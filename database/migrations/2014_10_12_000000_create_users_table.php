@@ -19,8 +19,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('can_train_all')->default(false);
+            $table->boolean('superadmin')->default(false);
+            $table->json('flags');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

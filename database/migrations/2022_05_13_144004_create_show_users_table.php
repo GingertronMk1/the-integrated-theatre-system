@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $table = 'venues';
+    private $table = 'show_users';
     /**
      * Run the migrations.
      *
@@ -16,7 +16,15 @@ return new class extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
+            $table->foreignId('show_id');
+            $table->foreignId('user_id');
+            $table->foreignId('role_id');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('show_id')->references('id')->on('shows');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

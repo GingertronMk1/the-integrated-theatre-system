@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $table = 'trainings';
+    private $table = 'prerequisites';
     /**
      * Run the migrations.
      *
@@ -16,7 +16,13 @@ return new class extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
+            $table->foreignId('training_id');
+            $table->foreignId('prerequisite_id');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('training_id')->references('id')->on('trainings');
+            $table->foreign('prerequisite_id')->references('id')->on('trainings');
         });
     }
 

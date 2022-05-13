@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $table = 'tickets';
+    private $table = 'trainings';
     /**
      * Run the migrations.
      *
@@ -16,7 +16,14 @@ return new class extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
+            $table->foreignId('training_category_id');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->boolean('is_dangerous')->default(false);
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('training_category_id')->references('id')->on('categories');
         });
     }
 

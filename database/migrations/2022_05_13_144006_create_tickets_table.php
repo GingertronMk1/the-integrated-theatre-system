@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $table = 'seasons';
+    private $table = 'tickets';
     /**
      * Run the migrations.
      *
@@ -16,7 +16,12 @@ return new class extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
+            $table->foreignId('performance_id');
+            $table->string('sold_email');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('performance_id')->references('id')->on('performances');
         });
     }
 

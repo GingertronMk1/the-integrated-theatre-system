@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $table = 'show_users';
+    private $table = 'categories';
     /**
      * Run the migrations.
      *
@@ -16,7 +16,11 @@ return new class extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->boolean('is_dangerous')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
