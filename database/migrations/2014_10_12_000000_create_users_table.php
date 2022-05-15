@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,7 +26,19 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+
         });
+
+        $user = new User();
+        $user->name = "Admin";
+        $user->email = "admin@tits.test";
+        $user->email_verified_at = now();
+        $user->password = bcrypt("admin");
+        $user->can_train_all = true;
+        $user->superadmin = true;
+        $user->flags = [ User::FLAG_INITIAL_SUPERADMIN ];
+        $user->save();
+
     }
 
     /**
