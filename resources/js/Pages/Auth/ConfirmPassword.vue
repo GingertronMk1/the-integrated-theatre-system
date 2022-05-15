@@ -11,7 +11,7 @@ const submit = () => {
 </script>
 
 <template>
-    <BreezeGuestLayout>
+    <DefaultLayout>
         <Head title="Confirm Password" />
 
         <div class="mb-4 text-sm text-gray-600">
@@ -45,5 +45,5 @@ const submit = () => {
                 </BreezeButton>
             </div>
         </form>
-    </BreezeGuestLayout>
+    </DefaultLayout>
 </template>

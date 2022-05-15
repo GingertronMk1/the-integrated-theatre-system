@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <Authenticated>
+    <DefaultLayout>
         <v-alert type="success"> V-Alert </v-alert>
-    </Authenticated>
+    </DefaultLayout>
 </template>

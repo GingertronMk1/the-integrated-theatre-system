@@ -1,4 +1,6 @@
 <script setup>
+import { useForm } from "@inertiajs/inertia-vue3";
+
 defineProps({
     canResetPassword: Boolean,
     status: String,
@@ -18,68 +20,71 @@ const submit = () => {
 </script>
 
 <template>
-    <BreezeGuestLayout>
+    <DefaultLayout>
         <Head title="Log in" />
 
-        <BreezeValidationErrors class="mb-4" />
+        <template v-if="form.hasErrors">
+            <v-alert
+                v-for="(error, index) in form.errors"
+                :key="index"
+                type="error"
+                class="mb-4"
+            >
+                {{ error }}
+            </v-alert>
+        </template>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
-
-        <v-form @submit.prevent="submit">
-            <div>
-                <v-text-input
-                    id="email"
-                    v-model="form.email"
-                    label="Email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-            </div>
-
-            <div class="mt-4">
-                <BreezeLabel for="password" value="Password" />
-                <BreezeInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <BreezeCheckbox
-                        v-model:checked="form.remember"
-                        name="remember"
+        <v-card>
+            <v-form @submit.prevent="submit">
+                <div>
+                    <v-text-field
+                        id="email"
+                        v-model="form.email"
+                        label="Email"
+                        type="email"
+                        required
+                        autofocus
+                        autocomplete="username"
+                        hide-details
                     />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900"
-                >
-                    Forgot your password?
-                </Link>
+                    <v-text-field
+                        id="password"
+                        v-model="form.password"
+                        label="Password"
+                        type="password"
+                        required
+                        autocomplete="current-password"
+                        hide-details
+                    />
+                </div>
 
-                <BreezeButton
-                    class="ml-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Log in
-                </BreezeButton>
-            </div>
-        </v-form>
-    </BreezeGuestLayout>
+                <div class="flex content-between items-center px-3">
+                    <v-checkbox
+                        v-model="form.remember"
+                        name="remember"
+                        label="Remember Me"
+                        color="blue"
+                        hide-details
+                    />
+
+                    <Link
+                        v-if="canResetPassword"
+                        :href="route('password.request')"
+                        class="ml-auto"
+                    >
+                        Forgot your password?
+                    </Link>
+
+                    <v-btn
+                        class="ml-4"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        type="submit"
+                        v-text="`Log in`"
+                    />
+                </div>
+            </v-form>
+        </v-card>
+    </DefaultLayout>
 </template>

@@ -16,5 +16,7 @@ module.exports = {
         },
     },
 
+    safelist: process.env.NODE_ENV === 'production' ? [] : [{ pattern: /.*/ }],
+
     plugins: [require('@tailwindcss/forms')],
 };

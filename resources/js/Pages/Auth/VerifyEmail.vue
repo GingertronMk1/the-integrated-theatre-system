@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import BreezeButton from "@/Components/Button.vue";
-import BreezeGuestLayout from "@/Layouts/Guest.vue";
+
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
@@ -20,7 +19,7 @@ const verificationLinkSent = computed(
 </script>
 
 <template>
-    <BreezeGuestLayout>
+    <DefaultLayout>
         <Head title="Email Verification" />
 
         <div class="mb-4 text-sm text-gray-600">
@@ -39,12 +38,12 @@ const verificationLinkSent = computed(
 
         <form @submit.prevent="submit">
             <div class="mt-4 flex items-center justify-between">
-                <BreezeButton
+                <v-button
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Resend Verification Email
-                </BreezeButton>
+                </v-button>
 
                 <Link
                     :href="route('logout')"
@@ -55,5 +54,5 @@ const verificationLinkSent = computed(
                 >
             </div>
         </form>
-    </BreezeGuestLayout>
+    </DefaultLayout>
 </template>
