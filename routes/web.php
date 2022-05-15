@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ShowController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,12 +17,15 @@ use Inertia\Inertia;
 |
 */
 
-Route::middleware(['auth'])->group(function() {
-Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-
+    Route::resources([
+        'show' => ShowController::class,
+        'training' => TrainingController::class,
+    ]);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

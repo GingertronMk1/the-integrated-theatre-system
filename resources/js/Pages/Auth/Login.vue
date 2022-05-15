@@ -29,8 +29,8 @@ const submit = () => {
         <template v-if="form.hasErrors"></template>
 
         <v-card>
-            <v-form @submit.prevent="submit">
-                <v-icon x-large color="blue darken-2" class="mx-auto">
+            <v-form class="flex flex-col" @submit.prevent="submit">
+                <v-icon color="blue darken-2" class="mx-auto text-h1">
                     mdi-drama-masks
                 </v-icon>
                 <div>
@@ -63,6 +63,7 @@ const submit = () => {
                         label="Remember Me"
                         color="blue"
                         hide-details
+                        class="flex-grow-0"
                     />
 
                     <Link

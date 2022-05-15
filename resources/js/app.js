@@ -1,7 +1,7 @@
 /**
  * Vue and inertia imports
  */
-import { createApp, h, ref } from "vue";
+import { createApp, h } from "vue";
 import { createInertiaApp, Head, Link } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 
@@ -49,7 +49,6 @@ createInertiaApp({
             .component("Link", Link)
             .mixin({
                 methods: {
-                    ref,
                     route,
                 },
             });
