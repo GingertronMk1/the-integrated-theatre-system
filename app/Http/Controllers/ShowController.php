@@ -15,8 +15,8 @@ class ShowController extends Controller
      */
     public function index()
     {
-        return inertia("Show/index", [
-            'Show' => Show::all(),
+        return inertia("Show/Index", [
+            'shows' => Show::all(),
         ]);
     }
 

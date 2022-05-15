@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 const nav_items = ref([
     {
         icon: "mdi-home",
@@ -12,6 +13,10 @@ const nav_items = ref([
         path: route("show.index"),
     },
 ]);
+
+function nav_link(link, params = {}) {
+    return Inertia.visit(link, params);
+}
 </script>
 
 <template>
@@ -33,13 +38,9 @@ const nav_items = ref([
                         v-for="(item, index) in nav_items"
                         :key="index"
                         :prepend-icon="item.icon"
-                    >
-                        <Link :to="item.path">
-                            <v-list-item-title>
-                                {{ item.title }}
-                            </v-list-item-title>
-                        </Link>
-                    </v-list-item>
+                        :title="item.title"
+                        @click="nav_link(item.path)"
+                    />
                 </v-list>
                 <template #append>
                     <div class="pa-2">

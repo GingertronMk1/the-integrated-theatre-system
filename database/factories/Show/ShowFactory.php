@@ -17,7 +17,10 @@ class ShowFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->words(5, true),
+            'description' => $this->faker->text(),
+            'default_venue_id' => \App\Models\Show\Venue::all()->random()->id,
+            'season_id' => \App\Models\Show\Season::all()->random()->id,
         ];
     }
 }

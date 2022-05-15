@@ -6,7 +6,7 @@ import { createInertiaApp, Head, Link } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 
 /**
- * Vuetify imports
+ * Vuetify imports and creation
  */
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
@@ -14,16 +14,6 @@ import * as directives from "vuetify/directives";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css"; // Ensure you are using css-loader
 import "vuetify/styles";
-
-/**
- * Default components/layouts
- */
-import DefaultLayout from "@/Layouts/Default.vue";
-
-require("./bootstrap");
-
-const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
 const vuetify = createVuetify({
     components,
@@ -36,6 +26,19 @@ const vuetify = createVuetify({
         },
     },
 });
+
+/**
+ * Default components/layouts
+ */
+import DefaultLayout from "@/Layouts/Default.vue";
+
+/**
+ * Functions etc that should be standard
+ */
+require("./bootstrap");
+
+const appName =
+    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
