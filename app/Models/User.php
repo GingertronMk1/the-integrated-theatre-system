@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const FLAG_INITIAL_SUPERADMIN = 'initial_superadmin';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,5 +42,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'flags' => 'array',
+        'can_train_all' => 'boolean',
+        'superadmin' => 'boolean',
     ];
 }
