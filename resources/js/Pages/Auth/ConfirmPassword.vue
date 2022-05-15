@@ -1,4 +1,6 @@
 <script setup>
+import ValidationErrors from "@/Components/ValidationErrors";
+
 const form = useForm({
     password: "",
 });
@@ -19,7 +21,7 @@ const submit = () => {
             password before continuing.
         </div>
 
-        <BreezeValidationErrors class="mb-4" />
+        <ValidationErrors />
 
         <form @submit.prevent="submit">
             <div>

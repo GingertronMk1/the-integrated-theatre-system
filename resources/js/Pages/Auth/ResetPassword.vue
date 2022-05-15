@@ -1,5 +1,6 @@
 <script setup>
 import { Head, useForm } from "@inertiajs/inertia-vue3";
+import ValidationErrors from "@/Components/ValidationErrors";
 
 const props = defineProps({
     email: String,
@@ -24,7 +25,7 @@ const submit = () => {
     <DefaultLayout>
         <Head title="Reset Password" />
 
-        <BreezeValidationErrors class="mb-4" />
+        <ValidationErrors />
 
         <form @submit.prevent="submit">
             <div>

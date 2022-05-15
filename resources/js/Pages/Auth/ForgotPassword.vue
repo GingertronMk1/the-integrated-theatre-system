@@ -1,5 +1,6 @@
 <script setup>
 import { Head, useForm } from "@inertiajs/inertia-vue3";
+import ValidationErrors from "@/Components/ValidationErrors";
 
 defineProps({
     status: String,
@@ -28,7 +29,7 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <BreezeValidationErrors class="mb-4" />
+        <ValidationErrors />
 
         <form @submit.prevent="submit">
             <div>

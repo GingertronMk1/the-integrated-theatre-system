@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import ValidationErrors from "@/Components/ValidationErrors";
 
 const form = useForm({
     name: "",
@@ -20,7 +21,7 @@ const submit = () => {
     <DefaultLayout>
         <Head title="Register" />
 
-        <BreezeValidationErrors class="mb-4" />
+        <ValidationErrors />
 
         <form @submit.prevent="submit">
             <div>

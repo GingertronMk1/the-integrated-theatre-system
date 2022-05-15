@@ -1,5 +1,6 @@
 <script setup>
 import { useForm } from "@inertiajs/inertia-vue3";
+import ValidationErrors from "@/Components/ValidationErrors";
 
 defineProps({
     canResetPassword: Boolean,
@@ -23,19 +24,15 @@ const submit = () => {
     <DefaultLayout>
         <Head title="Log in" />
 
-        <template v-if="form.hasErrors">
-            <v-alert
-                v-for="(error, index) in form.errors"
-                :key="index"
-                type="error"
-                class="mb-4"
-            >
-                {{ error }}
-            </v-alert>
-        </template>
+        <ValidationErrors />
+
+        <template v-if="form.hasErrors"></template>
 
         <v-card>
             <v-form @submit.prevent="submit">
+                <v-icon x-large color="blue darken-2" class="mx-auto">
+                    mdi-drama-masks
+                </v-icon>
                 <div>
                     <v-text-field
                         id="email"
