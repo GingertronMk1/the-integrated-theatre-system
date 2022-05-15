@@ -2,7 +2,7 @@
  * Vue and inertia imports
  */
 import { createApp, h, ref } from "vue";
-import { createInertiaApp, Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { createInertiaApp, Head, Link } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 
 /**
@@ -11,7 +11,14 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import Authenticated from "@/Layouts/Authenticated.vue";
+import { aliases, mdi } from "vuetify/iconsets/mdi";
+import "@mdi/font/css/materialdesignicons.css"; // Ensure you are using css-loader
+import "vuetify/styles";
+
+/**
+ * Default components/layouts
+ */
+import DefaultLayout from "@/Layouts/Default.vue";
 
 require("./bootstrap");
 
@@ -21,6 +28,13 @@ const appName =
 const vuetify = createVuetify({
     components,
     directives,
+    icons: {
+        defaultSet: "mdi",
+        aliases,
+        sets: {
+            mdi,
+        },
+    },
 });
 
 createInertiaApp({
@@ -30,10 +44,15 @@ createInertiaApp({
         const createdApp = createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(vuetify)
-            .component("Authenticated", Authenticated)
+            .component("DefaultLayout", DefaultLayout)
             .component("Head", Head)
             .component("Link", Link)
-            .mixin({ methods: { ref, route, useForm } });
+            .mixin({
+                methods: {
+                    ref,
+                    route,
+                },
+            });
 
         return createdApp.mount(el);
     },
