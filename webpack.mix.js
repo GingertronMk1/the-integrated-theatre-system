@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const eslint = require('laravel-mix-eslint');
 
 /*
  |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .alias({
         '@': 'resources/js',
+    })
+    .eslint({
+        fix: true,
     });
 
 if (mix.inProduction()) {
