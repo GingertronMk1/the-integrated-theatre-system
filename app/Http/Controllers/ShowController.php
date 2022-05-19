@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShowRequest;
 use App\Http\Requests\UpdateShowRequest;
+use App\Models\Show\Season;
 use App\Models\Show\Show;
+use App\Models\Show\Venue;
 
 class ShowController extends Controller
 {
@@ -27,7 +29,10 @@ class ShowController extends Controller
      */
     public function create()
     {
-        //
+        return inertia("Show/Create", [
+            'venues' => Venue::all(),
+            'seasons' => Season::all(),
+        ]);
     }
 
     /**
@@ -49,8 +54,8 @@ class ShowController extends Controller
      */
     public function show(Show $show)
     {
-        return inertia("Show/show", [
-            'Show' => $show,
+        return inertia("Show/Show", [
+            'show' => $show,
         ]);
     }
 
