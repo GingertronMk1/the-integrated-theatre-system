@@ -23,29 +23,30 @@ const submit = () => {
 
         <ValidationErrors />
 
-        <form @submit.prevent="submit">
-            <div>
-                <BreezeLabel for="password" value="Password" />
-                <BreezeInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                    autofocus
-                />
-            </div>
-
-            <div class="flex justify-end mt-4">
-                <BreezeButton
+        <v-card>
+            <v-form class="flex flex-col" @submit.prevent="submit">
+                <v-icon color="blue darken-2" class="mx-auto text-h1">
+                    mdi-drama-masks
+                </v-icon>
+                <div>
+                    <v-text-field
+                        id="password"
+                        v-model="form.password"
+                        label="Password"
+                        type="password"
+                        required
+                        autocomplete="current-password"
+                        autofocus
+                    />
+                </div>
+                <v-btn
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
-                >
-                    Confirm
-                </BreezeButton>
-            </div>
-        </form>
+                    type="submit"
+                    v-text="`Confirm`"
+                />
+            </v-form>
+        </v-card>
     </DefaultLayout>
 </template>

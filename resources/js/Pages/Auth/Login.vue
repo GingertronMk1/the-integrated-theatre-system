@@ -3,8 +3,14 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import ValidationErrors from "@/Components/ValidationErrors";
 
 defineProps({
-    canResetPassword: Boolean,
-    status: String,
+    canResetPassword: {
+        type: Boolean,
+        default: true,
+    },
+    status: {
+        type: String,
+        default: "",
+    },
 });
 
 const form = useForm({
@@ -25,8 +31,6 @@ const submit = () => {
         <Head title="Log in" />
 
         <ValidationErrors />
-
-        <template v-if="form.hasErrors"></template>
 
         <v-card>
             <v-form class="flex flex-col" @submit.prevent="submit">
