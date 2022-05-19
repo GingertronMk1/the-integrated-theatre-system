@@ -22,7 +22,7 @@ function nav_link(link, params = {}) {
 <template>
     <template v-if="$page?.props?.auth?.user">
         <v-app>
-            <v-navigation-drawer app expand-on-hover rail>
+            <v-navigation-drawer permanent expand-on-hover rail app>
                 <v-list>
                     <v-list-item
                         prepend-icon="mdi-account"
@@ -33,7 +33,7 @@ function nav_link(link, params = {}) {
 
                 <v-divider />
 
-                <v-list>
+                <v-list nav dense>
                     <v-list-item
                         v-for="(item, index) in nav_items"
                         :key="index"
