@@ -23,6 +23,10 @@ final class MakeEntity extends Command
     private const ARG_CLASSNAME = 'className';
     private const OPT_DRY_RUN = 'dry-run';
 
+    private const KIND_INTERFACE = 'interface';
+    private const KIND_CLASS = 'class';
+    private const KIND_DIRECTORY = 'dir';
+
     private const CLASSNAME_PLACEHOLDER = '<className>';
 
     private string $className = '';
@@ -73,20 +77,18 @@ final class MakeEntity extends Command
         $dirName = $this->kernel->getProjectDir()."/src/{$place}";
         $this->io->section($dirName);
         $nameSpace = 'App\\'.str_replace('/', '\\', $place);
-        $this->io->text("Namespace is '{$nameSpace}'");
         if (!$this->dryRun) {
             if (!is_dir($dirName)) {
-                $this->io->text("Making {$dirName}");
                 mkdir($dirName, recursive: true);
             } else {
-                $this->io->text("{$dirName} already exists");
             }
         } else {
-            $this->io->text("Not making {$dirName}");
         }
         foreach ($things as $thing => $attrs) {
-            if ($attrs['kind'] ?? 'class' === 'dir') {
-                $this->generatePlace("{$place}/$thing", $attrs['items'] ?? []);
+            $kind =  $attrs['kind'] ?? self::KIND_CLASS;
+            $this->io->text("{$place}/{$thing}: {$kind}");
+            if ($kind === self::KIND_DIRECTORY) {
+                $this->generatePlace("{$place}/{$thing}", $attrs['items'] ?? []);
             } else {
                 $this->generateThing(
                     $thing,
@@ -106,7 +108,7 @@ final class MakeEntity extends Command
     ): void {
         $thing = str_replace(self::CLASSNAME_PLACEHOLDER, $this->className, $thing);
         $qualifiedFileName = "{$dirName}/{$thing}.php";
-        $kind = $attrs['kind'] ?? 'class';
+        $kind = $attrs['kind'] ?? self::KIND_CLASS;
         $content = $this->twig->render(
             'util/make-entity.php.twig',
             [
@@ -116,20 +118,16 @@ final class MakeEntity extends Command
                 'comment' => $attrs['comment'] ?? null,
             ]
         );
-        $this->io->text($content);
         if (!$this->dryRun) {
             if (!file_exists($qualifiedFileName)) {
-                $this->io->text("Making {$qualifiedFileName}");
                 $fp = fopen($qualifiedFileName, 'w');
                 fwrite(
                     $fp,
                     $content
                 );
             } else {
-                $this->io->text("{$qualifiedFileName} already exists");
             }
         } else {
-            $this->io->text("Not actually making {$qualifiedFileName}");
         }
     }
 
@@ -139,9 +137,9 @@ final class MakeEntity extends Command
             'Domain/'.self::CLASSNAME_PLACEHOLDER => [
                 self::CLASSNAME_PLACEHOLDER.'Entity' => [],
                 self::CLASSNAME_PLACEHOLDER.'FinderInterface' => [
-                    'kind' => 'interface',
+                    'kind' => self::KIND_INTERFACE,
                 ],
-                self::CLASSNAME_PLACEHOLDER.'Id' => [
+                'ValueObject' => [
                     'kind' => 'dir',
                     'items' => [
                         self::CLASSNAME_PLACEHOLDER.'Id' => [],
@@ -151,7 +149,7 @@ final class MakeEntity extends Command
             'Application/'.self::CLASSNAME_PLACEHOLDER => [
                 self::CLASSNAME_PLACEHOLDER.'Model' => [],
                 self::CLASSNAME_PLACEHOLDER.'RepositoryInterface' => [
-                    'kind' => 'interface',
+                    'kind' => self::KIND_INTERFACE,
                 ],
                 'Create'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
                 'Create'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
