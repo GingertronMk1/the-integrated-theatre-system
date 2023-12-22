@@ -49,8 +49,7 @@ final class MakeEntity extends Command
                 'd',
                 InputOption::VALUE_NONE,
                 'Add to not actually write any files'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -86,12 +85,16 @@ final class MakeEntity extends Command
             $this->io->text("Not making {$dirName}");
         }
         foreach ($things as $thing => $attrs) {
-            $this->generateThing(
-                $thing,
-                $attrs,
-                $dirName,
-                $nameSpace
-            );
+            if ($attrs['kind'] ?? 'class' === 'dir') {
+                $this->generatePlace("{$place}/$thing", $attrs['items'] ?? []);
+            } else {
+                $this->generateThing(
+                    $thing,
+                    $attrs,
+                    $dirName,
+                    $nameSpace
+                );
+            }
         }
     }
 
@@ -111,7 +114,8 @@ final class MakeEntity extends Command
                 'className' => $thing,
                 'kind' => $kind,
                 'comment' => $attrs['comment'] ?? null,
-            ]);
+            ]
+        );
         $this->io->text($content);
         if (!$this->dryRun) {
             if (!file_exists($qualifiedFileName)) {
@@ -132,33 +136,46 @@ final class MakeEntity extends Command
     private function getPlacesAndThings(): array
     {
         return [
-        'Domain/'.self::CLASSNAME_PLACEHOLDER => [
-            self::CLASSNAME_PLACEHOLDER.'Entity' => [],
-            self::CLASSNAME_PLACEHOLDER.'FinderInterface' => [
-                'kind' => 'interface',
+            'Domain/'.self::CLASSNAME_PLACEHOLDER => [
+                self::CLASSNAME_PLACEHOLDER.'Entity' => [],
+                self::CLASSNAME_PLACEHOLDER.'FinderInterface' => [
+                    'kind' => 'interface',
+                ],
+                self::CLASSNAME_PLACEHOLDER.'Id' => [
+                    'kind' => 'dir',
+                    'items' => [
+                        self::CLASSNAME_PLACEHOLDER.'Id' => [],
+                    ],
+                ],
             ],
-            self::CLASSNAME_PLACEHOLDER.'Id' => [],
-        ],
-        'Application/'.self::CLASSNAME_PLACEHOLDER => [
-            self::CLASSNAME_PLACEHOLDER.'Model' => [],
-            self::CLASSNAME_PLACEHOLDER.'RepositoryInterface' => [
-                'kind' => 'interface',
+            'Application/'.self::CLASSNAME_PLACEHOLDER => [
+                self::CLASSNAME_PLACEHOLDER.'Model' => [],
+                self::CLASSNAME_PLACEHOLDER.'RepositoryInterface' => [
+                    'kind' => 'interface',
+                ],
+                'Create'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
+                'Create'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
+                'Update'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
+                'Update'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
             ],
-            'Create'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
-            'Create'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
-            'Update'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
-            'Update'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
-        ],
-        'Infrastructure/'.self::CLASSNAME_PLACEHOLDER => [
-            'Dbal'.self::CLASSNAME_PLACEHOLDER.'Repository' => [],
-            'Dbal'.self::CLASSNAME_PLACEHOLDER.'Finder' => [],
-        ],
-        'Framework/Controller' => [
-            self::CLASSNAME_PLACEHOLDER.'Controller' => [],
-        ],
-        'Framework/Form' => [
-            self::CLASSNAME_PLACEHOLDER.'Type' => [],
-        ],
-    ];
+            'Infrastructure/'.self::CLASSNAME_PLACEHOLDER => [
+                'Dbal'.self::CLASSNAME_PLACEHOLDER.'Repository' => [],
+                'Dbal'.self::CLASSNAME_PLACEHOLDER.'Finder' => [],
+            ],
+            'Framework' => [
+                'Controller' => [
+                    'kind' => 'dir',
+                    'items' => [
+                        self::CLASSNAME_PLACEHOLDER.'Controller' => [],
+                    ],
+                ],
+                'Form' => [
+                    'kind' => 'dir',
+                    'items' => [
+                        self::CLASSNAME_PLACEHOLDER.'Type' => [],
+                    ],
+                ],
+            ],
+        ];
     }
 }
