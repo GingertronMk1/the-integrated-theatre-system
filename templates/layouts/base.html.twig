@@ -16,6 +16,7 @@
     </head>
     <body>
         <header>
+            <h3>The Integrated Theatre System</h3>
         <span id="login-out-button">
           {% if app.user %}
             <a href="{{ logout_path() }}">Log Out {{ app.user.userIdentifier }}</a>
@@ -24,6 +25,8 @@
           {% endif %}
         </span>
         </header>
+        <main>
         {% block body %}{% endblock %}
+        </main>
     </body>
 </html>
