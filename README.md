@@ -23,7 +23,7 @@
 
 ### Schema Planning
 
-```
+```dbml
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 
