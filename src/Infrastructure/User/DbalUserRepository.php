@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\User;
 
-use Exception;
 use App\Application\User\UserRepositoryInterface;
 use App\Domain\User\UserEntity;
 use Doctrine\DBAL\Connection;
@@ -50,7 +49,7 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
                     ->executeQuery()
                 ;
             });
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
     }

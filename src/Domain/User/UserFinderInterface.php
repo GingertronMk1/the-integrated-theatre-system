@@ -11,5 +11,6 @@ use Symfony\Component\Uid\Uuid;
 interface UserFinderInterface extends UserProviderInterface, PasswordUpgraderInterface
 {
     public function findAll(): array;
+
     public function findById(Uuid $id): UserEntity;
 }

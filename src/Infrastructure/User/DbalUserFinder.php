@@ -8,9 +8,7 @@ use App\Domain\User\UserEntity;
 use App\Domain\User\UserFinderInterface;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Uid\Uuid;
 
 final readonly class DbalUserFinder implements UserFinderInterface
@@ -57,6 +55,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->from('users', 'u')
             ->executeQuery()
             ->fetchAllAssociative();
+
         return array_map(fn ($row) => $this->createUserFromRow($row), $rows);
     }
 
@@ -70,6 +69,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->setParameter('id', (string) $id)
             ->executeQuery()
             ->fetchAssociative();
+
         return $this->createUserFromRow($row);
     }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Framework\Controller;
 
-use Exception;
 use App\Application\User\CreateUserCommand;
 use App\Application\User\CreateUserCommandHandler;
 use App\Framework\Form\UserType;
@@ -31,7 +30,7 @@ class UserController extends AbstractController
                 $this->addFlash('success', 'Created organisation');
 
                 return $this->redirectToRoute('index');
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 throw $e;
             }
         }
