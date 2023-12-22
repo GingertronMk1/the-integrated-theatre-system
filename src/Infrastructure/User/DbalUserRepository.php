@@ -8,6 +8,7 @@ use App\Application\User\UserRepositoryInterface;
 use App\Domain\User\UserEntity;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
+use Exception;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final readonly class DbalUserRepository implements UserRepositoryInterface
@@ -49,7 +50,7 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
                     ->executeQuery()
                 ;
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

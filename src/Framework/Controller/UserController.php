@@ -7,6 +7,7 @@ namespace App\Framework\Controller;
 use App\Application\User\CreateUserCommand;
 use App\Application\User\CreateUserCommandHandler;
 use App\Framework\Form\UserType;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,7 @@ class UserController extends AbstractController
                 $returnRoute = $request->get('return_to', 'index');
 
                 return $this->redirectToRoute($returnRoute);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 throw $e;
             }
         }
