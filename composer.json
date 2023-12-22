@@ -94,7 +94,7 @@
             "@ecs --fix"
         ],
         "deptrac": [
-            "./vendor/bin/deptrac analyse --config-file=./config/packages/deptrac.yaml"
+            "./vendor/bin/deptrac analyse --config-file=./deptrac.yaml"
         ],
         "phinx": [
             "./vendor/bin/phinx --configuration=./phinx.php"
