@@ -4,4 +4,5 @@ docker-compose build
 docker-compose up -d
 ./_docker/bin/app/composer install
 ./_docker/bin/app/migrate
-docker-compose down -d
+./_docker/bin/node/npm run dev
+docker-compose stop

@@ -2,6 +2,7 @@ version: '3'
 
 services:
   nginx:
+    platform: linux/x86_64
     build:
       context: .
       dockerfile: _docker/config/nginx.dockerfile
@@ -28,6 +29,7 @@ services:
     ports:
       - "5432:5432"
   app:
+    platform: linux/x86_64
     build:
       context: .
       dockerfile: _docker/config/app.dockerfile
@@ -35,6 +37,15 @@ services:
       - '.:/var/www:delegated'
     networks:
       - the-integrated-theatre-system-network
+  node:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: _docker/config/node.dockerfile
+    volumes:
+        - '.:/app:delegated'
+    networks:
+        - the-integrated-theatre-system-network
 
 networks:
   the-integrated-theatre-system-network:
