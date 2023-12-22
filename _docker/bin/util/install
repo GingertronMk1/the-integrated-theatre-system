@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 docker-compose build
-
-docker-compose run --rm app composer install
-
 docker-compose up -d
+./_docker/bin/app/composer install
+./_docker/bin/app/migrate
+docker-compose down -d
