@@ -7,6 +7,7 @@ namespace App\Infrastructure\User;
 use App\Application\User\UserRepositoryInterface;
 use App\Domain\User\UserEntity;
 use App\Domain\User\ValueObject\UserId;
+use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -41,11 +42,14 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
                         'id' => ':id',
                         'email' => ':email',
                         'password' => ':password',
+                        'created_at' => ':now',
+                        'updated_at' => ':now',
                     ])
                     ->setParameters([
                         'id' => (string) $user->getId(),
                         'email' => $user->getEmail(),
                         'password' => $this->passwordHasher->hashPassword($user, $user->getPassword()),
+                        'now' => (new DateTimeImmutable())->format('c'),
                     ])
                     ->executeQuery()
                 ;

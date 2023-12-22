@@ -24,6 +24,8 @@ final class CreateUsersTable extends AbstractMigration
             ->addColumn('id', 'string')
             ->addColumn('email', 'string')
             ->addColumn('password', 'string')
+            ->addColumn('created_at', 'string')
+            ->addColumn('updated_at', 'string')
             ->create();
         ;
 
