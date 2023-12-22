@@ -6,11 +6,12 @@ namespace App\Domain\Common\ValueObject;
 
 use Symfony\Component\Uid\UuidV7;
 
-abstract class AbstractUuidId  
+abstract class AbstractUuidId
 {
     final private function __construct(
         private readonly UuidV7 $uuid
-    ) {}
+    ) {
+    }
 
     public static function generate(): self
     {

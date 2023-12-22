@@ -133,15 +133,14 @@ final class MakeEntity extends Command
     {
         return [
         'Domain/'.self::CLASSNAME_PLACEHOLDER => [
-            self::CLASSNAME_PLACEHOLDER.'Entity' => [
-            ],
+            self::CLASSNAME_PLACEHOLDER.'Entity' => [],
             self::CLASSNAME_PLACEHOLDER.'FinderInterface' => [
                 'kind' => 'interface',
             ],
+            self::CLASSNAME_PLACEHOLDER.'Id' => [],
         ],
         'Application/'.self::CLASSNAME_PLACEHOLDER => [
-            self::CLASSNAME_PLACEHOLDER.'Model' => [
-            ],
+            self::CLASSNAME_PLACEHOLDER.'Model' => [],
             self::CLASSNAME_PLACEHOLDER.'RepositoryInterface' => [
                 'kind' => 'interface',
             ],
@@ -151,10 +150,8 @@ final class MakeEntity extends Command
             'Update'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
         ],
         'Infrastructure/'.self::CLASSNAME_PLACEHOLDER => [
-            'Dbal'.self::CLASSNAME_PLACEHOLDER.'Repository' => [
-            ],
-            'Dbal'.self::CLASSNAME_PLACEHOLDER.'Finder' => [
-            ],
+            'Dbal'.self::CLASSNAME_PLACEHOLDER.'Repository' => [],
+            'Dbal'.self::CLASSNAME_PLACEHOLDER.'Finder' => [],
         ],
         'Framework/Controller' => [
             self::CLASSNAME_PLACEHOLDER.'Controller' => [],

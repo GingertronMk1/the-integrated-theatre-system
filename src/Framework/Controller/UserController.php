@@ -30,6 +30,7 @@ class UserController extends AbstractController
                 $this->addFlash('success', 'Created organisation');
 
                 $returnRoute = $request->get('return_to', 'index');
+
                 return $this->redirectToRoute($returnRoute);
             } catch (\Exception $e) {
                 throw $e;

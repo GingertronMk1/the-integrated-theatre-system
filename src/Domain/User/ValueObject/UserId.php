@@ -8,5 +8,4 @@ use App\Domain\Common\ValueObject\AbstractUuidId;
 
 final class UserId extends AbstractUuidId
 {
-    
 }
