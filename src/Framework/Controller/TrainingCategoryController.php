@@ -6,5 +6,7 @@ namespace App\Framework\Controller;
 
 class TrainingCategoryController
 {
-        public function __construct() {}
+    public function __construct()
+    {
     }
+}

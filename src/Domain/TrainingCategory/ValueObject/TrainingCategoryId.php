@@ -6,5 +6,7 @@ namespace App\Domain\TrainingCategory\ValueObject;
 
 class TrainingCategoryId
 {
-        public function __construct() {}
+    public function __construct()
+    {
     }
+}

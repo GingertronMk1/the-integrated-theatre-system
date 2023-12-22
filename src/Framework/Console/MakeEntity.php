@@ -85,9 +85,9 @@ final class MakeEntity extends Command
         } else {
         }
         foreach ($things as $thing => $attrs) {
-            $kind =  $attrs['kind'] ?? self::KIND_CLASS;
+            $kind = $attrs['kind'] ?? self::KIND_CLASS;
             $this->io->text("{$place}/{$thing}: {$kind}");
-            if ($kind === self::KIND_DIRECTORY) {
+            if (self::KIND_DIRECTORY === $kind) {
                 $this->generatePlace("{$place}/{$thing}", $attrs['items'] ?? []);
             } else {
                 $this->generateThing(

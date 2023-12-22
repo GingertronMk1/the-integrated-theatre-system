@@ -6,4 +6,4 @@ namespace App\Application\TrainingCategory;
 
 interface TrainingCategoryRepositoryInterface
 {
-    }
+}

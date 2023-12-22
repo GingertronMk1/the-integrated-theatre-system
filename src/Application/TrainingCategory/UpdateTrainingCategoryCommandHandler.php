@@ -6,5 +6,7 @@ namespace App\Application\TrainingCategory;
 
 class UpdateTrainingCategoryCommandHandler
 {
-        public function __construct() {}
+    public function __construct()
+    {
     }
+}

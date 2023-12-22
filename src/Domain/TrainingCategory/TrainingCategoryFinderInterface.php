@@ -6,4 +6,4 @@ namespace App\Domain\TrainingCategory;
 
 interface TrainingCategoryFinderInterface
 {
-    }
+}

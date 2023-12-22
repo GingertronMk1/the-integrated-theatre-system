@@ -6,5 +6,7 @@ namespace App\Application\TrainingCategory;
 
 class TrainingCategoryModel
 {
-        public function __construct() {}
+    public function __construct()
+    {
     }
+}

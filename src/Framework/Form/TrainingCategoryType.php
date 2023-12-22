@@ -6,5 +6,7 @@ namespace App\Framework\Form;
 
 class TrainingCategoryType
 {
-        public function __construct() {}
+    public function __construct()
+    {
     }
+}

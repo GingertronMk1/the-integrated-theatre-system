@@ -6,5 +6,7 @@ namespace App\Infrastructure\TrainingCategory;
 
 class DbalTrainingCategoryRepository
 {
-        public function __construct() {}
+    public function __construct()
+    {
     }
+}

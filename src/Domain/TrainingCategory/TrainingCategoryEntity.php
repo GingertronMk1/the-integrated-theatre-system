@@ -6,5 +6,7 @@ namespace App\Domain\TrainingCategory;
 
 class TrainingCategoryEntity
 {
-        public function __construct() {}
+    public function __construct()
+    {
     }
+}
