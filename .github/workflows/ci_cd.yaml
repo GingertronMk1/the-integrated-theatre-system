@@ -1,21 +1,24 @@
 name: CI/CD
 
 on:
-  push:
-    branches: 
-      main
+    pull_request:
+        branches:
+            - main
+    push:
+        branches:
+            - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-        - name: Checkout
-          uses: actions/checkout@v3
-        - name: Install
-          run: ./_docker/bin/util/install
-        - name: Start
-          run: ./_docker/bin/util/start
-        - name: Deptrac
-          run: ./_docker/bin/app/deptrac
-        - name: ECS
-          run: ./_docker/bin/app/ecs
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Install
+              run: ./_docker/bin/util/install
+            - name: Start
+              run: ./_docker/bin/util/start
+            - name: Deptrac
+              run: ./_docker/bin/app/deptrac
+            - name: ECS
+              run: ./_docker/bin/app/ecs
