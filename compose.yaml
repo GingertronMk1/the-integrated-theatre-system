@@ -14,7 +14,7 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - facman-network
+      - the-integrated-theatre-system-network
   database:
     image: postgres:${POSTGRES_VERSION:-15}-alpine
     environment:
@@ -24,7 +24,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-app}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
     networks:
-      - facman-network
+      - the-integrated-theatre-system-network
     ports:
       - "5432:5432"
   app:
@@ -34,9 +34,9 @@ services:
     volumes:
       - '.:/var/www:delegated'
     networks:
-      - facman-network
+      - the-integrated-theatre-system-network
 
 networks:
-  facman-network:
+  the-integrated-theatre-system-network:
     driver: bridge
       

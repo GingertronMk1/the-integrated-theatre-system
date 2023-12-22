@@ -1,4 +1,4 @@
-# FacMan
+# The Integrated Theatre System
 
 ### DDD
 
