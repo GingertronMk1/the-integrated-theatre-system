@@ -11,8 +11,10 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v3
-        - name: Build
+        - name: Install
           run: ./_docker/bin/util/install
+        - name: Start
+          run: ./_docker/bin/util/start
         - name: Deptrac
           run: ./_docker/bin/app/deptrac
         - name: ECS
