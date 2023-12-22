@@ -6,9 +6,9 @@ namespace App\Infrastructure\User;
 
 use App\Application\User\UserRepositoryInterface;
 use App\Domain\User\UserEntity;
+use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Uid\Uuid;
 
 final readonly class DbalUserRepository implements UserRepositoryInterface
 {
@@ -18,9 +18,9 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
     ) {
     }
 
-    public function getNextId(): Uuid
+    public function getNextId(): UserId
     {
-        return Uuid::v7();
+        return UserId::generate();
     }
 
     public function createUser(string $email, string $password): void
@@ -28,7 +28,7 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
         try {
             $this->connection->transactional(function (Connection $conn) use ($email, $password) {
                 $user = new UserEntity(
-                    (string) $this->getNextId(),
+                    $this->getNextId(),
                     $email,
                     [],
                     $password
@@ -42,7 +42,7 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
                         'password' => ':password',
                     ])
                     ->setParameters([
-                        'id' => $user->getId(),
+                        'id' => (string) $user->getId(),
                         'email' => $user->getEmail(),
                         'password' => $this->passwordHasher->hashPassword($user, $user->getPassword()),
                     ])

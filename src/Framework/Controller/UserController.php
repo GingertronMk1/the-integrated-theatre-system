@@ -21,7 +21,7 @@ class UserController extends AbstractController
     #[Route('/user/create', 'user.create', methods: ['GET', 'POST'])]
     public function create(Request $request, CreateUserCommandHandler $handler): Response
     {
-        $command = new CreateUserCommand('test@example.com', '12345');
+        $command = new CreateUserCommand();
         $form = $this->createForm(UserType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -29,7 +29,8 @@ class UserController extends AbstractController
                 $handler->handle($command);
                 $this->addFlash('success', 'Created organisation');
 
-                return $this->redirectToRoute('index');
+                $returnRoute = $request->get('return_to', 'index');
+                return $this->redirectToRoute($returnRoute);
             } catch (\Exception $e) {
                 throw $e;
             }

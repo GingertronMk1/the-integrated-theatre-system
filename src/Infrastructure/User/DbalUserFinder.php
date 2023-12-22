@@ -6,10 +6,10 @@ namespace App\Infrastructure\User;
 
 use App\Domain\User\UserEntity;
 use App\Domain\User\UserFinderInterface;
+use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Uuid;
 
 final readonly class DbalUserFinder implements UserFinderInterface
 {
@@ -40,11 +40,12 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->executeQuery()
             ->fetchAssociative();
 
-        return new UserEntity($row['id'], $row['email'], [], $row['password']);
+        return $this->createUserFromRow($row);
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, $newHashedPassword): void
     {
+        // Doing nothing for now
     }
 
     public function findAll(): array
@@ -59,7 +60,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
         return array_map(fn ($row) => $this->createUserFromRow($row), $rows);
     }
 
-    public function findById(Uuid $id): UserEntity
+    public function findById(UserId $id): UserEntity
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -76,7 +77,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
     private function createUserFromRow(array $row): UserEntity
     {
         return new UserEntity(
-            $row['id'],
+            UserId::fromString($row['id']),
             $row['email'],
             [],
             $row['password'],

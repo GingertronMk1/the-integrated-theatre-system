@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\User;
 
-use Symfony\Component\Uid\Uuid;
+use App\Domain\User\ValueObject\UserId;
 
 interface UserRepositoryInterface
 {
-    public function getNextId(): Uuid;
+    public function getNextId(): UserId;
 
     public function createUser(string $email, string $password): void;
 }

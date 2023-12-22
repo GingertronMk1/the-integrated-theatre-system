@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
+use App\Domain\User\ValueObject\UserId;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public function __construct(
-        private string $id,
+        private UserId $id,
         private string $email,
         private array $roles,
         private string $password
@@ -27,7 +28,7 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getEmail();
     }
 
-    public function getId(): string
+    public function getId(): UserId
     {
         return $this->id;
     }
