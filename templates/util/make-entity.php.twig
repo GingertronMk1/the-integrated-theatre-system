@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ nameSpace }};
+
+{% if comment is not empty %}
+/**
+ *  {{ comment }}
+ */
+{% endif %}
+{{ kind }} {{ className }}
+{
+    {% if kind == 'class' %}
+    public function __construct() {}
+    {% endif %}
+}

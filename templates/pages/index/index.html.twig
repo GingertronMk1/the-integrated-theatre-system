@@ -1,0 +1,10 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+    <h1>Welcome.</h1>
+    <ul>
+    {% for user in users %}
+      <li>{{ user.id }} | {{ user.email }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
