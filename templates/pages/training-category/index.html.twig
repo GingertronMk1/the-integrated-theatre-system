@@ -1,0 +1,7 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+    {% for training_category in training_categories %}
+    {{ training_category.name }}
+    {% endfor %}
+{% endblock %}

@@ -6,4 +6,5 @@ namespace App\Application\TrainingCategory;
 
 interface TrainingCategoryRepositoryInterface
 {
+    public function createTrainingCategory(string $name): void;
 }
