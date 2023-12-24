@@ -14,8 +14,7 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
 {
     public function __construct(
         private Connection $connection
-    )
-    {
+    ) {
     }
 
     public function find(TrainingCategoryId $id): TrainingCategoryEntity
@@ -27,6 +26,7 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
             ->executeQuery()
             ->fetchAssociative()
         ;
+
         return $this->createTrainingCategoryFromRow($row);
     }
 
@@ -39,6 +39,7 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
             ->executeQuery()
             ->fetchAllAssociative()
         ;
+
         return array_map(
             fn (array $row) => $this->createTrainingCategoryFromRow($row),
             $rows

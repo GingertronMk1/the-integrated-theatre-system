@@ -8,7 +8,6 @@ final class CreateTrainingCategoryCommand
 {
     public function __construct(
         public string $name = ''
-    )
-    {
+    ) {
     }
 }

@@ -13,8 +13,7 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
 {
     public function __construct(
         private Connection $connection
-    )
-    {
+    ) {
     }
 
     public function createTrainingCategory(string $name): void
@@ -26,12 +25,12 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
                 'id' => ':id',
                 'name' => ':name',
                 'created_at' => ':now',
-                'updated_at' => ':now'
+                'updated_at' => ':now',
             ])
             ->setParameters([
                 'id' => (string) TrainingCategoryId::generate(),
                 'name' => $name,
-                'now' => (new DateTimeImmutable())->format('c')
+                'now' => (new DateTimeImmutable())->format('c'),
             ])
             ->executeQuery()
         ;

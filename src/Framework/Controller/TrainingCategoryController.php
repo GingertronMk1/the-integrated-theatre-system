@@ -20,10 +20,11 @@ class TrainingCategoryController extends AbstractController
     public function index(Request $request, TrainingCategoryFinderInterface $finder): Response
     {
         $categories = $finder->findAll();
+
         return $this->render(
             'pages/training-category/index.html.twig',
             [
-                'training_categories' => $categories
+                'training_categories' => $categories,
             ]
         );
     }
@@ -50,6 +51,5 @@ class TrainingCategoryController extends AbstractController
         return $this->render('pages/training-category/create.html.twig', [
             'form' => $form->createView(),
         ]);
- 
     }
 }

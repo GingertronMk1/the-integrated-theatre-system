@@ -14,7 +14,6 @@ final class TrainingCategoryEntity
         public string $name,
         public DateTimeImmutable $createdAt,
         public DateTimeImmutable $updatedAt,
-    )
-    {
+    ) {
     }
 }
