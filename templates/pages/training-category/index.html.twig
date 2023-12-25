@@ -6,6 +6,9 @@
     {% for training_category in training_categories %}
     <li id="{{ training_category.name }}">
         {{ training_category.name }}
+        | C: `{{ training_category.createdAt | date('Y-m-d H:i:s') }}`
+        | U: `{{ training_category.updatedAt | date('Y-m-d H:i:s') }}`
+        <a href="{{ path('training-category.update', {id: training_category.id}) }}" class="button">Edit</a>
     </li>
     {% endfor %}
 </ul>

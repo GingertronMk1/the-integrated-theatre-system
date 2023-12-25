@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Framework\Console;
 
+use Doctrine\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -32,11 +34,13 @@ final class MakeEntity extends Command
     private string $className = '';
     private bool $dryRun = false;
     private SymfonyStyle $io;
+    private readonly Inflector $inflector;
 
     public function __construct(
         private readonly KernelInterface $kernel,
-        private readonly Environment $twig
+        private readonly Environment $twig,
     ) {
+        $this->inflector = InflectorFactory::create()->build();
         parent::__construct();
     }
 
@@ -65,6 +69,8 @@ final class MakeEntity extends Command
         foreach ($this->getPlacesAndThings() as $place => $things) {
             $this->generatePlace($place, $things);
         }
+
+        $this->makeTwigFiles();
 
         return self::SUCCESS;
     }
@@ -175,5 +181,35 @@ final class MakeEntity extends Command
                 ],
             ],
         ];
+    }
+
+    private function makeTwigFiles(): void
+    {
+        $kebabClass = str_replace('_', '-', $this->inflector->camelize($this->className));
+        $dir = $this->kernel->getProjectDir().'/templates/pages/'.$kebabClass;
+        if (!is_dir($dir)) {
+            mkdir($dir, recursive: true);
+        }
+        foreach ([
+            'index',
+            'create',
+            'view',
+            'edit',
+        ] as $view) {
+            $fileName = "{$dir}/{$view}.html.twig";
+            if (!file_exists($fileName)) {
+                $fp = fopen($fileName, 'w');
+                fwrite(
+                    $fp,
+                    <<<TWIG
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+{% endblock %}
+TWIG
+                );
+                fclose($fp);
+            }
+        }
     }
 }

@@ -35,4 +35,34 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->executeQuery()
         ;
     }
+
+    public function updateTrainingCategory(TrainingCategoryId $id, string $name): void
+    {
+        $finderQB = $this->connection->createQueryBuilder();
+        $result = $finderQB
+            ->select('COUNT(*)')
+            ->from('training_categories')
+            ->where('id = :id')
+            ->setParameter('id', (string) $id)
+            ->fetchFirstColumn()
+            ;
+        if ($result < 1) {
+            throw new \Exception("No category found with ID {$id}");
+        }
+
+        $qb = $this->connection->createQueryBuilder();
+        $qb
+            ->update('training_categories')
+            ->set('name', ':name')
+            ->set('updated_at', ':now')
+            ->setParameters([
+                'id' => (string) $id,
+                'name' => $name,
+                'now' => (new DateTimeImmutable())->format('c'),
+            ])
+            ->where('id = :id')
+            ->executeQuery()
+        ;
+
+    }
 }
