@@ -8,6 +8,7 @@ use App\Application\TrainingCategory\TrainingCategoryRepositoryInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use Exception;
 
 final readonly class DbalTrainingCategoryRepository implements TrainingCategoryRepositoryInterface
 {
@@ -45,9 +46,9 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->fetchFirstColumn()
-            ;
+        ;
         if ($result < 1) {
-            throw new \Exception("No category found with ID {$id}");
+            throw new Exception("No category found with ID {$id}");
         }
 
         $qb = $this->connection->createQueryBuilder();
@@ -63,6 +64,5 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->where('id = :id')
             ->executeQuery()
         ;
-
     }
 }
