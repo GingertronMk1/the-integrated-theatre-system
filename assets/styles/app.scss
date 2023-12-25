@@ -1,6 +1,8 @@
+@import 'mixins';
 @import 'reset';
 @import 'header';
+@import 'main';
 
 body {
-    background-color: skyblue;
+    background-color: white;
 }
