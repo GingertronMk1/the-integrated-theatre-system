@@ -1,7 +1,11 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block body %}
+<ul>
     {% for training_category in training_categories %}
-    {{ training_category.name }}
+    <li id="{{ training_category.name }}">
+{{ training_category.name }}
+    </li>
     {% endfor %}
+</ul>
 {% endblock %}
