@@ -1,8 +1,10 @@
+@import 'variables';
 @import 'mixins';
 @import 'reset';
-@import 'header';
-@import 'main';
+@import 'components/header';
+@import 'components/main';
+@import 'components/button';
 
 body {
-    background-color: white;
+    background-color: darken($white, 5%);
 }
