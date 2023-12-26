@@ -35,6 +35,7 @@ services:
       dockerfile: _docker/config/app.dockerfile
     volumes:
       - '.:/var/www:delegated'
+      - './_docker/config/app/php.ini:/usr/local/etc/php/conf.d/zzz_app.ini'
     networks:
       - the-integrated-theatre-system-network
   node:

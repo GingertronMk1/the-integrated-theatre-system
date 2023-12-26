@@ -25,3 +25,6 @@ jobs:
             - name: Stan
               run: ./_docker/bin/app/composer stan
               continue-on-error: true
+            - name: Coverage
+              run: ./_docker/bin/app/composer phpunit -- --coverage-text
+              continue-on-error: true

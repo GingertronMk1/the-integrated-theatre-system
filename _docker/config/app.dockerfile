@@ -11,8 +11,8 @@ RUN apk add --no-cache \
     $PHPIZE_DEPS \
     linux-headers
 
-# RUN pecl install -f xdebug-3.2.1 && \
-#     docker-php-ext-enable xdebug
+RUN pecl install -f xdebug pcov && \
+    docker-php-ext-enable xdebug
 
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl opcache pdo_pgsql
