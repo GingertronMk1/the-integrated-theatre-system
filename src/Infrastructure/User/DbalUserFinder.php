@@ -20,7 +20,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        return $user;
+        return $this->loadUserByIdentifier($user->getUserIdentifier());
     }
 
     public function supportsClass(string $class): bool
@@ -43,7 +43,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
         return $this->createUserFromRow($row);
     }
 
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, $newHashedPassword): void
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, mixed $newHashedPassword): void
     {
         // Doing nothing for now
     }
@@ -74,6 +74,9 @@ final readonly class DbalUserFinder implements UserFinderInterface
         return $this->createUserFromRow($row);
     }
 
+    /**
+     * @param array<string, string> $row
+     */
     private function createUserFromRow(array $row): UserEntity
     {
         return new UserEntity(

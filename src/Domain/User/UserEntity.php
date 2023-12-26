@@ -10,6 +10,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    /**
+     * @param UserId $id
+     * @param string $email
+     * @param array<int, mixed> $roles
+     * @param string $password
+     */
     public function __construct(
         private UserId $id,
         private string $email,

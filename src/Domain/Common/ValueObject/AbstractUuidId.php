@@ -13,7 +13,7 @@ abstract class AbstractUuidId
     ) {
     }
 
-    public static function generate(): self
+    public static function generate(): static
     {
         return new static(new UuidV7());
     }
@@ -23,7 +23,7 @@ abstract class AbstractUuidId
         return (string) $this->uuid;
     }
 
-    public static function fromString(string $id): self
+    public static function fromString(string $id): static
     {
         return new static(UuidV7::fromString($id));
     }

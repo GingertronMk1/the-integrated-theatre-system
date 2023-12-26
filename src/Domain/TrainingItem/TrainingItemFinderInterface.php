@@ -8,6 +8,9 @@ use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 
 interface TrainingItemFinderInterface
 {
+    /**
+     * @return array<TrainingItemEntity>
+     */
     public function findAll(): array;
 
     public function find(TrainingItemId $id): TrainingItemEntity;

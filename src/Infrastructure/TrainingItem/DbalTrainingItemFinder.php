@@ -47,6 +47,9 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
         );
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     private function createTrainingItemFromRow(array $row): TrainingItemEntity
     {
         return new TrainingItemEntity(

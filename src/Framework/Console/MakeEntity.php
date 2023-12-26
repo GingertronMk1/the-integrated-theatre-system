@@ -75,6 +75,9 @@ final class MakeEntity extends Command
         return self::SUCCESS;
     }
 
+    /**
+     * @param array<string, mixed> $things
+     */
     private function generatePlace(
         string $place,
         array $things
@@ -106,6 +109,9 @@ final class MakeEntity extends Command
         }
     }
 
+    /**
+     * @param array<string, mixed> $attrs
+     */
     private function generateThing(
         string $thing,
         array $attrs,
@@ -137,6 +143,9 @@ final class MakeEntity extends Command
         }
     }
 
+    /**
+     * @return array<string, array<mixed>>
+     */
     private function getPlacesAndThings(): array
     {
         return [
