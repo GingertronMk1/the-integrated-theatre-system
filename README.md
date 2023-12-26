@@ -4,17 +4,14 @@
 
 ##### Domain
 
-- Entity?
-  - This is the version with the most primitive types, used for creation and editing
-  - Effectively the write model
-- FinderInterface
+- Entity (aka write model)
+- RepositoryInterface
 
 ##### Application
 
-- Model?
-  - This is the version with all the relations and that
-  - Effectively the read model
-- RepositoryInterface
+- Model (aka read model)
+- FinderInterface
+- Command DTOs (Commands), and Command Handlers
 
 ##### Infrastructure
 
