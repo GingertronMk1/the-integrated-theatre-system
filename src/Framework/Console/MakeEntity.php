@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Framework\Console;
 
+use App\Domain\Common\ValueObject\AbstractUuidId;
+use Doctrine\DBAL\Connection;
 use Doctrine\Inflector\Inflector;
 use Doctrine\Inflector\InflectorFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Environment;
 
@@ -128,6 +132,9 @@ final class MakeEntity extends Command
                 'className' => $thing,
                 'kind' => $kind,
                 'comment' => $attrs['comment'] ?? null,
+                'attributes' => $attrs['attributes'] ?? [],
+                'extends' => $attrs['extends'] ?? [],
+                'implements' => $attrs['implements'] ?? []
             ]
         );
         if (!$this->dryRun) {
@@ -148,44 +155,68 @@ final class MakeEntity extends Command
      */
     private function getPlacesAndThings(): array
     {
+        $classPlaceholder = self::CLASSNAME_PLACEHOLDER;
         return [
-            'Domain/'.self::CLASSNAME_PLACEHOLDER => [
-                self::CLASSNAME_PLACEHOLDER.'Entity' => [],
-                self::CLASSNAME_PLACEHOLDER.'FinderInterface' => [
-                    'kind' => self::KIND_INTERFACE,
+            "Domain/{$classPlaceholder}" => [
+                "{$classPlaceholder}Entity" => [],
+                "{$classPlaceholder}FinderInterface" => [
+                    "kind" => self::KIND_INTERFACE,
                 ],
-                'ValueObject' => [
-                    'kind' => 'dir',
-                    'items' => [
-                        self::CLASSNAME_PLACEHOLDER.'Id' => [],
+                "ValueObject" => [
+                    "kind" => "dir",
+                    "items" => [
+                        "{$classPlaceholder}Id" => [
+                            'extends' => AbstractUuidId::class
+                        ],
                     ],
                 ],
             ],
-            'Application/'.self::CLASSNAME_PLACEHOLDER => [
-                self::CLASSNAME_PLACEHOLDER.'Model' => [],
-                self::CLASSNAME_PLACEHOLDER.'RepositoryInterface' => [
-                    'kind' => self::KIND_INTERFACE,
+            "Application/{$classPlaceholder}" => [
+                "{$classPlaceholder}Model" => [],
+                "{$classPlaceholder}RepositoryInterface" => [
+                    "kind" => self::KIND_INTERFACE,
                 ],
-                'Create'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
-                'Create'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
-                'Update'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
-                'Update'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
-            ],
-            'Infrastructure/'.self::CLASSNAME_PLACEHOLDER => [
-                'Dbal'.self::CLASSNAME_PLACEHOLDER.'Repository' => [],
-                'Dbal'.self::CLASSNAME_PLACEHOLDER.'Finder' => [],
-            ],
-            'Framework' => [
-                'Controller' => [
-                    'kind' => 'dir',
+                "Create{$classPlaceholder}" => [
+                    'kind' => self::KIND_DIRECTORY,
                     'items' => [
-                        self::CLASSNAME_PLACEHOLDER.'Controller' => [],
+                        'Command' => [],
+                        'CommandHandler' => []
+                    ]
+                ],
+                 "Update{$classPlaceholder}" => [
+                    'kind' => self::KIND_DIRECTORY,
+                    'items' => [
+                        'Command' => [],
+                        'CommandHandler' => []
+                    ]
+                ],
+            ],
+            "Infrastructure/{$classPlaceholder}" => [
+                "Dbal{$classPlaceholder}Repository" => [
+                    'attributes' => [
+                        Connection::class => 'private readonly'
+                    ]
+                ],
+                "Dbal{$classPlaceholder}Finder" => [
+                                        'attributes' => [
+                        Connection::class => 'private readonly'
+                    ]],
+            ],
+            "Framework" => [
+                "Controller" => [
+                    "kind" => "dir",
+                    "items" => [
+                        "{$classPlaceholder}Controller" => [
+                            'extends' => AbstractController::class
+                        ],
                     ],
                 ],
-                'Form' => [
-                    'kind' => 'dir',
-                    'items' => [
-                        self::CLASSNAME_PLACEHOLDER.'Type' => [],
+                "Form" => [
+                    "kind" => "dir",
+                    "items" => [
+                        "{$classPlaceholder}Type" => [
+                            'extends' => AbstractType::class
+                        ],
                     ],
                 ],
             ],

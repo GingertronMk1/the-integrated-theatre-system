@@ -9,9 +9,13 @@ namespace {{ nameSpace }};
  *  {{ comment }}
  */
 {% endif %}
-{{ kind }} {{ className }}
+{{ kind }} {{ className }} {% if extends is not empty %}extends {{ extends|join(', ') }}{% endif %}
 {
     {% if kind == 'class' %}
-    public function __construct() {}
+    public function __construct(
+        {% for attribute, modifier in attributes %}
+        {{ modifier }} {{ attribute }} ${{ attribute|lower }}
+        {% endfor %}
+    ) {}
     {% endif %}
 }
