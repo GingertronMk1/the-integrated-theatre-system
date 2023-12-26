@@ -15,8 +15,7 @@ class Command
         public TrainingCategoryId $trainingCategoryId,
         public string $name = '',
         public bool $isDangerous = false,
-    )
-    {
+    ) {
     }
 
     public static function forItem(TrainingItemEntity $entity): self
