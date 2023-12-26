@@ -134,7 +134,7 @@ final class MakeEntity extends Command
                 'comment' => $attrs['comment'] ?? null,
                 'attributes' => $attrs['attributes'] ?? [],
                 'extends' => $attrs['extends'] ?? [],
-                'implements' => $attrs['implements'] ?? []
+                'implements' => $attrs['implements'] ?? [],
             ]
         );
         if (!$this->dryRun) {
@@ -156,17 +156,18 @@ final class MakeEntity extends Command
     private function getPlacesAndThings(): array
     {
         $classPlaceholder = self::CLASSNAME_PLACEHOLDER;
+
         return [
             "Domain/{$classPlaceholder}" => [
                 "{$classPlaceholder}Entity" => [],
                 "{$classPlaceholder}FinderInterface" => [
-                    "kind" => self::KIND_INTERFACE,
+                    'kind' => self::KIND_INTERFACE,
                 ],
-                "ValueObject" => [
-                    "kind" => "dir",
-                    "items" => [
+                'ValueObject' => [
+                    'kind' => 'dir',
+                    'items' => [
                         "{$classPlaceholder}Id" => [
-                            'extends' => AbstractUuidId::class
+                            'extends' => AbstractUuidId::class,
                         ],
                     ],
                 ],
@@ -174,48 +175,48 @@ final class MakeEntity extends Command
             "Application/{$classPlaceholder}" => [
                 "{$classPlaceholder}Model" => [],
                 "{$classPlaceholder}RepositoryInterface" => [
-                    "kind" => self::KIND_INTERFACE,
+                    'kind' => self::KIND_INTERFACE,
                 ],
                 "Create{$classPlaceholder}" => [
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
                         'Command' => [],
-                        'CommandHandler' => []
-                    ]
+                        'CommandHandler' => [],
+                    ],
                 ],
                  "Update{$classPlaceholder}" => [
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
                         'Command' => [],
-                        'CommandHandler' => []
-                    ]
+                        'CommandHandler' => [],
+                    ],
                 ],
             ],
             "Infrastructure/{$classPlaceholder}" => [
                 "Dbal{$classPlaceholder}Repository" => [
                     'attributes' => [
-                        Connection::class => 'private readonly'
-                    ]
+                        Connection::class => 'private readonly',
+                    ],
                 ],
                 "Dbal{$classPlaceholder}Finder" => [
                                         'attributes' => [
-                        Connection::class => 'private readonly'
+                        Connection::class => 'private readonly',
                     ]],
             ],
-            "Framework" => [
-                "Controller" => [
-                    "kind" => "dir",
-                    "items" => [
+            'Framework' => [
+                'Controller' => [
+                    'kind' => 'dir',
+                    'items' => [
                         "{$classPlaceholder}Controller" => [
-                            'extends' => AbstractController::class
+                            'extends' => AbstractController::class,
                         ],
                     ],
                 ],
-                "Form" => [
-                    "kind" => "dir",
-                    "items" => [
+                'Form' => [
+                    'kind' => 'dir',
+                    'items' => [
                         "{$classPlaceholder}Type" => [
-                            'extends' => AbstractType::class
+                            'extends' => AbstractType::class,
                         ],
                     ],
                 ],
