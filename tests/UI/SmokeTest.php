@@ -22,9 +22,10 @@ final class SmokeTest extends WebTestCase
 
     /**
      * @test
+     *
      * @dataProvider urlDataProvider
      */
-    public function can_view_pages(string $url): void
+    public function canViewPages(string $url): void
     {
         $this->client->request('GET', $url);
         $this->assertResponseIsSuccessful();
@@ -34,11 +35,10 @@ final class SmokeTest extends WebTestCase
     {
         $pages = [
             '/training-category',
-            '/training-item'
+            '/training-item',
         ];
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             yield [$page];
         }
     }
-    
 }
