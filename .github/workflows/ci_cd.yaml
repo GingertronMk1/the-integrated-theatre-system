@@ -22,3 +22,6 @@ jobs:
               run: ./_docker/bin/app/deptrac
             - name: ECS
               run: ./_docker/bin/app/ecs
+            - name: Stan
+              run: ./_docker/bin/app/composer stan
+              continue-on-error: true

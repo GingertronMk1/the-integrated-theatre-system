@@ -45,9 +45,9 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->from('training_categories')
             ->where('id = :id')
             ->setParameter('id', (string) $id)
-            ->fetchFirstColumn()
+            ->fetchOne()
         ;
-        if ($result < 1) {
+        if ((int) $result < 1) {
             throw new Exception("No category found with ID {$id}");
         }
 

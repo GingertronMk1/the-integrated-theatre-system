@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\TrainingItem;
+namespace App\Application\User\UpdateUser;
 
-class UpdateTrainingItemCommandHandler
+class Command
 {
     public function __construct()
     {

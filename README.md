@@ -1,24 +1,37 @@
 # The Integrated Theatre System
 
-### DDD
+## DDD
 
-##### Domain
+### Domain
 
 - Entity (aka write model)
 - RepositoryInterface
 
-##### Application
+#### Per Noback
+
+- Entities
+- Value Objects
+- Domain Events
+- Write model repository interfaces
+- Domain services
+
+### Application
 
 - Model (aka read model)
 - FinderInterface
 - Command DTOs (Commands), and Command Handlers
 
-##### Infrastructure
+#### Per Noback
+
+- Application services/command handlers, and command DTOs
+- View model repository interfaces and view model DTOs
+
+### Infrastructure
 
 - ConcreteFinder
 - ConcreteRepository
 
-##### Framework
+### Framework
 
 - Controller
 

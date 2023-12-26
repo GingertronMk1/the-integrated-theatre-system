@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Framework\Controller;
 
-use App\Application\TrainingCategory\CreateTrainingCategoryCommand;
-use App\Application\TrainingCategory\CreateTrainingCategoryCommandHandler;
-use App\Application\TrainingCategory\UpdateTrainingCategoryCommand;
-use App\Application\TrainingCategory\UpdateTrainingCategoryCommandHandler;
+use App\Application\TrainingCategory\CreateTrainingCategory\Command as CreateCommand;
+use App\Application\TrainingCategory\CreateTrainingCategory\CommandHandler as CreateCommandHandler;
+use App\Application\TrainingCategory\UpdateTrainingCategory\Command as UpdateCommand;
+use App\Application\TrainingCategory\UpdateTrainingCategory\CommandHandler as UpdateCommandHandler;
 use App\Domain\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Framework\Form\TrainingCategoryType;
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class TrainingCategoryController extends AbstractController
 {
     #[Route('/training-category', 'training-category.index', methods: ['GET'])]
-    public function index(Request $request, TrainingCategoryFinderInterface $finder): Response
+    public function index(TrainingCategoryFinderInterface $finder): Response
     {
         $categories = $finder->findAll();
 
@@ -33,9 +33,9 @@ class TrainingCategoryController extends AbstractController
     }
 
     #[Route('/training-category/create', 'training-category.create', methods: ['GET', 'POST'])]
-    public function create(Request $request, CreateTrainingCategoryCommandHandler $handler): Response
+    public function create(Request $request, CreateCommandHandler $handler): Response
     {
-        $command = new CreateTrainingCategoryCommand();
+        $command = new CreateCommand();
         $form = $this->createForm(TrainingCategoryType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,10 +57,10 @@ class TrainingCategoryController extends AbstractController
     }
 
     #[Route('/training-category/update/{id}', 'training-category.update', methods: ['GET', 'POST'])]
-    public function update(Request $request, string $id, UpdateTrainingCategoryCommandHandler $handler, TrainingCategoryFinderInterface $finder): Response
+    public function update(Request $request, string $id, UpdateCommandHandler $handler, TrainingCategoryFinderInterface $finder): Response
     {
         $category = $finder->find(TrainingCategoryId::fromString($id));
-        $command = UpdateTrainingCategoryCommand::forCategory($category);
+        $command = UpdateCommand::forCategory($category);
         $form = $this->createForm(TrainingCategoryType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

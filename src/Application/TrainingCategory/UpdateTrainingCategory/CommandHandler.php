@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Application\TrainingCategory;
+namespace App\Application\TrainingCategory\UpdateTrainingCategory;
 
-final readonly class UpdateTrainingCategoryCommandHandler
+use App\Application\TrainingCategory\TrainingCategoryRepositoryInterface;
+
+final readonly class CommandHandler
 {
     public function __construct(
         private TrainingCategoryRepositoryInterface $trainingCategoryRepository
     ) {
     }
 
-    public function handle(UpdateTrainingCategoryCommand $command): void
+    public function handle(Command $command): void
     {
         $this->trainingCategoryRepository->updateTrainingCategory($command->id, $command->name);
     }

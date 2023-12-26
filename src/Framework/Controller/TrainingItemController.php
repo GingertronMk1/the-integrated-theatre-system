@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Framework\Controller;
 
-use App\Application\TrainingItem\CreateTrainingItemCommand;
-use App\Application\TrainingItem\CreateTrainingItemCommandHandler;
-use App\Application\TrainingItem\UpdateTrainingItemCommand;
-use App\Application\TrainingItem\UpdateTrainingItemCommandHandler;
+use App\Application\TrainingItem\CreateTrainingItem\Command as CreateCommand;
+use App\Application\TrainingItem\CreateTrainingItem\CommandHandler as CreateCommandHandler;
+use App\Application\TrainingItem\UpdateTrainingItem\Command as UpdateCommand;
+use App\Application\TrainingItem\UpdateTrainingItem\CommandHandler as UpdateCommandHandler;
 use App\Domain\TrainingItem\TrainingItemFinderInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use App\Framework\Form\TrainingItemType;
@@ -33,9 +33,9 @@ class TrainingItemController extends AbstractController
     }
 
     #[Route('/training-item/create', 'training-item.create', methods: ['GET', 'POST'])]
-    public function create(Request $request, CreateTrainingItemCommandHandler $handler): Response
+    public function create(Request $request, CreateCommandHandler $handler): Response
     {
-        $command = new CreateTrainingItemCommand();
+        $command = new CreateCommand();
         $form = $this->createForm(TrainingItemType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,10 +57,10 @@ class TrainingItemController extends AbstractController
     }
 
     #[Route('/training-item/update/{id}', 'training-item.update', methods: ['GET', 'POST'])]
-    public function update(Request $request, string $id, UpdateTrainingItemCommandHandler $handler, TrainingItemFinderInterface $finder): Response
+    public function update(Request $request, string $id, UpdateCommandHandler $handler, TrainingItemFinderInterface $finder): Response
     {
         $item = $finder->find(TrainingItemId::fromString($id));
-        $command = UpdateTrainingItemCommand::forItem($item);
+        $command = UpdateCommand::forItem($item);
         $form = $this->createForm(TrainingItemType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

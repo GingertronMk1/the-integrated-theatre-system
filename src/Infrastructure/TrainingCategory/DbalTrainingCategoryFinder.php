@@ -30,6 +30,9 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         return $this->createTrainingCategoryFromRow($row);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function findAll(): array
     {
         $qb = $this->connection->createQueryBuilder();
@@ -46,6 +49,9 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         );
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     private function createTrainingCategoryFromRow(array $row): TrainingCategoryEntity
     {
         return new TrainingCategoryEntity(

@@ -99,6 +99,9 @@
         ],
         "phinx": [
             "./vendor/bin/phinx --configuration=./phinx.php"
+        ],
+        "stan": [
+            "./vendor/bin/phpstan analyse src"
         ]
     },
     "conflict": {
@@ -111,6 +114,7 @@
         }
     },
     "require-dev": {
+        "phpstan/phpstan": "*",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "7.0.*",
         "symfony/css-selector": "7.0.*",
