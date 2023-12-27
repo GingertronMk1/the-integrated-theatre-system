@@ -16,18 +16,41 @@ services:
       - "443:443"
     networks:
       - the-integrated-theatre-system-network
+
+  # Regular DB
   database:
+    hostname: database
     image: postgres:${POSTGRES_VERSION:-15}-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
       POSTGRES_USER: ${POSTGRES_USER:-app}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
     networks:
       - the-integrated-theatre-system-network
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - database-volume:/var/lib/postgresql/data
+    command: "-p ${POSTGRES_PORT:-2345}"
+
+  # Test DB?
+  database_test:
+    hostname: database_test
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    networks:
+      - the-integrated-theatre-system-network
+    expose:
+      - ${POSTGRES_TEST_PORT:-2345}
+    ports:
+      - "${POSTGRES_TEST_PORT:-2345}:5432"
+    volumes:
+      - database_test-volume:/var/lib/postgresql/data
+    command: "-p ${POSTGRES_TEST_PORT:-2345}"
+
   app:
     platform: linux/x86_64
     build:
@@ -52,3 +75,6 @@ networks:
   the-integrated-theatre-system-network:
     driver: bridge
       
+volumes:
+  database-volume: #
+  database_test-volume: #

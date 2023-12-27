@@ -16,7 +16,7 @@ if (file_exists("{$dir}/config/bootstrap.php")) {
 
 $dev = [
             'adapter' => 'pgsql',
-            'host' => 'database',
+            'host' => $_ENV['POSTGRES_HOST'],
             'name' => $_ENV['POSTGRES_DB'],
             'user' => $_ENV['POSTGRES_USER'],
             'pass' => $_ENV['POSTGRES_PASSWORD'],
@@ -24,8 +24,13 @@ $dev = [
             'charset' => $_ENV['POSTGRES_CHARSET'],
 ];
 
-return
-[
+$test = [
+    ...$dev,
+    'host' => $_ENV['POSTGRES_TEST_HOST'],
+    'port' => $_ENV['POSTGRES_TEST_PORT'],
+];
+
+return [
     'paths' => [
         'migrations' => '%%PHINX_CONFIG_DIR%%/migrations',
         'seeds' => '%%PHINX_CONFIG_DIR%%/seeds'
@@ -43,15 +48,7 @@ return
             'charset' => getenv('POSTGRES_CHARSET'),
         ],
         'development' => $dev,
-        'testing' => [
-            'adapter' => 'mysql',
-            'host' => 'localhost',
-            'name' => 'testing_db',
-            'user' => 'root',
-            'pass' => '',
-            'port' => '3306',
-            'charset' => 'utf8',
-        ]
+        'test' => $test
     ],
     'version_order' => 'creation'
 ];

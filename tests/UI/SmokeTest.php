@@ -34,6 +34,7 @@ final class SmokeTest extends WebTestCase
     public function urlDataProvider(): Generator
     {
         $pages = [
+            '/',
             '/training-category',
             '/training-item',
         ];
