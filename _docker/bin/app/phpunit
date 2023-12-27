@@ -5,7 +5,7 @@ echo
 
 ./_docker/bin/app/migrate -- -e test
 
-./_docker/bin/app/composer phpunit "$@"
+./_docker/bin/app/composer phpunit -- --coverage-text
 
 ./_docker/bin/app/composer phinx -- rollback -e test -t 0
 
