@@ -4,32 +4,22 @@ declare(strict_types=1);
 
 namespace Tests\UI\Common;
 
-use App\Application\Fixtures\FixtureLoaderInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\UI\Common\Traits\TestWithFixturesTrait;
 
 abstract class UserInterfaceTest extends WebTestCase
 {
+    use TestWithFixturesTrait;
+
     protected readonly KernelBrowser $client;
-    private static bool $fixturesLoaded = false;
 
     protected function setUp(): void
     {
-        parent::setUp();
+        self::ensureKernelShutdown();
         $this->client = self::createClient();
         $this->client->followRedirects();
+        parent::setUp();
     }
 
-    protected function loadFixtures(string ...$fixtures)
-    {
-        if (self::$fixturesLoaded) {
-            return;
-        }
-        $container = self::getContainer();
-
-        /** @var FixtureLoaderInterface $fixtureLoader */
-        $fixtureLoader = $container->get(FixtureLoaderInterface::class);
-        $fixtureLoader->loadFixtures(...$fixtures);
-        self::$fixturesLoaded = true;
-    }
 }

@@ -12,11 +12,7 @@ use Tests\UI\Common\UserInterfaceTest;
  */
 final class TrainingItemControllerTest extends UserInterfaceTest
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->loadFixtures(TrainingItemFixture::class);
-    }
+    protected array $fixtureClasses = [TrainingItemFixture::class];
 
     /**
      * @test

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\TrainingCategory;
 
+use App\Application\TrainingCategory\TrainingCategoryModel;
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
@@ -17,7 +18,7 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
     ) {
     }
 
-    public function find(TrainingCategoryId $id): TrainingCategoryEntity
+    public function find(TrainingCategoryId $id): TrainingCategoryModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -49,9 +50,9 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
     /**
      * @param array<string, mixed> $row
      */
-    private function createTrainingCategoryFromRow(array $row): TrainingCategoryEntity
+    private function createTrainingCategoryFromRow(array $row): TrainingCategoryModel
     {
-        return new TrainingCategoryEntity(
+        return new TrainingCategoryModel(
             TrainingCategoryId::fromString($row['id']),
             $row['name'],
             new DateTimeImmutable($row['created_at']),

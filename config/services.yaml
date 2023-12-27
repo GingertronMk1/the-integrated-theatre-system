@@ -32,4 +32,6 @@ services:
         arguments:
             $fixtures: !tagged_iterator app.fixture
 
+    App\Infrastructure\Common\DbalDatabaseUtil:
+        public: true
 

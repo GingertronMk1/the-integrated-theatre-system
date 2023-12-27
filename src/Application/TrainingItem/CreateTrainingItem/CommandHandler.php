@@ -20,7 +20,7 @@ class CommandHandler
             $this->trainingItemRepository->getNextId(),
             $command->name,
             $command->isDangerous,
-            $command->trainingCategory->id
+            $command->trainingCategoryId
         );
         $this->trainingItemRepository->createTrainingItem($item);
     }

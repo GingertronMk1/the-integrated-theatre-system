@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\TrainingItem;
 
+use App\Application\TrainingItem\TrainingItemModel;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
-use App\Domain\TrainingItem\TrainingItemEntity;
 use App\Domain\TrainingItem\TrainingItemFinderInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use DateTimeImmutable;
@@ -18,7 +18,7 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
     ) {
     }
 
-    public function find(TrainingItemId $id): TrainingItemEntity
+    public function find(TrainingItemId $id): TrainingItemModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -50,9 +50,9 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
     /**
      * @param array<string, mixed> $row
      */
-    private function createTrainingItemFromRow(array $row): TrainingItemEntity
+    private function createTrainingItemFromRow(array $row): TrainingItemModel
     {
-        return new TrainingItemEntity(
+        return new TrainingItemModel(
             TrainingItemId::fromString($row['id']),
             $row['name'],
             $row['is_dangerous'],

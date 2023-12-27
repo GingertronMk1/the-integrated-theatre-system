@@ -31,7 +31,15 @@ final class CreateTrainingItemsTable extends AbstractMigration
         ;
         $table
             ->addIndex('name', ['unique' => true])
-            ->addForeignKey('training_category_id', 'training_categories', 'id')
+            ->addForeignKey(
+                'training_category_id',
+                'training_categories',
+                'id',
+                [
+                    'delete' => 'CASCADE',
+                    'update' => 'CASCADE'
+                ]
+            )
             ->update();
     }
 }

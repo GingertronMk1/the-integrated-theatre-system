@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\TrainingCategory\UpdateTrainingCategory;
 
+use App\Application\TrainingCategory\TrainingCategoryModel;
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
 
 final class Command
@@ -14,8 +15,12 @@ final class Command
     ) {
     }
 
-    public static function forCategory(TrainingCategoryEntity $category): self
+    public static function forCategory(TrainingCategoryModel $category): self
     {
-        return new self($category, $category->name);
+        $categoryEntity = new TrainingCategoryEntity(
+            $category->id,
+            $category->name
+        );
+        return new self($categoryEntity, $category->name);
     }
 }
