@@ -21,17 +21,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
-    _instanceof:
-        # Fixtures
-        App\Application\Fixtures\FixtureInterface:
-            tags: ['app.fixture']
-
-    App\Application\Fixtures\FixtureLoader:
-        public: true
-        arguments:
-            $fixtures: !tagged_iterator app.fixture
-
-    App\Infrastructure\Common\DbalDatabaseUtil:
-        public: true
-

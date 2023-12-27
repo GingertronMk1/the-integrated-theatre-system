@@ -6,7 +6,6 @@ namespace App\Infrastructure\User;
 
 use App\Application\User\UserFinderInterface;
 use App\Application\User\UserModel;
-use App\Domain\User\UserEntity;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;

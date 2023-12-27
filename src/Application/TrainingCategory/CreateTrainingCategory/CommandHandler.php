@@ -6,7 +6,6 @@ namespace App\Application\TrainingCategory\CreateTrainingCategory;
 
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\TrainingCategoryRepositoryInterface;
-use DateTimeImmutable;
 
 final readonly class CommandHandler
 {
