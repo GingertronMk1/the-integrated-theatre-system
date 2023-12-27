@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\UI;
 
 use Generator;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Tests\UI\Common\UserInterfaceTest;
 
 /**

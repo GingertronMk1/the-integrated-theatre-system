@@ -10,6 +10,8 @@ use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 interface TrainingCategoryRepositoryInterface
 {
     public function getNextId(): TrainingCategoryId;
+
     public function createTrainingCategory(TrainingCategoryEntity $category): void;
+
     public function updateTrainingCategory(TrainingCategoryEntity $category): void;
 }

@@ -13,7 +13,8 @@ final class TrainingCategoryFixture implements FixtureInterface
 {
     public function __construct(
         private readonly TrainingCategoryRepositoryInterface $trainingCategoryRepository
-    ) {}
+    ) {
+    }
 
     public function load(): void
     {
@@ -21,7 +22,7 @@ final class TrainingCategoryFixture implements FixtureInterface
             $this->trainingCategoryRepository->createTrainingCategory($fixture);
         }
     }
-    
+
     public function getAllFixtures(): array
     {
         return [
@@ -30,7 +31,7 @@ final class TrainingCategoryFixture implements FixtureInterface
                 'TC 1',
                 new DateTimeImmutable(),
                 new DateTimeImmutable(),
-            )
+            ),
         ];
     }
 }

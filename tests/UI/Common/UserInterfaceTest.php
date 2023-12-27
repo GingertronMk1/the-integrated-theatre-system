@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\UI\Common;
 
-use App\Application\Fixtures\FixtureInterface;
 use App\Application\Fixtures\FixtureLoaderInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -32,5 +31,4 @@ abstract class UserInterfaceTest extends WebTestCase
         $fixtureLoader->loadFixtures(...$fixtures);
         self::$fixturesLoaded = true;
     }
-
 }

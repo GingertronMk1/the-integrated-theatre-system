@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Fixtures;
 
-use App\Application\Fixtures\FixtureInterface;
-use App\Application\Fixtures\FixtureLoaderInterface;
 use Exception;
 
 final class FixtureLoader implements FixtureLoaderInterface
@@ -38,9 +36,6 @@ final class FixtureLoader implements FixtureLoaderInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function loadFixtures(string ...$fixtures): void
     {
         foreach ($fixtures as $class) {
@@ -68,4 +63,5 @@ final class FixtureLoader implements FixtureLoaderInterface
         }
 
         return $this->fixtures[$class];
-    }}
+    }
+}
