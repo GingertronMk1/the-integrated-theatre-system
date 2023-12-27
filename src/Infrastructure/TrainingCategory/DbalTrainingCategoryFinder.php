@@ -9,6 +9,7 @@ use App\Application\TrainingCategory\TrainingCategoryModel;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use Exception;
 
 final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinderInterface
 {
@@ -26,6 +27,10 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
             ->executeQuery()
             ->fetchAssociative()
         ;
+
+        if (!is_array($row)) {
+            throw new Exception("No category found with ID {$id}");
+        }
 
         return $this->createTrainingCategoryFromRow($row);
     }

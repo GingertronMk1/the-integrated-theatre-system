@@ -39,7 +39,6 @@ final class DbalTrainingCategoryRepositoryTest extends TestCase
     {
         $id = $this->repository->getNextId();
         $this->assertTrue(TrainingCategoryId::isValid((string) $id));
-
     }
 
     /**
@@ -99,5 +98,4 @@ final class DbalTrainingCategoryRepositoryTest extends TestCase
         // Update query
         $this->repository->updateTrainingCategory($this->entity);
     }
-
 }
