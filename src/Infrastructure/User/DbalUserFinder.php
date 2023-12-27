@@ -8,6 +8,7 @@ use App\Application\User\UserFinderInterface;
 use App\Application\User\UserModel;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
+use Exception;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -40,6 +41,10 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->executeQuery()
             ->fetchAssociative();
 
+        if (!is_array($row)) {
+            throw new Exception('Error finding categories');
+        }
+
         return $this->createUserFromRow($row);
     }
 
@@ -70,6 +75,10 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->setParameter('id', (string) $id)
             ->executeQuery()
             ->fetchAssociative();
+
+        if (!is_array($row)) {
+            throw new Exception("No training item found with ID {$id}");
+        }
 
         return $this->createUserFromRow($row);
     }

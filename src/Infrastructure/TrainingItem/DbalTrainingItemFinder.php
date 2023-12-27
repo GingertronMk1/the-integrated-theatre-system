@@ -10,6 +10,7 @@ use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use Exception;
 
 final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterface
 {
@@ -27,6 +28,10 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
             ->executeQuery()
             ->fetchAssociative()
         ;
+
+        if (!is_array($row)) {
+            throw new Exception('Error finding categories');
+        }
 
         return $this->createTrainingItemFromRow($row);
     }

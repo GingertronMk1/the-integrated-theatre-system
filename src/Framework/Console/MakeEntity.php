@@ -140,10 +140,13 @@ final class MakeEntity extends Command
         if (!$this->dryRun) {
             if (!file_exists($qualifiedFileName)) {
                 $fp = fopen($qualifiedFileName, 'w');
-                fwrite(
-                    $fp,
-                    $content
-                );
+                if ($fp) {
+                    fwrite(
+                        $fp,
+                        $content
+                    );
+                    fclose($fp);
+                }
             } else {
             }
         } else {
@@ -240,16 +243,18 @@ final class MakeEntity extends Command
             $fileName = "{$dir}/{$view}.html.twig";
             if (!file_exists($fileName)) {
                 $fp = fopen($fileName, 'w');
-                fwrite(
-                    $fp,
-                    <<<TWIG
+                if ($fp) {
+                    fwrite(
+                        $fp,
+                        <<<TWIG
 {% extends 'layouts/base.html.twig' %}
 
 {% block body %}
 {% endblock %}
 TWIG
-                );
-                fclose($fp);
+                    );
+                    fclose($fp);
+                }
             }
         }
     }
