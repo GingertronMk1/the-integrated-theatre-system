@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\TrainingCategory;
 
+use App\Application\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Application\TrainingCategory\TrainingCategoryModel;
-use App\Domain\TrainingCategory\TrainingCategoryEntity;
-use App\Domain\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\TrainingCategory\CreateTrainingCategory;
 
-use App\Application\TrainingCategory\TrainingCategoryRepositoryInterface;
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
+use App\Domain\TrainingCategory\TrainingCategoryRepositoryInterface;
 use DateTimeImmutable;
 
 final readonly class CommandHandler
@@ -21,8 +21,6 @@ final readonly class CommandHandler
         $category = new TrainingCategoryEntity(
             $id,
             $command->name,
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
         );
         $this->trainingCategoryRepository->createTrainingCategory($category);
     }

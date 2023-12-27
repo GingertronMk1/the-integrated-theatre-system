@@ -17,7 +17,6 @@ final readonly class TrainingItemModel
         public TrainingCategoryId $trainingCategoryId,
         public DateTimeImmutable $createdAt,
         public DateTimeImmutable $updatedAt
-    )
-    {
+    ) {
     }
 }

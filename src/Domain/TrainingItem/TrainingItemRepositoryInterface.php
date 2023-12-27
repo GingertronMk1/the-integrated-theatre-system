@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Application\TrainingItem;
+namespace App\Domain\TrainingItem;
 
-use App\Domain\TrainingItem\TrainingItemEntity;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 
 interface TrainingItemRepositoryInterface

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\TrainingCategory\UpdateTrainingCategory;
 
-use App\Application\TrainingCategory\TrainingCategoryRepositoryInterface;
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
+use App\Domain\TrainingCategory\TrainingCategoryRepositoryInterface;
 
 final readonly class CommandHandler
 {

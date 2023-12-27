@@ -6,9 +6,9 @@ namespace App\Framework\Controller;
 
 use App\Application\TrainingCategory\CreateTrainingCategory\Command as CreateCommand;
 use App\Application\TrainingCategory\CreateTrainingCategory\CommandHandler as CreateCommandHandler;
+use App\Application\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Application\TrainingCategory\UpdateTrainingCategory\Command as UpdateCommand;
 use App\Application\TrainingCategory\UpdateTrainingCategory\CommandHandler as UpdateCommandHandler;
-use App\Domain\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Framework\Form\TrainingCategoryType;
 use Exception;

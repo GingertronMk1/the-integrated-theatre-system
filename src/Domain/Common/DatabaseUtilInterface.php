@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Common;
 
-interface DatabaseUtilInterface  
+interface DatabaseUtilInterface
 {
     public function truncateAllTables(): void;
 }

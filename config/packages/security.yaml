@@ -6,7 +6,7 @@ security:
     providers:
         users_in_memory: { memory: null }
         app_user_provider:
-            id: App\Domain\User\UserFinderInterface
+            id: App\Application\User\UserFinderInterface
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

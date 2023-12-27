@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\TrainingCategory;
+namespace App\Application\TrainingCategory;
 
-use App\Application\TrainingCategory\TrainingCategoryModel;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 
 interface TrainingCategoryFinderInterface

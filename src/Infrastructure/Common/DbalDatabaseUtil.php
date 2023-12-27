@@ -11,15 +11,15 @@ final readonly class DbalDatabaseUtil implements DatabaseUtilInterface
 {
     public function __construct(
         private Connection $connection
-    )
-    {}
+    ) {
+    }
 
     public function truncateAllTables(): void
     {
         $schemaManager = $this->connection->createSchemaManager();
 
-        foreach($schemaManager->listTableNames() as $table) {
-            if ($table !== 'phinxlog') {
+        foreach ($schemaManager->listTableNames() as $table) {
+            if ('phinxlog' !== $table) {
                 $qb = $this->connection->createQueryBuilder();
                 $qb->delete($table)->executeQuery();
             }

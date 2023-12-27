@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Framework\Form;
 
-use App\Application\TrainingCategory\TrainingCategoryModel;
-use App\Domain\TrainingCategory\TrainingCategoryFinderInterface;
+use App\Application\TrainingCategory\TrainingCategoryFinderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,7 +22,7 @@ class TrainingItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $categoryChoices = [];
-        foreach($this->trainingCategoryFinder->findAll() as $category) {
+        foreach ($this->trainingCategoryFinder->findAll() as $category) {
             $categoryChoices[$category->name] = $category->id;
         }
         $builder

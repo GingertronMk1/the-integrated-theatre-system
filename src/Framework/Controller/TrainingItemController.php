@@ -6,9 +6,9 @@ namespace App\Framework\Controller;
 
 use App\Application\TrainingItem\CreateTrainingItem\Command as CreateCommand;
 use App\Application\TrainingItem\CreateTrainingItem\CommandHandler as CreateCommandHandler;
+use App\Application\TrainingItem\TrainingItemFinderInterface;
 use App\Application\TrainingItem\UpdateTrainingItem\Command as UpdateCommand;
 use App\Application\TrainingItem\UpdateTrainingItem\CommandHandler as UpdateCommandHandler;
-use App\Domain\TrainingItem\TrainingItemFinderInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use App\Framework\Form\TrainingItemType;
 use Exception;

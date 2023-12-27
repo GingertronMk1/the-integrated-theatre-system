@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\TrainingItem;
+namespace App\Application\TrainingItem;
 
-use App\Application\TrainingItem\TrainingItemModel;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 
 interface TrainingItemFinderInterface
 {
     /**
-     * @return array<TrainingItemEntity>
+     * @return array<TrainingItemModel>
      */
     public function findAll(): array;
 

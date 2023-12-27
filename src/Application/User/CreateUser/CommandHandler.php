@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\User\CreateUser;
 
-use App\Application\User\UserRepositoryInterface;
+use App\Domain\User\UserRepositoryInterface;
 
 final readonly class CommandHandler
 {

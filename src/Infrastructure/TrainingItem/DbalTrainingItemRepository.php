@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\TrainingItem;
 
-use App\Application\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingItem\TrainingItemEntity;
+use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;

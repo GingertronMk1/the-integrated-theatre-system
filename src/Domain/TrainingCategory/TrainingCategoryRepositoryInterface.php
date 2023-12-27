@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Application\TrainingCategory;
+namespace App\Domain\TrainingCategory;
 
-use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 
 interface TrainingCategoryRepositoryInterface

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\User;
 
+use App\Application\User\UserFinderInterface;
+use App\Application\User\UserModel;
 use App\Domain\User\UserEntity;
-use App\Domain\User\UserFinderInterface;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -25,7 +26,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
 
     public function supportsClass(string $class): bool
     {
-        return UserEntity::class === $class;
+        return UserModel::class === $class;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
@@ -60,7 +61,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
         return array_map(fn ($row) => $this->createUserFromRow($row), $rows);
     }
 
-    public function findById(UserId $id): UserEntity
+    public function findById(UserId $id): UserModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -77,9 +78,9 @@ final readonly class DbalUserFinder implements UserFinderInterface
     /**
      * @param array<string, string> $row
      */
-    private function createUserFromRow(array $row): UserEntity
+    private function createUserFromRow(array $row): UserModel
     {
-        return new UserEntity(
+        return new UserModel(
             UserId::fromString($row['id']),
             $row['email'],
             [],

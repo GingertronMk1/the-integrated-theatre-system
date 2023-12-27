@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\TrainingItem\CreateTrainingItem;
 
-use App\Application\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingItem\TrainingItemEntity;
+use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
 
 class CommandHandler
 {

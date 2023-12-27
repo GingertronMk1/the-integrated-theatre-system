@@ -21,6 +21,7 @@ final class Command
             $category->id,
             $category->name
         );
+
         return new self($categoryEntity, $category->name);
     }
 }
