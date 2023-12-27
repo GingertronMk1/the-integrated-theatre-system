@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\TrainingCategory;
 
 use App\Application\TrainingCategory\TrainingCategoryRepositoryInterface;
+use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
@@ -17,7 +18,12 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
     ) {
     }
 
-    public function createTrainingCategory(string $name): void
+    public function getNextId(): TrainingCategoryId
+    {
+        return TrainingCategoryId::generate();
+    }
+
+    public function createTrainingCategory(TrainingCategoryEntity $category): void
     {
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -25,30 +31,31 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->values([
                 'id' => ':id',
                 'name' => ':name',
-                'created_at' => ':now',
-                'updated_at' => ':now',
+                'created_at' => ':created_at',
+                'updated_at' => ':updated_at',
             ])
             ->setParameters([
-                'id' => (string) TrainingCategoryId::generate(),
-                'name' => $name,
-                'now' => (new DateTimeImmutable())->format('c'),
+                'id' => (string) $category->id,
+                'name' => $category->name,
+                'created_at' => $category->createdAt->format('c'),
+                'updated_at' => $category->updatedAt->format('c'),
             ])
             ->executeQuery()
         ;
     }
 
-    public function updateTrainingCategory(TrainingCategoryId $id, string $name): void
+    public function updateTrainingCategory(TrainingCategoryEntity $category): void
     {
         $finderQB = $this->connection->createQueryBuilder();
         $result = $finderQB
             ->select('COUNT(*)')
             ->from('training_categories')
             ->where('id = :id')
-            ->setParameter('id', (string) $id)
+            ->setParameter('id', (string) $category->id)
             ->fetchOne()
         ;
         if ((int) $result < 1) {
-            throw new Exception("No category found with ID {$id}");
+            throw new Exception("No category found with ID {$category->id}");
         }
 
         $qb = $this->connection->createQueryBuilder();
@@ -57,8 +64,8 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->set('name', ':name')
             ->set('updated_at', ':now')
             ->setParameters([
-                'id' => (string) $id,
-                'name' => $name,
+                'id' => (string) $category->id,
+                'name' => $category->name,
                 'now' => (new DateTimeImmutable())->format('c'),
             ])
             ->where('id = :id')
