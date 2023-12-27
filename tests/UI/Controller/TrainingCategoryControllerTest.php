@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\UI\Controller;
 
-use App\Application\Fixtures\FixtureLoader;
 use App\Application\Fixtures\TrainingCategoryFixture;
 use Tests\UI\Common\UserInterfaceTest;
 
@@ -13,11 +12,10 @@ use Tests\UI\Common\UserInterfaceTest;
  */
 final class TrainingCategoryControllerTest extends UserInterfaceTest
 {
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        /** @var FixtureLoader $fixtureLoader */
-        $fixtureLoader = self::getContainer()->get(FixtureLoader::class);
-        $fixtureLoader->loadFixtures([TrainingCategoryFixture::class]);
+        parent::setUp();
+        $this->loadFixtures(TrainingCategoryFixture::class);
     }
 
     /**
@@ -27,7 +25,7 @@ final class TrainingCategoryControllerTest extends UserInterfaceTest
     {
         $expectedId = '018cab99-f343-7faa-9bf4-1f43cadb86c5';
         $crawler = $this->client->request('GET', '/training-category');
-        $this->assertSelectorExists("tr[data-category-id={$expectedId}");
+        $this->assertSelectorExists("tr[data-category-id='{$expectedId}']");
     }
 
     /**

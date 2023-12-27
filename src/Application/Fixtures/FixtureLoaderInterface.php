@@ -6,5 +6,5 @@ namespace App\Application\Fixtures;
 
 interface FixtureLoaderInterface  
 {
-    public function loadFixtures(array $fixtures): void;
+    public function loadFixtures(string ...$fixtures): void;
 }

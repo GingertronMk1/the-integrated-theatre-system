@@ -25,13 +25,13 @@ final class FixtureLoader implements FixtureLoaderInterface
         // Build an associative map of class name to fixture.
         foreach ($fixtures as $fixture) {
             if (!is_object($fixture)) {
-                // throw FixtureException::nonObjectFixturePassedToLoader();
+                throw new Exception();
             }
 
             $fixtureClassName = $fixture::class;
 
             if (!$fixture instanceof FixtureInterface) {
-                // throw FixtureException::invalidFixturePassedToLoader($fixtureClassName);
+                throw new Exception($fixtureClassName);
             }
 
             $this->fixtures[$fixtureClassName] = $fixture;
@@ -41,7 +41,7 @@ final class FixtureLoader implements FixtureLoaderInterface
     /**
      * {@inheritDoc}
      */
-    public function loadFixtures(array $fixtures): void
+    public function loadFixtures(string ...$fixtures): void
     {
         foreach ($fixtures as $class) {
             $this->loadFixture($class);
@@ -57,14 +57,6 @@ final class FixtureLoader implements FixtureLoaderInterface
 
         $fixture = $this->findFixture($class);
 
-        // If this is a dependent fixture then before loading this fixture, we need to
-        // load any dependencies first (and any dependencies of the dependencies etc...)
-        // if ($fixture instanceof DependentFixtureInterface) {
-        //     foreach ($fixture->getDependencies() as $dependency) {
-        //         $this->loadFixture($dependency);
-        //     }
-        // }
-
         $fixture->load();
         $this->loadedFixtures[] = $class;
     }
@@ -72,7 +64,7 @@ final class FixtureLoader implements FixtureLoaderInterface
     private function findFixture(string $class): FixtureInterface
     {
         if (!array_key_exists($class, $this->fixtures)) {
-            // throw FixtureException::fixtureNotFoundByLoader($class);
+            throw new Exception($class);
         }
 
         return $this->fixtures[$class];
