@@ -15,5 +15,6 @@ abstract class UserInterfaceTest extends WebTestCase
     {
         parent::setUp();
         $this->client = self::createClient();
+        self::bootKernel();
     }
 }

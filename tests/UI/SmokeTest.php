@@ -7,19 +7,13 @@ namespace Tests\UI;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\UI\Common\UserInterfaceTest;
 
 /**
  * @group ui
  */
-final class SmokeTest extends WebTestCase
+final class SmokeTest extends UserInterfaceTest
 {
-    private KernelBrowser $client;
-
-    protected function setUp(): void
-    {
-        $this->client = self::createClient();
-    }
-
     /**
      * @test
      *
