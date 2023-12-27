@@ -53,7 +53,7 @@ final class FixtureLoader implements FixtureLoaderInterface
         $fixture = $this->findFixture($class);
 
         if ($fixture instanceof DependantFixtureInterface) {
-            foreach($fixture->getDependencies() as $dependency) {
+            foreach ($fixture->getDependencies() as $dependency) {
                 $this->loadFixture($dependency);
             }
         }
@@ -65,9 +65,7 @@ final class FixtureLoader implements FixtureLoaderInterface
     private function findFixture(string $class): FixtureInterface
     {
         if (!array_key_exists($class, $this->fixtures)) {
-            throw new Exception(
-                "{$class} does not exist in fixture list " 
-                . implode(', ', array_map('get_class', $this->fixtures)));
+            throw new Exception("{$class} does not exist in fixture list ".implode(', ', array_map('get_class', $this->fixtures)));
         }
 
         return $this->fixtures[$class];

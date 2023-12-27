@@ -38,7 +38,7 @@ final class TrainingItemFixture implements DependantFixtureInterface
     public function getDependencies(): array
     {
         return [
-            TrainingCategoryFixture::class
+            TrainingCategoryFixture::class,
         ];
     }
 }

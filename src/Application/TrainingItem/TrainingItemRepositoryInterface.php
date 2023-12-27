@@ -10,5 +10,6 @@ use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 interface TrainingItemRepositoryInterface
 {
     public function getNextId(): TrainingItemId;
+
     public function createTrainingItem(TrainingItemEntity $entity): void;
 }

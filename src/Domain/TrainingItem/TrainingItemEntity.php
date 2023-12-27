@@ -6,7 +6,6 @@ namespace App\Domain\TrainingItem;
 
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
-use DateTimeImmutable;
 
 final class TrainingItemEntity
 {

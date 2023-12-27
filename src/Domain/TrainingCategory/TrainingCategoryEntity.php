@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\TrainingCategory;
 
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
-use DateTimeImmutable;
 
 final class TrainingCategoryEntity
 {
