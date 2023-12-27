@@ -27,4 +27,9 @@ abstract class AbstractUuidId
     {
         return new static(UuidV7::fromString($id));
     }
+
+    public static function isValid(string $testId): bool
+    {
+        return UuidV7::isValid($testId);
+    }
 }
