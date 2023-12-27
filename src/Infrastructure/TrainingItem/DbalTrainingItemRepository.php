@@ -6,6 +6,7 @@ namespace App\Infrastructure\TrainingItem;
 
 use App\Application\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
+use App\Domain\TrainingItem\TrainingItemEntity;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
@@ -17,7 +18,12 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
     ) {
     }
 
-    public function createTrainingItem(string $name, bool $isDangerous, TrainingCategoryId $trainingCategoryId): void
+    public function getNextId(): TrainingItemId
+    {
+        return TrainingItemId::generate();
+    }
+
+    public function createTrainingItem(TrainingItemEntity $entity): void
     {
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -31,10 +37,10 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
                 'updated_at' => ':now',
             ])
             ->setParameters([
-                'id' => (string) TrainingItemId::generate(),
-                'name' => $name,
-                'is_dangerous' => (int) $isDangerous,
-                'training_category_id' => (string) $trainingCategoryId,
+                'id' => $entity->id,
+                'name' => $entity->name,
+                'is_dangerous' => (int) $entity->isDangerous,
+                'training_category_id' => (string) $entity->trainingCategoryId,
                 'now' => (new DateTimeImmutable())->format('c'),
             ])
             ->executeQuery()

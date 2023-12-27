@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\TrainingItem;
 
-use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
+use App\Domain\TrainingItem\TrainingItemEntity;
+use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 
 interface TrainingItemRepositoryInterface
 {
-    public function createTrainingItem(string $name, bool $isDangerous, TrainingCategoryId $trainingCategoryId): void;
+    public function getNextId(): TrainingItemId;
+    public function createTrainingItem(TrainingItemEntity $entity): void;
 }

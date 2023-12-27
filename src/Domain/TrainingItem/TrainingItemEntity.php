@@ -15,8 +15,6 @@ final class TrainingItemEntity
         public string $name,
         public bool $isDangerous,
         public TrainingCategoryId $trainingCategoryId,
-        public DateTimeImmutable $createdAt,
-        public DateTimeImmutable $updatedAt
     ) {
     }
 }

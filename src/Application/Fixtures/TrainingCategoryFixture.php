@@ -9,7 +9,7 @@ use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
 
-final class TrainingCategoryFixture implements AbstractFixture
+final class TrainingCategoryFixture extends AbstractFixture
 {
     public function __construct(
         private readonly TrainingCategoryRepositoryInterface $trainingCategoryRepository

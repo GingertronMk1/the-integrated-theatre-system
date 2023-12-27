@@ -12,8 +12,6 @@ final class TrainingCategoryEntity
     public function __construct(
         public TrainingCategoryId $id,
         public string $name,
-        public DateTimeImmutable $createdAt,
-        public DateTimeImmutable $updatedAt,
     ) {
     }
 }

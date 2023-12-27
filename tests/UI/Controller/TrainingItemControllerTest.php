@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\UI\Controller;
 
-use App\Application\Fixtures\TrainingCategoryFixture;
+use App\Application\Fixtures\TrainingItemFixture;
 use Tests\UI\Common\UserInterfaceTest;
 
 /**
@@ -15,62 +15,62 @@ final class TrainingItemControllerTest extends UserInterfaceTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->loadFixtures(TrainingItemFi::class);
+        $this->loadFixtures(TrainingItemFixture::class);
     }
 
     /**
      * @test
      */
-    public function doesCategoryExist(): void
+    public function doesItemExist(): void
     {
-        $expectedId = '018cab99-f343-7faa-9bf4-1f43cadb86c5';
-        $crawler = $this->client->request('GET', '/training-category');
-        $this->assertSelectorExists("tr[data-category-id='{$expectedId}']");
+        $expectedId = '018cace9-edc1-74bf-bc8f-582b4a68a3ac';
+        $crawler = $this->client->request('GET', '/training-item');
+        $this->assertSelectorExists("tr[data-item-id='{$expectedId}']");
     }
 
     /**
      * @test
      */
-    public function testCanCreateCategory(): void
+    public function testCanCreateItem(): void
     {
-        $testCategoryName = 'Test Category n';
-        $crawler = $this->client->request('GET', '/training-category/create');
+        $testItemName = 'Test Item n';
+        $crawler = $this->client->request('GET', '/training-item/create');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('form[name=training_category]');
-        $form = $crawler->filter('form[name=training_category]')->form([
-            'training_category[name]' => $testCategoryName,
+        $this->assertSelectorExists('form[name=training_item]');
+        $form = $crawler->filter('form[name=training_item]')->form([
+            'training_item[name]' => $testItemName,
         ]);
 
         $crawler = $this->client->submit($form);
 
         // Check we have been redirected back to the listing (ie submission was successful)
-        $this->assertStringEndsWith('/training-category', $crawler->getUri());
+        $this->assertStringEndsWith('/training-item', $crawler->getUri());
 
         // Check the new organisation is listed in the table
-        $this->assertSelectorTextContains('#training-categories', $testCategoryName);
+        $this->assertSelectorTextContains('#training-categories', $testItemName);
     }
 
     /**
      * @test
      */
-    public function testCanUpdateCategory(): void
+    public function testCanUpdateItem(): void
     {
         $expectedId = '018cab99-f343-7faa-9bf4-1f43cadb86c5';
-        $testCategoryName = 'This should have changed';
-        $crawler = $this->client->request('GET', "/training-category/update/{$expectedId}");
+        $testItemName = 'This should have changed';
+        $crawler = $this->client->request('GET', "/training-item/update/{$expectedId}");
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('form[name=training_category]');
-        $form = $crawler->filter('form[name=training_category]')->form([
-            'training_category[name]' => $testCategoryName,
+        $this->assertSelectorExists('form[name=training_item]');
+        $form = $crawler->filter('form[name=training_item]')->form([
+            'training_item[name]' => $testItemName,
         ]);
 
         $crawler = $this->client->submit($form);
 
         // Check we have been redirected back to the listing (ie submission was successful)
-        $this->assertStringEndsWith('/training-category', $crawler->getUri());
+        $this->assertStringEndsWith('/training-item', $crawler->getUri());
 
-        $this->assertSelectorExists("tr[data-category-id='{$expectedId}']");
+        $this->assertSelectorExists("tr[data-item-id='{$expectedId}']");
         // Check the new organisation is listed in the table
-        $this->assertSelectorTextContains("tr[data-category-id='{$expectedId}']", $testCategoryName);
+        $this->assertSelectorTextContains("tr[data-item-id='{$expectedId}']", $testItemName);
     }
 }
