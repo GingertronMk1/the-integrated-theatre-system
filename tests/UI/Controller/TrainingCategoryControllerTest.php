@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\UI\Controller;
 
+use App\Application\Fixtures\FixtureLoader;
 use App\Application\Fixtures\TrainingCategoryFixture;
 use Tests\UI\Common\UserInterfaceTest;
 
@@ -12,11 +13,11 @@ use Tests\UI\Common\UserInterfaceTest;
  */
 final class TrainingCategoryControllerTest extends UserInterfaceTest
 {
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        self::bootKernel();
-        $fixture = self::getContainer()->get(TrainingCategoryFixture::class);
-        $fixture->load();
+        /** @var FixtureLoader $fixtureLoader */
+        $fixtureLoader = self::getContainer()->get(FixtureLoader::class);
+        $fixtureLoader->loadFixtures([TrainingCategoryFixture::class]);
     }
 
     /**
