@@ -11,7 +11,8 @@ abstract class UserInterfaceTest extends WebTestCase
 {
     protected readonly KernelBrowser $client;
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         parent::setUp();
         $this->client = self::createClient();
     }

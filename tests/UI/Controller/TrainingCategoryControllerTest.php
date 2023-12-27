@@ -14,7 +14,7 @@ final class TrainingCategoryControllerTest extends UserInterfaceTest
     /**
      * @test
      */
-    public function test_can_create_category(): void
+    public function testCanCreateCategory(): void
     {
         $testCategoryName = 'Test Category n';
         $crawler = $this->client->request('GET', '/training-category/create');
