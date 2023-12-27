@@ -14,7 +14,8 @@ final class TrainingCategoryControllerTest extends UserInterfaceTest
 {
     public function setUp(): void
     {
-        $fixture = self::$container->get(TrainingCategoryFixture::class);
+        self::bootKernel();
+        $fixture = self::getContainer()->get(TrainingCategoryFixture::class);
         $fixture->load();
     }
 
