@@ -20,8 +20,6 @@ final readonly class CommandHandler
         $newCategory = new TrainingCategoryEntity(
             $command->category->id,
             $command->name,
-            $command->category->createdAt,
-            new DateTimeImmutable()
         );
         $this->trainingCategoryRepository->updateTrainingCategory($newCategory);
     }

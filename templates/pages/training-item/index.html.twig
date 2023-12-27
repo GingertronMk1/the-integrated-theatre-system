@@ -6,16 +6,12 @@
     <thead>
     <th>Name</th>
     <th>Dangerous</th>
-    <th>Created</th>
-    <th>Updated</th>
     <th>Actions</th>
     </thead>
     {% for training_item in training_categories %}
     <tr data-item-id="{{ training_item.id }}">
         <td>{{ training_item.name }}</td>
         <td>{{ training_item.isDangerous ? 'Yes' : 'No' }}</td>
-        <td>{{ training_item.createdAt | date('Y-m-d H:i:s') }}</td>
-        <td>{{ training_item.updatedAt | date('Y-m-d H:i:s') }}</td>
         <td><a href="{{ path('training-item.update', {id: training_item.id}) }}" class="button">Edit</a></td>
     </tr>
     {% endfor %}
