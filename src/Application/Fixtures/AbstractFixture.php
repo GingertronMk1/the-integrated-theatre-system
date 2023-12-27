@@ -8,5 +8,8 @@ abstract class AbstractFixture
 {
     abstract public function load(): void;
 
-    abstract public function getAllFixtures(): array;
+    public function getDependencies(): array
+    {
+        return [];
+    }
 }

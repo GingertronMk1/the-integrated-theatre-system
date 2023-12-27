@@ -28,7 +28,7 @@ final class FixtureLoader implements FixtureLoaderInterface
 
             $fixtureClassName = $fixture::class;
 
-            if (!$fixture instanceof FixtureInterface) {
+            if (!$fixture instanceof AbstractFixture) {
                 throw new Exception($fixtureClassName);
             }
 
@@ -51,6 +51,10 @@ final class FixtureLoader implements FixtureLoaderInterface
         }
 
         $fixture = $this->findFixture($class);
+
+        foreach($fixture->getDependencies() as $dependency) {
+            $this->loadFixture($dependency);
+        }
 
         $fixture->load();
         $this->loadedFixtures[] = $class;

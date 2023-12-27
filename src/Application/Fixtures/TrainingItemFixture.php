@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Application\Fixtures;
 
-use App\Application\TrainingCategory\TrainingCategoryRepositoryInterface;
+use App\Application\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
 
-final class TrainingCategoryFixture implements AbstractFixture
+final class TrainingItemFixture implements FixtureInterface
 {
     public function __construct(
-        private readonly TrainingCategoryRepositoryInterface $trainingCategoryRepository
+        private readonly TrainingItemRepositoryInterface $trainingItemRepository
     ) {
     }
 
     public function load(): void
     {
         foreach ($this->getAllFixtures() as $fixture) {
-            $this->trainingCategoryRepository->createTrainingCategory($fixture);
+            $this->trainingItemRepository->createTrainingCategory($fixture);
         }
     }
 
