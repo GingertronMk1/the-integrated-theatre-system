@@ -10,13 +10,13 @@ use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 final class Command
 {
     public function __construct(
-        public TrainingCategoryId $id,
+        public TrainingCategoryEntity $category,
         public string $name = ''
     ) {
     }
 
     public static function forCategory(TrainingCategoryEntity $category): self
     {
-        return new self($category->id, $category->name);
+        return new self($category, $category->name);
     }
 }

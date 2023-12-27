@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Application\TrainingCategory\UpdateTrainingCategory;
 
 use App\Application\TrainingCategory\TrainingCategoryRepositoryInterface;
+use App\Domain\TrainingCategory\TrainingCategoryEntity;
+use DateTimeImmutable;
 
 final readonly class CommandHandler
 {
@@ -15,6 +17,12 @@ final readonly class CommandHandler
 
     public function handle(Command $command): void
     {
-        $this->trainingCategoryRepository->updateTrainingCategory($command->id, $command->name);
+        $newCategory = new TrainingCategoryEntity(
+            $command->category->id,
+            $command->name,
+            $command->category->createdAt,
+            new DateTimeImmutable()
+        );
+        $this->trainingCategoryRepository->updateTrainingCategory($newCategory);
     }
 }

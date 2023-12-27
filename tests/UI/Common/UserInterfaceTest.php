@@ -17,6 +17,7 @@ abstract class UserInterfaceTest extends WebTestCase
     {
         parent::setUp();
         $this->client = self::createClient();
+        $this->client->followRedirects();
     }
 
     protected function loadFixtures(string ...$fixtures)
