@@ -27,27 +27,26 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
     public function createTrainingItem(TrainingItemEntity $entity): void
     {
         try {
-
-        $qb = $this->connection->createQueryBuilder();
-        $qb
-            ->insert('training_items')
-            ->values([
-                'id' => ':id',
-                'name' => ':name',
-                'is_dangerous' => ':is_dangerous',
-                'training_category_id' => ':training_category_id',
-                'created_at' => ':now',
-                'updated_at' => ':now',
-            ])
-            ->setParameters([
-                'id' => $entity->id,
-                'name' => $entity->name,
-                'is_dangerous' => (int) $entity->isDangerous,
-                'training_category_id' => (string) $entity->trainingCategoryId,
-                'now' => (new DateTimeImmutable())->format('c'),
-            ])
-            ->executeQuery()
-        ;
+            $qb = $this->connection->createQueryBuilder();
+            $qb
+                ->insert('training_items')
+                ->values([
+                    'id' => ':id',
+                    'name' => ':name',
+                    'is_dangerous' => ':is_dangerous',
+                    'training_category_id' => ':training_category_id',
+                    'created_at' => ':now',
+                    'updated_at' => ':now',
+                ])
+                ->setParameters([
+                    'id' => $entity->id,
+                    'name' => $entity->name,
+                    'is_dangerous' => (int) $entity->isDangerous,
+                    'training_category_id' => (string) $entity->trainingCategoryId,
+                    'now' => (new DateTimeImmutable())->format('c'),
+                ])
+                ->executeQuery()
+            ;
         } catch (Exception $e) {
             throw TrainingItemException::errorSaving($e);
         }

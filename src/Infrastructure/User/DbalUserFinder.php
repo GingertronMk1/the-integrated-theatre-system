@@ -9,7 +9,6 @@ use App\Application\User\UserModel;
 use App\Domain\User\UserException;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
-use Exception;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -43,7 +42,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->fetchAssociative();
 
         if (!is_array($row)) {
-            throw UserException::notFound($id);
+            throw UserException::notFoundWithIdentifier($identifier);
         }
 
         return $this->createUserFromRow($row);

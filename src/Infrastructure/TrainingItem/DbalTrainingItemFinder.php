@@ -11,7 +11,6 @@ use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
-use Exception;
 
 final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterface
 {

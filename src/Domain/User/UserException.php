@@ -10,7 +10,12 @@ use Throwable;
 
 final class UserException extends RuntimeException
 {
-    public static function notFound(UserId $id, ?Throwable $previous = null): self
+    public static function notFoundWithIdentifier(string $identifier): self
+    {
+        return new self("No user found with identifier '{$identifier}'");
+    }
+
+    public static function notFound(UserId $id, Throwable $previous = null): self
     {
         return new self("No user found with ID {$id}", previous: $previous);
     }

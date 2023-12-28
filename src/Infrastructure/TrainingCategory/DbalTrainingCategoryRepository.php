@@ -27,24 +27,23 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
     public function createTrainingCategory(TrainingCategoryEntity $category): void
     {
         try {
-
-        $qb = $this->connection->createQueryBuilder();
-        $qb
-            ->insert('training_categories')
-            ->values([
-                'id' => ':id',
-                'name' => ':name',
-                'created_at' => ':created_at',
-                'updated_at' => ':updated_at',
-            ])
-            ->setParameters([
-                'id' => (string) $category->id,
-                'name' => $category->name,
-                'created_at' => (new DateTimeImmutable())->format('c'),
-                'updated_at' => (new DateTimeImmutable())->format('c'),
-            ])
-            ->executeQuery()
-        ;
+            $qb = $this->connection->createQueryBuilder();
+            $qb
+                ->insert('training_categories')
+                ->values([
+                    'id' => ':id',
+                    'name' => ':name',
+                    'created_at' => ':created_at',
+                    'updated_at' => ':updated_at',
+                ])
+                ->setParameters([
+                    'id' => (string) $category->id,
+                    'name' => $category->name,
+                    'created_at' => (new DateTimeImmutable())->format('c'),
+                    'updated_at' => (new DateTimeImmutable())->format('c'),
+                ])
+                ->executeQuery()
+            ;
         } catch (Exception $e) {
             throw TrainingCategoryException::errorSaving($e);
         }
@@ -53,32 +52,31 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
     public function updateTrainingCategory(TrainingCategoryEntity $category): void
     {
         try {
+            $finderQB = $this->connection->createQueryBuilder();
+            $result = $finderQB
+                ->select('COUNT(*)')
+                ->from('training_categories')
+                ->where('id = :id')
+                ->setParameter('id', (string) $category->id)
+                ->fetchOne()
+            ;
+            if ((int) $result < 1) {
+                throw TrainingCategoryException::notFound($category->id);
+            }
 
-        $finderQB = $this->connection->createQueryBuilder();
-        $result = $finderQB
-            ->select('COUNT(*)')
-            ->from('training_categories')
-            ->where('id = :id')
-            ->setParameter('id', (string) $category->id)
-            ->fetchOne()
-        ;
-        if ((int) $result < 1) {
-            throw TrainingCategoryException::notFound($category->id);
-        }
-
-        $qb = $this->connection->createQueryBuilder();
-        $qb
-            ->update('training_categories')
-            ->set('name', ':name')
-            ->set('updated_at', ':now')
-            ->setParameters([
-                'id' => (string) $category->id,
-                'name' => $category->name,
-                'now' => (new DateTimeImmutable())->format('c'),
-            ])
-            ->where('id = :id')
-            ->executeQuery()
-        ;
+            $qb = $this->connection->createQueryBuilder();
+            $qb
+                ->update('training_categories')
+                ->set('name', ':name')
+                ->set('updated_at', ':now')
+                ->setParameters([
+                    'id' => (string) $category->id,
+                    'name' => $category->name,
+                    'now' => (new DateTimeImmutable())->format('c'),
+                ])
+                ->where('id = :id')
+                ->executeQuery()
+            ;
         } catch (Exception $e) {
             throw TrainingCategoryException::errorSaving($e);
         }
