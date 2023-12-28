@@ -101,7 +101,7 @@
             "./vendor/bin/phinx --configuration=./phinx.php"
         ],
         "stan": [
-            "./vendor/bin/phpstan analyse src"
+            "./vendor/bin/phpstan analyse --configuration=./phpstan.neon"
         ],
         "phpunit": [
             "./vendor/bin/phpunit"
