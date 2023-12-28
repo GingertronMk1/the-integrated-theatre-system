@@ -24,7 +24,6 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         $row = $qb
             ->select('*')
             ->from('training_categories', 'tc')
-            ->executeQuery()
             ->fetchAssociative()
         ;
 
@@ -41,7 +40,6 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         $rows = $qb
             ->select('*')
             ->from('training_categories', 'tc')
-            ->executeQuery()
             ->fetchAllAssociative()
         ;
 
