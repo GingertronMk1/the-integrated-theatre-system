@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\TrainingCategory;
 
-use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Infrastructure\TrainingCategory\DbalTrainingCategoryFinder;
-use App\Infrastructure\TrainingCategory\DbalTrainingCategoryRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -48,7 +46,7 @@ final class DbalTrainingCategoryFinderTest extends TestCase
             'id' => (string) $this->id,
             'name' => $name,
             'created_at' => $now->format('c'),
-            'updated_at' => $now->format('c')
+            'updated_at' => $now->format('c'),
         ]);
 
         $model = $this->finder->find($this->id);
@@ -56,7 +54,6 @@ final class DbalTrainingCategoryFinderTest extends TestCase
         $this->assertEquals($name, $model->name);
         $this->assertEquals($now, $model->createdAt);
         $this->assertEquals($now, $model->updatedAt);
-
     }
 
     /**
@@ -85,6 +82,5 @@ final class DbalTrainingCategoryFinderTest extends TestCase
 
         $models = $this->finder->findAll();
         $this->assertEmpty($models);
-
     }
 }

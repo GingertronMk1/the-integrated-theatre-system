@@ -20,14 +20,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class TrainingItemController extends AbstractController
 {
     #[Route('/training-item', 'training-item.index', methods: ['GET'])]
-    public function index(Request $request, TrainingItemFinderInterface $finder): Response
+    public function index(TrainingItemFinderInterface $finder): Response
     {
-        $categories = $finder->findAll();
+        $items = $finder->findAll();
 
         return $this->render(
             'pages/training-item/index.html.twig',
             [
-                'training_categories' => $categories,
+                'training_items' => $items,
             ]
         );
     }

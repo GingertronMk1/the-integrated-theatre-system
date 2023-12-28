@@ -30,7 +30,7 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
         ;
 
         if (!is_array($row)) {
-            throw new Exception('Error finding categories');
+            throw new Exception('Error finding items');
         }
 
         return $this->createTrainingItemFromRow($row);
