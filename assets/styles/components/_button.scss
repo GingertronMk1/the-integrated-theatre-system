@@ -1,0 +1,12 @@
+.button {
+    padding: 0.6rem 1rem;
+    background-color: $primary;
+    border-radius: 0.5rem;
+    color: $white;
+    font-weight: 600;
+    @include flex();
+
+    &:hover {
+        background-color: darken($primary, 25%);
+    }
+}

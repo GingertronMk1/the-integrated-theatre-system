@@ -1,0 +1,15 @@
+.main {
+    @include flex();
+    background-color: darken($white, 25%);
+    height: 100%;
+
+    &__inner {
+        max-width: 1920px;
+        width: 95%;
+        margin: 0 auto;
+        height: 100%;
+        @include flex($justify: flex-start, $align: flex-start);
+        background-color: $white;
+        padding: 0.5rem 1rem;
+    }
+}

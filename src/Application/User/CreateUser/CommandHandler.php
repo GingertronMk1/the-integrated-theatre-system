@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Application\User;
+namespace App\Application\User\CreateUser;
 
-final readonly class CreateUserCommandHandler
+use App\Domain\User\UserRepositoryInterface;
+
+final readonly class CommandHandler
 {
     public function __construct(
         private UserRepositoryInterface $userRepository
     ) {
     }
 
-    public function handle(CreateUserCommand $command): void
+    public function handle(Command $command): void
     {
         $this->userRepository->createUser($command->email, $command->password);
     }

@@ -1,5 +1,3 @@
 #!/usr/bin/env sh
 
-source .env
-
-./_docker/bin/app/exec composer phinx migrate
+./_docker/bin/app/exec composer phinx migrate "$@"

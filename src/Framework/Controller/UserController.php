@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Framework\Controller;
 
-use App\Application\User\CreateUserCommand;
-use App\Application\User\CreateUserCommandHandler;
+use App\Application\User\CreateUser\Command;
+use App\Application\User\CreateUser\CommandHandler;
 use App\Framework\Form\UserType;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,9 +20,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/create', 'user.create', methods: ['GET', 'POST'])]
-    public function create(Request $request, CreateUserCommandHandler $handler): Response
+    public function create(Request $request, CommandHandler $handler): Response
     {
-        $command = new CreateUserCommand();
+        $command = new Command();
         $form = $this->createForm(UserType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -1,6 +1,12 @@
+@use 'sass:color';
+@import 'variables';
+@import 'mixins';
 @import 'reset';
-@import 'header';
+@import 'components/header';
+@import 'components/main';
+@import 'components/button';
+@import 'components/table';
 
 body {
-    background-color: skyblue;
+    background-color: color.adjust($white, $lightness: -5%);
 }

@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+<a href="{{ path('training-item.create') }}" class="button">Add</a>
+<table id="training-items">
+    <thead>
+    <th>Name</th>
+    <th>Dangerous</th>
+    <th>Actions</th>
+    </thead>
+    {% for training_item in training_items %}
+    <tr data-item-id="{{ training_item.id }}">
+        <td>{{ training_item.name }}</td>
+        <td>{{ training_item.isDangerous ? 'Yes' : 'No' }}</td>
+        <td><a href="{{ path('training-item.update', {id: training_item.id}) }}" class="button">Edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+<a href="{{ path('training-category.create') }}" class="button">Add</a>
+<table id="training-categories">
+    <thead>
+    <th>Name</th>
+    <th>Created At</th>
+    <th>Updated At</th>
+    <th>Actions</th>
+    </thead>
+    {% for training_category in training_categories %}
+    <tr data-category-id="{{ training_category.id }}">
+        <td>{{ training_category.name }}</td>
+        <td>{{ training_category.createdAt|date('Y-m-d H:i:s') }}</td>
+        <td>{{ training_category.updatedAt|date('Y-m-d H:i:s') }}</td>
+        <td><a href="{{ path('training-category.update', {id: training_category.id}) }}" class="button">Edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

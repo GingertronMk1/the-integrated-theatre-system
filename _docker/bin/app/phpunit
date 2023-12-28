@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+echo 'APP_ENV=test' > .env.local
+echo
+
+./_docker/bin/app/composer phinx -- migrate -e test --no-info
+
+./_docker/bin/app/composer phpunit "$@"
+
+./_docker/bin/app/composer phinx -- rollback -e test -t 0 --no-info
+
+rm .env.local

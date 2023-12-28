@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\User;
+namespace App\Application\User\CreateUser;
 
-class CreateUserCommand
+final class Command
 {
     public function __construct(
         public string $email = '',

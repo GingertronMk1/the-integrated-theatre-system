@@ -63,7 +63,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Tests\\": "tests/"
         }
     },
     "replace": {
@@ -99,6 +99,12 @@
         ],
         "phinx": [
             "./vendor/bin/phinx --configuration=./phinx.php"
+        ],
+        "stan": [
+            "./vendor/bin/phpstan analyse --configuration=./phpstan.neon"
+        ],
+        "phpunit": [
+            "./vendor/bin/phpunit"
         ]
     },
     "conflict": {
@@ -111,6 +117,7 @@
         }
     },
     "require-dev": {
+        "phpstan/phpstan": "*",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "7.0.*",
         "symfony/css-selector": "7.0.*",

@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Framework\Console;
 
+use App\Domain\Common\ValueObject\AbstractUuidId;
+use Doctrine\DBAL\Connection;
+use Doctrine\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -11,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Environment;
 
@@ -23,16 +29,22 @@ final class MakeEntity extends Command
     private const ARG_CLASSNAME = 'className';
     private const OPT_DRY_RUN = 'dry-run';
 
+    private const KIND_INTERFACE = 'interface';
+    private const KIND_CLASS = 'class';
+    private const KIND_DIRECTORY = 'dir';
+
     private const CLASSNAME_PLACEHOLDER = '<className>';
 
     private string $className = '';
     private bool $dryRun = false;
     private SymfonyStyle $io;
+    private readonly Inflector $inflector;
 
     public function __construct(
         private readonly KernelInterface $kernel,
-        private readonly Environment $twig
+        private readonly Environment $twig,
     ) {
+        $this->inflector = InflectorFactory::create()->build();
         parent::__construct();
     }
 
@@ -62,9 +74,14 @@ final class MakeEntity extends Command
             $this->generatePlace($place, $things);
         }
 
+        $this->makeTwigFiles();
+
         return self::SUCCESS;
     }
 
+    /**
+     * @param array<string, mixed> $things
+     */
     private function generatePlace(
         string $place,
         array $things
@@ -73,20 +90,18 @@ final class MakeEntity extends Command
         $dirName = $this->kernel->getProjectDir()."/src/{$place}";
         $this->io->section($dirName);
         $nameSpace = 'App\\'.str_replace('/', '\\', $place);
-        $this->io->text("Namespace is '{$nameSpace}'");
         if (!$this->dryRun) {
             if (!is_dir($dirName)) {
-                $this->io->text("Making {$dirName}");
                 mkdir($dirName, recursive: true);
             } else {
-                $this->io->text("{$dirName} already exists");
             }
         } else {
-            $this->io->text("Not making {$dirName}");
         }
         foreach ($things as $thing => $attrs) {
-            if ($attrs['kind'] ?? 'class' === 'dir') {
-                $this->generatePlace("{$place}/$thing", $attrs['items'] ?? []);
+            $kind = $attrs['kind'] ?? self::KIND_CLASS;
+            $this->io->text("{$place}/{$thing}: {$kind}");
+            if (self::KIND_DIRECTORY === $kind) {
+                $this->generatePlace("{$place}/{$thing}", $attrs['items'] ?? []);
             } else {
                 $this->generateThing(
                     $thing,
@@ -98,6 +113,9 @@ final class MakeEntity extends Command
         }
     }
 
+    /**
+     * @param array<string, mixed> $attrs
+     */
     private function generateThing(
         string $thing,
         array $attrs,
@@ -106,7 +124,7 @@ final class MakeEntity extends Command
     ): void {
         $thing = str_replace(self::CLASSNAME_PLACEHOLDER, $this->className, $thing);
         $qualifiedFileName = "{$dirName}/{$thing}.php";
-        $kind = $attrs['kind'] ?? 'class';
+        $kind = $attrs['kind'] ?? self::KIND_CLASS;
         $content = $this->twig->render(
             'util/make-entity.php.twig',
             [
@@ -114,68 +132,130 @@ final class MakeEntity extends Command
                 'className' => $thing,
                 'kind' => $kind,
                 'comment' => $attrs['comment'] ?? null,
+                'attributes' => $attrs['attributes'] ?? [],
+                'extends' => $attrs['extends'] ?? [],
+                'implements' => $attrs['implements'] ?? [],
             ]
         );
-        $this->io->text($content);
         if (!$this->dryRun) {
             if (!file_exists($qualifiedFileName)) {
-                $this->io->text("Making {$qualifiedFileName}");
                 $fp = fopen($qualifiedFileName, 'w');
-                fwrite(
-                    $fp,
-                    $content
-                );
+                if ($fp) {
+                    fwrite(
+                        $fp,
+                        $content
+                    );
+                    fclose($fp);
+                }
             } else {
-                $this->io->text("{$qualifiedFileName} already exists");
             }
         } else {
-            $this->io->text("Not actually making {$qualifiedFileName}");
         }
     }
 
+    /**
+     * @return array<string, array<mixed>>
+     */
     private function getPlacesAndThings(): array
     {
+        $classPlaceholder = self::CLASSNAME_PLACEHOLDER;
+
         return [
-            'Domain/'.self::CLASSNAME_PLACEHOLDER => [
-                self::CLASSNAME_PLACEHOLDER.'Entity' => [],
-                self::CLASSNAME_PLACEHOLDER.'FinderInterface' => [
-                    'kind' => 'interface',
+            "Domain/{$classPlaceholder}" => [
+                "{$classPlaceholder}Entity" => [],
+                "{$classPlaceholder}FinderInterface" => [
+                    'kind' => self::KIND_INTERFACE,
                 ],
-                self::CLASSNAME_PLACEHOLDER.'Id' => [
+                'ValueObject' => [
                     'kind' => 'dir',
                     'items' => [
-                        self::CLASSNAME_PLACEHOLDER.'Id' => [],
+                        "{$classPlaceholder}Id" => [
+                            'extends' => AbstractUuidId::class,
+                        ],
                     ],
                 ],
             ],
-            'Application/'.self::CLASSNAME_PLACEHOLDER => [
-                self::CLASSNAME_PLACEHOLDER.'Model' => [],
-                self::CLASSNAME_PLACEHOLDER.'RepositoryInterface' => [
-                    'kind' => 'interface',
+            "Application/{$classPlaceholder}" => [
+                "{$classPlaceholder}Model" => [],
+                "{$classPlaceholder}RepositoryInterface" => [
+                    'kind' => self::KIND_INTERFACE,
                 ],
-                'Create'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
-                'Create'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
-                'Update'.self::CLASSNAME_PLACEHOLDER.'CommandHandler' => [],
-                'Update'.self::CLASSNAME_PLACEHOLDER.'Command' => [],
+                "Create{$classPlaceholder}" => [
+                    'kind' => self::KIND_DIRECTORY,
+                    'items' => [
+                        'Command' => [],
+                        'CommandHandler' => [],
+                    ],
+                ],
+                 "Update{$classPlaceholder}" => [
+                    'kind' => self::KIND_DIRECTORY,
+                    'items' => [
+                        'Command' => [],
+                        'CommandHandler' => [],
+                    ],
+                ],
             ],
-            'Infrastructure/'.self::CLASSNAME_PLACEHOLDER => [
-                'Dbal'.self::CLASSNAME_PLACEHOLDER.'Repository' => [],
-                'Dbal'.self::CLASSNAME_PLACEHOLDER.'Finder' => [],
+            "Infrastructure/{$classPlaceholder}" => [
+                "Dbal{$classPlaceholder}Repository" => [
+                    'attributes' => [
+                        Connection::class => 'private readonly',
+                    ],
+                ],
+                "Dbal{$classPlaceholder}Finder" => [
+                                        'attributes' => [
+                        Connection::class => 'private readonly',
+                    ]],
             ],
             'Framework' => [
                 'Controller' => [
                     'kind' => 'dir',
                     'items' => [
-                        self::CLASSNAME_PLACEHOLDER.'Controller' => [],
+                        "{$classPlaceholder}Controller" => [
+                            'extends' => AbstractController::class,
+                        ],
                     ],
                 ],
                 'Form' => [
                     'kind' => 'dir',
                     'items' => [
-                        self::CLASSNAME_PLACEHOLDER.'Type' => [],
+                        "{$classPlaceholder}Type" => [
+                            'extends' => AbstractType::class,
+                        ],
                     ],
                 ],
             ],
         ];
+    }
+
+    private function makeTwigFiles(): void
+    {
+        $kebabClass = str_replace('_', '-', $this->inflector->camelize($this->className));
+        $dir = $this->kernel->getProjectDir().'/templates/pages/'.$kebabClass;
+        if (!is_dir($dir)) {
+            mkdir($dir, recursive: true);
+        }
+        foreach ([
+            'index',
+            'create',
+            'view',
+            'edit',
+        ] as $view) {
+            $fileName = "{$dir}/{$view}.html.twig";
+            if (!file_exists($fileName)) {
+                $fp = fopen($fileName, 'w');
+                if ($fp) {
+                    fwrite(
+                        $fp,
+                        <<<TWIG
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+{% endblock %}
+TWIG
+                    );
+                    fclose($fp);
+                }
+            }
+        }
     }
 }

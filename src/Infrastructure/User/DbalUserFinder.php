@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\User;
 
-use App\Domain\User\UserEntity;
-use App\Domain\User\UserFinderInterface;
+use App\Application\User\UserFinderInterface;
+use App\Application\User\UserModel;
+use App\Domain\User\UserException;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -20,12 +21,12 @@ final readonly class DbalUserFinder implements UserFinderInterface
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        return $user;
+        return $this->loadUserByIdentifier($user->getUserIdentifier());
     }
 
     public function supportsClass(string $class): bool
     {
-        return UserEntity::class === $class;
+        return UserModel::class === $class;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
@@ -40,10 +41,14 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->executeQuery()
             ->fetchAssociative();
 
+        if (!is_array($row)) {
+            throw UserException::notFoundWithIdentifier($identifier);
+        }
+
         return $this->createUserFromRow($row);
     }
 
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, $newHashedPassword): void
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, mixed $newHashedPassword): void
     {
         // Doing nothing for now
     }
@@ -60,7 +65,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
         return array_map(fn ($row) => $this->createUserFromRow($row), $rows);
     }
 
-    public function findById(UserId $id): UserEntity
+    public function findById(UserId $id): UserModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -71,12 +76,19 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->executeQuery()
             ->fetchAssociative();
 
+        if (!is_array($row)) {
+            throw UserException::notFound($id);
+        }
+
         return $this->createUserFromRow($row);
     }
 
-    private function createUserFromRow(array $row): UserEntity
+    /**
+     * @param array<string, string> $row
+     */
+    private function createUserFromRow(array $row): UserModel
     {
-        return new UserEntity(
+        return new UserModel(
             UserId::fromString($row['id']),
             $row['email'],
             [],

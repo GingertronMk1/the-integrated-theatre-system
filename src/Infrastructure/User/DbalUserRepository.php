@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\User;
 
-use App\Application\User\UserRepositoryInterface;
 use App\Domain\User\UserEntity;
+use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\ValueObject\UserId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
