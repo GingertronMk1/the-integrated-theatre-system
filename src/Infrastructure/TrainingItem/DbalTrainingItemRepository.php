@@ -51,4 +51,41 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
             throw TrainingItemException::errorSaving($e);
         }
     }
+
+    public function updateTrainingItem(TrainingItemEntity $item): void
+    {
+        try {
+            $finderQB = $this->connection->createQueryBuilder();
+            $result = $finderQB
+                ->select('COUNT(*)')
+                ->from('training_items')
+                ->where('id = :id')
+                ->setParameter('id', (string) $item->id)
+                ->fetchOne()
+            ;
+            if ((int) $result < 1) {
+                throw TrainingItemException::notFound($item->id);
+            }
+
+            $qb = $this->connection->createQueryBuilder();
+            $qb
+                ->update('training_items')
+                ->set('name', ':name')
+                ->set('is_dangerous', ':is_dangerous')
+                ->set('training_category_id', ':training_category_id')
+                ->set('updated_at', ':now')
+                ->setParameters([
+                    'id' => (string) $item->id,
+                    'name' => $item->name,
+                    'is_dangerous' => (int) $item->isDangerous,
+                    'training_category_id' => (string) $item->trainingCategoryId,
+                    'now' => (new DateTimeImmutable())->format('c'),
+                ])
+                ->where('id = :id')
+                ->executeQuery()
+            ;
+        } catch (Exception $e) {
+            throw TrainingItemException::errorSaving($e);
+        }
+    }
 }
