@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Infrastructure\TrainingItem;
 
 use App\Domain\TrainingItem\TrainingItemEntity;
+use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use Exception;
 
 final readonly class DbalTrainingItemRepository implements TrainingItemRepositoryInterface
 {
@@ -24,6 +26,8 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
 
     public function createTrainingItem(TrainingItemEntity $entity): void
     {
+        try {
+
         $qb = $this->connection->createQueryBuilder();
         $qb
             ->insert('training_items')
@@ -44,5 +48,8 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
             ])
             ->executeQuery()
         ;
+        } catch (Exception $e) {
+            throw TrainingItemException::errorSaving($e);
+        }
     }
 }

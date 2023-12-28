@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\TrainingCategory;
 
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
+use App\Domain\TrainingCategory\TrainingCategoryException;
 use App\Domain\TrainingCategory\TrainingCategoryRepositoryInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
@@ -25,6 +26,8 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
 
     public function createTrainingCategory(TrainingCategoryEntity $category): void
     {
+        try {
+
         $qb = $this->connection->createQueryBuilder();
         $qb
             ->insert('training_categories')
@@ -42,10 +45,15 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ])
             ->executeQuery()
         ;
+        } catch (Exception $e) {
+            throw TrainingCategoryException::errorSaving($e);
+        }
     }
 
     public function updateTrainingCategory(TrainingCategoryEntity $category): void
     {
+        try {
+
         $finderQB = $this->connection->createQueryBuilder();
         $result = $finderQB
             ->select('COUNT(*)')
@@ -55,7 +63,7 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->fetchOne()
         ;
         if ((int) $result < 1) {
-            throw new Exception("No category found with ID {$category->id}");
+            throw TrainingCategoryException::notFound($category->id);
         }
 
         $qb = $this->connection->createQueryBuilder();
@@ -71,5 +79,8 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
             ->where('id = :id')
             ->executeQuery()
         ;
+        } catch (Exception $e) {
+            throw TrainingCategoryException::errorSaving($e);
+        }
     }
 }

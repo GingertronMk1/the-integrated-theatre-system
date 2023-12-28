@@ -6,6 +6,7 @@ namespace App\Infrastructure\TrainingCategory;
 
 use App\Application\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Application\TrainingCategory\TrainingCategoryModel;
+use App\Domain\TrainingCategory\TrainingCategoryException;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
@@ -28,7 +29,7 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         ;
 
         if (!is_array($row)) {
-            throw new Exception("No category found with ID {$id}");
+            throw TrainingCategoryException::notFound($id);
         }
 
         return $this->createTrainingCategoryFromRow($row);

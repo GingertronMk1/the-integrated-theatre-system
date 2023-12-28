@@ -6,6 +6,7 @@ namespace App\Infrastructure\User;
 
 use App\Application\User\UserFinderInterface;
 use App\Application\User\UserModel;
+use App\Domain\User\UserException;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -42,7 +43,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->fetchAssociative();
 
         if (!is_array($row)) {
-            throw new Exception('Error finding categories');
+            throw UserException::notFound($id);
         }
 
         return $this->createUserFromRow($row);
@@ -77,7 +78,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->fetchAssociative();
 
         if (!is_array($row)) {
-            throw new Exception("No training item found with ID {$id}");
+            throw UserException::notFound($id);
         }
 
         return $this->createUserFromRow($row);

@@ -7,6 +7,7 @@ namespace App\Infrastructure\TrainingItem;
 use App\Application\TrainingItem\TrainingItemFinderInterface;
 use App\Application\TrainingItem\TrainingItemModel;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
+use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
@@ -30,7 +31,7 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
         ;
 
         if (!is_array($row)) {
-            throw new Exception('Error finding items');
+            throw TrainingItemException::notFound($id);
         }
 
         return $this->createTrainingItemFromRow($row);
