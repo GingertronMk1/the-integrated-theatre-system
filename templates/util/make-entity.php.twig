@@ -9,7 +9,7 @@ namespace {{ nameSpace }};
  *  {{ comment }}
  */
 {% endif %}
-{{ kind }} {{ className }} {% if extends is not empty %}extends {{ extends|join(', ') }}{% endif %}
+{{ kind }} {{ className }} {% if extends is not empty %}extends {{ extends|map(c => "\{c}")|join(', ') }}{% endif %}
 {
     {% if kind == 'class' %}
     public function __construct(
