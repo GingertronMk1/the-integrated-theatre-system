@@ -25,16 +25,10 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
         return UserId::generate();
     }
 
-    public function createUser(string $email, string $password): void
+    public function createUser(UserEntity $userEntity): void
     {
         try {
-            $this->connection->transactional(function (Connection $conn) use ($email, $password) {
-                $user = new UserEntity(
-                    $this->getNextId(),
-                    $email,
-                    [],
-                    $password
-                );
+            $this->connection->transactional(function (Connection $conn) use ($userEntity) {
                 $queryBuilder = $conn->createQueryBuilder();
                 $queryBuilder
                     ->insert('users')
@@ -46,9 +40,9 @@ final readonly class DbalUserRepository implements UserRepositoryInterface
                         'updated_at' => ':now',
                     ])
                     ->setParameters([
-                        'id' => (string) $user->getId(),
-                        'email' => $user->getEmail(),
-                        'password' => $this->passwordHasher->hashPassword($user, $user->getPassword()),
+                        'id' => (string) $userEntity->getId(),
+                        'email' => $userEntity->getEmail(),
+                        'password' => $userEntity->getPassword(),
                         'now' => (new DateTimeImmutable())->format('c'),
                     ])
                     ->executeQuery()

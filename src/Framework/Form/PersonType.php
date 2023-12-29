@@ -24,7 +24,7 @@ class PersonType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $userChoices = [];
+        $userChoices = ['---' => null];
         foreach ($this->userFinder->findAll() as $user) {
             $userChoices[$user->email] = $user->id;
         }
