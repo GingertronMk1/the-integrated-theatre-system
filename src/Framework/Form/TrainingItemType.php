@@ -17,6 +17,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TrainingItemType extends AbstractType
 {
@@ -37,6 +39,11 @@ class TrainingItemType extends AbstractType
             ->add(
                 'name',
                 TextType::class,
+                [
+                    'constraints' => [
+                        new NotBlank()
+                    ]
+                ]
             )
             ->add(
                 'trainingCategoryId',
@@ -56,21 +63,4 @@ class TrainingItemType extends AbstractType
             )
         ;
     }
-
-    public function configureOptions(OptionsResolver $resolver): void
-{
-        $currentNames = [];
-        foreach($this->trainingItemFinder->findAll() as $item) {
-            $currentNames[] = $item->name;
-        }
-
-    $constraints = [
-        'name' => new Callback(fn (string $newName) => !in_array($newName, $currentNames)),
-    ];
-
-    $resolver->setDefaults([
-        'data_class' => null,
-        'constraints' => $constraints,
-    ]);
-}
 }
