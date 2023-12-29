@@ -8,6 +8,7 @@
     <th>Bio</th>
     <th>Start Year</th>
     <th>End Year</th>
+    <th>User Email</th>
     <th>Actions</th>
     </thead>
     {% for person in people %}
@@ -16,6 +17,7 @@
         <td>{{ person.bio }}</td>
         <td>{{ person.startYear }}</td>
         <td>{{ person.endYear }}</td>
+        <td>{{ person.user ? person.user.email : 'N/A' }}</td>
         <td>
         {#
             <a href="{{ path('person.update', {id: person.id}) }}" class="button">Edit</a>

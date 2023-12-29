@@ -6,6 +6,7 @@ namespace App\Infrastructure\Person;
 
 use App\Application\Person\PersonFinderInterface;
 use App\Application\Person\PersonModel;
+use App\Application\User\UserFinderInterface;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
@@ -13,7 +14,8 @@ use Doctrine\DBAL\Connection;
 class DbalPersonFinder implements PersonFinderInterface
 {
     public function __construct(
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly UserFinderInterface $userFinder
     ) {
     }
 
@@ -50,7 +52,13 @@ class DbalPersonFinder implements PersonFinderInterface
 
     private function createPersonFromRow(array $row): PersonModel
     {
-        $userId = !is_null($row['user_id']) ? UserId::fromString($row['user_id']) : null;
+        $user = null;
+        $dbUserId = $row['user_id'];
+
+        if (!is_null($dbUserId)) {
+            $userId = UserId::fromString($dbUserId);
+            $user = $this->userFinder->findById($userId);
+        }
 
         return new PersonModel(
             PersonId::fromString($row['id']),
@@ -58,7 +66,7 @@ class DbalPersonFinder implements PersonFinderInterface
             $row['bio'],
             (int) $row['start_year'],
             (int) $row['end_year'],
-            $userId
+            $user
         );
     }
 }

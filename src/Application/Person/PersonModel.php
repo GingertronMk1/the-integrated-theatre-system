@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Person;
 
+use App\Application\User\UserModel;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\User\ValueObject\UserId;
 
@@ -15,7 +16,7 @@ final readonly class PersonModel
         public string $bio,
         public ?int $startYear,
         public ?int $endYear,
-        public ?UserId $userId
+        public ?UserModel $user
     ) {
     }
 }
