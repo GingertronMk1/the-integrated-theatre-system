@@ -30,7 +30,7 @@ final class CreateTrainingItemsTable extends AbstractMigration
             ->create()
         ;
         $table
-            ->addIndex('name', ['unique' => true])
+            ->addIndex('name')
             ->addForeignKey(
                 'training_category_id',
                 'training_categories',

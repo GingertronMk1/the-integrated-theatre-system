@@ -11,11 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TrainingItemType extends AbstractType
 {
     public function __construct(
-        private readonly TrainingCategoryFinderInterface $trainingCategoryFinder
+        private readonly TrainingCategoryFinderInterface $trainingCategoryFinder,
     ) {
     }
 
@@ -25,10 +26,16 @@ class TrainingItemType extends AbstractType
         foreach ($this->trainingCategoryFinder->findAll() as $category) {
             $categoryChoices[$category->name] = $category->id;
         }
+
         $builder
             ->add(
                 'name',
-                TextType::class
+                TextType::class,
+                [
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                ]
             )
             ->add(
                 'trainingCategoryId',

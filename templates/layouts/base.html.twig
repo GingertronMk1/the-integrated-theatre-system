@@ -14,6 +14,8 @@
     <body>
         <header>
             <h3>The Integrated Theatre System</h3>
+            <a href="{{ path('training-category.index') }}">Training Categories</a>
+            <a href="{{ path('training-item.index') }}">Training Items</a>
         <span id="login-out-button">
           {% if app.user %}
             <a href="{{ logout_path() }}">Log Out {{ app.user.userIdentifier }}</a>

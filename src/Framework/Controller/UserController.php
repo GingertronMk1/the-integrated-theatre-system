@@ -28,7 +28,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
-                $this->addFlash('success', 'Created organisation');
+                $this->addFlash('success', 'Created user');
 
                 $returnRoute = $request->get('return_to', 'index');
 

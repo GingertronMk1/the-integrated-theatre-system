@@ -14,4 +14,6 @@ interface TrainingItemFinderInterface
     public function findAll(): array;
 
     public function find(TrainingItemId $id): TrainingItemModel;
+
+    public function findByName(string $name): TrainingItemModel;
 }

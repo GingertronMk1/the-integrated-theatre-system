@@ -21,19 +21,7 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
 
     public function find(TrainingItemId $id): TrainingItemModel
     {
-        $qb = $this->connection->createQueryBuilder();
-        $row = $qb
-            ->select('*')
-            ->from('training_items', 'tc')
-            ->executeQuery()
-            ->fetchAssociative()
-        ;
-
-        if (!is_array($row)) {
-            throw TrainingItemException::notFound($id);
-        }
-
-        return $this->createTrainingItemFromRow($row);
+        return $this->findByColumn('id', (string) $id);
     }
 
     public function findAll(): array
@@ -50,6 +38,30 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
             fn (array $row) => $this->createTrainingItemFromRow($row),
             $rows
         );
+    }
+
+    public function findByName(string $name): TrainingItemModel
+    {
+        return $this->findByColumn('name', $name);
+    }
+
+    private function findByColumn(string $column, string $value): TrainingItemModel
+    {
+        $qb = $this->connection->createQueryBuilder();
+        $row = $qb
+            ->select('*')
+            ->from('training_items', 'tc')
+            ->where("{$column} = :value")
+            ->setParameter('value', $value)
+            ->executeQuery()
+            ->fetchAssociative()
+        ;
+
+        if (!is_array($row)) {
+            throw TrainingItemException::notFoundWithColumn($column, $value);
+        }
+
+        return $this->createTrainingItemFromRow($row);
     }
 
     /**
