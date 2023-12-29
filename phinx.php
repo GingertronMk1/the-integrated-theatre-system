@@ -26,7 +26,7 @@ $dev = [
 
 $test = [
     ...$dev,
-    'name' => $_ENV['POSTGRES_DB'] . '_test'
+    'name' => $_ENV['POSTGRES_DB_TEST']
 ];
 
 return [

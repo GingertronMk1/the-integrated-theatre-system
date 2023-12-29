@@ -6,7 +6,6 @@ namespace App\Application\Person;
 
 use App\Application\User\UserModel;
 use App\Domain\Person\ValueObject\PersonId;
-use App\Domain\User\ValueObject\UserId;
 
 final readonly class PersonModel
 {

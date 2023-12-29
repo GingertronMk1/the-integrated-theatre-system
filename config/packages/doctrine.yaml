@@ -14,7 +14,7 @@ when@test:
     doctrine:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            dbname: '%env(resolve:POSTGRES_DB_TEST)%'
 
 
 when@prod:
