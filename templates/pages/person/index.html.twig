@@ -19,9 +19,7 @@
         <td>{{ person.endYear }}</td>
         <td>{{ person.user ? person.user.email : 'N/A' }}</td>
         <td>
-        {#
             <a href="{{ path('person.update', {id: person.id}) }}" class="button">Edit</a>
-            #}
         </td>
     </tr>
     {% endfor %}

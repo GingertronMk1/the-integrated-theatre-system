@@ -57,7 +57,6 @@ class DbalPersonRepository implements PersonRepositoryInterface
                 ->set('bio', ':bio')
                 ->set('start_year', ':start_year')
                 ->set('end_year', ':end_year')
-                ->set('created_at', ':now')
                 ->set('updated_at', ':now')
                 ->where('id = :id')
             ;
