@@ -10,7 +10,7 @@ use Throwable;
 
 final class TrainingItemException extends RuntimeException
 {
-    public static function notFoundWithColumn(string $column, string $value, ?Throwable $previous = null): self
+    public static function notFoundWithColumn(string $column, string $value, Throwable $previous = null): self
     {
         return new self("No item found with {$column} {$value}", previous: $previous);
     }

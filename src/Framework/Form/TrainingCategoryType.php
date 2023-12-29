@@ -23,7 +23,7 @@ class TrainingCategoryType extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'constraints' => [ new NotBlank() ]
+                    'constraints' => [new NotBlank()],
                 ]
             )
             ->add(

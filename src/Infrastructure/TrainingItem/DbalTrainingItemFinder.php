@@ -62,7 +62,6 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
         }
 
         return $this->createTrainingItemFromRow($row);
-
     }
 
     /**

@@ -25,7 +25,7 @@ class UserType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-                    'constraints' => [new Email()]
+                    'constraints' => [new Email()],
                 ]
             )
             ->add(
@@ -33,8 +33,8 @@ class UserType extends AbstractType
                 PasswordType::class,
                 [
                     'constraints' => [
-                        new Length(min: 5)
-                    ]
+                        new Length(min: 5),
+                    ],
                 ]
             )
             ->add(
