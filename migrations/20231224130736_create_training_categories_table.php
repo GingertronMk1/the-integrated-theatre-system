@@ -25,8 +25,12 @@ final class CreateTrainingCategoriesTable extends AbstractMigration
             ->addColumn('name', 'string')
             ->addColumn('created_at', 'string')
             ->addColumn('updated_at', 'string')
+            ->addColumn('deleted_at', 'string')
             ->create()
         ;
-        $table->addIndex('name')->update();
+        $table
+            ->addIndex('name')
+            ->addIndex('deleted_at')
+            ->update();
     }
 }
