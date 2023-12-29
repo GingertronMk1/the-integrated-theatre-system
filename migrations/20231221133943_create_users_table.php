@@ -26,9 +26,13 @@ final class CreateUsersTable extends AbstractMigration
             ->addColumn('password', 'string')
             ->addColumn('created_at', 'string')
             ->addColumn('updated_at', 'string')
+            ->addColumn('deleted_at', 'string')
             ->create();
         ;
 
-        $table->addIndex('email', ['unique' => true])->update();
+        $table
+            ->addIndex('email', ['unique' => true])
+            ->addIndex('deleted_at')
+            ->update();
     }
 }

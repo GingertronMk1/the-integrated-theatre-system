@@ -1,12 +1,11 @@
 #!/usr/bin/env sh
 
-echo 'APP_ENV=test' > .env.local
-echo
+TESTENV="test"
 
-./_docker/bin/app/composer phinx -- migrate -e test --no-info
+./_docker/bin/app/console doctrine:database:create -e $TESTENV
+
+./_docker/bin/app/composer phinx -- migrate -e $TESTENV --no-info
 
 ./_docker/bin/app/composer phpunit "$@"
 
-./_docker/bin/app/composer phinx -- rollback -e test -t 0 --no-info
-
-rm .env.local
+./_docker/bin/app/console doctrine:database:drop -e $TESTENV --force

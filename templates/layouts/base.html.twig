@@ -12,18 +12,7 @@
         {% endblock %}
     </head>
     <body>
-        <header>
-            <h3>The Integrated Theatre System</h3>
-            <a href="{{ path('training-category.index') }}">Training Categories</a>
-            <a href="{{ path('training-item.index') }}">Training Items</a>
-        <span id="login-out-button">
-          {% if app.user %}
-            <a href="{{ logout_path() }}">Log Out {{ app.user.userIdentifier }}</a>
-          {% else %}
-            <a href="{{ path('login') }}">Log In</a>
-          {% endif %}
-        </span>
-        </header>
+        {% include 'components/header.html.twig' %}
         <main class="main">
             <div class="main__inner">
                 {% block body %}{% endblock %}

@@ -14,8 +14,8 @@ when@test:
     doctrine:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
-            host: '%env(resolve:POSTGRES_TEST_HOST)%'
-            port: '%env(resolve:POSTGRES_TEST_PORT)%'
+            dbname: '%env(resolve:POSTGRES_DB_TEST)%'
+
 
 when@prod:
     doctrine:

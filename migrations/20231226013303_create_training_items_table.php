@@ -27,10 +27,12 @@ final class CreateTrainingItemsTable extends AbstractMigration
             ->addColumn('training_category_id', 'string')
             ->addColumn('created_at', 'string')
             ->addColumn('updated_at', 'string')
+            ->addColumn('deleted_at', 'string')
             ->create()
         ;
         $table
             ->addIndex('name')
+            ->addIndex('deleted_at')
             ->addForeignKey(
                 'training_category_id',
                 'training_categories',

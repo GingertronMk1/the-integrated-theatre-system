@@ -26,8 +26,7 @@ $dev = [
 
 $test = [
     ...$dev,
-    'host' => $_ENV['POSTGRES_TEST_HOST'],
-    'port' => $_ENV['POSTGRES_TEST_PORT'],
+    'name' => $_ENV['POSTGRES_DB_TEST']
 ];
 
 return [

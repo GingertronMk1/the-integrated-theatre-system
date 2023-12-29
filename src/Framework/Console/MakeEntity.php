@@ -8,6 +8,7 @@ use App\Domain\Common\ValueObject\AbstractUuidId;
 use Doctrine\DBAL\Connection;
 use Doctrine\Inflector\Inflector;
 use Doctrine\Inflector\InflectorFactory;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -70,7 +71,7 @@ final class MakeEntity extends Command
         $this->dryRun = (bool) $input->getOption(self::OPT_DRY_RUN);
         $this->className = $input->getArgument(self::ARG_CLASSNAME);
         $this->io->note($this->dryRun ? 'Dry Run' : 'Not a Dry Run');
-        foreach ($this->getPlacesAndThings() as $place => $things) {
+        foreach ($this->getPlacesAndThings($this->className) as $place => $things) {
             $this->generatePlace($place, $things);
         }
 
@@ -156,28 +157,12 @@ final class MakeEntity extends Command
     /**
      * @return array<string, array<mixed>>
      */
-    private function getPlacesAndThings(): array
+    private function getPlacesAndThings(string $classPlaceholder): array
     {
-        $classPlaceholder = self::CLASSNAME_PLACEHOLDER;
-
         return [
-            "Domain/{$classPlaceholder}" => [
-                "{$classPlaceholder}Entity" => [],
-                "{$classPlaceholder}FinderInterface" => [
-                    'kind' => self::KIND_INTERFACE,
-                ],
-                'ValueObject' => [
-                    'kind' => 'dir',
-                    'items' => [
-                        "{$classPlaceholder}Id" => [
-                            'extends' => AbstractUuidId::class,
-                        ],
-                    ],
-                ],
-            ],
             "Application/{$classPlaceholder}" => [
                 "{$classPlaceholder}Model" => [],
-                "{$classPlaceholder}RepositoryInterface" => [
+                "{$classPlaceholder}FinderInterface" => [
                     'kind' => self::KIND_INTERFACE,
                 ],
                 "Create{$classPlaceholder}" => [
@@ -192,6 +177,23 @@ final class MakeEntity extends Command
                     'items' => [
                         'Command' => [],
                         'CommandHandler' => [],
+                    ],
+                ],
+            ],
+            "Domain/{$classPlaceholder}" => [
+                "{$classPlaceholder}Entity" => [],
+                "{$classPlaceholder}RepositoryInterface" => [
+                    'kind' => self::KIND_INTERFACE,
+                ],
+                "{$classPlaceholder}Exception" => [
+                    'extends' => RuntimeException::class,
+                ],
+                'ValueObject' => [
+                    'kind' => 'dir',
+                    'items' => [
+                        "{$classPlaceholder}Id" => [
+                            'extends' => AbstractUuidId::class,
+                        ],
                     ],
                 ],
             ],
@@ -238,7 +240,7 @@ final class MakeEntity extends Command
             'index',
             'create',
             'view',
-            'edit',
+            'update',
         ] as $view) {
             $fileName = "{$dir}/{$view}.html.twig";
             if (!file_exists($fileName)) {

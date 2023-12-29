@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateTrainingCategoriesTable extends AbstractMigration
+final class CreatePeopleTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -19,18 +19,34 @@ final class CreateTrainingCategoriesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('training_categories', ['id' => false, 'primary_key' => 'id']);
+        $table = $this->table('people', ['id' => false, 'primary_key' => 'id']);
         $table
             ->addColumn('id', 'string')
             ->addColumn('name', 'string')
+            ->addColumn('bio', 'text')
+            ->addColumn('start_year', 'string')
+            ->addColumn('end_year', 'string')
+            ->addColumn('user_id', 'string', ['null' => true])
             ->addColumn('created_at', 'string')
             ->addColumn('updated_at', 'string')
             ->addColumn('deleted_at', 'string')
             ->create()
         ;
+
         $table
-            ->addIndex('name')
+            ->addIndex('start_year')
+            ->addIndex('end_year')
             ->addIndex('deleted_at')
-            ->update();
+            ->addForeignKey(
+                'user_id',
+                'users',
+                'id',
+                [
+                    'delete' => 'CASCADE',
+                    'update' => 'CASCADE'
+                ]
+            )
+            ->update()
+            ;
     }
 }

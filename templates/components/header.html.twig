@@ -1,0 +1,13 @@
+<header class="header">
+    <h3>The Integrated Theatre System</h3>
+    <a href="{{ path('training-category.index') }}">Training Categories</a>
+    <a href="{{ path('training-item.index') }}">Training Items</a>
+    <a href="{{ path('person.index') }}">People</a>
+    <span class="header__logout-button">
+        {% if app.user %}
+        <a href="{{ logout_path() }}">Log Out {{ app.user.userIdentifier }}</a>
+        {% else %}
+        <a href="{{ path('login') }}">Log In</a>
+        {% endif %}
+    </span>
+</header>
