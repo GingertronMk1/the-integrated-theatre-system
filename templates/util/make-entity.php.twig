@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace {{ nameSpace }};
 
+{% for attribute in attributes|keys %}
+use {{ attribute }};
+{% endfor %}
+
+{% for extend in extends %}
+use {{ extend }};
+{% endfor %}
+
 {% if comment is not empty %}
 /**
  *  {{ comment }}
  */
 {% endif %}
-{{ kind }} {{ className }} {% if extends is not empty %}extends {{ extends|map(c => "\{c}")|join(', ') }}{% endif %}
+{{ kind }} {{ className }} {% if extends is not empty %}extends {{ extends|map(c => c|split('\\')|last)|map(c => "\{c}")|join(', ') }}{% endif %}
 {
     {% if kind == 'class' %}
     public function __construct(
