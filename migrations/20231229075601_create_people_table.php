@@ -39,6 +39,7 @@ final class CreatePeopleTable extends AbstractMigration
             ->addColumn('created_at', 'string')
             ->addColumn('updated_at', 'string')
             ->addColumn('deleted_at', 'string')
+            ->create()
         ;
 
         $table
