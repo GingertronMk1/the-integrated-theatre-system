@@ -14,10 +14,10 @@ class UserModel implements UserInterface, PasswordAuthenticatedUserInterface
      * @param array<int, mixed> $roles
      */
     public function __construct(
-        private UserId $id,
-        private string $email,
-        private array $roles,
-        private string $password
+        public UserId $id,
+        public string $email,
+        public array $roles,
+        public string $password
     ) {
     }
 
