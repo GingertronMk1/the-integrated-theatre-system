@@ -240,7 +240,7 @@ final class MakeEntity extends Command
             'index',
             'create',
             'view',
-            'edit',
+            'update',
         ] as $view) {
             $fileName = "{$dir}/{$view}.html.twig";
             if (!file_exists($fileName)) {
