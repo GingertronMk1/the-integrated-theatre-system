@@ -14,7 +14,7 @@ namespace {{ nameSpace }};
     {% if kind == 'class' %}
     public function __construct(
         {% for attribute, modifier in attributes %}
-        {{ modifier }} {{ attribute }} ${{ attribute|lower }}
+        {{ modifier }} \{{ attribute }} ${{ attribute|lower|split('\\')|last }}
         {% endfor %}
     ) {}
     {% endif %}

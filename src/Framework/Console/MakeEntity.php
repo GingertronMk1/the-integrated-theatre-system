@@ -186,7 +186,7 @@ final class MakeEntity extends Command
                     'kind' => self::KIND_INTERFACE,
                 ],
                 "{$classPlaceholder}Exception" => [
-                    'extends' => RuntimeException::class
+                    'extends' => RuntimeException::class,
                 ],
                 'ValueObject' => [
                     'kind' => 'dir',
