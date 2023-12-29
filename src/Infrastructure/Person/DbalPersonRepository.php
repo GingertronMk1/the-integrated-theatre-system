@@ -13,6 +13,7 @@ use Doctrine\DBAL\Connection;
 class DbalPersonRepository implements PersonRepositoryInterface
 {
     public const PEOPLE_TABLE = 'people';
+
     public function __construct(
         private readonly Connection $connection
     ) {
@@ -34,9 +35,9 @@ class DbalPersonRepository implements PersonRepositoryInterface
             ->fetchOne();
 
         $now = (new DateTimeImmutable())->format('c');
-        
+
         $upsertQb = $this->connection->createQueryBuilder();
-        if ($count === 0) {
+        if (0 === $count) {
             $upsertQb
                 ->insert(self::PEOPLE_TABLE)
                 ->values([
@@ -49,7 +50,7 @@ class DbalPersonRepository implements PersonRepositoryInterface
                     'updated_at' => ':now',
                 ])
             ;
-        } else if ($count === 1) {
+        } elseif (1 === $count) {
             $upsertQb
                 ->update(self::PEOPLE_TABLE)
                 ->set('name', ':name')
@@ -59,7 +60,7 @@ class DbalPersonRepository implements PersonRepositoryInterface
                 ->set('created_at', ':now')
                 ->set('updated_at', ':now')
                 ->where('id = :id')
-                ;
+            ;
         }
         $upsertQb
             ->setParameters([

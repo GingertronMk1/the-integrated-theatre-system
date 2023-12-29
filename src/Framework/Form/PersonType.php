@@ -25,7 +25,7 @@ class PersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $userChoices = [];
-        foreach($this->userFinder->findAll() as $user) {
+        foreach ($this->userFinder->findAll() as $user) {
             $userChoices[$user->email] = $user->id;
         }
 
@@ -40,7 +40,7 @@ class PersonType extends AbstractType
                 'userId',
                 ChoiceType::class,
                 [
-                    'choices' => $userChoices
+                    'choices' => $userChoices,
                 ]
             )
             ->add(
@@ -53,11 +53,11 @@ class PersonType extends AbstractType
                 NumberType::class,
                 [
                     'attr' => [
-                        'max' => $currentYear
+                        'max' => $currentYear,
                     ],
                     'constraints' => [
-                        new LessThanOrEqual($currentYear)
-                    ]
+                        new LessThanOrEqual($currentYear),
+                    ],
                 ]
             )
             ->add(
@@ -68,6 +68,6 @@ class PersonType extends AbstractType
                 'submit',
                 SubmitType::class
             )
-            ;
+        ;
     }
 }

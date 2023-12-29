@@ -19,12 +19,13 @@ class PersonController extends AbstractController
     public function index(PersonFinderInterface $finder): Response
     {
         $people = $finder->findAll();
+
         return $this->render(
             'pages/person/index.html.twig',
             [
-                'people' => $people
+                'people' => $people,
             ]
-            );
+        );
     }
 
     #[Route('/person/create', 'person.create', methods: ['GET', 'POST'])]
@@ -49,6 +50,5 @@ class PersonController extends AbstractController
         return $this->render('pages/person/create.html.twig', [
             'form' => $form->createView(),
         ]);
- 
     }
 }

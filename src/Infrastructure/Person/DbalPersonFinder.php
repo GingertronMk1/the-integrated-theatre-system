@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\Person;
 
 use App\Application\Person\PersonFinderInterface;
-use App\Domain\Person\ValueObject\PersonId;
 use App\Application\Person\PersonModel;
+use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
 
@@ -23,7 +23,7 @@ class DbalPersonFinder implements PersonFinderInterface
         $row = $qb
             ->select('*')
             ->from('people', 'p')
-            ->where("id = :id")
+            ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->executeQuery()
             ->fetchAssociative()
@@ -46,12 +46,12 @@ class DbalPersonFinder implements PersonFinderInterface
             fn (array $row) => $this->createPersonFromRow($row),
             $rows
         );
-        
     }
 
     private function createPersonFromRow(array $row): PersonModel
     {
         $userId = !is_null($row['user_id']) ? UserId::fromString($row['user_id']) : null;
+
         return new PersonModel(
             PersonId::fromString($row['id']),
             $row['name'],
@@ -62,4 +62,3 @@ class DbalPersonFinder implements PersonFinderInterface
         );
     }
 }
-

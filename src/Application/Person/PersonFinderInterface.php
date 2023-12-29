@@ -9,5 +9,6 @@ use App\Domain\Person\ValueObject\PersonId;
 interface PersonFinderInterface
 {
     public function findById(PersonId $id): PersonModel;
+
     public function findAll(): array;
 }
