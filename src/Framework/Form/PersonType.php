@@ -58,11 +58,13 @@ class PersonType extends AbstractType
                     'constraints' => [
                         new LessThanOrEqual($currentYear),
                     ],
+                    'required' => false,
                 ]
             )
             ->add(
                 'endYear',
                 NumberType::class,
+                ['required' => false],
             )
             ->add(
                 'submit',

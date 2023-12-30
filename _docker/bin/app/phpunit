@@ -6,8 +6,6 @@ TESTENV="test"
 
 ./_docker/bin/app/composer phinx -- migrate -e $TESTENV --no-info
 
-./_docker/bin/app/console app:insert-fixtures -e $TESTENV
-
 ./_docker/bin/app/composer phpunit "$@"
 
 ./_docker/bin/app/console doctrine:database:drop -e $TESTENV --force

@@ -10,5 +10,6 @@ interface PersonFinderInterface
 {
     public function findById(PersonId $id): PersonModel;
 
+    /** @return array<PersonModel> */
     public function findAll(): array;
 }

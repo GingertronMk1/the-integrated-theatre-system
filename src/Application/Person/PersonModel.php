@@ -12,7 +12,7 @@ final readonly class PersonModel
     public function __construct(
         public PersonId $id,
         public string $name,
-        public string $bio,
+        public ?string $bio,
         public ?int $startYear,
         public ?int $endYear,
         public ?UserModel $user

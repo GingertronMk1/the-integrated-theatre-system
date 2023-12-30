@@ -10,13 +10,11 @@ use App\Domain\User\ValueObject\UserId;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Exception;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final readonly class DbalUserRepository implements UserRepositoryInterface
 {
     public function __construct(
         private Connection $connection,
-        private UserPasswordHasherInterface $passwordHasher
     ) {
     }
 

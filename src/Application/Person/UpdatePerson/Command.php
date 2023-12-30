@@ -13,7 +13,7 @@ class Command
     public function __construct(
         public PersonId $id,
         public string $name = '',
-        public string $bio = '',
+        public ?string $bio = '',
         public ?int $startYear = null,   // TODO: create stringable year value object
         public ?int $endYear = null,
         public ?UserId $userId = null,

@@ -7,6 +7,7 @@ namespace App\Infrastructure\Person;
 use App\Application\Person\PersonFinderInterface;
 use App\Application\Person\PersonModel;
 use App\Application\User\UserFinderInterface;
+use App\Domain\Person\PersonException;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
@@ -31,6 +32,10 @@ class DbalPersonFinder implements PersonFinderInterface
             ->fetchAssociative()
         ;
 
+        if (!is_array($row)) {
+            throw PersonException::notFound($id);
+        }
+
         return $this->createPersonFromRow($row);
     }
 
@@ -50,6 +55,9 @@ class DbalPersonFinder implements PersonFinderInterface
         );
     }
 
+    /**
+     * @param array<string, ?string> $row
+     */
     private function createPersonFromRow(array $row): PersonModel
     {
         $user = null;

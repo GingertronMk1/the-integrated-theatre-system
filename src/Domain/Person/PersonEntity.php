@@ -12,7 +12,7 @@ final class PersonEntity
     public function __construct(
         public PersonId $id,
         public string $name,
-        public string $bio,
+        public ?string $bio,
         public ?int $startYear,   // TODO: create stringable year value object
         public ?int $endYear,
         public ?UserId $userId,
