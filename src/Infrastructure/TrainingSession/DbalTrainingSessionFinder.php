@@ -6,9 +6,10 @@ namespace App\Infrastructure\TrainingSession;
 
 use Doctrine\DBAL\Connection;
 
-
-class DbalTrainingSessionFinder {
-        public function __construct(
-                private readonly \Doctrine\DBAL\Connection $connection
-            ) {}
+class DbalTrainingSessionFinder
+{
+    public function __construct(
+        private readonly Connection $connection
+    ) {
     }
+}

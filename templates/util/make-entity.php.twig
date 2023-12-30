@@ -17,7 +17,7 @@ use {{ extend }};
  *  {{ comment }}
  */
 {% endif %}
-{{ kind }} {{ className }} {% if extends is not empty %}extends {{ extends|map(c => c|split('\\')|last)|map(c => "\{c}")|join(', ') }}{% endif %}
+{{ kind }} {{ className }} {% if extends is not empty %}extends {{ extends|map(c => c|split('\\')|last)|join(', ') }}{% endif %}
 {
     {% if kind == 'class' %}
     public function __construct(
