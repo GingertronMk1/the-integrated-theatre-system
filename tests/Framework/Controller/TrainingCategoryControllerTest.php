@@ -34,7 +34,7 @@ final class TrainingCategoryControllerTest extends UserInterfaceTest
      */
     public function testCreate(): void
     {
-        $crawler = $this->client->request('GET', "/training-category/create");
+        $crawler = $this->client->request('GET', '/training-category/create');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('form[name=training_category]');
         $newName = 'Second test category';

@@ -37,7 +37,7 @@ final class TrainingItemControllerTest extends UserInterfaceTest
      */
     public function testCreate(): void
     {
-        $crawler = $this->client->request('GET', "/training-item/create");
+        $crawler = $this->client->request('GET', '/training-item/create');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('form[name=training_item]');
         $newName = 'Second test item';
@@ -70,5 +70,4 @@ final class TrainingItemControllerTest extends UserInterfaceTest
         $this->assertSelectorExists("[data-item-id='{$itemId}']");
         $this->assertSelectorTextContains("[data-item-id='{$itemId}']", $newName);
     }
-
 }
