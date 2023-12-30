@@ -32,7 +32,7 @@ class DbalPersonFinder implements PersonFinderInterface
             ->fetchAssociative()
         ;
 
-        if(!is_array($row)) {
+        if (!is_array($row)) {
             throw PersonException::notFound($id);
         }
 

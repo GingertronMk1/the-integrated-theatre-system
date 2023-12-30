@@ -11,6 +11,6 @@ class PersonException extends RuntimeException
 {
     public static function notFound(PersonId $id): self
     {
-      return new self("No person found with ID {$id}");
+        return new self("No person found with ID {$id}");
     }
 }
