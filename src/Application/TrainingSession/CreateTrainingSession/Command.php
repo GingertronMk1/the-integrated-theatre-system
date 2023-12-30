@@ -11,9 +11,9 @@ use DateTimeImmutable;
 class Command
 {
     /**
-     *  @param array<TrainingItemModel> $items
-     *  @param array<PersonModel> $trainers
-     *  @param array<PersonModel> $trainees
+     * @param array<TrainingItemModel> $items
+     * @param array<PersonModel>       $trainers
+     * @param array<PersonModel>       $trainees
      */
     public function __construct(
         public DateTimeImmutable $happenedAt = new DateTimeImmutable(),

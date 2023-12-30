@@ -9,4 +9,6 @@ use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 interface TrainingSessionRepositoryInterface
 {
     public function getNextId(): TrainingSessionId;
+
+    public function saveSession(TrainingSessionEntity $session): void;
 }

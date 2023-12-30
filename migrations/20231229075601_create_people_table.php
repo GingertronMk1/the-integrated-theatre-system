@@ -43,10 +43,10 @@ final class CreatePeopleTable extends AbstractMigration
                 'id',
                 [
                     'delete' => 'CASCADE',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->update()
-            ;
+        ;
     }
 }

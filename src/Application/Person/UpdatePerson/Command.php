@@ -7,7 +7,6 @@ namespace App\Application\Person\UpdatePerson;
 use App\Application\Person\PersonModel;
 use App\Application\User\UserModel;
 use App\Domain\Person\ValueObject\PersonId;
-use App\Domain\User\ValueObject\UserId;
 
 class Command
 {

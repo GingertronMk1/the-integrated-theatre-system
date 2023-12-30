@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Framework\Form;
 
 use App\Application\User\UserFinderInterface;
-use App\Application\User\UserModel;
 use DateTimeImmutable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -38,7 +37,7 @@ class PersonType extends AbstractType
                 [
                     'choices' => $this->userFinder->findAll(),
                     'choice_label' => 'name',
-                    'choice_value' => 'id'
+                    'choice_value' => 'id',
                 ]
             )
             ->add(
