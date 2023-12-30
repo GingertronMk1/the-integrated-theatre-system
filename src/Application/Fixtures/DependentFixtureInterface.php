@@ -9,6 +9,6 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 #[AutoconfigureTag('app.fixture')]
 interface DependentFixtureInterface
 {
-    /** @return array<int|string, FixtureInterface> */
+    /** @return array<int|string, string> */
     public function getDependencies(): array;
 }

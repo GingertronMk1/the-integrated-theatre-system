@@ -9,12 +9,15 @@ use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 final class FixtureLoader implements FixtureLoaderInterface
 {
-    /** @var array<int, string> */
+    /** @var array<string> */
     private static array $loadedFixtures = [];
 
     /** @var array<string, FixtureInterface> */
     private array $fixtures = [];
 
+    /**
+     * @param iterable<mixed, FixtureInterface> $fixtures
+     */
     public function __construct(
         #[TaggedIterator('app.fixture')]
         iterable $fixtures
