@@ -24,7 +24,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
     name: 'app:insert-fixtures',
     description: 'Adds fixtures to DB'
 )]
-final readonly class InsertFixtures extends Command
+final class InsertFixtures extends Command
 {
     private const ADMIN_ID = '018cb55d-f88d-70b3-bd5c-3771b1849848';
 
