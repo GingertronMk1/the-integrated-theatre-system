@@ -23,52 +23,72 @@ final class CreateTrainingSessions extends AbstractMigration
     {
         $sessionsTable = $this->table(self::SESSIONS_TABLE, ['id' => false, 'primary_key' => 'id']);
         $sessionsTable
-            ->addColumn('id', 'string')
-            ->addColumn('occurred_at', 'string')
-            ->addColumn('created_at', 'string')
-            ->addColumn('updated_at', 'string')
-            ->addColumn('deleted_at', 'string')
-            ->create()
-        ;
+          ->addColumn('id', 'string')
+          ->addColumn('occurred_at', 'string')
+          ->addColumn('created_at', 'string')
+          ->addColumn('updated_at', 'string')
+          ->addColumn('deleted_at', 'string')
+          ->create();
 
         $sessionsTable
-            ->addIndex('occurred_at')
-            ->addIndex('deleted_at')
-        ;
+          ->addIndex('occurred_at')
+          ->addIndex('deleted_at')
+          ->update();
 
-        $itemsPivotTable = $this->table('training_session_items', ['id' => false, 'primary_key' => ['user_id', 'item_id']]);
+        $itemsPivotTable = $this->table('training_session_items', ['id' => false, 'primary_key' => ['training_session_id', 'training_item_id']]);
         $itemsPivotTable
-          ->addColumn('user_id', 'string')
+          ->addColumn('training_session_id', 'string')
           ->addColumn('training_item_id', 'string')
-          ->addColumn('session_id', 'string')
-          ->create()
-        ;
+          ->create();
 
         $itemsPivotTable
-            ->addForeignKey('session_id',
-                self::SESSIONS_TABLE,
-                'id',
-                [
-                    'delete' => 'CASCADE',
-                    'update' => 'CASCADE',
-                ])
-            ->addForeignKey('training_item_id',
-                'training_items',
-                'id',
-                [
-                    'delete' => 'CASCADE',
-                    'update' => 'CASCADE',
-                ])
-            ->addForeignKey(
-                'user_id',
-                'users',
-                'id',
-                [
-                    'delete' => 'CASCADE',
-                    'update' => 'CASCADE',
-                ]
-            )
-            ->update()
-        ;
+          ->addForeignKey(
+              'training_session_id',
+              self::SESSIONS_TABLE,
+              'id',
+              [
+                'delete' => 'CASCADE',
+                'update' => 'CASCADE',
+              ]
+          )
+          ->addForeignKey(
+              'training_item_id',
+              'training_items',
+              'id',
+              [
+                'delete' => 'CASCADE',
+                'update' => 'CASCADE',
+              ]
+          )
+          ->update();
+
+        $peoplePivotTable = $this->table('training_session_people', ['id' => false, 'primary_key' => ['training_session_id', 'person_id']]);
+        $peoplePivotTable
+          ->addColumn('training_session_id', 'string')
+          ->addColumn('person_id', 'string')
+          ->addColumn('type', 'string')
+          ->create();
+
+        $peoplePivotTable
+          ->addIndex('type')
+          ->addForeignKey(
+              'training_session_id',
+              self::SESSIONS_TABLE,
+              'id',
+              [
+                'delete' => 'CASCADE',
+                'update' => 'CASCADE',
+              ]
+          )
+          ->addForeignKey(
+              'person_id',
+              'people',
+              'id',
+              [
+                'delete' => 'CASCADE',
+                'update' => 'CASCADE',
+              ]
+          )
+          ->update();
     }
 }

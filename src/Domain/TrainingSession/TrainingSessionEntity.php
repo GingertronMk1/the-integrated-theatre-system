@@ -11,7 +11,7 @@ class TrainingSessionEntity
 {
     public function __construct(
         public TrainingSessionId $id,
-        public DateTimeImmutable $happenedAt,
+        public DateTimeImmutable $occurredAt,
         public array $items,
         public array $trainers,
         public array $trainees,

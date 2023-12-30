@@ -6,4 +6,5 @@ namespace App\Application\TrainingSession;
 
 interface TrainingSessionFinderInterface
 {
+    public function findAll(): array;
 }

@@ -25,7 +25,7 @@ class TrainingSessionType extends AbstractType
         $items = $this->trainingItemFinder->findAll();
         $people = $this->personFinder->findAll();
         $builder
-          ->add('happenedAt', DateTimeType::class)
+          ->add('occurredAt', DateTimeType::class)
           ->add(
               'items',
               ChoiceType::class,

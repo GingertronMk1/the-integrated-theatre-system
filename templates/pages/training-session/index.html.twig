@@ -1,4 +1,17 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block body %}
+<a href="{{ path('training-session.create') }}" class="button">Add</a>
+<table id="training-sessions">
+    <thead>
+    <th>Occurred At</th>
+    <th>Actions</th>
+    </thead>
+    {% for training_session in training_sessions %}
+    <tr data-session-id="{{ training_sessions.id }}">
+        <td>{{ training_session.occurredAt|date }}</td>
+        <td><a href="{{ path('training-session.update', {id: training_sessions.id}) }}" class="button">Edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

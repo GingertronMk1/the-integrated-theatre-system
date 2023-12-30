@@ -16,7 +16,7 @@ class Command
      * @param array<PersonModel>       $trainees
      */
     public function __construct(
-        public DateTimeImmutable $happenedAt = new DateTimeImmutable(),
+        public DateTimeImmutable $occurredAt = new DateTimeImmutable(),
         public array $items = [],
         public array $trainers = [],
         public array $trainees = [],
