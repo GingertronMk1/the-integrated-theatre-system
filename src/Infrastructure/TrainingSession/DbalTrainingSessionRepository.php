@@ -7,6 +7,7 @@ namespace App\Infrastructure\TrainingSession;
 use App\Domain\TrainingSession\TrainingSessionEntity;
 use App\Domain\TrainingSession\TrainingSessionRepositoryInterface;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
+use App\Domain\TrainingSession\ValueObject\TrainingSessionPersonType;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
@@ -60,5 +61,63 @@ class DbalTrainingSessionRepository implements TrainingSessionRepositoryInterfac
             'now' => $now,
         ])
         ->executeStatement();
+
+        $clearItemsQb = $this
+            ->connection
+            ->createQueryBuilder()
+            ->delete('training_session_items')
+            ->where('training_session_id = :training_session_id')
+            ->setParameter('training_session_id', (string) $session->id)
+            ->executeStatement()
+        ;
+        $clearPeopleQb = $this
+            ->connection
+            ->createQueryBuilder()
+            ->delete('training_session_people')
+            ->where('training_session_id = :training_session_id')
+            ->setParameter('training_session_id', (string) $session->id)
+            ->executeStatement()
+        ;
+        foreach($session->items as $item) {
+            $this
+                ->connection
+                ->createQueryBuilder()
+                ->insert('training_session_items')
+                ->values([
+                    'training_session_id' => ':training_session_id',
+                    'training_item_id' => ':training_item_id'
+                ])
+                ->setParameters([
+                    'training_session_id' => (string) $session->id,
+                    'training_item_id' => (string) $item
+                ])
+                ->executeStatement();
+        }
+        foreach([
+          TrainingSessionPersonType::TYPE_TRAINER->value => $session->trainers,
+          TrainingSessionPersonType::TYPE_TRAINEE->value => $session->trainees,
+        ] as $type => $people) {
+        foreach($people as $person) {
+            $this
+                ->connection
+                ->createQueryBuilder()
+                ->insert('training_session_people')
+                ->values([
+                    'training_session_id' => ':training_session_id',
+                    'person_id' => ':person_id',
+                    'type' => ':type'
+                ])
+                ->setParameters([
+                    'training_session_id' => (string) $session->id,
+                    'person_id' => (string) $person,
+                    'type' => $type
+                ])
+                ->executeStatement();
+        }
+
+
+
+        }
+
     }
 }

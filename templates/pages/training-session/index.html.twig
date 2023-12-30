@@ -5,12 +5,36 @@
 <table id="training-sessions">
     <thead>
     <th>Occurred At</th>
+    <th>Training Items</th>
+    <th>Trainers</th>
+    <th>Trainees</th>
     <th>Actions</th>
     </thead>
     {% for training_session in training_sessions %}
-    <tr data-session-id="{{ training_sessions.id }}">
+    <tr data-session-id="{{ training_session.id }}">
         <td>{{ training_session.occurredAt|date }}</td>
-        <td><a href="{{ path('training-session.update', {id: training_sessions.id}) }}" class="button">Edit</a></td>
+        <td>
+        <ul>
+        {% for item in training_session.items %}
+        {{ item.name }}
+        {% endfor %}
+        </ul>
+        </td>
+        <td>
+        <ul>
+        {% for trainer in training_session.trainers %}
+        {{ trainer.name }}
+        {% endfor %}
+        </ul>
+        </td>
+        <td>
+        <ul>
+        {% for trainee in training_session.trainees %}
+        {{ trainee.name }}
+        {% endfor %}
+        </ul>
+        </td>
+        <td><a href="{{ path('training-session.update', {id: training_session.id}) }}" class="button">Edit</a></td>
     </tr>
     {% endfor %}
 </table>

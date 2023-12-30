@@ -62,7 +62,13 @@ final class CreateTrainingSessions extends AbstractMigration
           )
           ->update();
 
-        $peoplePivotTable = $this->table('training_session_people', ['id' => false, 'primary_key' => ['training_session_id', 'person_id']]);
+        $peoplePivotTable = $this->table(
+            'training_session_people',
+            [
+                'id' => false,
+                'primary_key' => ['training_session_id', 'person_id', 'type']
+            ]
+        );
         $peoplePivotTable
           ->addColumn('training_session_id', 'string')
           ->addColumn('person_id', 'string')
