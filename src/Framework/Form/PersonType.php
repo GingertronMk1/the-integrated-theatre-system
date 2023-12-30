@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Framework\Form;
 
 use App\Application\User\UserFinderInterface;
+use App\Application\User\UserModel;
 use DateTimeImmutable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,11 +25,6 @@ class PersonType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $userChoices = ['---' => null];
-        foreach ($this->userFinder->findAll() as $user) {
-            $userChoices[$user->email] = $user->id;
-        }
-
         $currentYear = (int) (new DateTimeImmutable())->format('Y');
 
         $builder
@@ -37,10 +33,12 @@ class PersonType extends AbstractType
                 TextType::class,
             )
             ->add(
-                'userId',
+                'user',
                 ChoiceType::class,
                 [
-                    'choices' => $userChoices,
+                    'choices' => $this->userFinder->findAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id'
                 ]
             )
             ->add(
