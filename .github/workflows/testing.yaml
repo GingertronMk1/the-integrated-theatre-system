@@ -32,11 +32,13 @@ jobs:
               run: ./_docker/bin/util/start
             - name: Deptrac
               run: ./_docker/bin/app/deptrac
+              if: always()
             - name: ECS
               run: ./_docker/bin/app/ecs
+              if: always()
             - name: Stan
               run: ./_docker/bin/app/composer stan
-              continue-on-error: true
+              if: always()
             - name: Coverage
               run: ./_docker/bin/app/phpunit -- --coverage-text
-              continue-on-error: true
+              if: always()
