@@ -8,7 +8,4 @@ use App\Domain\Common\ValueObject\AbstractUuidId;
 
 class TrainingSessionId extends AbstractUuidId
 {
-    public function __construct(
-    ) {
-    }
 }
