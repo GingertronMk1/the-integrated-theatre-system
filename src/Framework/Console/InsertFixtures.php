@@ -28,13 +28,6 @@ final class InsertFixtures extends Command
 {
     private const ADMIN_ID = '018cb55d-f88d-70b3-bd5c-3771b1849848';
 
-    private const TRAINING_CATEGORY_IDS = [
-      1 => '018cbad3-b98f-7974-846b-3a02b8333461',
-    ];
-    private const TRAINING_ITEM_IDS = [
-      1 => '018cbad5-2cb4-75b8-be8f-e084403270d6',
-    ];
-
     public function __construct(
         private UserRepositoryInterface $userRepository,
         private UserPasswordHasherInterface $userPasswordHasher,

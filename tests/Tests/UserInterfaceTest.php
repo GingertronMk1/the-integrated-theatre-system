@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 abstract class UserInterfaceTest extends WebTestCase
 {
+    use TestWithFixturesTrait;
+
     protected KernelBrowser $client;
 
     public function setUp(): void
