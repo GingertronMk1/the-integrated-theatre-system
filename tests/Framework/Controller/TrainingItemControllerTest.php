@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Framework\Controller;
 
 use App\Application\TrainingItem\TrainingItemFixture;
-use Tests\Tests\TestWithFixturesTrait;
 use Tests\Tests\UserInterfaceTest;
 
 /**
@@ -13,8 +12,6 @@ use Tests\Tests\UserInterfaceTest;
  */
 final class TrainingItemControllerTest extends UserInterfaceTest
 {
-    use TestWithFixturesTrait;
-
     public function setUp(): void
     {
         parent::setUp();

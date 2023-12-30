@@ -16,6 +16,6 @@ abstract class UserInterfaceTest extends WebTestCase
     public function setUp(): void
     {
         $this->client = self::createClient();
-        $this->client->followRedirects();
+        $this->client->followRedirects(true);
     }
 }

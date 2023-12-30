@@ -28,13 +28,18 @@ final readonly class TrainingCategoryFixture implements FixtureInterface
     }
 
     /** @return array<int, TrainingCategoryEntity> */
-    private function getFixtures(): array
+    public function getFixtures(): array
     {
         return [
-          new TrainingCategoryEntity(
-              TrainingCategoryId::fromString(self::IDS[1]),
-              'Test Category 1',
-          ),
+            self::testCategoryFixture1(),
         ];
+    }
+
+    public static function testCategoryFixture1(): TrainingCategoryEntity
+    {
+        return new TrainingCategoryEntity(
+            TrainingCategoryId::fromString(self::IDS[1]),
+            'Test Category 1',
+        );
     }
 }
