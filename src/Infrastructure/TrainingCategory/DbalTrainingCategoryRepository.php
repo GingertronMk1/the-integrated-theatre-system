@@ -33,14 +33,13 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
                 ->values([
                     'id' => ':id',
                     'name' => ':name',
-                    'created_at' => ':created_at',
-                    'updated_at' => ':updated_at',
+                    'created_at' => ':now',
+                    'updated_at' => ':now',
                 ])
                 ->setParameters([
                     'id' => (string) $category->id,
                     'name' => $category->name,
-                    'created_at' => (new DateTimeImmutable())->format('c'),
-                    'updated_at' => (new DateTimeImmutable())->format('c'),
+                    'now' => (new DateTimeImmutable())->format('c'),
                 ])
                 ->executeQuery()
             ;
