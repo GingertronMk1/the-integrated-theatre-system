@@ -87,13 +87,12 @@ final class TrainingSessionControllerTest extends UserInterfaceTest
         ]);
         $crawler = $this->client->submit($form);
         $this->assertStringEndsWith('/training-session', $crawler->getUri());
-        $rowSelector = 
-        $this->assertSelectorExists("table#training-sessions li[data-item-id='{$item->id}']");
+        $sessionSelector = "table#training-sessions tr[data-session-id='{$session->id}']";
+        $this->assertSelectorExists("{$sessionSelector} li[data-item-id='{$item->id}']");
         $this->assertSelectorTextContains(
-            "table#training-sessions li[data-item-id='{$item->id}']",
+            "{$sessionSelector} li[data-item-id='{$item->id}']",
             $item->name
         );
-        $sessionSelector = "table#training-sessions tr[data-session-id='{$session->id}']";
         $this->assertSelectorExists("{$sessionSelector} li[data-trainer-id='{$trainer->id}']");
         $this->assertSelectorTextContains(
             "{$sessionSelector} li[data-trainer-id='{$trainer->id}']",
