@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\TrainingItem;
 
+use App\Application\Common\Service\ClockInterface;
 use App\Domain\TrainingItem\TrainingItemEntity;
 use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Exception;
 
 final readonly class DbalTrainingItemRepository implements TrainingItemRepositoryInterface
 {
     public function __construct(
-        private Connection $connection
+        private Connection $connection,
+        private ClockInterface $clock
     ) {
     }
 
@@ -43,7 +44,7 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
                     'name' => $entity->name,
                     'is_dangerous' => (int) $entity->isDangerous,
                     'training_category_id' => (string) $entity->trainingCategoryId,
-                    'now' => (new DateTimeImmutable())->format('c'),
+                    'now' => (string) $this->clock->getCurrentTime(),
                 ])
                 ->executeQuery()
             ;
@@ -79,7 +80,7 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
                     'name' => $item->name,
                     'is_dangerous' => (int) $item->isDangerous,
                     'training_category_id' => (string) $item->trainingCategoryId,
-                    'now' => (new DateTimeImmutable())->format('c'),
+                    'now' => (string) $this->clock->getCurrentTime(),
                 ])
                 ->where('id = :id')
                 ->executeQuery()
