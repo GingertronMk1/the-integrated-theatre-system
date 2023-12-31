@@ -9,9 +9,11 @@ use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 interface TrainingItemFinderInterface
 {
     /**
+     * @param array<TrainingItemId> $ids
+     *
      * @return array<TrainingItemModel>
      */
-    public function findAll(): array;
+    public function findAll(array $ids = []): array;
 
     public function find(TrainingItemId $id): TrainingItemModel;
 

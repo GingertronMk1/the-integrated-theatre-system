@@ -186,13 +186,13 @@ final class MakeEntity extends Command
                     'kind' => self::KIND_INTERFACE,
                 ],
                 "{$classPlaceholder}Exception" => [
-                    'extends' => RuntimeException::class,
+                    'extends' => [RuntimeException::class],
                 ],
                 'ValueObject' => [
-                    'kind' => 'dir',
+                    'kind' => self::KIND_DIRECTORY,
                     'items' => [
                         "{$classPlaceholder}Id" => [
-                            'extends' => AbstractUuidId::class,
+                            'extends' => [AbstractUuidId::class],
                         ],
                     ],
                 ],
@@ -213,7 +213,7 @@ final class MakeEntity extends Command
                     'kind' => 'dir',
                     'items' => [
                         "{$classPlaceholder}Controller" => [
-                            'extends' => AbstractController::class,
+                            'extends' => [AbstractController::class],
                         ],
                     ],
                 ],
@@ -221,7 +221,7 @@ final class MakeEntity extends Command
                     'kind' => 'dir',
                     'items' => [
                         "{$classPlaceholder}Type" => [
-                            'extends' => AbstractType::class,
+                            'extends' => [AbstractType::class],
                         ],
                     ],
                 ],

@@ -39,7 +39,7 @@ final class CreateTrainingItemsTable extends AbstractMigration
                 'id',
                 [
                     'delete' => 'CASCADE',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->update();

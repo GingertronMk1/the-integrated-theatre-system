@@ -100,6 +100,12 @@
         "phinx": [
             "./vendor/bin/phinx --configuration=./phinx.php"
         ],
+        "phinx:migrate": [
+            "@phinx migrate"
+        ],
+        "phinx:create": [
+            "@phinx create"
+        ],
         "stan": [
             "./vendor/bin/phpstan analyse --configuration=./phpstan.neon"
         ],

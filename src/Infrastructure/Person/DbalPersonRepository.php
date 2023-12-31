@@ -70,6 +70,6 @@ class DbalPersonRepository implements PersonRepositoryInterface
                     'end_year' => $entity->endYear,
                     'now' => $now,
             ])
-            ->executeQuery();
+            ->executeStatement();
     }
 }

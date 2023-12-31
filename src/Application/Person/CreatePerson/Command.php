@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Person\CreatePerson;
 
-use App\Domain\User\ValueObject\UserId;
+use App\Application\User\UserModel;
 
 class Command
 {
@@ -13,7 +13,7 @@ class Command
         public ?string $bio = '',
         public ?int $startYear = null,   // TODO: create stringable year value object
         public ?int $endYear = null,
-        public ?UserId $userId = null,
+        public ?UserModel $user = null,
     ) {
     }
 }

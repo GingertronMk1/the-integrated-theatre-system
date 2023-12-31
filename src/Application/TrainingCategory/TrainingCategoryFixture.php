@@ -11,10 +11,6 @@ use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 
 final readonly class TrainingCategoryFixture implements FixtureInterface
 {
-    public const IDS = [
-      1 => '018cbad3-b98f-7974-846b-3a02b8333461',
-    ];
-
     public function __construct(
         private TrainingCategoryRepositoryInterface $trainingCategoryRepository
     ) {
@@ -38,7 +34,7 @@ final readonly class TrainingCategoryFixture implements FixtureInterface
     public static function testCategoryFixture1(): TrainingCategoryEntity
     {
         return new TrainingCategoryEntity(
-            TrainingCategoryId::fromString(self::IDS[1]),
+            TrainingCategoryId::fromString('018cbad3-b98f-7974-846b-3a02b8333461'),
             'Test Category 1',
         );
     }

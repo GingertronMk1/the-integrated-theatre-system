@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+<a href="{{ path('training-session.create') }}" class="button">Add</a>
+<table id="training-sessions">
+    <thead>
+    <th>Occurred At</th>
+    <th>Training Items</th>
+    <th>Trainers</th>
+    <th>Trainees</th>
+    <th>Actions</th>
+    </thead>
+    {% for training_session in training_sessions %}
+    <tr data-session-id="{{ training_session.id }}">
+        <td>{{ training_session.occurredAt|date }}</td>
+        <td>
+        <ul>
+        {% for item in training_session.items %}
+        <li data-item-id="{{ item.id }}">{{ item.name }}</li>
+        {% endfor %}
+        </ul>
+        </td>
+        <td>
+        <ul>
+        {% for trainer in training_session.trainers %}
+        <li data-trainer-id="{{ trainer.id }}">{{ trainer.name }}</li>
+        {% endfor %}
+        </ul>
+        </td>
+        <td>
+        <ul>
+        {% for trainee in training_session.trainees %}
+        <li data-trainee-id="{{ trainee.id }}">{{ trainee.name }}</li>
+        {% endfor %}
+        </ul>
+        </td>
+        <td><a href="{{ path('training-session.update', {id: training_session.id}) }}" class="button">Edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

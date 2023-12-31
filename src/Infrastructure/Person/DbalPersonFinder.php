@@ -39,13 +39,22 @@ class DbalPersonFinder implements PersonFinderInterface
         return $this->createPersonFromRow($row);
     }
 
-    public function findAll(): array
+    public function findAll(array $ids = []): array
     {
         $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
+        $qb = $qb
             ->select('*')
-            ->from('people', 'p')
-            ->executeQuery()
+            ->from('people', 'p');
+
+        if (!empty($ids)) {
+            $qb = $qb
+                ->where($qb->expr()->in(
+                    'id',
+                    array_map(fn (PersonId $id) => "'{$id}'", $ids)))
+            ;
+        }
+
+        $rows = $qb->executeQuery()
             ->fetchAllAssociative()
         ;
 

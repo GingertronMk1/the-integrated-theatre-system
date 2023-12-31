@@ -24,11 +24,6 @@ class PersonType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $userChoices = ['---' => null];
-        foreach ($this->userFinder->findAll() as $user) {
-            $userChoices[$user->email] = $user->id;
-        }
-
         $currentYear = (int) (new DateTimeImmutable())->format('Y');
 
         $builder
@@ -37,10 +32,12 @@ class PersonType extends AbstractType
                 TextType::class,
             )
             ->add(
-                'userId',
+                'user',
                 ChoiceType::class,
                 [
-                    'choices' => $userChoices,
+                    'choices' => $this->userFinder->findAll(),
+                    'choice_label' => 'email',
+                    'choice_value' => 'id',
                 ]
             )
             ->add(

@@ -24,13 +24,22 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
         return $this->findByColumn('id', (string) $id);
     }
 
-    public function findAll(): array
+    public function findAll(array $ids = []): array
     {
         $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
+        $qb = $qb
             ->select('*')
-            ->from('training_items', 'tc')
-            ->executeQuery()
+            ->from('training_items', 'tc');
+
+        if (!empty($ids)) {
+            $qb = $qb
+                ->where($qb->expr()->in(
+                    'id',
+                    array_map(fn (TrainingItemId $id) => "'{$id}'", $ids)
+                ));
+        }
+
+        $rows = $qb->executeQuery()
             ->fetchAllAssociative()
         ;
 
