@@ -7,6 +7,8 @@ namespace App\Framework\Controller;
 use App\Application\TrainingSession\CreateTrainingSession\Command as CreateCommand;
 use App\Application\TrainingSession\CreateTrainingSession\CommandHandler as CreateCommandHandler;
 use App\Application\TrainingSession\TrainingSessionFinderInterface;
+use App\Application\TrainingSession\UpdateTrainingSession\Command as UpdateCommand;
+use App\Application\TrainingSession\UpdateTrainingSession\CommandHandler as UpdateCommandHandler;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 use App\Framework\Form\TrainingSessionType;
 use Exception;
@@ -50,24 +52,24 @@ class TrainingSessionController extends AbstractController
     }
 
     #[Route('training-session/update/{id}', 'training-session.update', methods: ['GET', 'POST'])]
-    public function update(Request $request, string $id, TrainingSessionFinderInterface $finder): Response
+    public function update(Request $request, string $id, TrainingSessionFinderInterface $finder, UpdateCommandHandler $handler): Response
     {
-        // $session = $finder->find(TrainingSessionId::fromString($id));
-        // $command = UpdateCommand::forsession($session);
-        // $form = $this->createForm(TrainingSessionType::class, $command);
-        // $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     try {
-        //         $handler->handle($command);
-        //         $this->addFlash('success', 'Updated training session');
+        $session = $finder->find(TrainingSessionId::fromString($id));
+        $command = UpdateCommand::forSession($session);
+        $form = $this->createForm(TrainingSessionType::class, $command);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                $this->addFlash('success', 'Updated training session');
 
-        //         $returnRoute = $request->get('return_to', 'training-session.index');
+                $returnRoute = $request->get('return_to', 'training-session.index');
 
-        //         return $this->redirectToRoute($returnRoute);
-        //     } catch (Exception $e) {
-        //         throw $e;
-        //     }
-        // }
+                return $this->redirectToRoute($returnRoute);
+            } catch (Exception $e) {
+                throw $e;
+            }
+        }
 
         return $this->render('pages/training-session/update.html.twig', [
             'form' => $form->createView(),

@@ -38,6 +38,19 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
         );
     }
 
+    public function find(TrainingSessionId $id): TrainingSessionModel
+    {
+        $qb = $this->connection->createQueryBuilder();
+        $row = $qb
+          ->select('*')
+          ->from('training_sessions')
+          ->where('id = :id')
+          ->setParameter('id', (string) $id)
+          ->fetchAssociative();
+
+        return $this->createSessionFromRow($row);
+    }
+
     private function createSessionFromRow(array $row): TrainingSessionModel
     {
         $thisId = TrainingSessionId::fromString($row['id']);
