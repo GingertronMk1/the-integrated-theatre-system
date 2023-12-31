@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\TrainingCategory;
 
+use App\Application\Common\Service\ClockInterface;
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
+use App\Infrastructure\Common\SystemClock;
 use App\Infrastructure\TrainingCategory\DbalTrainingCategoryRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -21,11 +23,13 @@ final class DbalTrainingCategoryRepositoryTest extends TestCase
     private Connection|MockObject $connection;
     private DbalTrainingCategoryRepository $repository;
     private TrainingCategoryEntity $entity;
+    private ClockInterface $clock;
 
     public function setUp(): void
     {
         $this->connection = $this->createMock(Connection::class);
-        $this->repository = new DbalTrainingCategoryRepository($this->connection);
+        $this->clock = new SystemClock();
+        $this->repository = new DbalTrainingCategoryRepository($this->connection, $this->clock);
         $this->entity = new TrainingCategoryEntity(
             $this->repository->getNextId(),
             'test'
