@@ -15,10 +15,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
-    public function __construct()
-    {
-    }
-
     #[Route('/user/create', 'user.create', methods: ['GET', 'POST'])]
     public function create(Request $request, CommandHandler $handler): Response
     {
