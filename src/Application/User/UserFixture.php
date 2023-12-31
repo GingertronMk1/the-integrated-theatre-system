@@ -40,7 +40,7 @@ final readonly class UserFixture implements FixtureInterface
     {
         return [
           self::testUser1(),
-          self::testUser2()
+          self::testUser2(),
         ];
     }
 

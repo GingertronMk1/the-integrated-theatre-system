@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Framework\Controller;
 
+use App\Application\Person\PersonFixture;
+use App\Application\TrainingItem\TrainingItemFixture;
 use App\Application\TrainingSession\TrainingSessionFixture;
 use Tests\Tests\UserInterfaceTest;
 
@@ -37,15 +39,32 @@ final class TrainingSessionControllerTest extends UserInterfaceTest
         $crawler = $this->client->request('GET', '/training-session/create');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('form[name=training_session]');
-        $newName = 'Second test session';
+        $item = TrainingItemFixture::getTestFixture();
+        $trainer = PersonFixture::testPerson1();
+        $trainee = PersonFixture::testPerson2();
         $form = $crawler->filter('form[name=training_session]')->form([
-          'training_session[name]' => $newName,
-          'training_session[trainingCategoryId]' => 0,
-          'training_session[isDangerous]' => 1,
+          'training_session[occurredAt]' => '2024-01-01T16:00',
+          'training_session[items]' => [(string) $item->id],
+          'training_session[trainers]' => [(string) $trainer->id],
+          'training_session[trainees]' => [(string) $trainee->id],
         ]);
         $crawler = $this->client->submit($form);
         $this->assertStringEndsWith('/training-session', $crawler->getUri());
-        $this->assertSelectorTextContains('table#training-sessions', $newName);
+        $this->assertSelectorExists("table#training-sessions li[data-item-id='{$item->id}']");
+        $this->assertSelectorTextContains(
+            "table#training-sessions li[data-item-id='{$item->id}']",
+            $item->name
+        );
+        $this->assertSelectorExists("table#training-sessions li[data-trainer-id='{$trainer->id}']");
+        $this->assertSelectorTextContains(
+            "table#training-sessions li[data-trainer-id='{$trainer->id}']",
+            $trainer->name
+        );
+        $this->assertSelectorExists("table#training-sessions li[data-trainee-id='{$trainee->id}']");
+        $this->assertSelectorTextContains(
+            "table#training-sessions li[data-trainee-id='{$trainee->id}']",
+            $trainee->name
+        );
     }
 
     /**
@@ -53,18 +72,37 @@ final class TrainingSessionControllerTest extends UserInterfaceTest
      */
     public function testUpdate(): void
     {
-        $sessionId = TrainingSessionFixture::getTestSession1()->id;
-        $crawler = $this->client->request('GET', "/training-session/update/{$sessionId}");
+        $session = TrainingSessionFixture::getTestSession1();
+        $crawler = $this->client->request('GET', "/training-session/update/{$session->id}");
         $this->assertResponseIsSuccessful();
-        $this->assertStringEndsWith("/training-session/update/{$sessionId}", $crawler->getUri());
         $this->assertSelectorExists('form[name=training_session]');
-        $newName = 'This should have updated';
+        $item = TrainingItemFixture::getTestFixture();
+        $trainer = PersonFixture::testPerson2();
+        $trainee = PersonFixture::testPerson1();
         $form = $crawler->filter('form[name=training_session]')->form([
-          'training_session[name]' => $newName,
+          'training_session[occurredAt]' => '2024-01-01T16:00',
+          'training_session[items]' => [(string) $item->id],
+          'training_session[trainers]' => [(string) $trainer->id],
+          'training_session[trainees]' => [(string) $trainee->id],
         ]);
         $crawler = $this->client->submit($form);
         $this->assertStringEndsWith('/training-session', $crawler->getUri());
-        $this->assertSelectorExists("[data-session-id='{$sessionId}']");
-        $this->assertSelectorTextContains("[data-session-id='{$sessionId}']", $newName);
+        $rowSelector = 
+        $this->assertSelectorExists("table#training-sessions li[data-item-id='{$item->id}']");
+        $this->assertSelectorTextContains(
+            "table#training-sessions li[data-item-id='{$item->id}']",
+            $item->name
+        );
+        $sessionSelector = "table#training-sessions tr[data-session-id='{$session->id}']";
+        $this->assertSelectorExists("{$sessionSelector} li[data-trainer-id='{$trainer->id}']");
+        $this->assertSelectorTextContains(
+            "{$sessionSelector} li[data-trainer-id='{$trainer->id}']",
+            $trainer->name
+        );
+        $this->assertSelectorExists("{$sessionSelector} li[data-trainee-id='{$trainee->id}']");
+        $this->assertSelectorTextContains(
+            "{$sessionSelector} li[data-trainee-id='{$trainee->id}']",
+            $trainee->name
+        );
     }
 }

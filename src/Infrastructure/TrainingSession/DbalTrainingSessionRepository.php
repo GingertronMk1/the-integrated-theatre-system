@@ -62,7 +62,7 @@ final readonly class DbalTrainingSessionRepository implements TrainingSessionRep
         ])
         ->executeStatement();
 
-        $clearItemsQb = $this
+        $this
             ->connection
             ->createQueryBuilder()
             ->delete('training_session_items')
@@ -70,7 +70,7 @@ final readonly class DbalTrainingSessionRepository implements TrainingSessionRep
             ->setParameter('training_session_id', (string) $session->id)
             ->executeStatement()
         ;
-        $clearPeopleQb = $this
+        $this
             ->connection
             ->createQueryBuilder()
             ->delete('training_session_people')

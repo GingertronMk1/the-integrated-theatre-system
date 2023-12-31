@@ -36,6 +36,7 @@ final readonly class PersonFixture implements DependentFixtureInterface
     {
         return [
             self::testPerson1(),
+            self::testPerson2(),
         ];
     }
 

@@ -20,7 +20,7 @@ class TrainingSessionType extends AbstractType
     ) {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $items = $this->trainingItemFinder->findAll();
         $people = $this->personFinder->findAll();

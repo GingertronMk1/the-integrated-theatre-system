@@ -35,7 +35,13 @@ final class CreateTrainingSessions extends AbstractMigration
           ->addIndex('deleted_at')
           ->update();
 
-        $itemsPivotTable = $this->table('training_session_items', ['id' => false, 'primary_key' => ['training_session_id', 'training_item_id']]);
+        $itemsPivotTable = $this->table(
+            'training_session_items',
+            [
+                'id' => false,
+                'primary_key' => ['training_session_id', 'training_item_id'],
+            ]
+        );
         $itemsPivotTable
           ->addColumn('training_session_id', 'string')
           ->addColumn('training_item_id', 'string')

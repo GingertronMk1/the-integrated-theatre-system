@@ -34,17 +34,17 @@ final readonly class TrainingItemFixture implements DependentFixtureInterface
     private function getFixtures(): array
     {
         return [
-          self::getTestFixture()
+          self::getTestFixture(),
         ];
     }
 
     public static function getTestFixture(): TrainingItemEntity
     {
-      return new TrainingItemEntity(
-              TrainingItemId::fromString('018cad80-4a49-738a-8976-be8a62a5f235'),
-              'Test Item 1',
-              false,
-              TrainingCategoryId::fromString(TrainingCategoryFixture::IDS[1])
-      );
+        return new TrainingItemEntity(
+            TrainingItemId::fromString('018cad80-4a49-738a-8976-be8a62a5f235'),
+            'Test Item 1',
+            false,
+            TrainingCategoryId::fromString(TrainingCategoryFixture::IDS[1])
+        );
     }
 }

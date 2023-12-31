@@ -16,14 +16,14 @@ final readonly class TrainingSessionFixture implements DependentFixtureInterface
 {
     public function __construct(
         private TrainingSessionRepositoryInterface $trainingSessionRepository
-    )
-    {}
+    ) {
+    }
 
     public function load(): void
     {
-      foreach($this->getAllFixtures() as $fixture) {
-        $this->trainingSessionRepository->saveSession($fixture);
-      }
+        foreach ($this->getAllFixtures() as $fixture) {
+            $this->trainingSessionRepository->saveSession($fixture);
+        }
     }
 
     /**
@@ -31,9 +31,9 @@ final readonly class TrainingSessionFixture implements DependentFixtureInterface
      */
     private function getAllFixtures(): array
     {
-      return [
-        self::getTestSession1(),
-      ];
+        return [
+          self::getTestSession1(),
+        ];
     }
 
     public static function getTestSession1(): TrainingSessionEntity
@@ -49,6 +49,6 @@ final readonly class TrainingSessionFixture implements DependentFixtureInterface
 
     public function getDependencies(): array
     {
-      return [PersonFixture::class, TrainingItemFixture::class];
+        return [PersonFixture::class, TrainingItemFixture::class];
     }
 }

@@ -16,21 +16,21 @@
         <td>
         <ul>
         {% for item in training_session.items %}
-        <li>{{ item.name }}</li>
+        <li data-item-id="{{ item.id }}">{{ item.name }}</li>
         {% endfor %}
         </ul>
         </td>
         <td>
         <ul>
         {% for trainer in training_session.trainers %}
-        <li>{{ trainer.name }}</li>
+        <li data-trainer-id="{{ trainer.id }}">{{ trainer.name }}</li>
         {% endfor %}
         </ul>
         </td>
         <td>
         <ul>
         {% for trainee in training_session.trainees %}
-        <li>{{ trainee.name }}</li>
+        <li data-trainee-id="{{ trainee.id }}">{{ trainee.name }}</li>
         {% endfor %}
         </ul>
         </td>
