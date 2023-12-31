@@ -25,7 +25,7 @@ final class TrainingItemControllerTest extends UserInterfaceTest
     {
         $crawler = $this->client->request('GET', '/training-item');
         $this->assertResponseIsSuccessful();
-        $itemId = TrainingItemFixture::IDS[1];
+        $itemId = TrainingItemFixture::getTestFixture()->id;
         $this->assertSelectorExists("[data-item-id='{$itemId}']");
     }
 
@@ -53,7 +53,7 @@ final class TrainingItemControllerTest extends UserInterfaceTest
      */
     public function testUpdate(): void
     {
-        $itemId = TrainingItemFixture::IDS[1];
+        $itemId = TrainingItemFixture::getTestFixture()->id;
         $crawler = $this->client->request('GET', "/training-item/update/{$itemId}");
         $this->assertResponseIsSuccessful();
         $this->assertStringEndsWith("/training-item/update/{$itemId}", $crawler->getUri());

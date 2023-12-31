@@ -38,7 +38,10 @@ final readonly class UserFixture implements FixtureInterface
     /** @return array<int, UserEntity> */
     public function getFixtures(): array
     {
-        return [self::testUser1()];
+        return [
+          self::testUser1(),
+          self::testUser2()
+        ];
     }
 
     public static function testUser1(): UserEntity
@@ -46,6 +49,16 @@ final readonly class UserFixture implements FixtureInterface
         return new UserEntity(
             UserId::fromString('018cbbf7-9728-7f68-882c-ea116410442f'),
             'test1@tits.test',
+            [],
+            'test'
+        );
+    }
+
+    public static function testUser2(): UserEntity
+    {
+        return new UserEntity(
+            UserId::fromString('018cbfca-16d8-7153-b8d6-48a9afd6f127'),
+            'test2@tits.test',
             [],
             'test'
         );

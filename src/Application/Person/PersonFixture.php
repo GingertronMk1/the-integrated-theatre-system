@@ -50,4 +50,16 @@ final readonly class PersonFixture implements DependentFixtureInterface
             UserFixture::testUser1()->id
         );
     }
+
+    public static function testPerson2(): PersonEntity
+    {
+        return new PersonEntity(
+            PersonId::fromString('018cbfc9-8616-77a7-9d94-2e77bbee9288'),
+            'Test Person 2',
+            '',
+            2015,
+            2019,
+            UserFixture::testUser2()->id
+        );
+    }
 }
