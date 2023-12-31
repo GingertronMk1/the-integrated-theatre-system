@@ -16,21 +16,21 @@
         <td>
         <ul>
         {% for item in training_session.items %}
-        {{ item.name }}
+        <li>{{ item.name }}</li>
         {% endfor %}
         </ul>
         </td>
         <td>
         <ul>
         {% for trainer in training_session.trainers %}
-        {{ trainer.name }}
+        <li>{{ trainer.name }}</li>
         {% endfor %}
         </ul>
         </td>
         <td>
         <ul>
         {% for trainee in training_session.trainees %}
-        {{ trainee.name }}
+        <li>{{ trainee.name }}</li>
         {% endfor %}
         </ul>
         </td>

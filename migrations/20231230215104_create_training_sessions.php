@@ -66,7 +66,7 @@ final class CreateTrainingSessions extends AbstractMigration
             'training_session_people',
             [
                 'id' => false,
-                'primary_key' => ['training_session_id', 'person_id', 'type']
+                'primary_key' => ['training_session_id', 'person_id', 'type'],
             ]
         );
         $peoplePivotTable

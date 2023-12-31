@@ -20,8 +20,9 @@ class TrainingSessionController extends AbstractController
     #[Route('training-session', 'training-session.index', methods: ['GET'])]
     public function index(TrainingSessionFinderInterface $finder): Response
     {
-      $trainingSessions = $finder->findAll();
-      return $this->render('pages/training-session/index.html.twig', ['training_sessions' => $trainingSessions]);
+        $trainingSessions = $finder->findAll();
+
+        return $this->render('pages/training-session/index.html.twig', ['training_sessions' => $trainingSessions]);
     }
 
     #[Route('training-session/create', 'training-session.create', methods: ['GET', 'POST'])]
