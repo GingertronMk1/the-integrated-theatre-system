@@ -11,10 +11,8 @@ use Stringable;
 
 final class DateTime implements Stringable
 {
-    /** @var string Constant for date format. */
-    private const FORMAT = 'c';
+    private const FORMAT = 'Y-m-d H:i:s';
 
-    /** @var string The underlying date. */
     private readonly string $date;
 
     private function __construct(
