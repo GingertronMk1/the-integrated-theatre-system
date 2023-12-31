@@ -10,6 +10,10 @@ interface PersonFinderInterface
 {
     public function findById(PersonId $id): PersonModel;
 
-    /** @return array<PersonModel> */
-    public function findAll(): array;
+    /**
+     * @param array<PersonId> $ids
+     *
+     * @return array<PersonModel>
+     */
+    public function findAll(array $ids = []): array;
 }

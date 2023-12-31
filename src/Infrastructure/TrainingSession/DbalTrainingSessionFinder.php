@@ -70,7 +70,10 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
           ->setParameter('training_session_id', (string) $thisId)
           ->fetchFirstColumn();
 
-        $items = array_map(fn (string $str) => $this->trainingItemFinder->find(TrainingItemId::fromString($str)), $itemIds);
+        $items = $this->trainingItemFinder->findAll(
+            array_map(fn (string $str) => TrainingItemId::fromString($str),
+                $itemIds
+            ));
         $people = [];
 
         foreach (TrainingSessionPersonType::cases() as $type) {
@@ -90,10 +93,11 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
                 ])
                 ->fetchFirstColumn();
 
-            $people[$type->value] = array_map(
-                fn (string $id) => $this->personFinder->findById(PersonId::fromString($id)),
-                $personIds
-            );
+            $people[$type->value] = $this->personFinder->findAll(
+                array_map(
+                    fn (string $str) => PersonId::fromString($str),
+                    $personIds
+                ));
         }
 
         return new TrainingSessionModel(
