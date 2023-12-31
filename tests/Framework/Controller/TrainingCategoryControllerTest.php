@@ -25,7 +25,7 @@ final class TrainingCategoryControllerTest extends UserInterfaceTest
     {
         $crawler = $this->client->request('GET', '/training-category');
         $this->assertResponseIsSuccessful();
-        $categoryId = TrainingCategoryFixture::IDS[1];
+        $categoryId = TrainingCategoryFixture::testCategoryFixture1()->id;
         $this->assertSelectorExists("[data-category-id='{$categoryId}']");
     }
 
@@ -51,7 +51,7 @@ final class TrainingCategoryControllerTest extends UserInterfaceTest
      */
     public function testUpdate(): void
     {
-        $categoryId = TrainingCategoryFixture::IDS[1];
+        $categoryId = TrainingCategoryFixture::testCategoryFixture1()->id;
         $crawler = $this->client->request('GET', "/training-category/update/{$categoryId}");
         $this->assertResponseIsSuccessful();
         $this->assertStringEndsWith("/training-category/update/{$categoryId}", $crawler->getUri());

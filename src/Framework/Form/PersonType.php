@@ -36,7 +36,7 @@ class PersonType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices' => $this->userFinder->findAll(),
-                    'choice_label' => 'name',
+                    'choice_label' => 'email',
                     'choice_value' => 'id',
                 ]
             )

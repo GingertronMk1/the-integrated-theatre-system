@@ -39,9 +39,9 @@ final class TrainingSessionControllerTest extends UserInterfaceTest
         $crawler = $this->client->request('GET', '/training-session/create');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('form[name=training_session]');
-        $item = TrainingItemFixture::getTestFixture();
-        $trainer = PersonFixture::testPerson1();
-        $trainee = PersonFixture::testPerson2();
+        $item = TrainingItemFixture::getSessionTestFixture();
+        $trainer = PersonFixture::testSessionPerson1();
+        $trainee = PersonFixture::testSessionPerson2();
         $form = $crawler->filter('form[name=training_session]')->form([
           'training_session[occurredAt]' => '2024-01-01T16:00',
           'training_session[items]' => [(string) $item->id],
@@ -76,9 +76,9 @@ final class TrainingSessionControllerTest extends UserInterfaceTest
         $crawler = $this->client->request('GET', "/training-session/update/{$session->id}");
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('form[name=training_session]');
-        $item = TrainingItemFixture::getTestFixture();
-        $trainer = PersonFixture::testPerson2();
-        $trainee = PersonFixture::testPerson1();
+        $item = TrainingItemFixture::getSessionTestFixture();
+        $trainer = PersonFixture::testSessionPerson2();
+        $trainee = PersonFixture::testSessionPerson1();
         $form = $crawler->filter('form[name=training_session]')->form([
           'training_session[occurredAt]' => '2024-01-01T16:00',
           'training_session[items]' => [(string) $item->id],

@@ -6,7 +6,6 @@ namespace App\Application\TrainingItem;
 
 use App\Application\Fixtures\DependentFixtureInterface;
 use App\Application\TrainingCategory\TrainingCategoryFixture;
-use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\TrainingItemEntity;
 use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
@@ -35,6 +34,7 @@ final readonly class TrainingItemFixture implements DependentFixtureInterface
     {
         return [
           self::getTestFixture(),
+          self::getSessionTestFixture(),
         ];
     }
 
@@ -44,7 +44,17 @@ final readonly class TrainingItemFixture implements DependentFixtureInterface
             TrainingItemId::fromString('018cad80-4a49-738a-8976-be8a62a5f235'),
             'Test Item 1',
             false,
-            TrainingCategoryId::fromString(TrainingCategoryFixture::IDS[1])
+            TrainingCategoryFixture::testCategoryFixture1()->id
+        );
+    }
+
+    public static function getSessionTestFixture(): TrainingItemEntity
+    {
+        return new TrainingItemEntity(
+            TrainingItemId::fromString('018cc021-be3f-749f-9d56-ef70c52d60b4'),
+            'Session Item',
+            true,
+            TrainingCategoryFixture::testCategoryFixture1()->id
         );
     }
 }
