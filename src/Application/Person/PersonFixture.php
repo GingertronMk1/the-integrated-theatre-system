@@ -29,6 +29,9 @@ final readonly class PersonFixture implements DependentFixtureInterface
         }
     }
 
+    /**
+     * @return array<PersonEntity>
+     */
     public function getFixtures(): array
     {
         return [

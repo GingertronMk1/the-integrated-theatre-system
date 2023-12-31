@@ -10,6 +10,7 @@ use App\Application\TrainingSession\TrainingSessionFinderInterface;
 use App\Application\TrainingSession\TrainingSessionModel;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
+use App\Domain\TrainingSession\TrainingSessionException;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionPersonType;
 use DateTimeImmutable;
@@ -48,9 +49,16 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
           ->setParameter('id', (string) $id)
           ->fetchAssociative();
 
+        if (!is_array($row)) {
+            throw TrainingSessionException::notFoundWithId($id);
+        }
+
         return $this->createSessionFromRow($row);
     }
 
+    /**
+     * @param array<string, string> $row
+     */
     private function createSessionFromRow(array $row): TrainingSessionModel
     {
         $thisId = TrainingSessionId::fromString($row['id']);

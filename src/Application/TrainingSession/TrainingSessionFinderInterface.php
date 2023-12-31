@@ -10,5 +10,8 @@ interface TrainingSessionFinderInterface
 {
     public function find(TrainingSessionId $id): TrainingSessionModel;
 
+    /**
+     * @return array<TrainingSessionModel>
+     */
     public function findAll(): array;
 }
