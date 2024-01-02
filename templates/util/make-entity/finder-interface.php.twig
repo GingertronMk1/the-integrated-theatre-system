@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Application\{{ baseClass }};
+
+use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
+
+interface {{ className }}
+{
+    /**
+     * @return array<{{ baseClass }}Model>
+     */
+    public function findAll(): array;
+
+    public function find({{ baseClass }}Id $id): {{ baseClass }}Model;
+}
