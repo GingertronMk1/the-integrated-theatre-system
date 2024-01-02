@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {{ nameSpace }};
 
+use App\Application\{{ baseClass }}\{{ baseClass }}Model;
 use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
 
 final class Command
@@ -13,7 +14,7 @@ final class Command
     ) {
     }
 
-    public static function for{{ baseClass }}(Command $command): self
+    public static function for{{ baseClass }}({{ baseClass }}Model $command): self
     {
         return new self(
             $command->id,
