@@ -16,10 +16,10 @@ class ShowType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('year', TextType::class)
-            ->add('semester', TextType::class)
-            ->add('season', TextType::class)
+            ->add('description', TextareaType::class, ['required' => false])
+            ->add('year', TextType::class, ['required' => false])
+            ->add('semester', TextType::class, ['required' => false])
+            ->add('season', TextType::class, ['required' => false])
             ->add('submit', SubmitType::class)
         ;
     }

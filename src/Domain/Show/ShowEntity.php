@@ -11,10 +11,10 @@ final class ShowEntity
     public function __construct(
         public ShowId $id,
         public string $name,
-        public string $description,
-        public string $year,
-        public string $semester,
-        public string $season
+        public ?string $description,
+        public ?string $year,
+        public ?string $semester,
+        public ?string $season
     ) {
     }
 }
