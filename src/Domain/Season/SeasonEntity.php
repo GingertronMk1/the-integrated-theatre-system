@@ -10,6 +10,9 @@ final class SeasonEntity
 {
     public function __construct(
         public SeasonId $id,
+        public string $name,
+        public ?string $description,
+        public string $colour,
     ) {
     }
 }

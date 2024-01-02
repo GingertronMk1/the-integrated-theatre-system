@@ -8,6 +8,7 @@ final class CreateShowsTable extends AbstractMigration
 {
     private const SHOWS_TABLE = 'shows';
     private const SEASONS_TABLE = 'seasons';
+
     /**
      * Change Method.
      *
@@ -62,6 +63,5 @@ final class CreateShowsTable extends AbstractMigration
             )
             ->addIndex('deleted_at')
             ->update();
-
     }
 }
