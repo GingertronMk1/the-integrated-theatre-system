@@ -8,7 +8,6 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
-use DateTimeImmutable;
 
 class TrainingSessionEntity
 {

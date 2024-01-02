@@ -10,7 +10,6 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterface

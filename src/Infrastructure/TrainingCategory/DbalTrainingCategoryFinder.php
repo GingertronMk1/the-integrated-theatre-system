@@ -9,7 +9,6 @@ use App\Application\TrainingCategory\TrainingCategoryModel;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\TrainingCategoryException;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinderInterface

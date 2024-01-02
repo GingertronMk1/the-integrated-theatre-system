@@ -7,7 +7,6 @@ namespace App\Application\TrainingSession\CreateTrainingSession;
 use App\Application\Person\PersonModel;
 use App\Application\TrainingItem\TrainingItemModel;
 use App\Domain\Common\ValueObject\DateTime;
-use DateTimeImmutable;
 
 class Command
 {

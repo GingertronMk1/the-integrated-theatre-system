@@ -6,8 +6,8 @@ namespace App\Application\TrainingSession;
 
 use App\Application\Person\PersonModel;
 use App\Application\TrainingItem\TrainingItemModel;
-use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 use App\Domain\Common\ValueObject\DateTime;
+use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 
 final readonly class TrainingSessionModel
 {

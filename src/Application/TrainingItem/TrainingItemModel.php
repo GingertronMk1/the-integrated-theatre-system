@@ -7,7 +7,6 @@ namespace App\Application\TrainingItem;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
-use DateTimeImmutable;
 
 final readonly class TrainingItemModel
 {

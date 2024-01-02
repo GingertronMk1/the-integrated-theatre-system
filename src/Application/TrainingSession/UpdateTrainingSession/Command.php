@@ -9,7 +9,6 @@ use App\Application\TrainingItem\TrainingItemModel;
 use App\Application\TrainingSession\TrainingSessionModel;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
-use DateTimeImmutable;
 
 class Command
 {

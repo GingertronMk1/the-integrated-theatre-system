@@ -11,7 +11,6 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingSession\TrainingSessionEntity;
 use App\Domain\TrainingSession\TrainingSessionRepositoryInterface;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
-use DateTimeImmutable;
 
 final readonly class TrainingSessionFixture implements DependentFixtureInterface
 {

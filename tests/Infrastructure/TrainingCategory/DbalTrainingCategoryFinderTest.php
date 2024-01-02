@@ -7,7 +7,6 @@ namespace Tests\Infrastructure\TrainingCategory;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Infrastructure\TrainingCategory\DbalTrainingCategoryFinder;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Exception;

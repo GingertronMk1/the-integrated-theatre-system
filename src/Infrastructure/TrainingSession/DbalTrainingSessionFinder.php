@@ -14,7 +14,6 @@ use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use App\Domain\TrainingSession\TrainingSessionException;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionPersonType;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderInterface
