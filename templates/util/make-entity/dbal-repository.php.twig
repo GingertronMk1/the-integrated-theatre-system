@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace {{ nameSpace }};
 
 use App\Application\Common\Service\ClockInterface;
+use App\Domain\{{ baseClass }}\{{ baseClass }}Entity;
 use App\Domain\{{ baseClass }}\{{ baseClass }}RepositoryInterface;
 use Doctrine\DBAL\Connection;
 
@@ -15,4 +16,16 @@ final readonly class {{ className }} implements {{ baseClass }}RepositoryInterfa
         private ClockInterface $clock
     ) {
     }
+
+
+    public function create{{ baseClass }}({{ baseClass }}Entity $entity): void
+    {
+        // TODO: actually write this
+    }
+
+    public function update{{ baseClass }}({{ baseClass }}Entity $entity): void
+    {
+        // TODO: actually write this
+    }
+
 }
