@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\TrainingCategory;
 
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Infrastructure\TrainingCategory\DbalTrainingCategoryFinder;
 use DateTimeImmutable;
@@ -37,7 +38,7 @@ final class DbalTrainingCategoryFinderTest extends TestCase
     public function testFind(): void
     {
         $name = 'Test TC';
-        $now = new DateTimeImmutable('1997-04-15T17:00:00');
+        $now = DateTime::fromString('1997-04-15 17:00:00');
 
         $this->connection->expects($this->once())->method('createQueryBuilder')->willReturn($this->queryBuilder);
         $this->queryBuilder->expects($this->once())->method('select')->willReturn($this->queryBuilder);

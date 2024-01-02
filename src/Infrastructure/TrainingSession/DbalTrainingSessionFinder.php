@@ -8,6 +8,7 @@ use App\Application\Person\PersonFinderInterface;
 use App\Application\TrainingItem\TrainingItemFinderInterface;
 use App\Application\TrainingSession\TrainingSessionFinderInterface;
 use App\Application\TrainingSession\TrainingSessionModel;
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use App\Domain\TrainingSession\TrainingSessionException;
@@ -102,12 +103,12 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
 
         return new TrainingSessionModel(
             $thisId,
-            new DateTimeImmutable($row['occurred_at']),
+            DateTime::fromString($row['occurred_at']),
             $items,
             $people[TrainingSessionPersonType::TYPE_TRAINER->value],
             $people[TrainingSessionPersonType::TYPE_TRAINEE->value],
-            new DateTimeImmutable($row['created_at']),
-            new DateTimeImmutable($row['updated_at']),
+            DateTime::fromString($row['created_at']),
+            DateTime::fromString($row['updated_at']),
         );
     }
 }

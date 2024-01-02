@@ -150,4 +150,9 @@ final class DateTime implements Stringable
         return (int) $this->toDateTimeImmutable()
             ->format('U');
     }
+
+    public function getYear(): int
+    {
+        return (int) $this->toDateTimeImmutable()->format('Y');
+    }
 }
