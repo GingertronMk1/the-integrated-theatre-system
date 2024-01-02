@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ nameSpace }};
+
+use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
+
+final class Command
+{
+    public function __construct(
+        public {{ baseClass }}Id $id,
+    ) {
+    }
+
+    public static function for{{ baseClass }}(Command $command): void
+    {
+        return new self(
+            $command->id,
+        );
+    }
+}

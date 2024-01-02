@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ nameSpace }};
+
+use App\Application\{{ baseClass }}\{{ baseClass }}FinderInterface;
+use Doctrine\DBAL\Connection;
+
+final readonly class {{ className }} implements {{ baseClass }}FinderInterface
+{
+    public function __construct(
+        private Connection $connection
+    ) {
+    }
+}

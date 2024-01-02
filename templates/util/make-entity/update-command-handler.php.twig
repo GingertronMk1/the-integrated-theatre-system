@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ nameSpace }};
+
+use App\Domain\{{ baseClass }}\{{ baseClass }}RepositoryInterface;
+
+final readonly class CommandHandler
+{
+    public function __construct(
+        private {{ baseClass }}RepositoryInterface ${{ baseClass }}Repository
+    ) {
+    }
+
+    public function handle(Command $command): void
+    {
+    }
+}

@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ nameSpace }};
+
+use App\Application\Fixtures\FixtureInterface;
+use App\Domain\{{ baseClass }}\{{ baseClass }}RepositoryInterface;
+
+final readonly class {{ className }} implements FixtureInterface
+{
+    public function __construct(
+        private {{ baseClass }}RepositoryInterface ${{ baseClass }}Repository
+    ) {
+    }
+
+    public function load(): void
+    {
+        foreach ($this->getFixtures() as $fixture) {
+            $this->{{ baseClass }}Repository->create{{ baseClass }}($fixture);
+        }
+    }
+}

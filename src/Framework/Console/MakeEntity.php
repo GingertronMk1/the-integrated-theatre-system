@@ -126,8 +126,9 @@ final class MakeEntity extends Command
         $thing = str_replace(self::CLASSNAME_PLACEHOLDER, $this->className, $thing);
         $qualifiedFileName = "{$dirName}/{$thing}.php";
         $kind = $attrs['kind'] ?? self::KIND_CLASS;
+        $template = $attrs['template'] ?? 'base';
         $content = $this->twig->render(
-            'util/make-entity.php.twig',
+            "util/make-entity/{$template}.php.twig",
             [
                 'nameSpace' => $nameSpace,
                 'className' => $thing,
@@ -136,6 +137,7 @@ final class MakeEntity extends Command
                 'attributes' => $attrs['attributes'] ?? [],
                 'extends' => $attrs['extends'] ?? [],
                 'implements' => $attrs['implements'] ?? [],
+                'baseClass' => $this->className,
             ]
         );
         if (!$this->dryRun) {
@@ -161,50 +163,68 @@ final class MakeEntity extends Command
     {
         return [
             "Application/{$classPlaceholder}" => [
-                "{$classPlaceholder}Model" => [],
+                "{$classPlaceholder}Model" => [
+                    'template' => 'model',
+                ],
                 "{$classPlaceholder}FinderInterface" => [
                     'kind' => self::KIND_INTERFACE,
+                    'template' => 'finder-interface',
                 ],
                 "Create{$classPlaceholder}" => [
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
-                        'Command' => [],
-                        'CommandHandler' => [],
+                        'Command' => [
+                            'template' => 'create-command',
+                        ],
+                        'CommandHandler' => [
+                            'template' => 'create-command-handler',
+                        ],
                     ],
                 ],
                  "Update{$classPlaceholder}" => [
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
-                        'Command' => [],
-                        'CommandHandler' => [],
+                        'Command' => [
+                            'template' => 'update-command',
+                        ],
+                        'CommandHandler' => [
+                            'template' => 'update-command-handler',
+                        ],
                     ],
                 ],
             ],
             "Domain/{$classPlaceholder}" => [
-                "{$classPlaceholder}Entity" => [],
+                "{$classPlaceholder}Entity" => [
+                    'template' => 'entity',
+                ],
                 "{$classPlaceholder}RepositoryInterface" => [
                     'kind' => self::KIND_INTERFACE,
+                    'template' => 'repository-interface',
                 ],
                 "{$classPlaceholder}Exception" => [
                     'extends' => [RuntimeException::class],
+                    'template' => 'exception',
                 ],
                 'ValueObject' => [
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
                         "{$classPlaceholder}Id" => [
                             'extends' => [AbstractUuidId::class],
+                            'template' => 'id',
                         ],
                     ],
                 ],
             ],
             "Infrastructure/{$classPlaceholder}" => [
                 "Dbal{$classPlaceholder}Repository" => [
+                    'template' => 'dbal-repository',
                     'attributes' => [
                         Connection::class => 'private readonly',
                     ],
                 ],
                 "Dbal{$classPlaceholder}Finder" => [
-                                        'attributes' => [
+                    'template' => 'dbal-finder',
+                    'attributes' => [
                         Connection::class => 'private readonly',
                     ]],
             ],
@@ -213,6 +233,7 @@ final class MakeEntity extends Command
                     'kind' => 'dir',
                     'items' => [
                         "{$classPlaceholder}Controller" => [
+                            'template' => 'controller',
                             'extends' => [AbstractController::class],
                         ],
                     ],
@@ -221,6 +242,7 @@ final class MakeEntity extends Command
                     'kind' => 'dir',
                     'items' => [
                         "{$classPlaceholder}Type" => [
+                            'template' => 'form',
                             'extends' => [AbstractType::class],
                         ],
                     ],
