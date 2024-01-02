@@ -7,10 +7,10 @@ namespace App\Application\TrainingSession;
 use App\Application\Fixtures\DependentFixtureInterface;
 use App\Application\Person\PersonFixture;
 use App\Application\TrainingItem\TrainingItemFixture;
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingSession\TrainingSessionEntity;
 use App\Domain\TrainingSession\TrainingSessionRepositoryInterface;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
-use DateTimeImmutable;
 
 final readonly class TrainingSessionFixture implements DependentFixtureInterface
 {
@@ -40,7 +40,7 @@ final readonly class TrainingSessionFixture implements DependentFixtureInterface
     {
         return new TrainingSessionEntity(
             TrainingSessionId::fromString('018cbfc8-72c2-7f2b-9732-3e7d214f35f7'),
-            new DateTimeImmutable('2023-12-25T09:00:00'),
+            DateTime::fromString('2023-12-25 09:00:00'),
             [TrainingItemFixture::getTestFixture()->id],
             [PersonFixture::testPerson1()->id],
             [PersonFixture::testPerson2()->id],

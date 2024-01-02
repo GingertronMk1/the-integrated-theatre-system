@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\TrainingCategory;
 
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Infrastructure\TrainingCategory\DbalTrainingCategoryFinder;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Exception;
@@ -37,7 +37,7 @@ final class DbalTrainingCategoryFinderTest extends TestCase
     public function testFind(): void
     {
         $name = 'Test TC';
-        $now = new DateTimeImmutable('1997-04-15T17:00:00');
+        $now = DateTime::fromString('1997-04-15 17:00:00');
 
         $this->connection->expects($this->once())->method('createQueryBuilder')->willReturn($this->queryBuilder);
         $this->queryBuilder->expects($this->once())->method('select')->willReturn($this->queryBuilder);
@@ -45,8 +45,8 @@ final class DbalTrainingCategoryFinderTest extends TestCase
         $this->queryBuilder->expects($this->once())->method('fetchAssociative')->willReturn([
             'id' => (string) $this->id,
             'name' => $name,
-            'created_at' => $now->format('c'),
-            'updated_at' => $now->format('c'),
+            'created_at' => (string) $now,
+            'updated_at' => (string) $now,
         ]);
 
         $model = $this->finder->find($this->id);

@@ -6,9 +6,9 @@ namespace App\Infrastructure\TrainingCategory;
 
 use App\Application\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Application\TrainingCategory\TrainingCategoryModel;
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\TrainingCategoryException;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinderInterface
@@ -57,8 +57,8 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         return new TrainingCategoryModel(
             TrainingCategoryId::fromString($row['id']),
             $row['name'],
-            new DateTimeImmutable($row['created_at']),
-            new DateTimeImmutable($row['updated_at']),
+            DateTime::fromString($row['created_at']),
+            DateTime::fromString($row['updated_at']),
         );
     }
 }

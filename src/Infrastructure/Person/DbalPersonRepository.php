@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Person;
 
+use App\Application\Common\Service\ClockInterface;
 use App\Domain\Person\PersonEntity;
 use App\Domain\Person\PersonRepositoryInterface;
 use App\Domain\Person\ValueObject\PersonId;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
-class DbalPersonRepository implements PersonRepositoryInterface
+final readonly class DbalPersonRepository implements PersonRepositoryInterface
 {
     public const PEOPLE_TABLE = 'people';
 
     public function __construct(
-        private readonly Connection $connection
+        private Connection $connection,
+        private ClockInterface $clock
     ) {
     }
 
@@ -34,7 +35,7 @@ class DbalPersonRepository implements PersonRepositoryInterface
             ->setParameter('id', (string) $entity->id)
             ->fetchOne();
 
-        $now = (new DateTimeImmutable())->format('c');
+        $now = (string) $this->clock->getCurrentTime();
 
         $upsertQb = $this->connection->createQueryBuilder();
         if (0 === $count) {

@@ -6,8 +6,8 @@ namespace App\Application\TrainingSession;
 
 use App\Application\Person\PersonModel;
 use App\Application\TrainingItem\TrainingItemModel;
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
-use DateTimeImmutable;
 
 final readonly class TrainingSessionModel
 {
@@ -18,12 +18,12 @@ final readonly class TrainingSessionModel
      */
     public function __construct(
         public TrainingSessionId $id,
-        public DateTimeImmutable $occurredAt,
+        public DateTime $occurredAt,
         public array $items,
         public array $trainers,
         public array $trainees,
-        public DateTimeImmutable $createdAt,
-        public DateTimeImmutable $updatedAt,
+        public DateTime $createdAt,
+        public DateTime $updatedAt,
     ) {
     }
 }

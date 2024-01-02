@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Framework\Form;
 
+use App\Application\Common\Service\ClockInterface;
 use App\Application\User\UserFinderInterface;
-use DateTimeImmutable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -18,13 +18,14 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 class PersonType extends AbstractType
 {
     public function __construct(
-        private readonly UserFinderInterface $userFinder
+        private readonly UserFinderInterface $userFinder,
+        private readonly ClockInterface $clock
     ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $currentYear = (int) (new DateTimeImmutable())->format('Y');
+        $currentYear = $this->clock->getCurrentTime()->getYear();
 
         $builder
             ->add(

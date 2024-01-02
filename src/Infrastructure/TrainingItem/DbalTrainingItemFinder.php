@@ -6,10 +6,10 @@ namespace App\Infrastructure\TrainingItem;
 
 use App\Application\TrainingItem\TrainingItemFinderInterface;
 use App\Application\TrainingItem\TrainingItemModel;
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterface
@@ -83,8 +83,8 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
             $row['name'],
             $row['is_dangerous'],
             TrainingCategoryId::fromString($row['training_category_id']),
-            new DateTimeImmutable($row['created_at']),
-            new DateTimeImmutable($row['updated_at']),
+            DateTime::fromString($row['created_at']),
+            DateTime::fromString($row['updated_at']),
         );
     }
 }

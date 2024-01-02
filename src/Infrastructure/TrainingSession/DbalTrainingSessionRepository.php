@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\TrainingSession;
 
+use App\Application\Common\Service\ClockInterface;
 use App\Domain\TrainingSession\TrainingSessionEntity;
 use App\Domain\TrainingSession\TrainingSessionRepositoryInterface;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionPersonType;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalTrainingSessionRepository implements TrainingSessionRepositoryInterface
@@ -17,6 +17,7 @@ final readonly class DbalTrainingSessionRepository implements TrainingSessionRep
 
     public function __construct(
         private Connection $connection,
+        private ClockInterface $clock
     ) {
     }
 
@@ -35,7 +36,6 @@ final readonly class DbalTrainingSessionRepository implements TrainingSessionRep
             ->setParameter('id', (string) $session->id)
             ->fetchOne();
 
-        $now = (new DateTimeImmutable())->format('c');
         $upsertQb = $this->connection->createQueryBuilder();
         if (0 === $count) {
             $upsertQb
@@ -57,8 +57,8 @@ final readonly class DbalTrainingSessionRepository implements TrainingSessionRep
         }
         $upsertQb->setParameters([
             'id' => (string) $session->id,
-            'occurred_at' => $session->occurredAt->format('c'),
-            'now' => $now,
+            'occurred_at' => (string) $session->occurredAt,
+            'now' => (string) $this->clock->getCurrentTime(),
         ])
         ->executeStatement();
 
