@@ -57,7 +57,7 @@ final readonly class DbalTrainingSessionRepository implements TrainingSessionRep
         }
         $upsertQb->setParameters([
             'id' => (string) $session->id,
-            'occurred_at' => $session->occurredAt->format('c'),
+            'occurred_at' => (string) $session->occurredAt,
             'now' => (string) $this->clock->getCurrentTime(),
         ])
         ->executeStatement();

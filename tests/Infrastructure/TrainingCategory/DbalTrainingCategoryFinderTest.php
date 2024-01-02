@@ -45,8 +45,8 @@ final class DbalTrainingCategoryFinderTest extends TestCase
         $this->queryBuilder->expects($this->once())->method('fetchAssociative')->willReturn([
             'id' => (string) $this->id,
             'name' => $name,
-            'created_at' => $now->format('c'),
-            'updated_at' => $now->format('c'),
+            'created_at' => (string) $now,
+            'updated_at' => (string) $now,
         ]);
 
         $model = $this->finder->find($this->id);

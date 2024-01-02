@@ -22,7 +22,7 @@ class CommandHandler
             $command->bio,
             $command->startYear,
             $command->endYear,
-            $command->user->id
+            $command->user?->id ?? null
         );
         $this->personRepository->savePerson($personEntity);
     }

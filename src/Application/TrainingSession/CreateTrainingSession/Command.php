@@ -6,7 +6,7 @@ namespace App\Application\TrainingSession\CreateTrainingSession;
 
 use App\Application\Person\PersonModel;
 use App\Application\TrainingItem\TrainingItemModel;
-use App\Domain\Common\ValueObject\DateTime;
+use DateTimeInterface;
 
 class Command
 {
@@ -16,7 +16,7 @@ class Command
      * @param array<PersonModel>       $trainees
      */
     public function __construct(
-        public ?DateTime $occurredAt = null,
+        public ?DateTimeInterface $occurredAt = null,
         public array $items = [],
         public array $trainers = [],
         public array $trainees = [],
