@@ -7,6 +7,7 @@ namespace App\Infrastructure\Show;
 use App\Application\Show\ShowFinderInterface;
 use App\Application\Show\ShowModel;
 use App\Domain\Common\ValueObject\DateTime;
+use App\Domain\Show\ShowException;
 use App\Domain\Show\ValueObject\ShowId;
 use Doctrine\DBAL\Connection;
 
@@ -17,6 +18,9 @@ final readonly class DbalShowFinder implements ShowFinderInterface
     ) {
     }
 
+    /**
+     * @return array<ShowModel>
+     */
     public function findAll(): array
     {
         $qb = $this->connection->createQueryBuilder();
@@ -40,9 +44,16 @@ final readonly class DbalShowFinder implements ShowFinderInterface
             ->setParameter('id', (string) $id)
             ->fetchAssociative();
 
+        if (!is_array($row)) {
+            throw ShowException::notFound($id);
+        }
+
         return $this->createShowFromRow($row);
     }
 
+    /**
+     * @param array<string, ?string> $row
+     */
     public function createShowFromRow(array $row): ShowModel
     {
         $deletedAt = null;

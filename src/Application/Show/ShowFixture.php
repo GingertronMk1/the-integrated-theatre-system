@@ -13,8 +13,8 @@ final readonly class ShowFixture implements FixtureInterface
 {
     public function __construct(
         private ShowRepositoryInterface $showRepository
-    )
-    {}
+    ) {
+    }
 
     public function load(): void
     {
@@ -23,10 +23,13 @@ final readonly class ShowFixture implements FixtureInterface
         }
     }
 
+    /**
+     * @return array<ShowEntity>
+     */
     private function getFixtures(): array
     {
         return [
-            self::testShow1()
+            self::testShow1(),
         ];
     }
 
