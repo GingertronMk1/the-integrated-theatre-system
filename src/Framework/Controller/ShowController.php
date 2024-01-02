@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Framework\Controller;
 
-use App\Application\Show\ShowFinderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 use App\Application\Show\CreateShow\Command as CreateCommand;
 use App\Application\Show\CreateShow\CommandHandler as CreateCommandHandler;
+use App\Application\Show\ShowFinderInterface;
 use App\Application\Show\UpdateShow\Command as UpdateCommand;
 use App\Application\Show\UpdateShow\CommandHandler as UpdateCommandHandler;
 use App\Domain\Show\ValueObject\ShowId;
 use App\Framework\Form\ShowType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ShowController extends AbstractController
 {
@@ -26,7 +26,7 @@ class ShowController extends AbstractController
         return $this->render(
             'pages/show/index.html.twig',
             [
-                'shows' => $shows
+                'shows' => $shows,
             ]
         );
     }
@@ -39,12 +39,14 @@ class ShowController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $handler->handle($command);
+
             return $this->redirectToRoute('show.index');
         }
+
         return $this->render(
             'pages/show/create.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }
@@ -58,12 +60,14 @@ class ShowController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $handler->handle($command);
+
             return $this->redirectToRoute('show.index');
         }
+
         return $this->render(
             'pages/show/update.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }
