@@ -22,6 +22,7 @@ class SeasonController extends AbstractController
     public function index(): Response
     {
         $seasons = [];
+
         return $this->render('pages/season/index.html.twig', ['seasons' => $seasons]);
     }
 
@@ -45,7 +46,6 @@ class SeasonController extends AbstractController
         );
     }
 
-
     #[Route('/season/update/{id}', 'season.create', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, SeasonFinderInterface $finder): Response
     {
@@ -66,5 +66,4 @@ class SeasonController extends AbstractController
             ]
         );
     }
-
 }
