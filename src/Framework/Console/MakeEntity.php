@@ -137,7 +137,7 @@ final class MakeEntity extends Command
                 'attributes' => $attrs['attributes'] ?? [],
                 'extends' => $attrs['extends'] ?? [],
                 'implements' => $attrs['implements'] ?? [],
-                'baseClass' => $this->className
+                'baseClass' => $this->className,
             ]
         );
         if (!$this->dryRun) {
@@ -164,20 +164,20 @@ final class MakeEntity extends Command
         return [
             "Application/{$classPlaceholder}" => [
                 "{$classPlaceholder}Model" => [
-                    'template' => 'model'
+                    'template' => 'model',
                 ],
                 "{$classPlaceholder}FinderInterface" => [
                     'kind' => self::KIND_INTERFACE,
-                    'template' => 'finder-interface'
+                    'template' => 'finder-interface',
                 ],
                 "Create{$classPlaceholder}" => [
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
                         'Command' => [
-                            'template' => 'create-command'
+                            'template' => 'create-command',
                         ],
                         'CommandHandler' => [
-                            'template' => 'create-command-handler'
+                            'template' => 'create-command-handler',
                         ],
                     ],
                 ],
@@ -185,32 +185,32 @@ final class MakeEntity extends Command
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
                         'Command' => [
-                            'template' => 'update-command'
+                            'template' => 'update-command',
                         ],
                         'CommandHandler' => [
-                            'template' => 'update-command-handler'
+                            'template' => 'update-command-handler',
                         ],
                     ],
                 ],
             ],
             "Domain/{$classPlaceholder}" => [
                 "{$classPlaceholder}Entity" => [
-                    'template' => 'entity'
+                    'template' => 'entity',
                 ],
                 "{$classPlaceholder}RepositoryInterface" => [
                     'kind' => self::KIND_INTERFACE,
-                    'template' => 'repository-interface'
+                    'template' => 'repository-interface',
                 ],
                 "{$classPlaceholder}Exception" => [
                     'extends' => [RuntimeException::class],
-                    'template' => 'exception'
+                    'template' => 'exception',
                 ],
                 'ValueObject' => [
                     'kind' => self::KIND_DIRECTORY,
                     'items' => [
                         "{$classPlaceholder}Id" => [
                             'extends' => [AbstractUuidId::class],
-                            'template' => 'id'
+                            'template' => 'id',
                         ],
                     ],
                 ],
