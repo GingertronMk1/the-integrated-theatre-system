@@ -13,7 +13,7 @@ final class Command
     ) {
     }
 
-    public static function for{{ baseClass }}(Command $command): void
+    public static function for{{ baseClass }}(Command $command): self
     {
         return new self(
             $command->id,

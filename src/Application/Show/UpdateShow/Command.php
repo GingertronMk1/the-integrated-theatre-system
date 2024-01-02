@@ -13,7 +13,7 @@ final class Command
     ) {
     }
 
-    public static function forShow(Command $command): void
+    public static function forShow(Command $command): self
     {
         return new self(
             $command->id,
