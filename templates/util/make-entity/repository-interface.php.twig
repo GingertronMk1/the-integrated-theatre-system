@@ -10,7 +10,5 @@ interface {{ className }}
 {
     public function getNextId(): {{ baseClass }}Id;
 
-    public function create{{ baseClass }}({{ baseClass }}Entity $category): void;
-
-    public function update{{ baseClass }}({{ baseClass }}Entity $category): void;
+    public function save{{ baseClass }}({{ baseClass }}Entity $entity): void;
 }

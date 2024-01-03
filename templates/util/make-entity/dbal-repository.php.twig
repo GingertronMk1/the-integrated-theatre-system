@@ -5,14 +5,61 @@ declare(strict_types=1);
 namespace {{ nameSpace }};
 
 use App\Application\Common\Service\ClockInterface;
+use App\Domain\{{ baseClass }}\{{ baseClass }}Entity;
+use App\Domain\{{ baseClass }}\{{ baseClass }}Exception;
+use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
 use App\Domain\{{ baseClass }}\{{ baseClass }}RepositoryInterface;
 use Doctrine\DBAL\Connection;
 
 final readonly class {{ className }} implements {{ baseClass }}RepositoryInterface
 {
+    private const TABLE = 'changeme';
+
     public function __construct(
         private Connection $connection,
         private ClockInterface $clock
     ) {
+    }
+
+    public function getNextId(): {{ baseClass }}Id
+    {
+        return {{ baseClass }}Id::generate();
+    }
+
+
+    public function save{{ baseClass }}({{ baseClass }}Entity $entity): void
+    {
+        $countQb = $this->connection->createQueryBuilder();
+        $count = $countQb
+            ->select('COUNT(*)')
+            ->from(self::TABLE)
+            ->where('id = :id')
+            ->setParameter('id', (string) $entity->id)
+            ->fetchOne();
+
+        $upsertQb = $this->connection->createQueryBuilder();
+        if (0 === $count) {
+            $upsertQb
+                ->insert(self::TABLE)
+                ->values([
+                    'id' => ':id,
+                    'created_at' => ':now',
+                    'updated_at' => ':now',
+                ]);
+        } else if (1 === $count) {
+            $upsertQb
+                ->update(self::TABLE)
+                ->set('updated_at', ':now')
+                ->where('id = :id')
+            ;
+        } else {
+            throw new {{ baseClass }}Exception("Too many rows with ID {{ $entity->id }}");
+        }
+
+        $upsertQb
+            ->setParameters([
+                'id' => (string) $entity->id,
+                'now' => (string) $this->clock->getCurrentTime(),
+            ])
     }
 }

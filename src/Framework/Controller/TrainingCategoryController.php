@@ -39,16 +39,12 @@ class TrainingCategoryController extends AbstractController
         $form = $this->createForm(TrainingCategoryType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $handler->handle($command);
-                $this->addFlash('success', 'Created training category');
+            $handler->handle($command);
+            $this->addFlash('success', 'Created training category');
 
-                $returnRoute = $request->get('return_to', 'training-category.index');
+            $returnRoute = $request->get('return_to', 'training-category.index');
 
-                return $this->redirectToRoute($returnRoute);
-            } catch (Exception $e) {
-                throw $e;
-            }
+            return $this->redirectToRoute($returnRoute);
         }
 
         return $this->render('pages/training-category/create.html.twig', [
