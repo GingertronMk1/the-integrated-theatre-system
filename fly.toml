@@ -30,7 +30,7 @@ primary_region = "lhr"
   processes = ["app"]
 
 [deploy]
-  release_command = "composer phinx:migrate"
+  release_command = "composer phinx:migrate -- -e production"
 
 [[vm]]
   cpu_kind = "shared"

@@ -1,0 +1,24 @@
+paths:
+    migrations: '%%PHINX_CONFIG_DIR%%/migrations'
+    seeds: '%%PHINX_CONFIG_DIR%%/seeds'
+environments:
+    default_migration_table: phinxlog
+    default_environment: development
+    production:
+        dsn: '%%DATABASE_URL%%'
+    development:
+        adapter: pgsql
+        host: '%%POSTGRES_HOST%%'
+        name: '%%POSTGRES_DB%%'
+        user: '%%POSTGRES_USER%%'
+        pass: '%%POSTGRES_PASSWORD%%'
+        port: '%%POSTGRES_PORT%%'
+        charset: '%%POSTGRES_CHARSET%%'
+    test:
+        adapter: pgsql
+        host: '%%POSTGRES_HOST%%'
+        name: '%%POSTGRES_DB_TEST%%'
+        user: '%%POSTGRES_USER%%'
+        pass: '%%POSTGRES_PASSWORD%%'
+        port: '%%POSTGRES_PORT%%'
+        charset: '%%POSTGRES_CHARSET%%'

@@ -98,7 +98,7 @@
             "./vendor/bin/deptrac analyse --config-file=./deptrac.yaml"
         ],
         "phinx": [
-            "./vendor/bin/phinx --configuration=./phinx.php"
+            "./vendor/bin/phinx --configuration=./phinx.yml"
         ],
         "phinx:migrate": [
             "@phinx migrate"
