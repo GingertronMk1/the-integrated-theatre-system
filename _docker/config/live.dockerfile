@@ -11,14 +11,16 @@ FROM fideloper/fly-laravel:${PHP_VERSION} as base
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION
 
-LABEL fly_launch_runtime="php"
+LABEL fly_launch_runtime="laravel"
 
 # copy application code, skipping files based on .dockerignore
 COPY . /var/www/html
 
 COPY ./_docker/config/live/FlyRuntime.php /var/www/html/src/FlyRuntime.php  
 
-RUN echo $APP_RUNTIME \
+ENV APP_RUNTIME="App\\FlyRuntime"
+
+RUN ls -la ./src \
     && composer install --optimize-autoloader --no-dev \
     && mkdir -p storage/logs \
     && chown -R www-data:www-data /var/www/html \

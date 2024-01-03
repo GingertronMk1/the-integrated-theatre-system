@@ -6,27 +6,23 @@ $dir = __DIR__;
 
 require "{$dir}/vendor/autoload.php";
 
-if (file_exists("{$dir}/config/bootstrap.php")) {
-    echo "file exists";
-    require "{$dir}/config/bootstrap.php";
-} elseif (method_exists(Dotenv::class, "bootEnv")) {
-    echo "loading dotenv";
-    (new Dotenv())->bootEnv("{$dir}/.env");
-}
-
 $dev = [
             'adapter' => 'pgsql',
-            'host' => $_ENV['POSTGRES_HOST'],
-            'name' => $_ENV['POSTGRES_DB'],
-            'user' => $_ENV['POSTGRES_USER'],
-            'pass' => $_ENV['POSTGRES_PASSWORD'],
-            'port' => $_ENV['POSTGRES_PORT'],
-            'charset' => $_ENV['POSTGRES_CHARSET'],
+            'host' => getenv('POSTGRES_HOST'),
+            'name' => getenv('POSTGRES_DB'),
+            'user' => getenv('POSTGRES_USER'),
+            'pass' => getenv('POSTGRES_PASSWORD'),
+            'port' => getenv('POSTGRES_PORT'),
+            'charset' => getenv('POSTGRES_CHARSET'),
 ];
 
 $test = [
     ...$dev,
-    'name' => $_ENV['POSTGRES_DB_TEST']
+    'name' => getenv('POSTGRES_DB_TEST')
+];
+
+$production = [
+    'dsn' => getenv('DATABASE_URL')
 ];
 
 return [
@@ -37,15 +33,7 @@ return [
     'environments' => [
         'default_migration_table' => 'phinxlog',
         'default_environment' => 'development',
-        'production' => [
-            'adapter' => 'postgresql',
-            'host' => 'database',
-            'name' => getenv('POSTGRES_DB'),
-            'user' => getenv('POSTGRES_USER'),
-            'pass' => getenv('POSTGRES_PASSWORD'),
-            'port' => getenv('POSTGRES_PORT'),
-            'charset' => getenv('POSTGRES_CHARSET'),
-        ],
+        'production' => $production,
         'development' => $dev,
         'test' => $test
     ],

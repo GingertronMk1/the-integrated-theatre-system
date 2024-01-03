@@ -17,8 +17,18 @@ when@test:
             dbname: '%env(resolve:POSTGRES_DB_TEST)%'
 
 
-when@prod:
+when@production:
     doctrine:
+        dbal:
+            url: '%env(DATABASE_URL)%'
+            dbname: ~
+            host: ~
+            port: ~
+            user: ~
+            password: ~
+            charset: ~
+            server_version: ~
+            profiling_collect_backtrace: ~
         orm:
             auto_generate_proxy_classes: false
             proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
