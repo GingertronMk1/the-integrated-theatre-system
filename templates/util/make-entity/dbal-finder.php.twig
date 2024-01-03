@@ -42,7 +42,7 @@ final readonly class {{ className }} implements {{ baseClass }}FinderInterface
     }
 
     /**
-     * @param array<string, ?(int|string)> $row
+     * @param array<string, int|string|null> $row
      */
     private function createFromRow(array $row): {{ baseClass }}Entity
     {
