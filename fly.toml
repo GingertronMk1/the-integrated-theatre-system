@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for the-integrated-theatre-system on 2024-01-03T12:24:01Z
+# fly.toml app configuration file generated for the-integrated-theatre-system-little-feather-4873 on 2024-01-03T12:27:12Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,10 +7,17 @@ app = "the-integrated-theatre-system"
 primary_region = "lhr"
 
 [build]
-  dockerfile = "./_docker/config/live.dockerfile"
+  [build.args]
+    NODE_VERSION = "18"
+    PHP_VERSION = "8.3"
 
 [env]
-  PORT = "8080"
+  APP_ENV = "production"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
+  SESSION_DRIVER = "cookie"
+  SESSION_SECURE_COOKIE = "true"
 
 [http_service]
   internal_port = 8080
