@@ -10,6 +10,7 @@ primary_region = "lhr"
   [build.args]
     NODE_VERSION = "18"
     PHP_VERSION = "8.3"
+  dockerfile = "./_docker/config/live.dockerfile"
 
 [env]
   APP_ENV = "production"
