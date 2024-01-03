@@ -25,11 +25,9 @@ final readonly class DbalSeasonRepository implements SeasonRepositoryInterface
 
     public function createSeason(SeasonEntity $entity): void
     {
-
     }
 
     public function updateSeason(SeasonEntity $entity): void
     {
-
     }
 }

@@ -8,8 +8,8 @@ use App\Application\Season\SeasonFinderInterface;
 use App\Application\Season\SeasonModel;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Season\SeasonException;
-use Doctrine\DBAL\Connection;
 use App\Domain\Season\ValueObject\SeasonId;
+use Doctrine\DBAL\Connection;
 
 final readonly class DbalSeasonFinder implements SeasonFinderInterface
 {
