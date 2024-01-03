@@ -34,7 +34,7 @@ final readonly class DbalShowRepository implements ShowRepositoryInterface
                 'description' => ':description',
                 'year' => ':year',
                 'semester' => ':semester',
-                'season' => ':season',
+                'season_id' => ':season_id',
                 'created_at' => ':now',
                 'updated_at' => ':now',
             ])
@@ -44,7 +44,7 @@ final readonly class DbalShowRepository implements ShowRepositoryInterface
                 'description' => $entity->description,
                 'year' => $entity->year,
                 'semester' => $entity->semester,
-                'season' => $entity->season,
+                'season_id' => $entity->seasonId,
                 'now' => (string) $this->clock->getCurrentTime(),
             ])
             ->executeStatement();
@@ -59,7 +59,7 @@ final readonly class DbalShowRepository implements ShowRepositoryInterface
             ->set('description', ':description')
             ->set('year', ':year')
             ->set('semester', ':semester')
-            ->set('season', ':season')
+            ->set('season_id', ':season_id')
             ->set('updated_at', ':now')
             ->setParameters([
                 'id' => (string) $entity->id,
@@ -67,7 +67,7 @@ final readonly class DbalShowRepository implements ShowRepositoryInterface
                 'description' => $entity->description,
                 'year' => $entity->year,
                 'semester' => $entity->semester,
-                'season' => $entity->season,
+                'season_id' => $entity->seasonId,
                 'now' => (string) $this->clock->getCurrentTime(),
             ])
             ->where('id = :id')

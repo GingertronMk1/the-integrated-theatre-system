@@ -67,7 +67,7 @@ final readonly class DbalShowFinder implements ShowFinderInterface
             $row['description'],
             $row['year'],
             $row['semester'],
-            $row['season'],
+            $row['season_id'],
             DateTime::fromString($row['created_at']),
             DateTime::fromString($row['updated_at']),
             $deletedAt,

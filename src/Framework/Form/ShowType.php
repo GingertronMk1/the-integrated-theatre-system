@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Framework\Form;
 
 use App\Application\Common\Service\ClockInterface;
+use App\Application\Season\SeasonFinderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -15,7 +16,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ShowType extends AbstractType
 {
     public function __construct(
-        private readonly ClockInterface $clock
+        private readonly ClockInterface $clock,
+        private readonly SeasonFinderInterface $seasonFinder
     ) {
     }
 
@@ -39,7 +41,16 @@ class ShowType extends AbstractType
                     'choice_label' => fn (?string $str) => $str ?? 'Unknown',
                 ])
             ->add('semester', TextType::class, ['required' => false])
-            ->add('season', TextType::class, ['required' => false])
+            ->add(
+                'season',
+                ChoiceType::class,
+                [
+                    'required' => false,
+                    'choices' => $this->seasonFinder->findAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                ]
+            )
             ->add('submit', SubmitType::class)
         ;
     }

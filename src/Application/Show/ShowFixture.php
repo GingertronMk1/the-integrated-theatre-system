@@ -41,7 +41,7 @@ final readonly class ShowFixture implements FixtureInterface
             'Woooo',
             '2015-16',
             'Summer',
-            'Fringe'
+            null
         );
     }
 }
