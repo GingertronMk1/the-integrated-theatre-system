@@ -7,13 +7,15 @@ app = "the-integrated-theatre-system"
 primary_region = "lhr"
 
 [build]
+  dockerfile = "_docker/config/live.dockerfile"
+
   [build.args]
     NODE_VERSION = "18"
     PHP_VERSION = "8.3"
-  dockerfile = "./_docker/config/live.dockerfile"
 
 [env]
   APP_ENV = "production"
+  APP_RUNTIME = "App\\FlyRuntime"
   LOG_CHANNEL = "stderr"
   LOG_LEVEL = "info"
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
