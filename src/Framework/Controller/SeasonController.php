@@ -19,9 +19,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class SeasonController extends AbstractController
 {
     #[Route('/season', 'season.index', methods: ['GET'])]
-    public function index(): Response
+    public function index(SeasonFinderInterface $finder): Response
     {
-        $seasons = [];
+        $seasons = $finder->findAll();
 
         return $this->render('pages/season/index.html.twig', ['seasons' => $seasons]);
     }
@@ -46,7 +46,7 @@ class SeasonController extends AbstractController
         );
     }
 
-    #[Route('/season/update/{id}', 'season.create', methods: ['GET', 'POST'])]
+    #[Route('/season/update/{id}', 'season.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, SeasonFinderInterface $finder): Response
     {
         $show = $finder->find(SeasonId::fromString($id));

@@ -41,6 +41,9 @@ final readonly class {{ className }} implements {{ baseClass }}FinderInterface
         return [];
     }
 
+    /**
+     * @param array<string, ?(int|string)> $row
+     */
     private function createFromRow(array $row): {{ baseClass }}Entity
     {
         return new {{ baseClass }}Entity(

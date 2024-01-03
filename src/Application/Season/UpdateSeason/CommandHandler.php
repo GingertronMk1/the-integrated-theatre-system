@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Season\UpdateSeason;
 
+use App\Domain\Season\SeasonEntity;
 use App\Domain\Season\SeasonRepositoryInterface;
 
 final readonly class CommandHandler
@@ -15,5 +16,12 @@ final readonly class CommandHandler
 
     public function handle(Command $command): void
     {
+        $entity = new SeasonEntity(
+            $command->id,
+            $command->name,
+            $command->description,
+            $command->colour
+        );
+        $this->repository->updateSeason($entity);
     }
 }

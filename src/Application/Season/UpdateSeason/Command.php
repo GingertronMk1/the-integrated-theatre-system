@@ -11,13 +11,19 @@ final class Command
 {
     public function __construct(
         public SeasonId $id,
+        public string $name = '',
+        public ?string $description = '',
+        public string $colour = '',
     ) {
     }
 
-    public static function forSeason(SeasonModel $command): self
+    public static function forSeason(SeasonModel $model): self
     {
         return new self(
-            $command->id,
+            $model->id,
+            $model->name,
+            $model->description,
+            $model->colour
         );
     }
 }

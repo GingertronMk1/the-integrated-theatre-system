@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Show;
 
+use App\Application\Season\SeasonFinderInterface;
 use App\Application\Show\ShowFinderInterface;
 use App\Application\Show\ShowModel;
 use App\Domain\Common\ValueObject\DateTime;
+use App\Domain\Season\ValueObject\SeasonId;
 use App\Domain\Show\ShowException;
 use App\Domain\Show\ValueObject\ShowId;
 use Doctrine\DBAL\Connection;
@@ -14,7 +16,8 @@ use Doctrine\DBAL\Connection;
 final readonly class DbalShowFinder implements ShowFinderInterface
 {
     public function __construct(
-        private Connection $connection
+        private Connection $connection,
+        private SeasonFinderInterface $seasonFinder
     ) {
     }
 
@@ -61,13 +64,18 @@ final readonly class DbalShowFinder implements ShowFinderInterface
             $deletedAt = DateTime::fromString($row['deleted_at']);
         }
 
+        $season = null;
+        if (!is_null($row['season_id'])) {
+            $season = $this->seasonFinder->find(SeasonId::fromString($row['season_id']));
+        }
+
         return new ShowModel(
             ShowId::fromString($row['id']),
             $row['name'],
             $row['description'],
             $row['year'],
             $row['semester'],
-            $row['season_id'],
+            $season,
             DateTime::fromString($row['created_at']),
             DateTime::fromString($row['updated_at']),
             $deletedAt,

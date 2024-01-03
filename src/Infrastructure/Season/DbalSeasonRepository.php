@@ -12,6 +12,8 @@ use Doctrine\DBAL\Connection;
 
 final readonly class DbalSeasonRepository implements SeasonRepositoryInterface
 {
+    private const TABLE = 'seasons';
+
     public function __construct(
         private Connection $connection,
         private ClockInterface $clock
@@ -25,6 +27,25 @@ final readonly class DbalSeasonRepository implements SeasonRepositoryInterface
 
     public function createSeason(SeasonEntity $entity): void
     {
+        $qb = $this->connection->createQueryBuilder();
+        $qb
+            ->insert(self::TABLE)
+            ->values([
+                'id' => ':id',
+                'name' => ':name',
+                'description' => ':description',
+                'colour' => ':colour',
+                'created_at' => ':now',
+                'updated_at' => ':now',
+            ])
+            ->setParameters([
+                'id' => (string) $entity->id,
+                'name' => $entity->name,
+                'description' => $entity->description,
+                'colour' => $entity->colour,
+                'now' => (string) $this->clock->getCurrentTime(),
+            ])
+            ->executeStatement();
     }
 
     public function updateSeason(SeasonEntity $entity): void

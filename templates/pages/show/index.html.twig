@@ -18,8 +18,14 @@
         <td>{{ show.name }}</td>
         <td>{{ show.description }}</td>
         <td>{{ show.year }}</td>
-        <td>{{ show.year }}</td>
-        <td>{{ show.season }}</td>
+        <td>{{ show.semester }}</td>
+        <td>
+            {% if show.season is not empty %}
+            {{ show.season.name }}
+            {% else %}
+            Season unknown
+            {% endif %}
+        </td>
         <td>{{ show.createdAt|date('Y-m-d H:i:s') }}</td>
         <td>{{ show.updatedAt|date('Y-m-d H:i:s') }}</td>
         <td><a href="{{ path('show.update', {id: show.id}) }}" class="button">Edit</a></td>

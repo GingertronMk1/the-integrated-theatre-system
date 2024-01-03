@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Show\UpdateShow;
 
+use App\Application\Season\SeasonModel;
 use App\Application\Show\ShowModel;
 use App\Domain\Show\ValueObject\ShowId;
 
@@ -15,7 +16,7 @@ final class Command
         public ?string $description = '',
         public ?string $year = '',
         public ?string $semester = '',
-        public ?string $season = '',
+        public ?SeasonModel $season = null,
     ) {
     }
 

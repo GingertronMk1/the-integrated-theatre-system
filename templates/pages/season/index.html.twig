@@ -1,4 +1,23 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block body %}
+<a href="{{ path('season.create') }}" class="button">Add</a>
+<table id="seasons">
+    <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Colour</th>
+    <th>Actions</th>
+    </thead>
+    {% for season in seasons %}
+    <tr data-item-id="{{ season.id }}">
+        <td>{{ season.name }}</td>
+        <td>{{ season.description }}</td>
+        <td style="color: {{ season.colour }}; background-color: {{ season.colour }}">
+            {{ season.colour }}
+        </td>
+        <td><a href="{{ path('season.update', {id: season.id}) }}" class="button">Edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

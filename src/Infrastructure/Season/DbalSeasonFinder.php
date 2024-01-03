@@ -50,6 +50,9 @@ final readonly class DbalSeasonFinder implements SeasonFinderInterface
         );
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     private function createFromRow(array $row): SeasonModel
     {
         $deletedAt = null;

@@ -22,7 +22,7 @@ final readonly class CommandHandler
             $command->description,
             $command->year,
             $command->semester,
-            $command->season
+            $command->season?->id ?? null
         );
 
         $this->repository->createShow($entity);
