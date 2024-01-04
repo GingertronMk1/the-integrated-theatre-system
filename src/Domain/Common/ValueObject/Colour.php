@@ -11,7 +11,8 @@ final readonly class Colour implements Stringable
 {
     private function __construct(
         private string $colour
-    ) {}
+    ) {
+    }
 
     public static function fromString(string $colour): self
     {
@@ -21,12 +22,13 @@ final readonly class Colour implements Stringable
             $amendedColour = implode(
                 '',
                 array_map(
-                    fn (string $subStr) => $subStr . '0',
+                    fn (string $subStr) => $subStr.'0',
                     $splitStr
                 )
             );
+
             return new self("#{$amendedColour}");
-        } else if (preg_match('/^#[0-9a-zA-Z]{6}$/', $colour)) {
+        } elseif (preg_match('/^#[0-9a-zA-Z]{6}$/', $colour)) {
             return new self($colour);
         } else {
             throw new InvalidArgumentException("Invalid hex colour string {$colour}");
@@ -38,6 +40,7 @@ final readonly class Colour implements Stringable
         $hexR = self::intToHex($r);
         $hexG = self::intToHex($g);
         $hexB = self::intToHex($b);
+
         return self::fromString("#{$hexR}{$hexG}{$hexB}");
     }
 
