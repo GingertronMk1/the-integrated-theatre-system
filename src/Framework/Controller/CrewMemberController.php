@@ -11,29 +11,30 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CrewMemberController extends AbstractController
 {
-    #[Route('<NAME>', '<NAME>.index', methods: ['GET'])]
+    #[Route('crew-member', 'crew-member.index', methods: ['GET'])]
     public function index(): Response
     {
+        $items = [];
         return $this->render(
-            'pages/<NAME>/index.html.twig',
+            'pages/crew-member/index.html.twig',
             [
                 'training_items' => $items,
             ]
         );
     }
 
-    #[Route('/<NAME>/create', '<NAME>.create', methods: ['GET', 'POST'])]
+    #[Route('/crew-member/create', 'crew-member.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
-        return $this->render('pages/<NAME>/create.html.twig', [
+        return $this->render('pages/crew-member/create.html.twig', [
             // 'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/<NAME>/update/{id}', '<NAME>.update', methods: ['GET', 'POST'])]
+    #[Route('/crew-member/update/{id}', 'crew-member.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id): Response
     {
-        return $this->render('pages/<NAME>/update.html.twig', [
+        return $this->render('pages/crew-member/update.html.twig', [
             // 'form' => $form->createView(),
         ]);
     }
