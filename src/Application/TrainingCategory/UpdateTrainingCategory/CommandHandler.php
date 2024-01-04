@@ -20,6 +20,6 @@ final readonly class CommandHandler
             $command->category->id,
             $command->name,
         );
-        $this->trainingCategoryRepository->updateTrainingCategory($newCategory);
+        $this->trainingCategoryRepository->save($newCategory);
     }
 }

@@ -24,6 +24,6 @@ class CommandHandler
             $command->endYear,
             $command->user?->id ?? null
         );
-        $this->personRepository->savePerson($personEntity);
+        $this->personRepository->save($personEntity);
     }
 }

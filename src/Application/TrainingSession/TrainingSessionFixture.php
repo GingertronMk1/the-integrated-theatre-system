@@ -22,7 +22,7 @@ final readonly class TrainingSessionFixture implements DependentFixtureInterface
     public function load(): void
     {
         foreach ($this->getAllFixtures() as $fixture) {
-            $this->trainingSessionRepository->saveSession($fixture);
+            $this->trainingSessionRepository->save($fixture);
         }
     }
 

@@ -25,7 +25,7 @@ final readonly class PersonFixture implements DependentFixtureInterface
     public function load(): void
     {
         foreach ($this->getFixtures() as $fixture) {
-            $this->personRepository->savePerson($fixture);
+            $this->personRepository->save($fixture);
         }
     }
 

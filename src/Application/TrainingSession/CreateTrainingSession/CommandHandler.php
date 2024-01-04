@@ -27,6 +27,6 @@ final readonly class CommandHandler
             array_map(fn (PersonModel $person) => $person->id, $command->trainers),
             array_map(fn (PersonModel $person) => $person->id, $command->trainees),
         );
-        $this->trainingSessionRepository->saveSession($entity);
+        $this->trainingSessionRepository->save($entity);
     }
 }

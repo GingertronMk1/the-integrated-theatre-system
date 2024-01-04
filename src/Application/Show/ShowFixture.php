@@ -19,7 +19,7 @@ final readonly class ShowFixture implements FixtureInterface
     public function load(): void
     {
         foreach ($this->getFixtures() as $fixture) {
-            $this->showRepository->createShow($fixture);
+            $this->showRepository->save($fixture);
         }
     }
 
@@ -40,7 +40,6 @@ final readonly class ShowFixture implements FixtureInterface
             'Some Show Or Other',
             'Woooo',
             '2015-16',
-            'Summer',
             null
         );
     }

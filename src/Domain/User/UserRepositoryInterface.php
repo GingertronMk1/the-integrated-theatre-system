@@ -10,5 +10,5 @@ interface UserRepositoryInterface
 {
     public function getNextId(): UserId;
 
-    public function createUser(UserEntity $userEntity): void;
+    public function save(UserEntity $userEntity): void;
 }

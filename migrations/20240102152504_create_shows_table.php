@@ -42,7 +42,6 @@ final class CreateShowsTable extends AbstractMigration
             ->addColumn('name', 'string')
             ->addColumn('description', 'text')
             ->addColumn('year', 'string')
-            ->addColumn('semester', 'string')
             ->addColumn('season_id', 'string')
             ->addColumn('created_at', 'string')
             ->addColumn('updated_at', 'string')
@@ -51,7 +50,6 @@ final class CreateShowsTable extends AbstractMigration
         $showsTable
             ->addIndex('name')
             ->addIndex('year')
-            ->addIndex('semester')
             ->addForeignKey(
                 'season_id',
                 self::SEASONS_TABLE,

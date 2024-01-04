@@ -8,13 +8,14 @@ use App\Application\Common\Service\ClockInterface;
 use App\Domain\Show\ShowEntity;
 use App\Domain\Show\ShowRepositoryInterface;
 use App\Domain\Show\ValueObject\ShowId;
+use App\Infrastructure\Common\AbstractDbalRepository;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalShowRepository implements ShowRepositoryInterface
+final class DbalShowRepository extends AbstractDbalRepository implements ShowRepositoryInterface
 {
     public function __construct(
-        private Connection $connection,
-        private ClockInterface $clock
+        private readonly Connection $connection,
+        private readonly ClockInterface $clock
     ) {
     }
 
@@ -23,54 +24,44 @@ final readonly class DbalShowRepository implements ShowRepositoryInterface
         return ShowId::generate();
     }
 
-    public function createShow(ShowEntity $entity): void
+    public function save(ShowEntity $entity): void
     {
+        $count = $this->getCount($this->connection, $entity->id);
         $qb = $this->connection->createQueryBuilder();
-        $qb
-            ->insert('shows')
-            ->values([
-                'id' => ':id',
-                'name' => ':name',
-                'description' => ':description',
-                'year' => ':year',
-                'semester' => ':semester',
-                'season_id' => ':season_id',
-                'created_at' => ':now',
-                'updated_at' => ':now',
-            ])
-            ->setParameters([
-                'id' => (string) $entity->id,
-                'name' => $entity->name,
-                'description' => $entity->description,
-                'year' => $entity->year,
-                'semester' => $entity->semester,
-                'season_id' => $entity->seasonId,
-                'now' => (string) $this->clock->getCurrentTime(),
-            ])
-            ->executeStatement();
+
+        if (0 === $count) {
+            $qb
+                ->insert($this->getTable())
+                ->values([
+                    'id' => ':id',
+                    'name' => ':name',
+                    'description' => ':description',
+                    'year' => ':year',                    'season_id' => ':season_id',
+                    'created_at' => ':now',
+                    'updated_at' => ':now',
+                ]);
+        } else {
+            $qb
+                ->update($this->getTable())
+                ->set('name', ':name')
+                ->set('description', ':description')
+                ->set('year', ':year')->set('season_id', ':season_id')
+                ->set('updated_at', ':now')
+                ->where('id = :id')
+            ;
+        }
+        $qb->setParameters([
+            'id' => (string) $entity->id,
+            'name' => $entity->name,
+            'description' => $entity->description,
+            'year' => $entity->year,            'season_id' => $entity->seasonId,
+            'now' => (string) $this->clock->getCurrentTime(),
+        ])
+        ->executeStatement();
     }
 
-    public function updateShow(ShowEntity $entity): void
+    protected function getTable(): string
     {
-        $qb = $this->connection->createQueryBuilder();
-        $qb
-            ->update('shows')
-            ->set('name', ':name')
-            ->set('description', ':description')
-            ->set('year', ':year')
-            ->set('semester', ':semester')
-            ->set('season_id', ':season_id')
-            ->set('updated_at', ':now')
-            ->setParameters([
-                'id' => (string) $entity->id,
-                'name' => $entity->name,
-                'description' => $entity->description,
-                'year' => $entity->year,
-                'semester' => $entity->semester,
-                'season_id' => $entity->seasonId,
-                'now' => (string) $this->clock->getCurrentTime(),
-            ])
-            ->where('id = :id')
-            ->executeStatement();
+        return 'shows';
     }
 }

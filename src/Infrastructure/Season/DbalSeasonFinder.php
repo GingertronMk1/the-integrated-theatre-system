@@ -6,6 +6,7 @@ namespace App\Infrastructure\Season;
 
 use App\Application\Season\SeasonFinderInterface;
 use App\Application\Season\SeasonModel;
+use App\Domain\Common\ValueObject\Colour;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Season\SeasonException;
 use App\Domain\Season\ValueObject\SeasonId;
@@ -64,7 +65,7 @@ final readonly class DbalSeasonFinder implements SeasonFinderInterface
             SeasonId::fromString($row['id']),
             $row['name'],
             $row['description'],
-            $row['colour'],
+            Colour::fromString($row['colour']),
             DateTime::fromString($row['created_at']),
             DateTime::fromString($row['updated_at']),
             $deletedAt,

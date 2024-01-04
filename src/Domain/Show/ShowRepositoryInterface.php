@@ -10,7 +10,5 @@ interface ShowRepositoryInterface
 {
     public function getNextId(): ShowId;
 
-    public function createShow(ShowEntity $category): void;
-
-    public function updateShow(ShowEntity $category): void;
+    public function save(ShowEntity $category): void;
 }

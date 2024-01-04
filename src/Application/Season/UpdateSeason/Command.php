@@ -23,7 +23,7 @@ final class Command
             $model->id,
             $model->name,
             $model->description,
-            $model->colour
+            (string) $model->colour
         );
     }
 }

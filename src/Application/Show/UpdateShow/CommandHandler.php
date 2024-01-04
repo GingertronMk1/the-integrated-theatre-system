@@ -20,11 +20,9 @@ final readonly class CommandHandler
             $command->id,
             $command->name,
             $command->description,
-            $command->year,
-            $command->semester,
-            $command->season?->id ?? null
+            $command->year, $command->season?->id ?? null
         );
 
-        $this->repository->updateShow($entity);
+        $this->repository->save($entity);
     }
 }
