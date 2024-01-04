@@ -46,14 +46,16 @@ final readonly class Colour implements Stringable
 
     private static function intToHex(int $n): string
     {
-        if (256 < $n) {
+        if (255 < $n) {
             throw new InvalidArgumentException("{$n} is too large to be a valid colour");
         }
-        if (-1 > $n) {
+        if (0 > $n) {
             throw new InvalidArgumentException("{$n} is too small to be a valid colour");
         }
 
-        return dechex($n);
+        $hex = dechex($n);
+
+        return str_pad($hex, 2, '0', STR_PAD_LEFT);
     }
 
     public function __toString(): string
