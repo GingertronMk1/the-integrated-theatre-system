@@ -9,20 +9,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-
 class {{ className }} extends AbstractController
 {
     #[Route('<NAME>', '<NAME>.index', methods: ['GET'])]
     public function index(): Response
     {
+        $items = [];
         return $this->render(
             'pages/<NAME>/index.html.twig',
             [
-                'training_items' => $items,
+                'items' => $items,
             ]
         );
     }
-
 
     #[Route('/<NAME>/create', '<NAME>.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
