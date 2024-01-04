@@ -10,7 +10,7 @@
     <th>Actions</th>
     </thead>
     {% for season in seasons %}
-    <tr data-item-id="{{ season.id }}">
+    <tr data-season-id="{{ season.id }}">
         <td>{{ season.name }}</td>
         <td>{{ season.description }}</td>
         <td style="color: {{ season.colour }}; background-color: {{ season.colour }}">

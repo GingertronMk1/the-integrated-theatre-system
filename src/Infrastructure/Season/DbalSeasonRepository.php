@@ -50,5 +50,21 @@ final readonly class DbalSeasonRepository implements SeasonRepositoryInterface
 
     public function updateSeason(SeasonEntity $entity): void
     {
+        $qb = $this->connection->createQueryBuilder();
+        $qb
+            ->update(self::TABLE)
+            ->set('name', ':name')
+            ->set('description', ':description')
+            ->set('colour', ':colour')
+            ->set('updated_at', ':now')
+            ->where('id = :id')
+            ->setParameters([
+                'id' => (string) $entity->id,
+                'name' => $entity->name,
+                'description' => $entity->description,
+                'colour' => $entity->colour,
+                'now' => (string) $this->clock->getCurrentTime(),
+            ])
+            ->executeStatement();
     }
 }
