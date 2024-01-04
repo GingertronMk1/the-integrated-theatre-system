@@ -46,7 +46,7 @@ final class DbalSeasonRepository extends AbstractDbalRepository implements Seaso
                 ]);
         } else {
             $qb
-                ->insert($this->getTable())
+                ->update($this->getTable())
                 ->set('name', ':name')
                 ->set('description', ':description')
                 ->set('colour', ':colour')

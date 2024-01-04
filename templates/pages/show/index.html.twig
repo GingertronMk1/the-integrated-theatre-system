@@ -6,9 +6,7 @@
     <thead>
     <th>Name</th>
     <th>Description</th>
-    <th>Year</th>
-    <th>Semester</th>
-    <th>Season</th>
+    <th>Year</th>    <th>Season</th>
     <th>Created At</th>
     <th>Updated At</th>
     <th>Actions</th>
@@ -17,9 +15,7 @@
     <tr data-show-id="{{ show.id }}">
         <td>{{ show.name }}</td>
         <td>{{ show.description }}</td>
-        <td>{{ show.year }}</td>
-        <td>{{ show.semester }}</td>
-        <td>
+        <td>{{ show.year }}</td>        <td>
             {% if show.season is not empty %}
             {{ show.season.name }}
             {% else %}

@@ -14,9 +14,7 @@ final class Command
         public ShowId $id,
         public string $name = '',
         public ?string $description = '',
-        public ?string $year = '',
-        public ?string $semester = '',
-        public ?SeasonModel $season = null,
+        public ?string $year = '', public ?SeasonModel $season = null,
     ) {
     }
 
@@ -26,9 +24,7 @@ final class Command
             $model->id,
             $model->name,
             $model->description,
-            $model->year,
-            $model->semester,
-            $model->season
+            $model->year, $model->season
         );
     }
 }

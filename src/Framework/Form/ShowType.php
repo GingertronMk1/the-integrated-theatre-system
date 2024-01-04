@@ -39,18 +39,16 @@ class ShowType extends AbstractType
                     'required' => false,
                     'choices' => $years,
                     'choice_label' => fn (?string $str) => $str ?? 'Unknown',
-                ])
-            ->add('semester', TextType::class, ['required' => false])
-            ->add(
-                'season',
-                ChoiceType::class,
-                [
-                    'required' => false,
-                    'choices' => $this->seasonFinder->findAll(),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                ]
-            )
+                ])->add(
+                    'season',
+                    ChoiceType::class,
+                    [
+                        'required' => false,
+                        'choices' => $this->seasonFinder->findAll(),
+                        'choice_label' => 'name',
+                        'choice_value' => 'id',
+                    ]
+                )
             ->add('submit', SubmitType::class)
         ;
     }

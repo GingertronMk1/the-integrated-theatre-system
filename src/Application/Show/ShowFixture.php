@@ -40,7 +40,6 @@ final readonly class ShowFixture implements FixtureInterface
             'Some Show Or Other',
             'Woooo',
             '2015-16',
-            'Summer',
             null
         );
     }

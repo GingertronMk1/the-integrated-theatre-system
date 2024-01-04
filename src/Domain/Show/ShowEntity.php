@@ -14,7 +14,6 @@ final class ShowEntity
         public string $name,
         public ?string $description,
         public ?string $year,
-        public ?string $semester,
         public ?SeasonId $seasonId
     ) {
     }

@@ -11,9 +11,7 @@ final class Command
     public function __construct(
         public string $name = '',
         public ?string $description = '',
-        public ?string $year = '',
-        public ?string $semester = '',
-        public ?SeasonModel $season = null,
+        public ?string $year = '', public ?SeasonModel $season = null,
     ) {
     }
 }

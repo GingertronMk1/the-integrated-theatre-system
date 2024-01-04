@@ -47,7 +47,6 @@ final class DbalTrainingCategoryRepository extends AbstractDbalRepository implem
             $qb
                 ->update($this->getTable())
                 ->set('name', ':name')
-                ->set('created_at', ':now')
                 ->set('updated_at', ':now')
                 ->where('id = :id')
             ;
