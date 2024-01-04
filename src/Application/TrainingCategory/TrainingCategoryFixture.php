@@ -19,7 +19,7 @@ final readonly class TrainingCategoryFixture implements FixtureInterface
     public function load(): void
     {
         foreach ($this->getFixtures() as $fixture) {
-            $this->trainingCategoryRepository->createTrainingCategory($fixture);
+            $this->trainingCategoryRepository->save($fixture);
         }
     }
 

@@ -6,17 +6,16 @@ namespace App\Infrastructure\TrainingCategory;
 
 use App\Application\Common\Service\ClockInterface;
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
-use App\Domain\TrainingCategory\TrainingCategoryException;
 use App\Domain\TrainingCategory\TrainingCategoryRepositoryInterface;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
+use App\Infrastructure\Common\AbstractDbalRepository;
 use Doctrine\DBAL\Connection;
-use Exception;
 
-final readonly class DbalTrainingCategoryRepository implements TrainingCategoryRepositoryInterface
+final class DbalTrainingCategoryRepository extends AbstractDbalRepository implements TrainingCategoryRepositoryInterface
 {
     public function __construct(
-        private Connection $connection,
-        private ClockInterface $clock
+        private readonly Connection $connection,
+        private readonly ClockInterface $clock
     ) {
     }
 
@@ -25,60 +24,40 @@ final readonly class DbalTrainingCategoryRepository implements TrainingCategoryR
         return TrainingCategoryId::generate();
     }
 
-    public function createTrainingCategory(TrainingCategoryEntity $category): void
+    protected function getTable(): string
     {
-        try {
-            $qb = $this->connection->createQueryBuilder();
+        return 'training_categories';
+    }
+
+    public function save(TrainingCategoryEntity $category): void
+    {
+        $count = $this->getCount($this->connection, $category->id);
+
+        $qb = $this->connection->createQueryBuilder();
+        if (0 === $count) {
             $qb
-                ->insert('training_categories')
+                ->insert($this->getTable())
                 ->values([
                     'id' => ':id',
                     'name' => ':name',
                     'created_at' => ':now',
                     'updated_at' => ':now',
-                ])
-                ->setParameters([
-                    'id' => (string) $category->id,
-                    'name' => $category->name,
-                    'now' => (string) $this->clock->getCurrentTime(),
-                ])
-                ->executeQuery()
-            ;
-        } catch (Exception $e) {
-            throw TrainingCategoryException::errorSaving($e);
-        }
-    }
-
-    public function updateTrainingCategory(TrainingCategoryEntity $category): void
-    {
-        try {
-            $finderQB = $this->connection->createQueryBuilder();
-            $result = $finderQB
-                ->select('COUNT(*)')
-                ->from('training_categories')
-                ->where('id = :id')
-                ->setParameter('id', (string) $category->id)
-                ->fetchOne()
-            ;
-            if ((int) $result < 1) {
-                throw TrainingCategoryException::notFound($category->id);
-            }
-
-            $qb = $this->connection->createQueryBuilder();
+                ]);
+        } else {
             $qb
-                ->update('training_categories')
+                ->update($this->getTable())
                 ->set('name', ':name')
+                ->set('created_at', ':now')
                 ->set('updated_at', ':now')
-                ->setParameters([
-                    'id' => (string) $category->id,
-                    'name' => $category->name,
-                    'now' => (string) $this->clock->getCurrentTime(),
-                ])
                 ->where('id = :id')
-                ->executeQuery()
             ;
-        } catch (Exception $e) {
-            throw TrainingCategoryException::errorSaving($e);
         }
+        $qb->setParameters([
+            'id' => (string) $category->id,
+            'name' => $category->name,
+            'now' => (string) $this->clock->getCurrentTime(),
+        ])
+        ->executeQuery()
+        ;
     }
 }

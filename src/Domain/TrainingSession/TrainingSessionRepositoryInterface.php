@@ -10,5 +10,5 @@ interface TrainingSessionRepositoryInterface
 {
     public function getNextId(): TrainingSessionId;
 
-    public function saveSession(TrainingSessionEntity $session): void;
+    public function save(TrainingSessionEntity $session): void;
 }

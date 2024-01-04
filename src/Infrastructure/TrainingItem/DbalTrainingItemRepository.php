@@ -6,17 +6,16 @@ namespace App\Infrastructure\TrainingItem;
 
 use App\Application\Common\Service\ClockInterface;
 use App\Domain\TrainingItem\TrainingItemEntity;
-use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
+use App\Infrastructure\Common\AbstractDbalRepository;
 use Doctrine\DBAL\Connection;
-use Exception;
 
-final readonly class DbalTrainingItemRepository implements TrainingItemRepositoryInterface
+final class DbalTrainingItemRepository extends AbstractDbalRepository implements TrainingItemRepositoryInterface
 {
     public function __construct(
-        private Connection $connection,
-        private ClockInterface $clock
+        private readonly Connection $connection,
+        private readonly ClockInterface $clock
     ) {
     }
 
@@ -25,12 +24,18 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
         return TrainingItemId::generate();
     }
 
-    public function createTrainingItem(TrainingItemEntity $entity): void
+    protected function getTable(): string
     {
-        try {
-            $qb = $this->connection->createQueryBuilder();
+        return 'training_items';
+    }
+
+    public function save(TrainingItemEntity $entity): void
+    {
+        $count = $this->getCount($this->connection, $entity->id);
+        $qb = $this->connection->createQueryBuilder();
+        if (0 === $count) {
             $qb
-                ->insert('training_items')
+                ->insert($this->getTable())
                 ->values([
                     'id' => ':id',
                     'name' => ':name',
@@ -38,55 +43,24 @@ final readonly class DbalTrainingItemRepository implements TrainingItemRepositor
                     'training_category_id' => ':training_category_id',
                     'created_at' => ':now',
                     'updated_at' => ':now',
-                ])
-                ->setParameters([
-                    'id' => $entity->id,
-                    'name' => $entity->name,
-                    'is_dangerous' => (int) $entity->isDangerous,
-                    'training_category_id' => (string) $entity->trainingCategoryId,
-                    'now' => (string) $this->clock->getCurrentTime(),
-                ])
-                ->executeQuery()
-            ;
-        } catch (Exception $e) {
-            throw TrainingItemException::errorSaving($e);
-        }
-    }
-
-    public function updateTrainingItem(TrainingItemEntity $item): void
-    {
-        try {
-            $finderQB = $this->connection->createQueryBuilder();
-            $result = $finderQB
-                ->select('COUNT(*)')
-                ->from('training_items')
-                ->where('id = :id')
-                ->setParameter('id', (string) $item->id)
-                ->fetchOne()
-            ;
-            if ((int) $result < 1) {
-                throw TrainingItemException::notFound($item->id);
-            }
-
-            $qb = $this->connection->createQueryBuilder();
+                ]);
+        } else {
             $qb
-                ->update('training_items')
+                ->update($this->getTable())
                 ->set('name', ':name')
                 ->set('is_dangerous', ':is_dangerous')
                 ->set('training_category_id', ':training_category_id')
                 ->set('updated_at', ':now')
-                ->setParameters([
-                    'id' => (string) $item->id,
-                    'name' => $item->name,
-                    'is_dangerous' => (int) $item->isDangerous,
-                    'training_category_id' => (string) $item->trainingCategoryId,
-                    'now' => (string) $this->clock->getCurrentTime(),
-                ])
-                ->where('id = :id')
-                ->executeQuery()
-            ;
-        } catch (Exception $e) {
-            throw TrainingItemException::errorSaving($e);
+                ->where('id = :id');
         }
+        $qb->setParameters([
+            'id' => $entity->id,
+            'name' => $entity->name,
+            'is_dangerous' => (int) $entity->isDangerous,
+            'training_category_id' => (string) $entity->trainingCategoryId,
+            'now' => (string) $this->clock->getCurrentTime(),
+        ])
+        ->executeQuery()
+        ;
     }
 }

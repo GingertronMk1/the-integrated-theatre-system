@@ -22,6 +22,6 @@ class CommandHandler
             $command->isDangerous,
             $command->trainingCategoryId
         );
-        $this->trainingItemRepository->createTrainingItem($item);
+        $this->trainingItemRepository->save($item);
     }
 }

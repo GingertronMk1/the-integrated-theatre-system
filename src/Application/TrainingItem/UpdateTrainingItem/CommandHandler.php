@@ -23,6 +23,6 @@ final readonly class CommandHandler
             $command->trainingCategoryId,
         );
 
-        $this->trainingItemRepository->updateTrainingItem($trainingItemEntity);
+        $this->trainingItemRepository->save($trainingItemEntity);
     }
 }

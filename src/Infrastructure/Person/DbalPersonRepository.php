@@ -8,11 +8,15 @@ use App\Application\Common\Service\ClockInterface;
 use App\Domain\Person\PersonEntity;
 use App\Domain\Person\PersonRepositoryInterface;
 use App\Domain\Person\ValueObject\PersonId;
+use App\Infrastructure\Common\AbstractDbalRepository;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalPersonRepository implements PersonRepositoryInterface
+final class DbalPersonRepository extends AbstractDbalRepository implements PersonRepositoryInterface
 {
-    public const PEOPLE_TABLE = 'people';
+    protected function getTable(): string
+    {
+        return 'people';
+    }
 
     public function __construct(
         private Connection $connection,
@@ -25,22 +29,16 @@ final readonly class DbalPersonRepository implements PersonRepositoryInterface
         return PersonId::generate();
     }
 
-    public function savePerson(PersonEntity $entity): void
+    public function save(PersonEntity $entity): void
     {
-        $existsQb = $this->connection->createQueryBuilder();
-        $count = $existsQb
-            ->select('COUNT(*)')
-            ->from(self::PEOPLE_TABLE)
-            ->where('id = :id')
-            ->setParameter('id', (string) $entity->id)
-            ->fetchOne();
+        $count = $this->getCount($this->connection, $entity->id);
 
         $now = (string) $this->clock->getCurrentTime();
 
         $upsertQb = $this->connection->createQueryBuilder();
         if (0 === $count) {
             $upsertQb
-                ->insert(self::PEOPLE_TABLE)
+                ->insert($this->getTable())
                 ->values([
                     'id' => ':id',
                     'name' => ':name',
@@ -53,7 +51,7 @@ final readonly class DbalPersonRepository implements PersonRepositoryInterface
             ;
         } elseif (1 === $count) {
             $upsertQb
-                ->update(self::PEOPLE_TABLE)
+                ->update($this->getTable())
                 ->set('name', ':name')
                 ->set('bio', ':bio')
                 ->set('start_year', ':start_year')

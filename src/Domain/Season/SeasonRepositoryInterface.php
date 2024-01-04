@@ -10,7 +10,5 @@ interface SeasonRepositoryInterface
 {
     public function getNextId(): SeasonId;
 
-    public function createSeason(SeasonEntity $entity): void;
-
-    public function updateSeason(SeasonEntity $entity): void;
+    public function save(SeasonEntity $entity): void;
 }

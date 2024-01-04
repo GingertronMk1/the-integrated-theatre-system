@@ -24,7 +24,7 @@ final readonly class UserFixture implements FixtureInterface
             $hashedPassword = $this->userPasswordHasher->hashPassword($fixture, $fixture->password);
             $this
                 ->userRepository
-                ->createUser(
+                ->save(
                     new UserEntity(
                         $fixture->id,
                         $fixture->email,

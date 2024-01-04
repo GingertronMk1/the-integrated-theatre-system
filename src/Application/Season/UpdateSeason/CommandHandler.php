@@ -23,6 +23,6 @@ final readonly class CommandHandler
             $command->description,
             Colour::fromString($command->colour)
         );
-        $this->repository->updateSeason($entity);
+        $this->repository->save($entity);
     }
 }

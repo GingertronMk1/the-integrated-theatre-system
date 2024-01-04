@@ -56,7 +56,7 @@ final class DbalTrainingCategoryRepositoryTest extends TestCase
         $mockQueryBuilder->expects($this->once())->method('values')->willReturn($mockQueryBuilder);
         $mockQueryBuilder->expects($this->once())->method('setParameters')->willReturn($mockQueryBuilder);
         $mockQueryBuilder->expects($this->once())->method('executeQuery');
-        $this->repository->createTrainingCategory($this->entity);
+        $this->repository->save($this->entity);
     }
 
     /**
@@ -79,7 +79,7 @@ final class DbalTrainingCategoryRepositoryTest extends TestCase
         $mockQueryBuilder->expects($this->exactly(2))->method('set')->willReturn($mockQueryBuilder);
         $mockQueryBuilder->expects($this->once())->method('setParameters')->willReturn($mockQueryBuilder);
         $mockQueryBuilder->expects($this->once())->method('executeQuery');
-        $this->repository->updateTrainingCategory($this->entity);
+        $this->repository->save($this->entity);
     }
 
     /**
@@ -100,6 +100,6 @@ final class DbalTrainingCategoryRepositoryTest extends TestCase
         $this->expectException(Exception::class);
 
         // Update query
-        $this->repository->updateTrainingCategory($this->entity);
+        $this->repository->save($this->entity);
     }
 }

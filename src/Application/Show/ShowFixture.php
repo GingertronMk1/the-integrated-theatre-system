@@ -19,7 +19,7 @@ final readonly class ShowFixture implements FixtureInterface
     public function load(): void
     {
         foreach ($this->getFixtures() as $fixture) {
-            $this->showRepository->createShow($fixture);
+            $this->showRepository->save($fixture);
         }
     }
 

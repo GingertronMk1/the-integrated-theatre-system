@@ -20,7 +20,7 @@ final class SeasonFixture implements FixtureInterface
     public function load(): void
     {
         foreach ($this->getAllFixtures() as $fixture) {
-            $this->repository->createSeason($fixture);
+            $this->repository->save($fixture);
         }
     }
 

@@ -25,7 +25,7 @@ final readonly class CommandHandler
             $command->password
         );
         $hashedPassword = $this->passwordHasher->hashPassword($userEntity, $userEntity->getPassword());
-        $this->userRepository->createUser(new UserEntity(
+        $this->userRepository->save(new UserEntity(
             $userEntity->id,
             $userEntity->email,
             $userEntity->roles,

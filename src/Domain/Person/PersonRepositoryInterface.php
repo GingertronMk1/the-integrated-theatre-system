@@ -10,5 +10,5 @@ interface PersonRepositoryInterface
 {
     public function getNextId(): PersonId;
 
-    public function savePerson(PersonEntity $entity): void;
+    public function save(PersonEntity $entity): void;
 }

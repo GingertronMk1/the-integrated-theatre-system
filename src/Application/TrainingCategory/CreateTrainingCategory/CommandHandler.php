@@ -21,6 +21,6 @@ final readonly class CommandHandler
             $id,
             $command->name,
         );
-        $this->trainingCategoryRepository->createTrainingCategory($category);
+        $this->trainingCategoryRepository->save($category);
     }
 }

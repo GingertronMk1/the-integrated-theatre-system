@@ -20,7 +20,7 @@ final readonly class TrainingItemFixture implements DependentFixtureInterface
     public function load(): void
     {
         foreach ($this->getFixtures() as $fixture) {
-            $this->trainingItemRepository->createTrainingItem($fixture);
+            $this->trainingItemRepository->save($fixture);
         }
     }
 

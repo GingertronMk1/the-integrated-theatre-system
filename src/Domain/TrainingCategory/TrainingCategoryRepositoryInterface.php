@@ -10,7 +10,5 @@ interface TrainingCategoryRepositoryInterface
 {
     public function getNextId(): TrainingCategoryId;
 
-    public function createTrainingCategory(TrainingCategoryEntity $category): void;
-
-    public function updateTrainingCategory(TrainingCategoryEntity $category): void;
+    public function save(TrainingCategoryEntity $category): void;
 }

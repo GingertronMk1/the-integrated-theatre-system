@@ -25,6 +25,6 @@ final readonly class CommandHandler
             $command->season?->id ?? null
         );
 
-        $this->repository->updateShow($entity);
+        $this->repository->save($entity);
     }
 }
