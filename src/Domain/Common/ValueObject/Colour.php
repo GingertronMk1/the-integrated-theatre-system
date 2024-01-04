@@ -17,7 +17,7 @@ final readonly class Colour implements Stringable
     {
         if (preg_match('/^#[0-9a-zA-Z]{3}$/', $colour)) {
             $splitStr = array_values(str_split($colour));
-            $hash = array_shift($splitStr);
+            array_shift($splitStr);
             $amendedColour = implode(
                 '',
                 array_map(
@@ -31,6 +31,26 @@ final readonly class Colour implements Stringable
         } else {
             throw new InvalidArgumentException("Invalid hex colour string {$colour}");
         }
+    }
+
+    public static function fromRGB(int $r, int $g, int $b): self
+    {
+        $hexR = self::intToHex($r);
+        $hexG = self::intToHex($g);
+        $hexB = self::intToHex($b);
+        return self::fromString("#{$hexR}{$hexG}{$hexB}");
+    }
+
+    private static function intToHex(int $n): string
+    {
+        if (256 < $n) {
+            throw new InvalidArgumentException("{$n} is too large to be a valid colour");
+        }
+        if (-1 > $n) {
+            throw new InvalidArgumentException("{$n} is too small to be a valid colour");
+        }
+
+        return dechex($n);
     }
 
     public function __toString(): string
