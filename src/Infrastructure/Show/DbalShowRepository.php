@@ -54,7 +54,8 @@ final class DbalShowRepository extends AbstractDbalRepository implements ShowRep
             'id' => (string) $entity->id,
             'name' => $entity->name,
             'description' => $entity->description,
-            'year' => $entity->year,            'season_id' => $entity->seasonId,
+            'year' => $entity->year,
+            'season_id' => $entity->seasonId,
             'now' => (string) $this->clock->getCurrentTime(),
         ])
         ->executeStatement();
