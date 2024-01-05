@@ -1,0 +1,8 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+    {{ show.name }}
+    {{ show.createdAt|date }}
+    {{ show.updatedAt|date }}
+    {{ form(create_cast_member_form) }}
+{% endblock %}

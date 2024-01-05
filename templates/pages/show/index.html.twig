@@ -13,7 +13,11 @@
     </thead>
     {% for show in shows %}
     <tr data-show-id="{{ show.id }}">
-        <td>{{ show.name }}</td>
+        <td>
+            <a href="{{ path('show.show', {id: show.id}) }}">
+                {{ show.name }}
+            </a>
+        </td>
         <td>{{ show.description }}</td>
         <td>{{ show.year }}</td>        <td>
             {% if show.season is not empty %}
