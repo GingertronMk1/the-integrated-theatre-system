@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CrewMemberController extends AbstractController
 {
-    #[Route('/crew-member/create/{showId}', 'crew-member.create', methods: ['POST'])]
+    #[Route('/crew-member/create/{showId}', 'crew-member.create', methods: ['GET', 'POST'])]
     public function create(Request $request, string $showId, CommandHandler $handler, ShowFinderInterface $finder): Response
     {
         $show = $finder->find(ShowId::fromString($showId));
@@ -25,9 +25,13 @@ class CrewMemberController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $handler->handle($command);
+
+            return $this->redirectToRoute('show.show', ['id' => $show->id]);
         }
 
-        return $this->redirectToRoute('show.show', ['id' => $show->id]);
+        return $this->render('./pages/crew-member/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/crew-member/update/{id}', 'crew-member.update', methods: ['GET', 'POST'])]
