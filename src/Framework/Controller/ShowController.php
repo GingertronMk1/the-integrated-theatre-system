@@ -83,7 +83,7 @@ class ShowController extends AbstractController
             CastMemberType::class,
             $createCastMemberCommand,
             [
-                'action' => $this->generateUrl('cast-member.create')
+                'action' => $this->generateUrl('cast-member.create', ['showId' => $show->id])
             ]
         );
 

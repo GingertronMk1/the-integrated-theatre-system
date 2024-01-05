@@ -17,7 +17,10 @@ final readonly class CommandHandler
     public function handle(Command $command): void
     {
         $entity = new CastMemberEntity(
-            $this->repository->getNextId()
+            $this->repository->getNextId(),
+            $command->role,
+            $command->person->id,
+            $command->showId
         );
 
         $this->repository->save($entity);

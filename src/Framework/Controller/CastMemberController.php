@@ -34,7 +34,7 @@ class CastMemberController extends AbstractController
     {
         $show = $finder->find(ShowId::fromString($showId));
         $command = CreateCommand::forShow($show);
-        $form = $this->createForm(CastMemberType::class);
+        $form = $this->createForm(CastMemberType::class, $command);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $handler->handle($command);
