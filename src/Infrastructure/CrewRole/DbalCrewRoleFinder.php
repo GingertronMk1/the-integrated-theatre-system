@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\CrewRole;
 
-use App\Application\CrewRole\CrewRoleEntity;
 use App\Application\CrewRole\CrewRoleFinderInterface;
 use App\Domain\CrewRole\CrewRoleException;
 use App\Domain\CrewRole\ValueObject\CrewRoleId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
+use App\Application\CrewRole\CrewRoleModel;
 
 final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFinderInterface
 {
@@ -57,9 +57,9 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): CrewRoleEntity
+    private function createFromRow(array $row): CrewRoleModel
     {
-        return new CrewRoleEntity(
+        return new CrewRoleModel(
             CrewRoleId::fromString($row['id'])
         );
     }
