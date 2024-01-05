@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CrewRole;
+namespace App\Infrastructure\CastMember;
 
-use App\Application\CrewRole\CrewRoleFinderInterface;
-use App\Application\CrewRole\CrewRoleModel;
-use App\Domain\CrewRole\CrewRoleException;
-use App\Domain\CrewRole\ValueObject\CrewRoleId;
+use App\Application\CastMember\CastMemberFinderInterface;
+use App\Domain\CastMember\CastMemberException;
+use App\Domain\CastMember\ValueObject\CastMemberId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFinderInterface
+final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMemberFinderInterface
 {
     public function __construct(
         private readonly Connection $connection
@@ -23,7 +22,7 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
         return 'CHANGEME';
     }
 
-    public function find(CrewRoleId $id): CrewRoleModel
+    public function find(CastMemberId $id): CastMemberModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -34,7 +33,7 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
             ->fetchAssociative();
 
         if (!is_array($row)) {
-            throw new CrewRoleException("No CrewRole found with ID {$id}");
+            throw new CastMemberException("No CastMember found with ID {$id}");
         }
 
         return $this->createFromRow($row);
@@ -57,10 +56,10 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): CrewRoleModel
+    private function createFromRow(array $row): CastMemberModel
     {
-        return new CrewRoleModel(
-            CrewRoleId::fromString($row['id'])
+        return new CastMemberModel(
+            CastMemberId::fromString($row['id'])
         );
     }
 }
