@@ -14,28 +14,28 @@
         {{ show.updatedAt|date }}
     </p>
 
-<div class="show__cast-and-crew">
-<div class="show__cast">
-    <h3>Cast</h3>
-    <ul>
-        {% for member in show.castMembers %}
-            <li data-cast-member-id="{{ member.id }}">{{ member.person.name }}: {{ member.role }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ path('cast-member.create', {showId: show.id}) }}">Add</a>
-</div>
-<div class="show__crew">
-    <h3>Crew</h3>
-    <ul>
-        {% for member in show.crewMembers %}
-            <li data-crew-member-id="{{ member.id }}">
-                {{ member.person.name }}: {{ member.role.name }}
-                {% if member.notes is not empty -%}({{ member.notes }}){%- endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{{ path('crew-member.create', {showId: show.id}) }}">Add</a>
-</div>
-</div>
+    <div class="show__cast-and-crew">
+        <div class="show__cast">
+            <h3>Cast</h3>
+            <ul>
+                {% for member in show.castMembers %}
+                    <li data-cast-member-id="{{ member.id }}">{{ member.person.name }}: {{ member.role }}</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('cast-member.create', {showId: show.id}) }}">Add</a>
+        </div>
+        <div class="show__crew">
+            <h3>Crew</h3>
+            <ul>
+                {% for member in show.crewMembers %}
+                    <li data-crew-member-id="{{ member.id }}">
+                        {{ member.person.name }}: {{ member.role.name }}
+                        {% if member.notes is not empty -%}({{ member.notes }}){%- endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('crew-member.create', {showId: show.id}) }}">Add</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
