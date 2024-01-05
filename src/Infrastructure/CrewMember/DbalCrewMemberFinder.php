@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\CrewMember;
 
-use App\Application\CrewMember\CrewMemberEntity;
 use App\Application\CrewMember\CrewMemberFinderInterface;
 use App\Domain\CrewMember\CrewMemberException;
 use App\Domain\CrewMember\ValueObject\CrewMemberId;
 use Doctrine\DBAL\Connection;
+use App\Infrastructure\Common\AbstractDbalFinder;
+use App\Application\CrewMember\CrewMemberModel;
 
-final readonly class DbalCrewMemberFinder implements CrewMemberFinderInterface
+final class DbalCrewMemberFinder  extends AbstractDbalFinder implements CrewMemberFinderInterface
 {
     public function __construct(
         private Connection $connection
@@ -22,7 +23,7 @@ final readonly class DbalCrewMemberFinder implements CrewMemberFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from(self::TABLE)
+            ->from($this->getTable())
             ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->fetchAssociative();
@@ -42,10 +43,15 @@ final readonly class DbalCrewMemberFinder implements CrewMemberFinderInterface
     /**
      * @param array<string, (int|string|null)> $row
      */
-    private function createFromRow(array $row): CrewMemberEntity
+    private function createFromRow(array $row): CrewMemberModel
     {
-        return new CrewMemberEntity(
+        return new CrewMemberModel(
             CrewMemberId::fromString($row['id'])
         );
+    }
+
+    protected function getTable(): string
+    {
+        return 'crew_members';
     }
 }

@@ -25,7 +25,7 @@ final class DbalCrewMemberRepository extends AbstractDbalRepository implements C
         return CrewMemberId::generate();
     }
 
-    public function saveCrewMember(CrewMemberEntity $entity): void
+    public function save(CrewMemberEntity $entity): void
     {
         $count = $this->getCount($this->connection, $entity->id);
 

@@ -11,8 +11,9 @@ use App\Domain\Person\PersonException;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\User\ValueObject\UserId;
 use Doctrine\DBAL\Connection;
+use App\Infrastructure\Common\AbstractDbalFinder;
 
-class DbalPersonFinder implements PersonFinderInterface
+class DbalPersonFinder  extends AbstractDbalFinder implements PersonFinderInterface
 {
     public function __construct(
         private readonly Connection $connection,
@@ -20,12 +21,17 @@ class DbalPersonFinder implements PersonFinderInterface
     ) {
     }
 
+    protected function getTable(): string
+    {
+        return 'people';
+    }
+
     public function findById(PersonId $id): PersonModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from('people', 'p')
+            ->from($this->getTable())
             ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->executeQuery()
@@ -44,7 +50,7 @@ class DbalPersonFinder implements PersonFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $qb = $qb
             ->select('*')
-            ->from('people', 'p');
+            ->from($this->getTable());
 
         if (!empty($ids)) {
             $qb = $qb

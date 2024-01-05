@@ -15,8 +15,9 @@ use App\Domain\TrainingSession\TrainingSessionException;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionPersonType;
 use Doctrine\DBAL\Connection;
+use App\Infrastructure\Common\AbstractDbalFinder;
 
-final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderInterface
+final readonly class DbalTrainingSessionFinder  extends AbstractDbalFinder implements TrainingSessionFinderInterface
 {
     public function __construct(
         private Connection $connection,
@@ -30,7 +31,7 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
         $qb = $this->connection->createQueryBuilder();
         $rows = $qb
           ->select('*')
-          ->from('training_sessions')
+          ->from($this->getTable())
           ->fetchAllAssociative();
 
         return array_map(
@@ -44,7 +45,7 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
           ->select('*')
-          ->from('training_sessions')
+          ->from($this->getTable())
           ->where('id = :id')
           ->setParameter('id', (string) $id)
           ->fetchAssociative();
@@ -79,17 +80,13 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
         foreach (TrainingSessionPersonType::cases() as $type) {
             $personFinderQb = $this->connection->createQueryBuilder();
             $personIds = $personFinderQb
-              ->select('person_id')
-              ->from('training_session_people')
-              ->where(
-                  $personFinderQb->expr()->and(
-                      $personFinderQb->expr()->eq('training_session_id', ':training_session_id'),
-                      $personFinderQb->expr()->eq('type', ':type')
-                  )
-              )
+                ->select('person_id')
+                ->from('training_session_people')
+                ->where('training_session_id = :training_session_id')
+                ->andWhere('type = :type')
                 ->setParameters([
-                  'training_session_id' => $thisId,
-                  'type' => $type->value,
+                    'training_session_id' => $thisId,
+                    'type' => $type->value,
                 ])
                 ->fetchFirstColumn();
 
@@ -109,5 +106,10 @@ final readonly class DbalTrainingSessionFinder implements TrainingSessionFinderI
             DateTime::fromString($row['created_at']),
             DateTime::fromString($row['updated_at']),
         );
+    }
+
+    protected function getTable(): string
+    {
+        return 'training_sessions';
     }
 }

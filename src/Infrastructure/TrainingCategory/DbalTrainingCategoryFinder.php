@@ -10,8 +10,9 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\TrainingCategoryException;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use Doctrine\DBAL\Connection;
+use App\Infrastructure\Common\AbstractDbalFinder;
 
-final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinderInterface
+final readonly class DbalTrainingCategoryFinder  extends AbstractDbalFinder implements TrainingCategoryFinderInterface
 {
     public function __construct(
         private Connection $connection
@@ -23,7 +24,7 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from('training_categories', 'tc')
+            ->from($this->getTable())
             ->fetchAssociative()
         ;
 
@@ -39,7 +40,7 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
         $qb = $this->connection->createQueryBuilder();
         $rows = $qb
             ->select('*')
-            ->from('training_categories', 'tc')
+            ->from($this->getTable())
             ->fetchAllAssociative()
         ;
 
@@ -60,5 +61,10 @@ final readonly class DbalTrainingCategoryFinder implements TrainingCategoryFinde
             DateTime::fromString($row['created_at']),
             DateTime::fromString($row['updated_at']),
         );
+    }
+
+    protected function getTable(): string
+    {
+        return 'training_categories';
     }
 }
