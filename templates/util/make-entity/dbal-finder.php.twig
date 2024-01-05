@@ -58,9 +58,9 @@ final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): {{ baseClass }}Entity
+    private function createFromRow(array $row): {{ baseClass }}Model
     {
-        return new {{ baseClass }}Entity(
+        return new {{ baseClass }}Model(
             {{ baseClass }}Id::fromString($row['id'])
         );
     }
