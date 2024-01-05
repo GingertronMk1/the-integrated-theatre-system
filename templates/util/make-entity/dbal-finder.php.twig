@@ -11,10 +11,10 @@ use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class {{ className }} extends AbstractDbalFinder  extends AbstractDbalFinder implements {{ baseClass }}FinderInterface
+final class {{ className }} extends AbstractDbalFinder  extends AbstractDbalFinder implements {{ baseClass }}FinderInterface
 {
     public function __construct(
-        private Connection $connection
+        private readonly Connection $connection
     ) {
     }
 
