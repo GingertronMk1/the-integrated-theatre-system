@@ -20,7 +20,8 @@ final readonly class CommandHandler
             $this->repository->getNextId(),
             $command->name,
             $command->description,
-            $command->year, $command->season?->id ?? null
+            $command->year,
+            $command->season?->id ?? null
         );
 
         $this->repository->save($entity);
