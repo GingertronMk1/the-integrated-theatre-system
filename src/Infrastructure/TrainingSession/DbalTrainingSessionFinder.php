@@ -14,10 +14,10 @@ use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use App\Domain\TrainingSession\TrainingSessionException;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 use App\Domain\TrainingSession\ValueObject\TrainingSessionPersonType;
-use Doctrine\DBAL\Connection;
 use App\Infrastructure\Common\AbstractDbalFinder;
+use Doctrine\DBAL\Connection;
 
-final readonly class DbalTrainingSessionFinder  extends AbstractDbalFinder implements TrainingSessionFinderInterface
+final readonly class DbalTrainingSessionFinder extends AbstractDbalFinder implements TrainingSessionFinderInterface
 {
     public function __construct(
         private Connection $connection,

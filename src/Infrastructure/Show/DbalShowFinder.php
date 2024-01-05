@@ -11,10 +11,10 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Season\ValueObject\SeasonId;
 use App\Domain\Show\ShowException;
 use App\Domain\Show\ValueObject\ShowId;
-use Doctrine\DBAL\Connection;
 use App\Infrastructure\Common\AbstractDbalFinder;
+use Doctrine\DBAL\Connection;
 
-final readonly class DbalShowFinder  extends AbstractDbalFinder implements ShowFinderInterface
+final readonly class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInterface
 {
     public function __construct(
         private Connection $connection,

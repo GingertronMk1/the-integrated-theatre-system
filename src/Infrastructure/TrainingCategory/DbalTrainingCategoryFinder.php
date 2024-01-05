@@ -9,10 +9,10 @@ use App\Application\TrainingCategory\TrainingCategoryModel;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\TrainingCategoryException;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
-use Doctrine\DBAL\Connection;
 use App\Infrastructure\Common\AbstractDbalFinder;
+use Doctrine\DBAL\Connection;
 
-final readonly class DbalTrainingCategoryFinder  extends AbstractDbalFinder implements TrainingCategoryFinderInterface
+final readonly class DbalTrainingCategoryFinder extends AbstractDbalFinder implements TrainingCategoryFinderInterface
 {
     public function __construct(
         private Connection $connection

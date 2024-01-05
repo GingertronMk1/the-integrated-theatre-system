@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Infrastructure\CrewMember;
 
 use App\Application\CrewMember\CrewMemberFinderInterface;
+use App\Application\CrewMember\CrewMemberModel;
 use App\Domain\CrewMember\CrewMemberException;
 use App\Domain\CrewMember\ValueObject\CrewMemberId;
-use Doctrine\DBAL\Connection;
 use App\Infrastructure\Common\AbstractDbalFinder;
-use App\Application\CrewMember\CrewMemberModel;
+use Doctrine\DBAL\Connection;
 
-final class DbalCrewMemberFinder  extends AbstractDbalFinder implements CrewMemberFinderInterface
+final class DbalCrewMemberFinder extends AbstractDbalFinder implements CrewMemberFinderInterface
 {
     public function __construct(
         private Connection $connection
@@ -41,7 +41,7 @@ final class DbalCrewMemberFinder  extends AbstractDbalFinder implements CrewMemb
     }
 
     /**
-     * @param array<string, (int|string|null)> $row
+     * @param array<string, ?string> $row
      */
     private function createFromRow(array $row): CrewMemberModel
     {

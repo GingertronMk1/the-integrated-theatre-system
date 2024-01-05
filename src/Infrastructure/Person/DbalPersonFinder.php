@@ -10,10 +10,10 @@ use App\Application\User\UserFinderInterface;
 use App\Domain\Person\PersonException;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\User\ValueObject\UserId;
-use Doctrine\DBAL\Connection;
 use App\Infrastructure\Common\AbstractDbalFinder;
+use Doctrine\DBAL\Connection;
 
-class DbalPersonFinder  extends AbstractDbalFinder implements PersonFinderInterface
+class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterface
 {
     public function __construct(
         private readonly Connection $connection,

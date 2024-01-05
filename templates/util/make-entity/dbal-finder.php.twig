@@ -56,7 +56,7 @@ final readonly class {{ className }} extends AbstractDbalFinder  extends Abstrac
     }
 
     /**
-     * @param array<string, (int|string|null)> $row
+     * @param array<string, ?string> $row
      */
     private function createFromRow(array $row): {{ baseClass }}Entity
     {

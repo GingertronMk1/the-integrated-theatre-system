@@ -10,10 +10,10 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
-use Doctrine\DBAL\Connection;
 use App\Infrastructure\Common\AbstractDbalFinder;
+use Doctrine\DBAL\Connection;
 
-final readonly class DbalTrainingItemFinder  extends AbstractDbalFinder implements TrainingItemFinderInterface
+final readonly class DbalTrainingItemFinder extends AbstractDbalFinder implements TrainingItemFinderInterface
 {
     public function __construct(
         private Connection $connection
