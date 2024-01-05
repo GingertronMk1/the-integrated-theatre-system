@@ -11,12 +11,8 @@
     <a class="button" href="{{ path('show.update', {id: show.id}) }}">Edit</a>
     </div>
     <p>{{ show.description|nl2br }}</p>
-    <p>
-        {{ show.createdAt|date }}
-    </p>
-    <p>
-        {{ show.updatedAt|date }}
-    </p>
+    <p>{{ show.createdAt|date }}</p>
+    <p>{{ show.updatedAt|date }}</p>
 
     <div class="show__cast-and-crew">
         <div class="show__cast">
