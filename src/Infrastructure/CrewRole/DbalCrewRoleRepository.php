@@ -35,12 +35,16 @@ final class DbalCrewRoleRepository extends AbstractDbalRepository implements Cre
                 ->insert($this->getTable())
                 ->values([
                     'id' => ':id',
+                    'name' => ':name',
+                    'description' => ':description',
                     'created_at' => ':now',
                     'updated_at' => ':now',
                 ]);
         } elseif (1 === $count) {
             $upsertQb
                 ->update($this->getTable())
+                ->set('name', ':name')
+                ->set('description', ':description')
                 ->set('updated_at', ':now')
                 ->where('id = :id')
             ;
@@ -51,12 +55,14 @@ final class DbalCrewRoleRepository extends AbstractDbalRepository implements Cre
         $upsertQb
             ->setParameters([
                 'id' => (string) $entity->id,
+                'name' => (string) $entity->name,
+                'description' => (string) $entity->description,
                 'now' => (string) $this->clock->getCurrentTime(),
             ]);
     }
 
     protected function getTable(): string
     {
-        return 'CHANGE_ME';
+        return 'crew_roles';
     }
 }

@@ -17,7 +17,9 @@ final readonly class CommandHandler
     public function handle(Command $command): void
     {
         $entity = new CrewRoleEntity(
-            $command->id
+            $command->id,
+            $command->name,
+            $command->description,
         );
         $this->repository->save($entity);
     }
