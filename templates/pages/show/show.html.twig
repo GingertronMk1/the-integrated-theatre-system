@@ -1,8 +1,26 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block body %}
-    {{ show.name }}
-    {{ show.createdAt|date }}
-    {{ show.updatedAt|date }}
+    <h1>
+        {{ show.name }}
+    </h1>
+    <p>
+        {{ show.createdAt|date }}
+    </p>
+    <p>
+        {{ show.updatedAt|date }}
+    </p>
+
+    <ul>
+        {% for member in show.castMembers %}
+            <li>{{ member.person.name }}: {{ member.role }}</li>
+        {% endfor %}
+    </ul>
     {{ form(create_cast_member_form) }}
+    <ul>
+        {% for member in show.crewMembers %}
+            <li>{{ member.person.name }}: {{ member.role.name }}</li>
+        {% endfor %}
+    </ul>
+    {{ form(create_crew_member_form) }}
 {% endblock %}

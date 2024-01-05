@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Framework\Controller;
 
 use App\Application\CastMember\CreateCastMember\Command as CreateCastMemberCommand;
+use App\Application\CrewMember\CreateCrewMember\Command as CreateCrewMemberCommand;
 use App\Application\Show\CreateShow\Command as CreateCommand;
 use App\Application\Show\CreateShow\CommandHandler as CreateCommandHandler;
 use App\Application\Show\ShowFinderInterface;
@@ -12,6 +13,7 @@ use App\Application\Show\UpdateShow\Command as UpdateCommand;
 use App\Application\Show\UpdateShow\CommandHandler as UpdateCommandHandler;
 use App\Domain\Show\ValueObject\ShowId;
 use App\Framework\Form\CastMemberType;
+use App\Framework\Form\CrewMemberType;
 use App\Framework\Form\ShowType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,7 +85,16 @@ class ShowController extends AbstractController
             CastMemberType::class,
             $createCastMemberCommand,
             [
-                'action' => $this->generateUrl('cast-member.create', ['showId' => $show->id])
+                'action' => $this->generateUrl('cast-member.create', ['showId' => $show->id]),
+            ]
+        );
+
+        $createCrewMemberCommand = CreateCrewMemberCommand::forShow($show);
+        $createCrewMemberForm = $this->createForm(
+            CrewMemberType::class,
+            $createCrewMemberCommand,
+            [
+                'action' => $this->generateUrl('crew-member.create', ['showId' => $show->id]),
             ]
         );
 
@@ -91,10 +102,9 @@ class ShowController extends AbstractController
             'pages/show/show.html.twig',
             [
                 'show' => $show,
-                'create_cast_member_form' => $createCastMemberForm
+                'create_cast_member_form' => $createCastMemberForm,
+                'create_crew_member_form' => $createCrewMemberForm,
             ]
         );
     }
-
-
 }

@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Framework\Controller;
 
+use App\Application\CrewMember\CreateCrewMember\Command as CreateCommand;
+use App\Application\CrewMember\CreateCrewMember\CommandHandler;
+use App\Application\Show\ShowFinderInterface;
+use App\Domain\Show\ValueObject\ShowId;
+use App\Framework\Form\CrewMemberType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,25 +16,18 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CrewMemberController extends AbstractController
 {
-    #[Route('crew-member', 'crew-member.index', methods: ['GET'])]
-    public function index(): Response
+    #[Route('/crew-member/create/{showId}', 'crew-member.create', methods: ['POST'])]
+    public function create(Request $request, string $showId, CommandHandler $handler, ShowFinderInterface $finder): Response
     {
-        $items = [];
+        $show = $finder->find(ShowId::fromString($showId));
+        $command = CreateCommand::forShow($show);
+        $form = $this->createForm(CrewMemberType::class, $command);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $handler->handle($command);
+        }
 
-        return $this->render(
-            'pages/crew-member/index.html.twig',
-            [
-                'training_items' => $items,
-            ]
-        );
-    }
-
-    #[Route('/crew-member/create', 'crew-member.create', methods: ['GET', 'POST'])]
-    public function create(Request $request): Response
-    {
-        return $this->render('pages/crew-member/create.html.twig', [
-            // 'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('show.show', ['id' => $show->id]);
     }
 
     #[Route('/crew-member/update/{id}', 'crew-member.update', methods: ['GET', 'POST'])]

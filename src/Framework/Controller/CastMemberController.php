@@ -39,6 +39,7 @@ class CastMemberController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $handler->handle($command);
         }
+
         return $this->redirectToRoute('show.show', ['id' => $show->id]);
     }
 
