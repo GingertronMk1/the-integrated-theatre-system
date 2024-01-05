@@ -17,5 +17,31 @@
     &__logout-button {
         margin-left: auto;
     }
+
+    &__dropdown {
+        position: relative;
+        display: inline-block;
+        cursor: context-menu;
+    }
+
+    &__dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: $white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 1;
+    }
+
+    &__dropdown:hover &__dropdown-content {
+        @include flex();
+        color: $primary;
+
+        > a + a {
+            margin-top: 1rem;
+        }
+    }
+
 }
 

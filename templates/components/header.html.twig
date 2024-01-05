@@ -1,18 +1,47 @@
 {% set links = {
     'training-category.index': 'Training Categories',
     'training-item.index': 'Training Items',
-    'person.index': 'People',
     'training-session.index': 'Training Sessions',
+    'person.index': 'People',
     'show.index': 'Shows',
     'season.index': 'Seasons',
 }
-
-
 %}
+{% set nav = [
+    {
+        'title': 'Training',
+        'content': {
+            'training-category.index': 'Categories',
+            'training-item.index': 'Items',
+            'training-session.index': 'Sessions',
+        }
+    },
+    {
+        'title': 'Shows',
+        'content': {
+            'show.index': 'Shows',
+            'season.index': 'Seasons',
+        }
+    },
+    {
+        'title': 'People',
+        'content': {
+            'person.index': 'People',
+        }
+    }
+] %}
+<style></style>
 <header class="header">
     <h3>The Integrated Theatre System</h3>
-    {% for route, text in links %}
-        <a href="{{ path(route) }}">{{ text }}</a>
+    {% for item in nav %}
+        <div class="header__dropdown">
+            <span>{{ item.title }}</span>
+            <div class="header__dropdown-content">
+                {% for route, text in item.content %}
+                    <a href="{{ path(route) }}">{{ text }}</a>
+                {% endfor %}
+            </div>
+        </div> 
     {% endfor %}
     <span class="header__logout-button">
         {% if app.user %}
