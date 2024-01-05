@@ -1,12 +1,3 @@
-{% set links = {
-    'training-category.index': 'Training Categories',
-    'training-item.index': 'Training Items',
-    'training-session.index': 'Training Sessions',
-    'person.index': 'People',
-    'show.index': 'Shows',
-    'season.index': 'Seasons',
-}
-%}
 {% set nav = [
     {
         'title': 'Training',
@@ -29,7 +20,6 @@
         'route': 'person.index',
     }
 ] %}
-<style></style>
 <header class="header">
     <h3>The Integrated Theatre System</h3>
     {% for item in nav %}
