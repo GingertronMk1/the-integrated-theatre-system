@@ -16,20 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CastMemberController extends AbstractController
 {
-    #[Route('/cast-member', 'cast-member.index', methods: ['GET'])]
-    public function index(): Response
-    {
-        $items = [];
-
-        return $this->render(
-            'pages/cast-member/index.html.twig',
-            [
-                'items' => $items,
-            ]
-        );
-    }
-
-    #[Route('/cast-member/create/{showId}', 'cast-member.create', methods: ['POST'])]
+    #[Route('/cast-member/create/{showId}', 'cast-member.create', methods: ['GET', 'POST'])]
     public function create(Request $request, string $showId, CommandHandler $handler, ShowFinderInterface $finder): Response
     {
         $show = $finder->find(ShowId::fromString($showId));
@@ -38,9 +25,13 @@ class CastMemberController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $handler->handle($command);
+
+            return $this->redirectToRoute('show.show', ['id' => $show->id]);
         }
 
-        return $this->redirectToRoute('show.show', ['id' => $show->id]);
+        return $this->render('./pages/cast-member/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/cast-member/update/{id}', 'cast-member.update', methods: ['GET', 'POST'])]
