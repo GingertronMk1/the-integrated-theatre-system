@@ -25,7 +25,7 @@ final class DbalCrewRoleRepository extends AbstractDbalRepository implements Cre
         return CrewRoleId::generate();
     }
 
-    public function saveCrewRole(CrewRoleEntity $entity): void
+    public function save(CrewRoleEntity $entity): void
     {
         $count = $this->getCount($this->connection, $entity->id);
 
