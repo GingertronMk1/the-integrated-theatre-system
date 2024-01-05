@@ -20,7 +20,7 @@ final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMembe
 
     protected function getTable(): string
     {
-        return 'CHANGEME';
+        return 'cast_members';
     }
 
     public function find(CastMemberId $id): CastMemberModel
