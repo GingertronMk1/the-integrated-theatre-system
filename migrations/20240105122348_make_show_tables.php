@@ -57,14 +57,16 @@ final class MakeShowTables extends AbstractMigration
             ->addColumn('person_id', 'string')
             ->create();
         $crewMembers
-            ->addForeignKey('show_id',
+            ->addForeignKey(
+                'show_id',
                 'shows',
                 'id',
                 [
                     'delete' => 'CASCADE',
                     'update' => 'CASCADE',
                 ])
-            ->addForeignKey('person_id',
+            ->addForeignKey(
+                'person_id',
                 'people',
                 'id',
                 [
@@ -95,7 +97,7 @@ final class MakeShowTables extends AbstractMigration
             ->addColumn('show_id', 'string')
             ->addColumn('person_id', 'string')
             ->create();
-        $crewMembers
+        $castMembers
             ->addForeignKey(
                 'show_id',
                 'shows',
@@ -104,15 +106,9 @@ final class MakeShowTables extends AbstractMigration
                     'delete' => 'CASCADE',
                     'update' => 'CASCADE',
                 ])
-            ->addForeignKey('person_id',
+            ->addForeignKey(
+                'person_id',
                 'people',
-                'id',
-                [
-                    'delete' => 'CASCADE',
-                    'update' => 'CASCADE',
-                ])
-            ->addForeignKey('role_id',
-                self::ROLES_TABLE,
                 'id',
                 [
                     'delete' => 'CASCADE',
