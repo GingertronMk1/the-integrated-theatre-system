@@ -13,7 +13,7 @@ use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalTrainingItemFinder extends AbstractDbalFinder implements TrainingItemFinderInterface
+final class DbalTrainingItemFinder extends AbstractDbalFinder implements TrainingItemFinderInterface
 {
     public function __construct(
         private Connection $connection

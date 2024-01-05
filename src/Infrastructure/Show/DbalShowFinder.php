@@ -14,7 +14,7 @@ use App\Domain\Show\ValueObject\ShowId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInterface
+final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInterface
 {
     public function __construct(
         private Connection $connection,

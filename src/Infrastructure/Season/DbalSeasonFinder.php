@@ -13,7 +13,7 @@ use App\Domain\Season\ValueObject\SeasonId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalSeasonFinder extends AbstractDbalFinder implements SeasonFinderInterface
+final class DbalSeasonFinder extends AbstractDbalFinder implements SeasonFinderInterface
 {
     public function __construct(
         private Connection $connection
