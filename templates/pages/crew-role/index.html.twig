@@ -5,13 +5,13 @@
 <table id="crew-roles">
     <thead>
     <th>Name</th>
-    <th>Dangerous</th>
+    <th>Description</th>
     <th>Actions</th>
     </thead>
     {% for crew_role in crew_roles %}
     <tr data-item-id="{{ crew_role.id }}">
         <td>{{ crew_role.name }}</td>
-        <td>{{ crew_role.isDangerous ? 'Yes' : 'No' }}</td>
+        <td>{{ crew_role.description }}</td>
         <td><a href="{{ path('crew-role.update', {id: crew_role.id}) }}" class="button">Edit</a></td>
     </tr>
     {% endfor %}

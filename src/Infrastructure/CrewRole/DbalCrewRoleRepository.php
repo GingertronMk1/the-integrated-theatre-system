@@ -58,7 +58,8 @@ final class DbalCrewRoleRepository extends AbstractDbalRepository implements Cre
                 'name' => (string) $entity->name,
                 'description' => (string) $entity->description,
                 'now' => (string) $this->clock->getCurrentTime(),
-            ]);
+            ])
+            ->executeStatement();
     }
 
     protected function getTable(): string

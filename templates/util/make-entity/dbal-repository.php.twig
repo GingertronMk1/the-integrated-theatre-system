@@ -53,7 +53,8 @@ final class {{ className }} extends AbstractDbalRepository implements {{ baseCla
             ->setParameters([
                 'id' => (string) $entity->id,
                 'now' => (string) $this->clock->getCurrentTime(),
-            ]);
+            ])
+            ->executeStatement();
     }
 
     protected function getTable(): string
