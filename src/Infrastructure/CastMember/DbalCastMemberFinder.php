@@ -9,6 +9,7 @@ use App\Domain\CastMember\CastMemberException;
 use App\Domain\CastMember\ValueObject\CastMemberId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
+use App\Application\CastMember\CastMemberModel;
 
 final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMemberFinderInterface
 {
