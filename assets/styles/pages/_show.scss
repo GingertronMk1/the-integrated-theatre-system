@@ -1,10 +1,15 @@
 .show {
-    &__cast-and-crew {
+    &__header {
         @include flex($direction: row);
+    }
+    &__cast-and-crew {
+        @include flex($direction: row, $justify: space-evenly);
     }
 
     &__cast, &__crew {
+        @include flex($align: flex-start);
         flex: 1;
         min-width: 1rem;
+        max-width: 45%;
     }
 }
