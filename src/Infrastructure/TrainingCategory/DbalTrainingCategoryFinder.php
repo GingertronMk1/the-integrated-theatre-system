@@ -12,7 +12,7 @@ use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalTrainingCategoryFinder extends AbstractDbalFinder implements TrainingCategoryFinderInterface
+final class DbalTrainingCategoryFinder extends AbstractDbalFinder implements TrainingCategoryFinderInterface
 {
     public function __construct(
         private Connection $connection

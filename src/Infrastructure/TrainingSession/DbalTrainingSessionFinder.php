@@ -17,7 +17,7 @@ use App\Domain\TrainingSession\ValueObject\TrainingSessionPersonType;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalTrainingSessionFinder extends AbstractDbalFinder implements TrainingSessionFinderInterface
+final class DbalTrainingSessionFinder extends AbstractDbalFinder implements TrainingSessionFinderInterface
 {
     public function __construct(
         private Connection $connection,

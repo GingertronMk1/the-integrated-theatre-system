@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace {{ nameSpace }};
+namespace App\Infrastructure\CrewRole;
 
-use App\Application\{{ baseClass }}\{{ baseClass }}Entity;
-use App\Application\{{ baseClass }}\{{ baseClass }}FinderInterface;
-use App\Domain\{{ baseClass }}\{{ baseClass }}Exception;
-use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
+use App\Application\CrewRole\CrewRoleEntity;
+use App\Application\CrewRole\CrewRoleFinderInterface;
+use App\Domain\CrewRole\CrewRoleException;
+use App\Domain\CrewRole\ValueObject\CrewRoleId;
 use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }}FinderInterface
+final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFinderInterface
 {
     public function __construct(
         private readonly Connection $connection
@@ -23,7 +23,7 @@ final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }
         return 'CHANGEME';
     }
 
-    public function find({{ baseClass }}Id $id): {{ baseClass }}Model
+    public function find(CrewRoleId $id): CrewRoleModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -34,7 +34,7 @@ final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }
             ->fetchAssociative();
 
         if (!is_array($row)) {
-            throw new {{ baseClass }}Exception("No {{ baseClass }} found with ID {$id}");
+            throw new CrewRoleException("No CrewRole found with ID {$id}");
         }
 
         return $this->createFromRow($row);
@@ -48,7 +48,6 @@ final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }
             ->from($this->getTable())
             ->fetchAllAssociative();
 
-
         return array_map(
             fn (array $row) => $this->createFromRow($row),
             $rows
@@ -58,10 +57,10 @@ final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): {{ baseClass }}Entity
+    private function createFromRow(array $row): CrewRoleEntity
     {
-        return new {{ baseClass }}Entity(
-            {{ baseClass }}Id::fromString($row['id'])
+        return new CrewRoleEntity(
+            CrewRoleId::fromString($row['id'])
         );
     }
 }
