@@ -21,19 +21,19 @@
         'content': {
             'show.index': 'Shows',
             'season.index': 'Seasons',
+            'crew-role.index': 'Crew Roles',
         }
     },
     {
         'title': 'People',
-        'content': {
-            'person.index': 'People',
-        }
+        'route': 'person.index',
     }
 ] %}
 <style></style>
 <header class="header">
     <h3>The Integrated Theatre System</h3>
     {% for item in nav %}
+        {% if item.content is defined %}
         <div class="header__dropdown">
             <span>{{ item.title }}</span>
             <div class="header__dropdown-content">
@@ -42,6 +42,9 @@
                 {% endfor %}
             </div>
         </div> 
+        {% elseif item.route is defined and item.title is defined %}
+            <a href="{{ path(item.route) }}">{{ item.title }}</a>
+        {% endif %}
     {% endfor %}
     <span class="header__logout-button">
         {% if app.user %}

@@ -11,31 +11,31 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CastMemberController extends AbstractController
 {
-    #[Route('<NAME>', '<NAME>.index', methods: ['GET'])]
+    #[Route('/cast-member', 'cast-member.index', methods: ['GET'])]
     public function index(): Response
     {
         $items = [];
 
         return $this->render(
-            'pages/<NAME>/index.html.twig',
+            'pages/cast-member/index.html.twig',
             [
                 'items' => $items,
             ]
         );
     }
 
-    #[Route('/<NAME>/create', '<NAME>.create', methods: ['GET', 'POST'])]
+    #[Route('/cast-member/create', 'cast-member.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
-        return $this->render('pages/<NAME>/create.html.twig', [
+        return $this->render('pages/cast-member/create.html.twig', [
             // 'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/<NAME>/update/{id}', '<NAME>.update', methods: ['GET', 'POST'])]
+    #[Route('/cast-member/update/{id}', 'cast-member.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id): Response
     {
-        return $this->render('pages/<NAME>/update.html.twig', [
+        return $this->render('pages/cast-member/update.html.twig', [
             // 'form' => $form->createView(),
         ]);
     }
