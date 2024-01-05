@@ -38,8 +38,6 @@ final class DbalCastMemberRepository extends AbstractDbalRepository implements C
                     'person_id' => ':person_id',
                     'show_id' => ':show_id',
                     'role' => ':role',
-                    'created_at' => ':now',
-                    'updated_at' => ':now',
                 ]);
         } elseif (1 === $count) {
             $upsertQb
@@ -47,7 +45,6 @@ final class DbalCastMemberRepository extends AbstractDbalRepository implements C
                 ->set('person_id', ':person_id')
                 ->set('show_id', ':show_id')
                 ->set('role', ':role')
-                ->set('updated_at', ':now')
                 ->where('id = :id')
             ;
         } else {
@@ -57,11 +54,11 @@ final class DbalCastMemberRepository extends AbstractDbalRepository implements C
         $upsertQb
             ->setParameters([
                 'id' => (string) $entity->id,
-                    'person_id' => (string) $entity->personId,
-                    'show_id' => (string) $entity->showId,
-                    'role' => $entity->role,
-                'now' => (string) $this->clock->getCurrentTime(),
-            ]);
+                'person_id' => (string) $entity->personId,
+                'show_id' => (string) $entity->showId,
+                'role' => $entity->role,
+            ])
+            ->executeStatement();
     }
 
     protected function getTable(): string

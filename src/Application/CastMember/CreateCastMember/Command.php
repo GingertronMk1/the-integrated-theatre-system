@@ -11,7 +11,7 @@ use App\Domain\Show\ValueObject\ShowId;
 final class Command
 {
     public function __construct(
-        public ?ShowId $showId = null,
+        public ShowId $showId,
         public string $role = '',
         public ?PersonModel $person = null,
     ) {

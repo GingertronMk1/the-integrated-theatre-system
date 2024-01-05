@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Show;
 
+use App\Application\CastMember\CastMemberFinderInterface;
+use App\Application\CrewMember\CrewMemberFinderInterface;
 use App\Application\Season\SeasonFinderInterface;
 use App\Application\Show\ShowFinderInterface;
 use App\Application\Show\ShowModel;
@@ -18,7 +20,9 @@ final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInter
 {
     public function __construct(
         private Connection $connection,
-        private SeasonFinderInterface $seasonFinder
+        private SeasonFinderInterface $seasonFinder,
+        private CastMemberFinderInterface $castMemberFinder,
+        private CrewMemberFinderInterface $crewMemberFinder
     ) {
     }
 
@@ -69,12 +73,16 @@ final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInter
         if (!is_null($row['season_id'])) {
             $season = $this->seasonFinder->find(SeasonId::fromString($row['season_id']));
         }
+        $showId = ShowId::fromString($row['id']);
 
         return new ShowModel(
-            ShowId::fromString($row['id']),
+            $showId,
             $row['name'],
             $row['description'],
-            $row['year'], $season,
+            $row['year'],
+            $season,
+            $this->castMemberFinder->findForShow($showId),
+            $this->crewMemberFinder->findForShow($showId),
             DateTime::fromString($row['created_at']),
             DateTime::fromString($row['updated_at']),
             $deletedAt,

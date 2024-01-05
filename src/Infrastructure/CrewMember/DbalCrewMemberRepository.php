@@ -35,13 +35,18 @@ final class DbalCrewMemberRepository extends AbstractDbalRepository implements C
                 ->insert($this->getTable())
                 ->values([
                     'id' => ':id',
-                    'created_at' => ':now',
-                    'updated_at' => ':now',
+                    'role_id' => ':role_id',
+                    'show_id' => ':show_id',
+                    'person_id' => ':person_id',
+                    'notes' => ':notes',
                 ]);
         } elseif (1 === $count) {
             $upsertQb
                 ->update($this->getTable())
-                ->set('updated_at', ':now')
+                ->set('role_id', ':role_id')
+                ->set('show_id', ':show_id')
+                ->set('person_id', ':person_id')
+                ->set('notes', ':notes')
                 ->where('id = :id')
             ;
         } else {
@@ -51,12 +56,16 @@ final class DbalCrewMemberRepository extends AbstractDbalRepository implements C
         $upsertQb
             ->setParameters([
                 'id' => (string) $entity->id,
-                'now' => (string) $this->clock->getCurrentTime(),
-            ]);
+                'role_id' => $entity->crewRoleId,
+                'show_id' => $entity->showId,
+                'person_id' => $entity->personId,
+                'notes' => $entity->notes,
+            ])
+            ->executeStatement();
     }
 
     protected function getTable(): string
     {
-        return 'CHANGE_ME';
+        return 'crew_members';
     }
 }

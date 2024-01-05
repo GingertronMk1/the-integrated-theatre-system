@@ -55,8 +55,10 @@ final class MakeShowTables extends AbstractMigration
             ->addColumn('notes', 'text')
             ->addColumn('show_id', 'string')
             ->addColumn('person_id', 'string')
+            ->addColumn('credit_order', 'int')
             ->create();
         $crewMembers
+            ->addIndex('credit_order')
             ->addForeignKey(
                 'show_id',
                 'shows',
@@ -96,8 +98,10 @@ final class MakeShowTables extends AbstractMigration
             ->addColumn('notes', 'text')
             ->addColumn('show_id', 'string')
             ->addColumn('person_id', 'string')
+            ->addColumn('credit_order', 'int')
             ->create();
         $castMembers
+            ->addIndex('credit_order')
             ->addForeignKey(
                 'show_id',
                 'shows',

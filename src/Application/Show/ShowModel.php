@@ -16,6 +16,8 @@ final readonly class ShowModel
         public ?string $description,
         public ?string $year,
         public ?SeasonModel $season,
+        public array $castMembers,
+        public array $crewMembers,
         public DateTime $createdAt,
         public DateTime $updatedAt,
         public ?DateTime $deletedAt,
