@@ -16,5 +16,8 @@ interface CrewMemberFinderInterface
 
     public function find(CrewMemberId $id): CrewMemberModel;
 
+    /**
+     * @return array<CrewMemberModel>
+     */
     public function findForShow(ShowId $showId): array;
 }

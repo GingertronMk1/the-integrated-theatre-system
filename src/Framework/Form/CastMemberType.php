@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Framework\Form;
 
 use App\Application\Person\PersonFinderInterface;
-use App\Application\Show\ShowFinderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,7 +15,6 @@ class CastMemberType extends AbstractType
 {
     public function __construct(
         private readonly PersonFinderInterface $personFinder,
-        private readonly ShowFinderInterface $showFinder,
     ) {
     }
 

@@ -16,5 +16,8 @@ interface CastMemberFinderInterface
 
     public function find(CastMemberId $id): CastMemberModel;
 
+    /**
+     * @return array<CastMemberModel>
+     */
     public function findForShow(ShowId $id): array;
 }
