@@ -11,31 +11,31 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CrewRoleController extends AbstractController
 {
-    #[Route('<NAME>', '<NAME>.index', methods: ['GET'])]
+    #[Route('/crew-role', 'crew-role.index', methods: ['GET'])]
     public function index(): Response
     {
         $items = [];
 
         return $this->render(
-            'pages/<NAME>/index.html.twig',
+            'pages/crew-role/index.html.twig',
             [
                 'items' => $items,
             ]
         );
     }
 
-    #[Route('/<NAME>/create', '<NAME>.create', methods: ['GET', 'POST'])]
+    #[Route('/crew-role/create', 'crew-role.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
-        return $this->render('pages/<NAME>/create.html.twig', [
+        return $this->render('pages/crew-role/create.html.twig', [
             // 'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/<NAME>/update/{id}', '<NAME>.update', methods: ['GET', 'POST'])]
+    #[Route('/crew-role/update/{id}', 'crew-role.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id): Response
     {
-        return $this->render('pages/<NAME>/update.html.twig', [
+        return $this->render('pages/crew-role/update.html.twig', [
             // 'form' => $form->createView(),
         ]);
     }
