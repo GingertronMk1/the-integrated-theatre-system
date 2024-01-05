@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\CrewMember;
 
-use App\Application\Common\Service\ClockInterface;
 use App\Domain\CrewMember\CrewMemberEntity;
 use App\Domain\CrewMember\CrewMemberException;
 use App\Domain\CrewMember\CrewMemberRepositoryInterface;
@@ -16,7 +15,6 @@ final class DbalCrewMemberRepository extends AbstractDbalRepository implements C
 {
     public function __construct(
         private readonly Connection $connection,
-        private readonly ClockInterface $clock
     ) {
     }
 

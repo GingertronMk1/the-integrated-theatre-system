@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\CastMember;
 
-use App\Application\Common\Service\ClockInterface;
 use App\Domain\CastMember\CastMemberEntity;
 use App\Domain\CastMember\CastMemberException;
 use App\Domain\CastMember\CastMemberRepositoryInterface;
@@ -16,7 +15,6 @@ final class DbalCastMemberRepository extends AbstractDbalRepository implements C
 {
     public function __construct(
         private readonly Connection $connection,
-        private readonly ClockInterface $clock
     ) {
     }
 

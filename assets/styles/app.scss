@@ -6,6 +6,7 @@
 @import 'components/main';
 @import 'components/button';
 @import 'components/table';
+@import 'pages/show';
 
 body {
     background-color: color.adjust($white, $lightness: -5%);

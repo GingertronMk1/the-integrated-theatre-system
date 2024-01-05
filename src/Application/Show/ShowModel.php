@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\Application\Show;
 
+use App\Application\CastMember\CastMemberModel;
+use App\Application\CrewMember\CrewMemberModel;
 use App\Application\Season\SeasonModel;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Show\ValueObject\ShowId;
 
 final readonly class ShowModel
 {
+    /**
+     * @param array<CastMemberModel> $castMembers
+     * @param array<CrewMemberModel> $crewMembers
+     */
     public function __construct(
         public ShowId $id,
         public string $name,

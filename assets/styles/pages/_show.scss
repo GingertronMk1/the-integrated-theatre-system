@@ -1,0 +1,10 @@
+.show {
+    &__cast-and-crew {
+        @include flex($direction: row);
+    }
+
+    &__cast, &__crew {
+        flex: 1;
+        min-width: 1rem;
+    }
+}
