@@ -6,6 +6,7 @@ namespace App\Infrastructure\CrewRole;
 
 use App\Application\CrewRole\CrewRoleFinderInterface;
 use App\Application\CrewRole\CrewRoleModel;
+use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\CrewRole\CrewRoleException;
 use App\Domain\CrewRole\ValueObject\CrewRoleId;
 use App\Infrastructure\Common\AbstractDbalFinder;
@@ -20,7 +21,7 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
 
     protected function getTable(): string
     {
-        return 'CHANGEME';
+        return 'crew_roles';
     }
 
     public function find(CrewRoleId $id): CrewRoleModel
@@ -59,8 +60,18 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
      */
     private function createFromRow(array $row): CrewRoleModel
     {
+        $deletedAt = null;
+        if (!is_null($row['deleted_at'])) {
+            $deletedAt = DateTime::fromString($row['deleted_at']);
+        }
+
         return new CrewRoleModel(
-            CrewRoleId::fromString($row['id'])
+            CrewRoleId::fromString($row['id']),
+            $row['name'],
+            $row['description'],
+            DateTime::fromString($row['created_at']),
+            DateTime::fromString($row['updated_at']),
+            $deletedAt
         );
     }
 }

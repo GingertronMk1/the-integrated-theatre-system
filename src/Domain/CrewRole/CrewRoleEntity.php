@@ -10,6 +10,8 @@ final class CrewRoleEntity
 {
     public function __construct(
         public CrewRoleId $id,
+        public string $name,
+        public string $description
     ) {
     }
 }
