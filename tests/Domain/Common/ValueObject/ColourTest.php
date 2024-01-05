@@ -49,6 +49,7 @@ final class ColourTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider rgbColourDataProvider
      */
     public function testRGBInput(int $r, int $g, int $b, string $expected): void
@@ -60,28 +61,28 @@ final class ColourTest extends TestCase
     public function rgbColourDataProvider(): array
     {
         return [
-            [0,0,0,'#000000'],
-            [255,255,255,'#ffffff'],
-            [255,0,0,'#ff0000'],
-            [0,255,0,'#00ff00'],
-            [0,0,255,'#0000ff'],
-            [255,255,0,'#ffff00'],
-            [0,255,255,'#00ffff'],
-            [255,0,255,'#ff00ff'],
-            [192,192,192,'#c0c0c0'],
-            [128,128,128,'#808080'],
-            [128,0,0,'#800000'],
-            [128,128,0,'#808000'],
-            [0,128,0,'#008000'],
-            [128,0,128,'#800080'],
-            [0,128,128,'#008080'],
-            [0,0,128,'#000080'],
+            [0, 0, 0, '#000000'],
+            [255, 255, 255, '#ffffff'],
+            [255, 0, 0, '#ff0000'],
+            [0, 255, 0, '#00ff00'],
+            [0, 0, 255, '#0000ff'],
+            [255, 255, 0, '#ffff00'],
+            [0, 255, 255, '#00ffff'],
+            [255, 0, 255, '#ff00ff'],
+            [192, 192, 192, '#c0c0c0'],
+            [128, 128, 128, '#808080'],
+            [128, 0, 0, '#800000'],
+            [128, 128, 0, '#808000'],
+            [0, 128, 0, '#008000'],
+            [128, 0, 128, '#800080'],
+            [0, 128, 128, '#008080'],
+            [0, 0, 128, '#000080'],
         ];
     }
 
-
     /**
      * @test
+     *
      * @dataProvider exceptionRGBProvider
      */
     public function throwsExceptionOnInvalidRGB(int $r, int $g, int $b): void
@@ -101,5 +102,4 @@ final class ColourTest extends TestCase
             [0, 0, 256],
         ];
     }
-
 }
