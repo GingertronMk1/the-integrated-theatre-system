@@ -15,6 +15,7 @@ class CrewMemberController extends AbstractController
     public function index(): Response
     {
         $items = [];
+
         return $this->render(
             'pages/crew-member/index.html.twig',
             [

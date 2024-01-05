@@ -10,10 +10,10 @@ use App\Domain\Common\ValueObject\Colour;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Season\SeasonException;
 use App\Domain\Season\ValueObject\SeasonId;
-use Doctrine\DBAL\Connection;
 use App\Infrastructure\Common\AbstractDbalFinder;
+use Doctrine\DBAL\Connection;
 
-final readonly class DbalSeasonFinder  extends AbstractDbalFinder implements SeasonFinderInterface
+final readonly class DbalSeasonFinder extends AbstractDbalFinder implements SeasonFinderInterface
 {
     public function __construct(
         private Connection $connection

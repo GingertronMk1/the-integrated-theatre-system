@@ -13,7 +13,7 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final readonly class DbalUserFinder  extends AbstractDbalFinder implements UserFinderInterface
+final readonly class DbalUserFinder extends AbstractDbalFinder implements UserFinderInterface
 {
     public function __construct(
         private Connection $connection
