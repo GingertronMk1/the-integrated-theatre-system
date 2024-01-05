@@ -10,5 +10,5 @@ interface CrewMemberRepositoryInterface
 {
     public function getNextId(): CrewMemberId;
 
-    public function saveCrewMember(CrewMemberEntity $entity): void;
+    public function save(CrewMemberEntity $entity): void;
 }

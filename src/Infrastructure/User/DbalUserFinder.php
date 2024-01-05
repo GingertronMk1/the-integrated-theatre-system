@@ -8,11 +8,12 @@ use App\Application\User\UserFinderInterface;
 use App\Application\User\UserModel;
 use App\Domain\User\UserException;
 use App\Domain\User\ValueObject\UserId;
+use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final readonly class DbalUserFinder implements UserFinderInterface
+final readonly class DbalUserFinder  extends AbstractDbalFinder implements UserFinderInterface
 {
     public function __construct(
         private Connection $connection
@@ -35,7 +36,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
             ->connection
             ->createQueryBuilder()
             ->select('*')
-            ->from('users', 'u')
+            ->from($this->getTable())
             ->where('email = :email')
             ->setParameter('email', $identifier)
             ->executeQuery()
@@ -58,7 +59,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $rows = $qb
             ->select('*')
-            ->from('users', 'u')
+            ->from($this->getTable())
             ->executeQuery()
             ->fetchAllAssociative();
 
@@ -70,7 +71,7 @@ final readonly class DbalUserFinder implements UserFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from('users', 'u')
+            ->from($this->getTable())
             ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->executeQuery()
@@ -94,5 +95,10 @@ final readonly class DbalUserFinder implements UserFinderInterface
             [],
             $row['password'],
         );
+    }
+
+    protected function getTable(): string
+    {
+        return 'users';
     }
 }

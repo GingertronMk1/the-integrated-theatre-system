@@ -8,10 +8,8 @@ use App\Domain\Common\ValueObject\AbstractUuidId;
 use Doctrine\DBAL\Connection;
 use Exception;
 
-abstract class AbstractDbalRepository
+abstract class AbstractDbalRepository extends AbstractDbalService
 {
-    abstract protected function getTable(): string;
-
     protected function getCount(Connection $connection, AbstractUuidId $id): int
     {
         $qb = $connection->createQueryBuilder();

@@ -11,12 +11,18 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\Season\SeasonException;
 use App\Domain\Season\ValueObject\SeasonId;
 use Doctrine\DBAL\Connection;
+use App\Infrastructure\Common\AbstractDbalFinder;
 
-final readonly class DbalSeasonFinder implements SeasonFinderInterface
+final readonly class DbalSeasonFinder  extends AbstractDbalFinder implements SeasonFinderInterface
 {
     public function __construct(
         private Connection $connection
     ) {
+    }
+
+    protected function getTable(): string
+    {
+        return 'seasons';
     }
 
     public function find(SeasonId $id): SeasonModel
@@ -24,7 +30,7 @@ final readonly class DbalSeasonFinder implements SeasonFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from('seasons')
+            ->from($this->getTable())
             ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->fetchAssociative();
@@ -41,7 +47,7 @@ final readonly class DbalSeasonFinder implements SeasonFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $rows = $qb
             ->select('*')
-            ->from('seasons', 'tc')
+            ->from($this->getTable())
             ->fetchAllAssociative()
         ;
 

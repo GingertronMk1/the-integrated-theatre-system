@@ -12,8 +12,9 @@ use App\Domain\Season\ValueObject\SeasonId;
 use App\Domain\Show\ShowException;
 use App\Domain\Show\ValueObject\ShowId;
 use Doctrine\DBAL\Connection;
+use App\Infrastructure\Common\AbstractDbalFinder;
 
-final readonly class DbalShowFinder implements ShowFinderInterface
+final readonly class DbalShowFinder  extends AbstractDbalFinder implements ShowFinderInterface
 {
     public function __construct(
         private Connection $connection,
@@ -29,7 +30,7 @@ final readonly class DbalShowFinder implements ShowFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $rows = $qb
             ->select('*')
-            ->from('shows')
+            ->from($this->getTable())
             ->where('deleted_at IS NULL')
             ->fetchAllAssociative();
 
@@ -41,7 +42,7 @@ final readonly class DbalShowFinder implements ShowFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from('shows')
+            ->from($this->getTable())
             ->where('id = :id')
             ->andWhere('deleted_at IS NULL')
             ->setParameter('id', (string) $id)
@@ -78,5 +79,10 @@ final readonly class DbalShowFinder implements ShowFinderInterface
             DateTime::fromString($row['updated_at']),
             $deletedAt,
         );
+    }
+
+    protected function getTable(): string
+    {
+        return 'shows';
     }
 }
