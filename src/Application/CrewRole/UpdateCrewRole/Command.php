@@ -11,13 +11,17 @@ final class Command
 {
     public function __construct(
         public CrewRoleId $id,
+        public string $name = '',
+        public ?string $description = ''
     ) {
     }
 
-    public static function forCrewRole(CrewRoleModel $command): self
+    public static function forCrewRole(CrewRoleModel $model): self
     {
         return new self(
-            $command->id,
+            $model->id,
+            $model->name,
+            $model->description
         );
     }
 }
