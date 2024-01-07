@@ -56,7 +56,7 @@ class CrewRoleController extends AbstractController
         ]);
     }
 
-    #[Route('/crew-role/update/{id}', 'crew-role.update', methods: ['GET', 'POST'])]
+    #[Route('/crew-role/{id}/update', 'crew-role.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, CrewRoleFinderInterface $finder): Response
     {
         $item = $finder->find(CrewRoleId::fromString($id));

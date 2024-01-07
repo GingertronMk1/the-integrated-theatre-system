@@ -56,7 +56,7 @@ class PersonController extends AbstractController
         ]);
     }
 
-    #[Route('/person/update/{id}', 'person.update', methods: ['GET', 'POST'])]
+    #[Route('/person/{id}/update', 'person.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, CommandHandler $handler, PersonFinderInterface $finder): Response
     {
         $item = $finder->findById(PersonId::fromString($id));
