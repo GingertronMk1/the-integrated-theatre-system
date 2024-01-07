@@ -10,7 +10,7 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingSession\TrainingSessionEntity;
 use App\Domain\TrainingSession\TrainingSessionRepositoryInterface;
 
-class CommandHandler
+final readonly class CommandHandler
 {
     public function __construct(
         private TrainingSessionRepositoryInterface $trainingSessionRepository

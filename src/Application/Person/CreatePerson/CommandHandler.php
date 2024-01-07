@@ -7,7 +7,7 @@ namespace App\Application\Person\CreatePerson;
 use App\Domain\Person\PersonEntity;
 use App\Domain\Person\PersonRepositoryInterface;
 
-class CommandHandler
+final readonly class CommandHandler
 {
     public function __construct(
         private readonly PersonRepositoryInterface $personRepository
