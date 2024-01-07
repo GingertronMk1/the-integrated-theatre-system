@@ -7,7 +7,7 @@ namespace App\Application\TrainingItem\CreateTrainingItem;
 use App\Domain\TrainingItem\TrainingItemEntity;
 use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
 
-class CommandHandler
+final readonly class CommandHandler
 {
     public function __construct(
         private readonly TrainingItemRepositoryInterface $trainingItemRepository

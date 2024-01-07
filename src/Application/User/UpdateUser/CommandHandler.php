@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\User\UpdateUser;
 
-class CommandHandler
+final readonly class CommandHandler
 {
     public function __construct()
     {
