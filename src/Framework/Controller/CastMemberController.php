@@ -34,7 +34,7 @@ class CastMemberController extends AbstractController
         ]);
     }
 
-    #[Route('/cast-member/{id}/update', 'cast-member.update', methods: ['GET', 'POST'])]
+    #[Route('/cast-member/{id}/delete', 'cast-member.delete', methods: ['DELETE'])]
     public function update(Request $request, string $id): Response
     {
         return $this->render('pages/cast-member/update.html.twig', [

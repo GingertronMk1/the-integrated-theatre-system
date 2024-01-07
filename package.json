@@ -21,5 +21,9 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress",
         "stylelint": "stylelint ./assets/**/*.scss"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.5.1",
+        "bootstrap": "~5.3"
     }
 }

@@ -14,39 +14,51 @@
     <p>{{ show.createdAt|date }}</p>
     <p>{{ show.updatedAt|date }}</p>
 
-    <div class="show__cast-and-crew">
-        <div class="show__cast">
-            <h3>Cast</h3>
-            <ul>
-                {% for member in show.castMembers %}
-                    <li data-cast-member-id="{{ member.id }}">
-                        {{ member.person.name }}: {{ member.role }}
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">Cast</div>
+                <ul class="list-group list-group-flush">
+                    {% for member in show.castMembers %}
+                        <li data-cast-member-id="{{ member.id }}" class="list-group-item">
+                            {{ member.person.name }}: {{ member.role }}
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item">
+                        <a
+                            class="btn btn-primary"
+                            href="{{ path('crew-member.create', {showId: show.id}) }}"
+                            >
+                            Add
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </li>
-                {% endfor %}
-            </ul>
-            <a
-                class="button"
-                href="{{ path('cast-member.create', {showId: show.id}) }}"
-                >
-                Add
-            </a>
+
+                </ul>
+            </div>
         </div>
-        <div class="show__crew">
-            <h3>Crew</h3>
-            <ul>
-                {% for member in show.crewMembers %}
-                    <li data-crew-member-id="{{ member.id }}">
-                        {{ member.person.name }}: {{ member.role.name }}
-                        {% if member.notes is not empty -%}({{ member.notes }}){%- endif %}
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">Crew</div>
+                <ul class="list-group list-group-flush">
+                    {% for member in show.crewMembers %}
+                        <li data-crew-member-id="{{ member.id }}" class="list-group-item">
+                            {{ member.person.name }}: {{ member.role.name }}
+                            {% if member.notes is not empty -%}({{ member.notes }}){%- endif %}
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item">
+                        <a
+                            class="btn btn-primary"
+                            href="{{ path('cast-member.create', {showId: show.id}) }}"
+                            >
+                            Add
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </li>
-                {% endfor %}
-            </ul>
-            <a
-                class="button"
-                href="{{ path('crew-member.create', {showId: show.id}) }}"
-                >
-                Add
-            </a>
+                </ul>
+
+            </div>
         </div>
     </div>
 </div>
