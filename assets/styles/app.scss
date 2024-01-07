@@ -7,6 +7,12 @@
 @import 'components/button';
 @import 'components/table';
 @import 'pages/show';
+@import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+
+
 
 body {
     background-color: color.adjust($white, $lightness: -5%);
