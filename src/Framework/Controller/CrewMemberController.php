@@ -34,7 +34,7 @@ class CrewMemberController extends AbstractController
         ]);
     }
 
-    #[Route('/crew-member/update/{id}', 'crew-member.update', methods: ['GET', 'POST'])]
+    #[Route('/crew-member/{id}/update', 'crew-member.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id): Response
     {
         return $this->render('pages/crew-member/update.html.twig', [

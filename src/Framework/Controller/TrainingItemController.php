@@ -56,7 +56,7 @@ class TrainingItemController extends AbstractController
         ]);
     }
 
-    #[Route('/training-item/update/{id}', 'training-item.update', methods: ['GET', 'POST'])]
+    #[Route('/training-item/{id}/update', 'training-item.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, TrainingItemFinderInterface $finder): Response
     {
         $item = $finder->find(TrainingItemId::fromString($id));

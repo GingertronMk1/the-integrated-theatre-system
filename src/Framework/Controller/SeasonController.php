@@ -46,7 +46,7 @@ class SeasonController extends AbstractController
         );
     }
 
-    #[Route('/season/update/{id}', 'season.update', methods: ['GET', 'POST'])]
+    #[Route('/season/{id}/update', 'season.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, SeasonFinderInterface $finder): Response
     {
         $show = $finder->find(SeasonId::fromString($id));

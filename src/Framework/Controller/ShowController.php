@@ -51,7 +51,7 @@ class ShowController extends AbstractController
         );
     }
 
-    #[Route('/show/update/{id}', 'show.update', methods: ['GET', 'POST'])]
+    #[Route('/show/{id}/update', 'show.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, ShowFinderInterface $finder): Response
     {
         $show = $finder->find(ShowId::fromString($id));
