@@ -6,6 +6,7 @@ namespace App\Application\TrainingCategory\CreateTrainingCategory;
 
 use App\Domain\TrainingCategory\TrainingCategoryEntity;
 use App\Domain\TrainingCategory\TrainingCategoryRepositoryInterface;
+use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 
 final readonly class CommandHandler
 {
@@ -14,7 +15,7 @@ final readonly class CommandHandler
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): TrainingCategoryId
     {
         $id = $this->trainingCategoryRepository->getNextId();
         $category = new TrainingCategoryEntity(
@@ -22,5 +23,7 @@ final readonly class CommandHandler
             $command->name,
         );
         $this->trainingCategoryRepository->save($category);
+
+        return $id;
     }
 }

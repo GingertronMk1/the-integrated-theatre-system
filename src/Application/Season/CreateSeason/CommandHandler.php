@@ -7,6 +7,7 @@ namespace App\Application\Season\CreateSeason;
 use App\Domain\Common\ValueObject\Colour;
 use App\Domain\Season\SeasonEntity;
 use App\Domain\Season\SeasonRepositoryInterface;
+use App\Domain\Season\ValueObject\SeasonId;
 
 final readonly class CommandHandler
 {
@@ -15,14 +16,17 @@ final readonly class CommandHandler
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): SeasonId
     {
+        $id = $this->repository->getNextId();
         $entity = new SeasonEntity(
-            $this->repository->getNextId(),
+            $id,
             $command->name,
             $command->description,
             Colour::fromString($command->colour)
         );
         $this->repository->save($entity);
+
+        return $id;
     }
 }

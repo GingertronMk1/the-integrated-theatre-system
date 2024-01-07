@@ -6,6 +6,7 @@ namespace App\Application\CrewRole\UpdateCrewRole;
 
 use App\Domain\CrewRole\CrewRoleEntity;
 use App\Domain\CrewRole\CrewRoleRepositoryInterface;
+use App\Domain\CrewRole\ValueObject\CrewRoleId;
 
 final readonly class CommandHandler
 {
@@ -14,7 +15,7 @@ final readonly class CommandHandler
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): CrewRoleId
     {
         $entity = new CrewRoleEntity(
             $command->id,
@@ -22,5 +23,7 @@ final readonly class CommandHandler
             $command->description,
         );
         $this->repository->save($entity);
+
+        return $command->id;
     }
 }

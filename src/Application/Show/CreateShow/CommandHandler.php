@@ -6,6 +6,7 @@ namespace App\Application\Show\CreateShow;
 
 use App\Domain\Show\ShowEntity;
 use App\Domain\Show\ShowRepositoryInterface;
+use App\Domain\Show\ValueObject\ShowId;
 
 final readonly class CommandHandler
 {
@@ -14,10 +15,11 @@ final readonly class CommandHandler
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): ShowId
     {
+        $id = $this->repository->getNextId();
         $entity = new ShowEntity(
-            $this->repository->getNextId(),
+            $id,
             $command->name,
             $command->description,
             $command->year,
@@ -25,5 +27,7 @@ final readonly class CommandHandler
         );
 
         $this->repository->save($entity);
+
+        return $id;
     }
 }
