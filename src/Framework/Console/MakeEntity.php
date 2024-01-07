@@ -30,7 +30,6 @@ final class MakeEntity extends Command
     private const ARG_CLASSNAME = 'className';
     private const OPT_DRY_RUN = 'dry-run';
 
-    private const KIND_INTERFACE = 'interface';
     private const KIND_CLASS = 'class';
     private const KIND_DIRECTORY = 'dir';
 
@@ -167,7 +166,6 @@ final class MakeEntity extends Command
                     'template' => 'model',
                 ],
                 "{$classPlaceholder}FinderInterface" => [
-                    'kind' => self::KIND_INTERFACE,
                     'template' => 'finder-interface',
                 ],
                 "Create{$classPlaceholder}" => [
@@ -198,7 +196,6 @@ final class MakeEntity extends Command
                     'template' => 'entity',
                 ],
                 "{$classPlaceholder}RepositoryInterface" => [
-                    'kind' => self::KIND_INTERFACE,
                     'template' => 'repository-interface',
                 ],
                 "{$classPlaceholder}Exception" => [
