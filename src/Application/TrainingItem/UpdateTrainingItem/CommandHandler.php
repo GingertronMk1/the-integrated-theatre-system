@@ -6,6 +6,7 @@ namespace App\Application\TrainingItem\UpdateTrainingItem;
 
 use App\Domain\TrainingItem\TrainingItemEntity;
 use App\Domain\TrainingItem\TrainingItemRepositoryInterface;
+use App\Domain\TrainingItem\ValueObject\TrainingItemId;
 
 final readonly class CommandHandler
 {
@@ -14,7 +15,7 @@ final readonly class CommandHandler
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): TrainingItemId
     {
         $trainingItemEntity = new TrainingItemEntity(
             $command->id,
@@ -24,5 +25,7 @@ final readonly class CommandHandler
         );
 
         $this->trainingItemRepository->save($trainingItemEntity);
+
+        return $command->id;
     }
 }

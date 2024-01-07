@@ -6,6 +6,7 @@ namespace App\Application\User\CreateUser;
 
 use App\Domain\User\UserEntity;
 use App\Domain\User\UserRepositoryInterface;
+use App\Domain\User\ValueObject\UserId;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final readonly class CommandHandler
@@ -16,10 +17,11 @@ final readonly class CommandHandler
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): UserId
     {
+        $id = $this->userRepository->getNextId();
         $userEntity = new UserEntity(
-            $this->userRepository->getNextId(),
+            $id,
             $command->email,
             [],
             $command->password
@@ -31,5 +33,7 @@ final readonly class CommandHandler
             $userEntity->roles,
             $hashedPassword
         ));
+
+        return $id;
     }
 }
