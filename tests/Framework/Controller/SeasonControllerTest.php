@@ -54,9 +54,9 @@ final class SeasonControllerTest extends UserInterfaceTest
     public function testUpdate(): void
     {
         $seasonId = SeasonFixture::inHouseSeason()->id;
-        $crawler = $this->client->request('GET', "/season/update/{$seasonId}");
+        $crawler = $this->client->request('GET', "/season/{$seasonId}/update");
         $this->assertResponseIsSuccessful();
-        $this->assertStringEndsWith("/season/update/{$seasonId}", $crawler->getUri());
+        $this->assertStringEndsWith("/season/{$seasonId}/update", $crawler->getUri());
         $this->assertSelectorExists('form[name=season]');
         $newName = 'This should have updated';
         $form = $crawler->filter('form[name=season]')->form([
