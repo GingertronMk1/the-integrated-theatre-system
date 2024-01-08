@@ -20,6 +20,80 @@
         'route': 'person.index',
     }
 ] %}
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav w-100 mb-2 mb-lg-0">
+        {% for item in nav %}
+            {% if item.content is defined %}
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        {{ item.title }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for route, text in item.content %}
+                            <li>
+                                <a class="dropdown-item" href="{{ path(route) }}">
+                                    {{ text }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% elseif item.route is defined and item.title is defined %}
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        aria-current="page"
+                        href="{{ path(item.route) }}"
+                    >
+                        {{ item.title }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        <span class="ms-auto">
+        {% if app.user %}
+        <li class="nav-item dropdown">
+            <a
+                href="#"
+                class="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                User
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="{{ logout_path() }}" class="dropdown-item">
+                        Log Out
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {% else %}
+        <li class="nav-item"><a href="{{ path('login') }}" class="nav-link">Log In</a></li>
+        {% endif %}
+        </span>
+    </ul>
+    </div>
+  </div>
+</nav>
+
+ 
+ {#
 <header class="header">
     <h3>The Integrated Theatre System</h3>
     {% for item in nav %}
@@ -44,3 +118,5 @@
         {% endif %}
     </span>
 </header>
+
+#}
