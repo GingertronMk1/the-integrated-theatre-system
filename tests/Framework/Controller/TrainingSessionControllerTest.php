@@ -73,7 +73,7 @@ final class TrainingSessionControllerTest extends UserInterfaceTest
     public function testUpdate(): void
     {
         $session = TrainingSessionFixture::getTestSession1();
-        $crawler = $this->client->request('GET', "/training-session/update/{$session->id}");
+        $crawler = $this->client->request('GET', "/training-session/{$session->id}/update");
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('form[name=training_session]');
         $item = TrainingItemFixture::getSessionTestFixture();

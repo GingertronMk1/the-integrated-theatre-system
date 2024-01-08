@@ -54,9 +54,9 @@ final class PersonControllerTest extends UserInterfaceTest
     public function testUpdate(): void
     {
         $person = PersonFixture::testPerson1();
-        $crawler = $this->client->request('GET', "/person/update/{$person->id}");
+        $crawler = $this->client->request('GET', "/person/{$person->id}/update");
         $this->assertResponseIsSuccessful();
-        $this->assertStringEndsWith("/person/update/{$person->id}", $crawler->getUri());
+        $this->assertStringEndsWith("/person/{$person->id}/update", $crawler->getUri());
         $this->assertSelectorExists('form[name=person]');
         $newName = 'This should have updated';
         $form = $crawler->filter('form[name=person]')->form([
