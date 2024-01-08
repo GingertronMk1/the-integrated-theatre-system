@@ -23,12 +23,23 @@
 
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <a class="navbar-brand" href="#">T.I.T.S.</a>
+    <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav w-100 mb-2 mb-lg-0">
+    <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
+    >
+        <ul class="navbar-nav w-100 mb-2 mb-lg-0">
         {% for item in nav %}
             {% if item.content is defined %}
                 <li class="nav-item dropdown">
@@ -91,32 +102,3 @@
     </div>
   </div>
 </nav>
-
- 
- {#
-<header class="header">
-    <h3>The Integrated Theatre System</h3>
-    {% for item in nav %}
-        {% if item.content is defined %}
-        <div class="header__dropdown">
-            <span>{{ item.title }}</span>
-            <div class="header__dropdown-content">
-                {% for route, text in item.content %}
-                    <a href="{{ path(route) }}">{{ text }}</a>
-                {% endfor %}
-            </div>
-        </div> 
-        {% elseif item.route is defined and item.title is defined %}
-            <a href="{{ path(item.route) }}">{{ item.title }}</a>
-        {% endif %}
-    {% endfor %}
-    <span class="header__logout-button">
-        {% if app.user %}
-        <a href="{{ logout_path() }}">Log Out {{ app.user.userIdentifier }}</a>
-        {% else %}
-        <a href="{{ path('login') }}">Log In</a>
-        {% endif %}
-    </span>
-</header>
-
-#}
