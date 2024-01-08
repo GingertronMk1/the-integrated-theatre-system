@@ -1,8 +1,11 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block body %}
+<h3 class="col-8">Shows</h3>
+<div class="col-4">
 <a href="{{ path('show.create') }}" class="button">Add</a>
-<table id="shows">
+</div>
+<table class="table" id="shows">
     <thead>
     <th>Name</th>
     <th>Description</th>
