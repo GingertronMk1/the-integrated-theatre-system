@@ -10,9 +10,9 @@
                     History
                 </div>
                 <div class="card-body">
-                    We have records of {{ shows|length }} {{ shows|length == 1 ? 'show' : 'shows' }},
-                    across {{ seasons|length }} {{ seasons|length == 1 ? 'season' : 'seasons' }},
-                    with {{ people|length }} {{ people|length == 1 ? 'person' : 'people' }} working on them
+                    We have records of {{ shows }} {{ shows == 1 ? 'show' : 'shows' }},
+                    across {{ seasons }} {{ seasons == 1 ? 'season' : 'seasons' }},
+                    with {{ people }} {{ people == 1 ? 'person' : 'people' }} working on them
                 </div>
             </div>
         </div>
@@ -20,9 +20,9 @@
             <div class="card">
                 <div class="card-header">Training</div>
                 <div class="card-body">
-                    We have records of {{ trainingItems|length }} things to be trained on, 
-                    across {{ trainingCategories|length }} categories,
-                    with {{ trainingSessions|length }} sessions making sure everyone's up to speed
+                    We have records of {{ trainingItems }} things to be trained on, 
+                    across {{ trainingCategories }} categories,
+                    with {{ trainingSessions }} sessions making sure everyone's up to speed
                 </div>
             </div>
         </div>

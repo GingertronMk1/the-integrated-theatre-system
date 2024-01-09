@@ -14,4 +14,6 @@ interface ShowFinderInterface
     public function findAll(): array;
 
     public function find(ShowId $id): ShowModel;
+
+    public function count(ShowId $id = null): int;
 }

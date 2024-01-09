@@ -77,4 +77,9 @@ final class DbalSeasonFinder extends AbstractDbalFinder implements SeasonFinderI
             $deletedAt,
         );
     }
+
+    public function count(SeasonId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
+    }
 }

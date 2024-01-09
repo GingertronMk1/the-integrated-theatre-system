@@ -26,7 +26,7 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
         return 'people';
     }
 
-    public function findById(PersonId $id): PersonModel
+    public function find(PersonId $id): PersonModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -80,7 +80,7 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
 
         if (!is_null($dbUserId)) {
             $userId = UserId::fromString($dbUserId);
-            $user = $this->userFinder->findById($userId);
+            $user = $this->userFinder->find($userId);
         }
 
         return new PersonModel(
@@ -91,5 +91,10 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
             (int) $row['end_year'],
             $user
         );
+    }
+
+    public function count(PersonId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
     }
 }

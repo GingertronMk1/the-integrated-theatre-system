@@ -66,7 +66,7 @@ final class DbalUserFinder extends AbstractDbalFinder implements UserFinderInter
         return array_map(fn ($row) => $this->createUserFromRow($row), $rows);
     }
 
-    public function findById(UserId $id): UserModel
+    public function find(UserId $id): UserModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
@@ -100,5 +100,10 @@ final class DbalUserFinder extends AbstractDbalFinder implements UserFinderInter
     protected function getTable(): string
     {
         return 'users';
+    }
+
+    public function count(UserId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
     }
 }

@@ -16,6 +16,8 @@ interface CastMemberFinderInterface
 
     public function find(CastMemberId $id): CastMemberModel;
 
+    public function count(CastMemberId $id = null): int;
+
     /**
      * @return array<CastMemberModel>
      */

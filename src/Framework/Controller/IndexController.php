@@ -19,24 +19,22 @@ final class IndexController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(
-        UserFinderInterface $userFinder,
         ShowFinderInterface $showFinder,
         SeasonFinderInterface $seasonFinder,
         PersonFinderInterface $personFinder,
         TrainingCategoryFinderInterface $trainingCategoryFinder,
         TrainingItemFinderInterface $trainingItemFinder,
         TrainingSessionFinderInterface $trainingSessionFinder
-    ): Response
-    {
+    ): Response {
         return $this->render(
             'pages/index/index.html.twig',
             [
-                'shows' => $showFinder->findAll(),
-                'seasons' => $seasonFinder->findAll(),
-                'people' => $personFinder->findAll(),
-                'trainingCategories' => $trainingCategoryFinder->findAll(),
-                'trainingItems' => $trainingItemFinder->findAll(),
-                'trainingSessions' => $trainingSessionFinder->findAll()
+                'shows' => $showFinder->count(),
+                'seasons' => $seasonFinder->count(),
+                'people' => $personFinder->count(),
+                'trainingCategories' => $trainingCategoryFinder->count(),
+                'trainingItems' => $trainingItemFinder->count(),
+                'trainingSessions' => $trainingSessionFinder->count(),
             ]
         );
     }

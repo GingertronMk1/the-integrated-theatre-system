@@ -93,4 +93,9 @@ final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInter
     {
         return 'shows';
     }
+
+    public function count(ShowId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
+    }
 }

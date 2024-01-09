@@ -67,4 +67,9 @@ final class DbalTrainingCategoryFinder extends AbstractDbalFinder implements Tra
     {
         return 'training_categories';
     }
+
+    public function count(TrainingCategoryId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
+    }
 }

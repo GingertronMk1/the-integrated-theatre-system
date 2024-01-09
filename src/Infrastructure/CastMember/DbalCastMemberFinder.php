@@ -66,7 +66,7 @@ final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMembe
         return new CastMemberModel(
             CastMemberId::fromString($row['id']),
             $row['role'],
-            $this->personFinder->findById(PersonId::fromString($row['person_id']))
+            $this->personFinder->find(PersonId::fromString($row['person_id']))
         );
     }
 
@@ -86,5 +86,10 @@ final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMembe
             fn (array $row) => $this->createFromRow($row),
             $rows
         );
+    }
+
+    public function count(CastMemberId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
     }
 }
