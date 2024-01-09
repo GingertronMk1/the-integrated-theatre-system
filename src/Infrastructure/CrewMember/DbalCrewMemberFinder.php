@@ -54,7 +54,7 @@ final class DbalCrewMemberFinder extends AbstractDbalFinder implements CrewMembe
     {
         return new CrewMemberModel(
             CrewMemberId::fromString($row['id']),
-            $this->personFinder->findById(PersonId::fromString($row['person_id'])),
+            $this->personFinder->find(PersonId::fromString($row['person_id'])),
             $this->crewRoleFinder->find(CrewRoleId::fromString($row['role_id'])),
             $row['notes']
         );
@@ -81,5 +81,10 @@ final class DbalCrewMemberFinder extends AbstractDbalFinder implements CrewMembe
             fn (array $row) => $this->createFromRow($row),
             $rows
         );
+    }
+
+    public function count(CrewMemberId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
     }
 }

@@ -112,4 +112,9 @@ final class DbalTrainingSessionFinder extends AbstractDbalFinder implements Trai
     {
         return 'training_sessions';
     }
+
+    public function count(TrainingSessionId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
+    }
 }

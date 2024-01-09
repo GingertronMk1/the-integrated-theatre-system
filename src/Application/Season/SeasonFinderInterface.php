@@ -14,4 +14,6 @@ interface SeasonFinderInterface
     public function findAll(): array;
 
     public function find(SeasonId $id): SeasonModel;
+
+    public function count(SeasonId $id = null): int;
 }

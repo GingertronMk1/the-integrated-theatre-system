@@ -74,4 +74,9 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
             $deletedAt
         );
     }
+
+    public function count(CrewRoleId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
+    }
 }

@@ -89,4 +89,9 @@ final class DbalTrainingItemFinder extends AbstractDbalFinder implements Trainin
     {
         return 'training_items';
     }
+
+    public function count(TrainingItemId $id = null): int
+    {
+        return $this->internalCount($this->connection, $id);
+    }
 }

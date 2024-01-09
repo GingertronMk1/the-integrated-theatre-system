@@ -16,6 +16,8 @@ interface CrewMemberFinderInterface
 
     public function find(CrewMemberId $id): CrewMemberModel;
 
+    public function count(CrewMemberId $id = null): int;
+
     /**
      * @return array<CrewMemberModel>
      */

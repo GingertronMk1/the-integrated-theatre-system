@@ -14,4 +14,6 @@ interface CrewRoleFinderInterface
     public function findAll(): array;
 
     public function find(CrewRoleId $id): CrewRoleModel;
+
+    public function count(CrewRoleId $id = null): int;
 }

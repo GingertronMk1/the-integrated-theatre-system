@@ -18,5 +18,7 @@ interface UserFinderInterface extends UserProviderInterface, PasswordUpgraderInt
      */
     public function findAll(): array;
 
-    public function findById(UserId $id): UserModel;
+    public function find(UserId $id): UserModel;
+
+    public function count(UserId $id = null): int;
 }
