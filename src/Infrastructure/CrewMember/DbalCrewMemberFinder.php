@@ -85,6 +85,6 @@ final class DbalCrewMemberFinder extends AbstractDbalFinder implements CrewMembe
 
     public function count(CrewMemberId $id = null): int
     {
-        return $this->internalCount($this->connection, $id);
+        return $this->_count($this->connection, $id);
     }
 }

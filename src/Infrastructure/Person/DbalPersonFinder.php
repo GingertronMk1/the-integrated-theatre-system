@@ -95,6 +95,6 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
 
     public function count(PersonId $id = null): int
     {
-        return $this->internalCount($this->connection, $id);
+        return $this->_count($this->connection, $id);
     }
 }
