@@ -104,6 +104,6 @@ final class DbalUserFinder extends AbstractDbalFinder implements UserFinderInter
 
     public function count(UserId $id = null): int
     {
-        return $this->internalCount($this->connection, $id);
+        return $this->_count($this->connection, $id);
     }
 }
