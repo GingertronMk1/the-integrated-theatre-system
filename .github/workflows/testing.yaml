@@ -62,7 +62,7 @@ jobs:
               id: cache
               if: steps.coverage.outputs.exit_code == 0
               with:
-                name: code-coverage-${{ github.sha }}
+                key: code-coverage-${{ github.sha }}
                 path: ./code-coverage
 
     static_upload:
