@@ -26,6 +26,9 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v3
+            - name: Setup Pages
+              if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
+              uses: actions/configure-pages@v4
             - name: Cache Composer
               id: cache-composer
               uses: actions/cache@v3
@@ -56,24 +59,22 @@ jobs:
               run: ./_docker/bin/app/phpunit-with-coverage
               if: always()
             - name: Artifact Coverage
+              id: artifact-coverage
               uses: actions/upload-artifact@v3
               if: steps.coverage.outputs.exit_code == 0
               with:
                 name: code-coverage-${{ github.sha }}
                 path: ./code-coverage
+
     static_upload:
         needs: testing
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
         runs-on: ubuntu-latest
         steps:
-        - name: Setup Pages
-          uses: actions/configure-pages@v4
         - uses: actions/download-artifact@v4
-          with:
-            name: code-coverage-${{ github.sha }}
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v3
           with:
