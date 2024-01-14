@@ -58,9 +58,8 @@ jobs:
               id: coverage
               run: ./_docker/bin/app/phpunit-with-coverage
               if: always()
-            - name: Artifact Coverage
-              id: artifact-coverage
-              uses: actions/upload-artifact@v3
+            - uses: actions/cache/save@v3
+              id: cache
               if: steps.coverage.outputs.exit_code == 0
               with:
                 name: code-coverage-${{ github.sha }}
@@ -74,11 +73,15 @@ jobs:
             url: ${{ steps.deployment.outputs.page_url }}
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/download-artifact@v4
+        - uses: actions/cache/restore@v3
+          id: cache-download
+          with:
+            path: ./code-coverage
+            key: code-coverage-${{ github.sha }}
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v3
           with:
-            path: './files'
+            path: ./code-coverage
         - name: Deploy to GitHub Pages
           id: deployment
           uses: actions/deploy-pages@v4
