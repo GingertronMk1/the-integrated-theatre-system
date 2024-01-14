@@ -6,6 +6,7 @@ namespace App\Application\Show\UpdateShow;
 
 use App\Domain\Show\ShowEntity;
 use App\Domain\Show\ShowRepositoryInterface;
+use App\Domain\Show\ValueObject\ShowId;
 
 final readonly class CommandHandler
 {
@@ -14,7 +15,7 @@ final readonly class CommandHandler
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): ShowId
     {
         $entity = new ShowEntity(
             $command->id,
@@ -24,5 +25,7 @@ final readonly class CommandHandler
         );
 
         $this->repository->save($entity);
+
+        return $command->id;
     }
 }

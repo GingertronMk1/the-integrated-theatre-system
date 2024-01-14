@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Framework\Controller;
 
 use App\Application\Season\SeasonFixture;
-use Tests\Tests\UserInterfaceTest;
+use Tests\Tests\UserInterfaceTestCase;
 
 /**
  * @group userinterface
  */
-final class SeasonControllerTest extends UserInterfaceTest
+final class SeasonControllerTest extends UserInterfaceTestCase
 {
     public function setUp(): void
     {
@@ -54,9 +54,9 @@ final class SeasonControllerTest extends UserInterfaceTest
     public function testUpdate(): void
     {
         $seasonId = SeasonFixture::inHouseSeason()->id;
-        $crawler = $this->client->request('GET', "/season/update/{$seasonId}");
+        $crawler = $this->client->request('GET', "/season/{$seasonId}/update");
         $this->assertResponseIsSuccessful();
-        $this->assertStringEndsWith("/season/update/{$seasonId}", $crawler->getUri());
+        $this->assertStringEndsWith("/season/{$seasonId}/update", $crawler->getUri());
         $this->assertSelectorExists('form[name=season]');
         $newName = 'This should have updated';
         $form = $crawler->filter('form[name=season]')->form([

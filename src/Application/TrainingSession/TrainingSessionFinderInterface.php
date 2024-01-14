@@ -14,4 +14,6 @@ interface TrainingSessionFinderInterface
      * @return array<TrainingSessionModel>
      */
     public function findAll(): array;
+
+    public function count(TrainingSessionId $id = null): int;
 }

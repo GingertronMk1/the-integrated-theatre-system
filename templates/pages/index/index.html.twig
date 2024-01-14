@@ -1,5 +1,30 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block body %}
-    <h1>Welcome.</h1>
+    <h1>Welcome to The Integrated Theatre System</h1>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    History
+                </div>
+                <div class="card-body">
+                    We have records of {{ shows }} {{ shows == 1 ? 'show' : 'shows' }},
+                    across {{ seasons }} {{ seasons == 1 ? 'season' : 'seasons' }},
+                    with {{ people }} {{ people == 1 ? 'person' : 'people' }} working on them
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">Training</div>
+                <div class="card-body">
+                    We have records of {{ trainingItems }} things to be trained on, 
+                    across {{ trainingCategories }} categories,
+                    with {{ trainingSessions }} sessions making sure everyone's up to speed
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

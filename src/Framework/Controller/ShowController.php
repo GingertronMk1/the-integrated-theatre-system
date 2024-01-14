@@ -51,7 +51,7 @@ class ShowController extends AbstractController
         );
     }
 
-    #[Route('/show/update/{id}', 'show.update', methods: ['GET', 'POST'])]
+    #[Route('/show/{id}/update', 'show.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, ShowFinderInterface $finder): Response
     {
         $show = $finder->find(ShowId::fromString($id));
@@ -68,6 +68,19 @@ class ShowController extends AbstractController
             'pages/show/update.html.twig',
             [
                 'form' => $form->createView(),
+            ]
+        );
+    }
+
+    #[Route('/show/{id}', 'show.show', methods: ['GET'])]
+    public function show(string $id, ShowFinderInterface $finder): Response
+    {
+        $show = $finder->find(ShowId::fromString($id));
+
+        return $this->render(
+            'pages/show/show.html.twig',
+            [
+                'show' => $show,
             ]
         );
     }

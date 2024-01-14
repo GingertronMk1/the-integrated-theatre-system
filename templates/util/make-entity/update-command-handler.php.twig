@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {{ nameSpace }};
 
+use App\Domain\{{ baseClass }}\{{ baseClass }}Entity;
 use App\Domain\{{ baseClass }}\{{ baseClass }}RepositoryInterface;
 
 final readonly class CommandHandler
@@ -15,5 +16,9 @@ final readonly class CommandHandler
 
     public function handle(Command $command): void
     {
+        $entity = new {{ baseClass }}Entity(
+            $command->id
+        );
+        $this->repository->save($entity);
     }
 }

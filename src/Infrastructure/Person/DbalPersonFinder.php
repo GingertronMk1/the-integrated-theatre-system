@@ -10,9 +10,10 @@ use App\Application\User\UserFinderInterface;
 use App\Domain\Person\PersonException;
 use App\Domain\Person\ValueObject\PersonId;
 use App\Domain\User\ValueObject\UserId;
+use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-class DbalPersonFinder implements PersonFinderInterface
+class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterface
 {
     public function __construct(
         private readonly Connection $connection,
@@ -20,12 +21,17 @@ class DbalPersonFinder implements PersonFinderInterface
     ) {
     }
 
-    public function findById(PersonId $id): PersonModel
+    protected function getTable(): string
+    {
+        return 'people';
+    }
+
+    public function find(PersonId $id): PersonModel
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from('people', 'p')
+            ->from($this->getTable())
             ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->executeQuery()
@@ -44,7 +50,7 @@ class DbalPersonFinder implements PersonFinderInterface
         $qb = $this->connection->createQueryBuilder();
         $qb = $qb
             ->select('*')
-            ->from('people', 'p');
+            ->from($this->getTable());
 
         if (!empty($ids)) {
             $qb = $qb
@@ -74,7 +80,7 @@ class DbalPersonFinder implements PersonFinderInterface
 
         if (!is_null($dbUserId)) {
             $userId = UserId::fromString($dbUserId);
-            $user = $this->userFinder->findById($userId);
+            $user = $this->userFinder->find($userId);
         }
 
         return new PersonModel(
@@ -85,5 +91,10 @@ class DbalPersonFinder implements PersonFinderInterface
             (int) $row['end_year'],
             $user
         );
+    }
+
+    public function count(PersonId $id = null): int
+    {
+        return $this->_count($this->connection, $id);
     }
 }

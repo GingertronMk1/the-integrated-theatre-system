@@ -7,7 +7,7 @@ namespace Tests\Tests;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-abstract class UserInterfaceTest extends WebTestCase
+abstract class UserInterfaceTestCase extends WebTestCase
 {
     use TestWithFixturesTrait;
 

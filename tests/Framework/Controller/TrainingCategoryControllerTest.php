@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Framework\Controller;
 
 use App\Application\TrainingCategory\TrainingCategoryFixture;
-use Tests\Tests\UserInterfaceTest;
+use Tests\Tests\UserInterfaceTestCase;
 
 /**
  * @group userinterface
  */
-final class TrainingCategoryControllerTest extends UserInterfaceTest
+final class TrainingCategoryControllerTest extends UserInterfaceTestCase
 {
     public function setUp(): void
     {
@@ -52,9 +52,9 @@ final class TrainingCategoryControllerTest extends UserInterfaceTest
     public function testUpdate(): void
     {
         $categoryId = TrainingCategoryFixture::testCategoryFixture1()->id;
-        $crawler = $this->client->request('GET', "/training-category/update/{$categoryId}");
+        $crawler = $this->client->request('GET', "/training-category/{$categoryId}/update");
         $this->assertResponseIsSuccessful();
-        $this->assertStringEndsWith("/training-category/update/{$categoryId}", $crawler->getUri());
+        $this->assertStringEndsWith("/training-category/{$categoryId}/update", $crawler->getUri());
         $this->assertSelectorExists('form[name=training_category]');
         $newName = 'This should have updated';
         $form = $crawler->filter('form[name=training_category]')->form([

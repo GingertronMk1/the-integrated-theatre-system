@@ -14,4 +14,6 @@ interface TrainingCategoryFinderInterface
     public function findAll(): array;
 
     public function find(TrainingCategoryId $id): TrainingCategoryModel;
+
+    public function count(TrainingCategoryId $id = null): int;
 }

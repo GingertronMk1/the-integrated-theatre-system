@@ -52,7 +52,7 @@ class TrainingCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/training-category/update/{id}', 'training-category.update', methods: ['GET', 'POST'])]
+    #[Route('/training-category/{id}/update', 'training-category.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, UpdateCommandHandler $handler, TrainingCategoryFinderInterface $finder): Response
     {
         $category = $finder->find(TrainingCategoryId::fromString($id));

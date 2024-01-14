@@ -10,9 +10,10 @@ use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingCategory\ValueObject\TrainingCategoryId;
 use App\Domain\TrainingItem\TrainingItemException;
 use App\Domain\TrainingItem\ValueObject\TrainingItemId;
+use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterface
+final class DbalTrainingItemFinder extends AbstractDbalFinder implements TrainingItemFinderInterface
 {
     public function __construct(
         private Connection $connection
@@ -29,14 +30,10 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
         $qb = $this->connection->createQueryBuilder();
         $qb = $qb
             ->select('*')
-            ->from('training_items', 'tc');
+            ->from($this->getTable());
 
         if (!empty($ids)) {
-            $qb = $qb
-                ->where($qb->expr()->in(
-                    'id',
-                    array_map(fn (TrainingItemId $id) => "'{$id}'", $ids)
-                ));
+            $qb = $qb->where($this->columnInArray($qb, 'id', $ids));
         }
 
         $rows = $qb->executeQuery()
@@ -59,7 +56,7 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from('training_items', 'tc')
+            ->from($this->getTable())
             ->where("{$column} = :value")
             ->setParameter('value', $value)
             ->executeQuery()
@@ -86,5 +83,15 @@ final readonly class DbalTrainingItemFinder implements TrainingItemFinderInterfa
             DateTime::fromString($row['created_at']),
             DateTime::fromString($row['updated_at']),
         );
+    }
+
+    protected function getTable(): string
+    {
+        return 'training_items';
+    }
+
+    public function count(TrainingItemId $id = null): int
+    {
+        return $this->_count($this->connection, $id);
     }
 }

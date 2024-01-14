@@ -7,9 +7,9 @@ namespace Tests\Framework\Controller;
 use App\Application\User\UserFinderInterface;
 use App\Application\User\UserFixture;
 use App\Application\User\UserModel;
-use Tests\Tests\UserInterfaceTest;
+use Tests\Tests\UserInterfaceTestCase;
 
-final class UserControllerTest extends UserInterfaceTest
+final class UserControllerTest extends UserInterfaceTestCase
 {
     public function setUp(): void
     {

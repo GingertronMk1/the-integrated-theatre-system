@@ -1,12 +1,13 @@
-@use 'sass:color';
-@import 'variables';
-@import 'mixins';
-@import 'reset';
-@import 'components/header';
-@import 'components/main';
-@import 'components/button';
-@import 'components/table';
-
-body {
-    background-color: color.adjust($white, $lightness: -5%);
-}
+// @use 'sass:color';
+// @import 'variables';
+// @import 'mixins';
+// @import 'reset';
+// @import 'components/header';
+// @import 'components/main';
+// @import 'components/button';
+// @import 'components/table';
+// @import 'pages/show';
+@import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';

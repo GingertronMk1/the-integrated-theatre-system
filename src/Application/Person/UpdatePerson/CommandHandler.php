@@ -6,15 +6,16 @@ namespace App\Application\Person\UpdatePerson;
 
 use App\Domain\Person\PersonEntity;
 use App\Domain\Person\PersonRepositoryInterface;
+use App\Domain\Person\ValueObject\PersonId;
 
-class CommandHandler
+final readonly class CommandHandler
 {
     public function __construct(
         private readonly PersonRepositoryInterface $personRepository
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): PersonId
     {
         $personEntity = new PersonEntity(
             $command->id,
@@ -25,5 +26,7 @@ class CommandHandler
             $command->user?->id ?? null
         );
         $this->personRepository->save($personEntity);
+
+        return $command->id;
     }
 }

@@ -8,7 +8,7 @@ use App\Domain\Person\ValueObject\PersonId;
 
 interface PersonFinderInterface
 {
-    public function findById(PersonId $id): PersonModel;
+    public function find(PersonId $id): PersonModel;
 
     /**
      * @param array<PersonId> $ids
@@ -16,4 +16,6 @@ interface PersonFinderInterface
      * @return array<PersonModel>
      */
     public function findAll(array $ids = []): array;
+
+    public function count(PersonId $id = null): int;
 }

@@ -9,15 +9,16 @@ use App\Application\TrainingItem\TrainingItemModel;
 use App\Domain\Common\ValueObject\DateTime;
 use App\Domain\TrainingSession\TrainingSessionEntity;
 use App\Domain\TrainingSession\TrainingSessionRepositoryInterface;
+use App\Domain\TrainingSession\ValueObject\TrainingSessionId;
 
-class CommandHandler
+final readonly class CommandHandler
 {
     public function __construct(
         private TrainingSessionRepositoryInterface $trainingSessionRepository
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): TrainingSessionId
     {
         $entity = new TrainingSessionEntity(
             $command->id,
@@ -27,5 +28,7 @@ class CommandHandler
             array_map(fn (PersonModel $person) => $person->id, $command->trainees),
         );
         $this->trainingSessionRepository->save($entity);
+
+        return $command->id;
     }
 }

@@ -51,7 +51,7 @@ class TrainingSessionController extends AbstractController
         ]);
     }
 
-    #[Route('training-session/update/{id}', 'training-session.update', methods: ['GET', 'POST'])]
+    #[Route('training-session/{id}/update', 'training-session.update', methods: ['GET', 'POST'])]
     public function update(Request $request, string $id, TrainingSessionFinderInterface $finder, UpdateCommandHandler $handler): Response
     {
         $session = $finder->find(TrainingSessionId::fromString($id));

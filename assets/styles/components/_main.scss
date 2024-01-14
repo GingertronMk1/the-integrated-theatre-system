@@ -8,8 +8,8 @@
         width: 95%;
         margin: 0 auto;
         height: 100%;
-        @include flex($justify: flex-start, $align: flex-start);
+        @include flex($justify: flex-start);
         background-color: $white;
-        padding: 0.5rem 1rem;
+        padding: 1rem;
     }
 }

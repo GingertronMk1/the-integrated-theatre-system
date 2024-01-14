@@ -40,5 +40,12 @@ jobs:
               run: ./_docker/bin/app/composer stan
               if: always()
             - name: Coverage
-              run: ./_docker/bin/app/phpunit -- --coverage-text
+              id: coverage
+              run: ./_docker/bin/app/phpunit-with-coverage
               if: always()
+            - name: Artifact Coverage
+              uses: actions/upload-artifact@v3
+              if: steps.coverage.outputs.exit_code == 0
+              with:
+                name: code-coverage-${{ github.sha }}
+                path: ./code-coverage

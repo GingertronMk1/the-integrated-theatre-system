@@ -4,27 +4,31 @@ declare(strict_types=1);
 
 namespace {{ nameSpace }};
 
+use App\Application\{{ baseClass }}\{{ baseClass }}Model;
 use App\Application\{{ baseClass }}\{{ baseClass }}FinderInterface;
-use App\Domain\{{ baseClass }}\{{ baseClass }}Entity;
 use App\Domain\{{ baseClass }}\{{ baseClass }}Exception;
 use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
+use App\Infrastructure\Common\AbstractDbalFinder;
 use Doctrine\DBAL\Connection;
 
-final readonly class {{ className }} implements {{ baseClass }}FinderInterface
+final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }}FinderInterface
 {
-    private const TABLE = 'changeme';
-
     public function __construct(
-        private Connection $connection
+        private readonly Connection $connection
     ) {
     }
 
-    public function find({{ baseClass }}Id $id): {{ baseClass }}Entity
+    protected function getTable(): string
+    {
+        return 'CHANGEME';
+    }
+
+    public function find({{ baseClass }}Id $id): {{ baseClass }}Model
     {
         $qb = $this->connection->createQueryBuilder();
         $row = $qb
             ->select('*')
-            ->from(self::TABLE)
+            ->from($this->getTable())
             ->where('id = :id')
             ->setParameter('id', (string) $id)
             ->fetchAssociative();
@@ -38,16 +42,26 @@ final readonly class {{ className }} implements {{ baseClass }}FinderInterface
 
     public function findAll(): array
     {
-        return [];
+        $qb = $this->connection->createQueryBuilder();
+        $rows = $qb
+            ->select('*')
+            ->from($this->getTable())
+            ->fetchAllAssociative();
+
+
+        return array_map(
+            fn (array $row) => $this->createFromRow($row),
+            $rows
+        );
     }
 
     /**
-     * @param array<string, ?(int|string)> $row
+     * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): {{ baseClass }}Entity
+    private function createFromRow(array $row): {{ baseClass }}Model
     {
-        return new {{ baseClass }}Entity(
-            {{ baseClass }}Id::fromString($row['id])
+        return new {{ baseClass }}Model(
+            {{ baseClass }}Id::fromString($row['id'])
         );
     }
 }

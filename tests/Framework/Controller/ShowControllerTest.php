@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Framework\Controller;
 
 use App\Application\Show\ShowFixture;
-use Tests\Tests\UserInterfaceTest;
+use Tests\Tests\UserInterfaceTestCase;
 
 /**
  * @group userinterface
  */
-final class ShowControllerTest extends UserInterfaceTest
+final class ShowControllerTest extends UserInterfaceTestCase
 {
     public function setUp(): void
     {
@@ -52,9 +52,9 @@ final class ShowControllerTest extends UserInterfaceTest
     public function testUpdate(): void
     {
         $showId = ShowFixture::testShow1()->id;
-        $crawler = $this->client->request('GET', "/show/update/{$showId}");
+        $crawler = $this->client->request('GET', "/show/{$showId}/update");
         $this->assertResponseIsSuccessful();
-        $this->assertStringEndsWith("/show/update/{$showId}", $crawler->getUri());
+        $this->assertStringEndsWith("/show/{$showId}/update", $crawler->getUri());
         $this->assertSelectorExists('form[name=show]');
         $newName = 'This should have updated';
         $form = $crawler->filter('form[name=show]')->form([

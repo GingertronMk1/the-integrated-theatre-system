@@ -7,8 +7,8 @@ namespace {{ nameSpace }};
 use App\Application\Common\Service\ClockInterface;
 use App\Domain\{{ baseClass }}\{{ baseClass }}Entity;
 use App\Domain\{{ baseClass }}\{{ baseClass }}Exception;
-use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
 use App\Domain\{{ baseClass }}\{{ baseClass }}RepositoryInterface;
+use App\Domain\{{ baseClass }}\ValueObject\{{ baseClass }}Id;
 use App\Infrastructure\Common\AbstractDbalRepository;
 use Doctrine\DBAL\Connection;
 
@@ -26,7 +26,7 @@ final class {{ className }} extends AbstractDbalRepository implements {{ baseCla
     }
 
 
-    public function save{{ baseClass }}({{ baseClass }}Entity $entity): void
+    public function save({{ baseClass }}Entity $entity): void
     {
         $count = $this->getCount($this->connection, $entity->id);
 
@@ -35,18 +35,18 @@ final class {{ className }} extends AbstractDbalRepository implements {{ baseCla
             $upsertQb
                 ->insert($this->getTable())
                 ->values([
-                    'id' => ':id,
+                    'id' => ':id',
                     'created_at' => ':now',
                     'updated_at' => ':now',
                 ]);
-        } else if (1 === $count) {
+        } elseif (1 === $count) {
             $upsertQb
                 ->update($this->getTable())
                 ->set('updated_at', ':now')
                 ->where('id = :id')
             ;
         } else {
-            throw new {{ baseClass }}Exception("Too many rows with ID {{ $entity->id }}");
+            throw new {{ baseClass }}Exception("Too many rows with ID {$entity->id}");
         }
 
         $upsertQb
@@ -54,10 +54,11 @@ final class {{ className }} extends AbstractDbalRepository implements {{ baseCla
                 'id' => (string) $entity->id,
                 'now' => (string) $this->clock->getCurrentTime(),
             ])
+            ->executeStatement();
     }
 
     protected function getTable(): string
     {
-        return 
+        return 'CHANGE_ME';
     }
 }
