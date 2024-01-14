@@ -7,12 +7,12 @@ namespace Tests\Framework\Controller;
 use App\Application\Person\PersonFixture;
 use App\Application\TrainingItem\TrainingItemFixture;
 use App\Application\TrainingSession\TrainingSessionFixture;
-use Tests\Tests\UserInterfaceTest;
+use Tests\Tests\UserInterfaceTestCase;
 
 /**
  * @group userinterface
  */
-final class TrainingSessionControllerTest extends UserInterfaceTest
+final class TrainingSessionControllerTest extends UserInterfaceTestCase
 {
     public function setUp(): void
     {

@@ -24,7 +24,7 @@ final class ColourTest extends TestCase
         $this->assertEquals($expected, (string) $colour);
     }
 
-    public function hexColourDataProvider(): array
+    public static function hexColourDataProvider(): array
     {
         return [
             [
@@ -58,7 +58,7 @@ final class ColourTest extends TestCase
         $this->assertEquals($expected, (string) $colour);
     }
 
-    public function rgbColourDataProvider(): array
+    public static function rgbColourDataProvider(): array
     {
         return [
             [0, 0, 0, '#000000'],
@@ -91,7 +91,7 @@ final class ColourTest extends TestCase
         $colour = Colour::fromRGB($r, $g, $b);
     }
 
-    public function exceptionRGBProvider(): array
+    public static function exceptionRGBProvider(): array
     {
         return [
             [-1, 0, 0],

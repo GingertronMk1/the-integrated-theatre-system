@@ -7,4 +7,5 @@ docker-compose build \
 && ./_docker/bin/node/npm install \
 && ./_docker/bin/node/npm run dev \
 && ./_docker/bin/app/console app:add-admin-user \
-&& docker-compose stop
+&& docker-compose stop \
+&& cp phpunit.xml.dist phpunit.xml

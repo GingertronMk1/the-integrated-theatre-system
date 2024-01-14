@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Framework\Controller;
 
 use App\Application\Season\SeasonFixture;
-use Tests\Tests\UserInterfaceTest;
+use Tests\Tests\UserInterfaceTestCase;
 
 /**
  * @group userinterface
  */
-final class SeasonControllerTest extends UserInterfaceTest
+final class SeasonControllerTest extends UserInterfaceTestCase
 {
     public function setUp(): void
     {

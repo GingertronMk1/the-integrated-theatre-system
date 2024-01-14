@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Framework\Controller;
 
 use App\Application\Show\ShowFixture;
-use Tests\Tests\UserInterfaceTest;
+use Tests\Tests\UserInterfaceTestCase;
 
 /**
  * @group userinterface
  */
-final class ShowControllerTest extends UserInterfaceTest
+final class ShowControllerTest extends UserInterfaceTestCase
 {
     public function setUp(): void
     {
