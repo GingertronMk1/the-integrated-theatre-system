@@ -10,7 +10,6 @@ use App\Application\Show\ShowFinderInterface;
 use App\Application\TrainingCategory\TrainingCategoryFinderInterface;
 use App\Application\TrainingItem\TrainingItemFinderInterface;
 use App\Application\TrainingSession\TrainingSessionFinderInterface;
-use App\Application\User\UserFinderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
