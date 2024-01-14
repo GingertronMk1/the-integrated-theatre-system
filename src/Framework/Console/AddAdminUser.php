@@ -35,12 +35,13 @@ final class AddAdminUser extends Command
             $this->userRepository->save($this->getAdminUser());
             $io->success('Successfully created');
 
-            return Command::SUCCESS;
         } catch (Exception $e) {
             $io->error($e->getMessage());
 
             return Command::FAILURE;
         }
+
+        return Command::SUCCESS;
     }
 
     private function getAdminUser(): UserEntity
