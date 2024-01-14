@@ -47,5 +47,5 @@ jobs:
               uses: actions/upload-artifact@v3
               if: steps.coverage.outputs.exit_code == 0
               with:
-                name: code-coverage
+                name: code-coverage-${{ github.sha }}
                 path: ./code-coverage
