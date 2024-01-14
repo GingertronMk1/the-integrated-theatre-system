@@ -24,8 +24,7 @@ final class AddAdminUser extends Command
 {
     public function __construct(
         private readonly UserRepositoryInterface $userRepository
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -35,9 +34,11 @@ final class AddAdminUser extends Command
         try {
             $this->userRepository->save($this->getAdminUser());
             $io->success('Successfully created');
+
             return Command::SUCCESS;
         } catch (Exception $e) {
             $io->error($e->getMessage());
+
             return Command::FAILURE;
         }
     }
@@ -51,5 +52,4 @@ final class AddAdminUser extends Command
             roles: []
         );
     }
-    
 }
