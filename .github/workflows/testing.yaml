@@ -40,5 +40,10 @@ jobs:
               run: ./_docker/bin/app/composer stan
               if: always()
             - name: Coverage
-              run: ./_docker/bin/app/phpunit -- --coverage-text
+              run: ./_docker/bin/app/phpunit-with-coverage
               if: always()
+            - name: Artifact Coverage
+              uses: actions/upload-artifact@v3
+              with:
+                name: code-coverage
+                path: ./code-coverage
