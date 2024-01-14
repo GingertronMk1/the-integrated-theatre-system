@@ -34,7 +34,6 @@ final class AddAdminUser extends Command
         try {
             $this->userRepository->save($this->getAdminUser());
             $io->success('Successfully created');
-
         } catch (Exception $e) {
             $io->error($e->getMessage());
 
