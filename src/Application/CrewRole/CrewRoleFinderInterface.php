@@ -11,7 +11,7 @@ interface CrewRoleFinderInterface
     /**
      * @return array<CrewRoleModel>
      */
-    public function findAll(): array;
+    public function findAll(int $offset = null, int $limit = null): array;
 
     public function find(CrewRoleId $id): CrewRoleModel;
 

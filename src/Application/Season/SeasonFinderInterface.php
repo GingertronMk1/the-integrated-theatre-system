@@ -11,7 +11,7 @@ interface SeasonFinderInterface
     /**
      * @return array<SeasonModel>
      */
-    public function findAll(): array;
+    public function findAll(int $offset = null, int $limit = null): array;
 
     public function find(SeasonId $id): SeasonModel;
 

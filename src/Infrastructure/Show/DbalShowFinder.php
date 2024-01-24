@@ -29,16 +29,9 @@ final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInter
     /**
      * @return array<ShowModel>
      */
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
-            ->select('*')
-            ->from($this->getTable())
-            ->where('deleted_at IS NULL')
-            ->fetchAllAssociative();
-
-        return array_map(fn (array $row) => $this->createShowFromRow($row), $rows);
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     public function find(ShowId $id): ShowModel
@@ -56,13 +49,13 @@ final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInter
             throw ShowException::notFound($id);
         }
 
-        return $this->createShowFromRow($row);
+        return $this->createFromRow($row);
     }
 
     /**
      * @param array<string, ?string> $row
      */
-    public function createShowFromRow(array $row): ShowModel
+    protected function createFromRow(array $row): ShowModel
     {
         $deletedAt = null;
         if (!is_null($row['deleted_at'])) {

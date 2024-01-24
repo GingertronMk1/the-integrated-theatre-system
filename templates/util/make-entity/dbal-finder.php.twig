@@ -40,7 +40,7 @@ final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }
         return $this->createFromRow($row);
     }
 
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
         $qb = $this->connection->createQueryBuilder();
         $rows = $qb
@@ -58,7 +58,7 @@ final class {{ className }} extends AbstractDbalFinder implements {{ baseClass }
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): {{ baseClass }}Model
+    protected function createFromRow(array $row): {{ baseClass }}Model
     {
         return new {{ baseClass }}Model(
             {{ baseClass }}Id::fromString($row['id'])
