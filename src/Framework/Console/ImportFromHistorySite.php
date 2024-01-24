@@ -34,12 +34,20 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 final class ImportFromHistorySite extends Command
 {
     private readonly string $historySiteSearchUrl;
-    private array $shows = [];
+    /**
+     * @var array<string, CrewRoleEntity>
+     */
     private array $crewRoles = [];
+    /**
+     * @var array<string, SeasonEntity>
+     */
     private array $seasons = [];
+    /**
+     * @var array<string, PersonEntity>
+     */
     private array $people = [];
 
-    private readonly SymfonyStyle $io;
+    private SymfonyStyle $io;
 
     public function __construct(
         private readonly string $historySiteBaseUrl,
@@ -88,6 +96,9 @@ final class ImportFromHistorySite extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * @param array<string, ?string> $item
+     */
     private function saveShow(array $item): void
     {
         $seasonId = null;

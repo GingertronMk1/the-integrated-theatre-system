@@ -32,6 +32,9 @@ abstract class AbstractDbalFinder extends AbstractDbalService
         return (int) $count;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     protected function _findAll(Connection $connection, int $offset = null, int $limit = null): array
     {
         $qb = $connection->createQueryBuilder();
@@ -55,7 +58,10 @@ abstract class AbstractDbalFinder extends AbstractDbalService
         );
     }
 
+    /**
+     * @param array<string, ?string> $row
+     *
+     * @return mixed This will broadly be an entity type
+     */
     abstract protected function createFromRow(array $row): mixed;
-
-
 }

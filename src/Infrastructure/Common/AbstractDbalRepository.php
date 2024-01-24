@@ -25,5 +25,4 @@ abstract class AbstractDbalRepository extends AbstractDbalService
 
         return (int) $count;
     }
-
 }
