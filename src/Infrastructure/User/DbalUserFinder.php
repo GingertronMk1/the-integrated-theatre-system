@@ -46,7 +46,7 @@ final class DbalUserFinder extends AbstractDbalFinder implements UserFinderInter
             throw UserException::notFoundWithIdentifier($identifier);
         }
 
-        return $this->createUserFromRow($row);
+        return $this->createFromRow($row);
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, mixed $newHashedPassword): void
