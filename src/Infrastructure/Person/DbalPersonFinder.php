@@ -42,38 +42,18 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
             throw PersonException::notFound($id);
         }
 
-        return $this->createPersonFromRow($row);
+        return $this->createFromRow($row);
     }
 
-    public function findAll(array $ids = []): array
+    public function findAll(array $ids = [], int $offset, int $limit): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $qb = $qb
-            ->select('*')
-            ->from($this->getTable());
-
-        if (!empty($ids)) {
-            $qb = $qb
-                ->where($qb->expr()->in(
-                    'id',
-                    array_map(fn (PersonId $id) => "'{$id}'", $ids)))
-            ;
-        }
-
-        $rows = $qb->executeQuery()
-            ->fetchAllAssociative()
-        ;
-
-        return array_map(
-            fn (array $row) => $this->createPersonFromRow($row),
-            $rows
-        );
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     /**
      * @param array<string, ?string> $row
      */
-    private function createPersonFromRow(array $row): PersonModel
+    protected function createFromRow(array $row): PersonModel
     {
         $user = null;
         $dbUserId = $row['user_id'];
