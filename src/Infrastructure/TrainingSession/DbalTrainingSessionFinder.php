@@ -26,18 +26,9 @@ final class DbalTrainingSessionFinder extends AbstractDbalFinder implements Trai
     ) {
     }
 
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
-          ->select('*')
-          ->from($this->getTable())
-          ->fetchAllAssociative();
-
-        return array_map(
-            fn (array $row) => $this->createSessionFromRow($row),
-            $rows
-        );
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     public function find(TrainingSessionId $id): TrainingSessionModel
@@ -54,13 +45,13 @@ final class DbalTrainingSessionFinder extends AbstractDbalFinder implements Trai
             throw TrainingSessionException::notFoundWithId($id);
         }
 
-        return $this->createSessionFromRow($row);
+        return $this->createFromRow($row);
     }
 
     /**
      * @param array<string, string> $row
      */
-    private function createSessionFromRow(array $row): TrainingSessionModel
+    protected function createFromRow(array $row): TrainingSessionModel
     {
         $thisId = TrainingSessionId::fromString($row['id']);
         $itemFinderQb = $this->connection->createQueryBuilder();

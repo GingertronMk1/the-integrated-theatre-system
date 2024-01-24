@@ -44,24 +44,15 @@ final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMembe
         return $this->createFromRow($row);
     }
 
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
-            ->select('*')
-            ->from($this->getTable())
-            ->fetchAllAssociative();
-
-        return array_map(
-            fn (array $row) => $this->createFromRow($row),
-            $rows
-        );
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): CastMemberModel
+    protected function createFromRow(array $row): CastMemberModel
     {
         return new CastMemberModel(
             CastMemberId::fromString($row['id']),

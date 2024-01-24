@@ -42,15 +42,15 @@ final class DbalCrewMemberFinder extends AbstractDbalFinder implements CrewMembe
         return $this->createFromRow($row);
     }
 
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
-        return [];
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): CrewMemberModel
+    protected function createFromRow(array $row): CrewMemberModel
     {
         return new CrewMemberModel(
             CrewMemberId::fromString($row['id']),

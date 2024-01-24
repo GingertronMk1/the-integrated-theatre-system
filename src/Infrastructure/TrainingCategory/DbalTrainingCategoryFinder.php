@@ -32,28 +32,18 @@ final class DbalTrainingCategoryFinder extends AbstractDbalFinder implements Tra
             throw TrainingCategoryException::notFound($id);
         }
 
-        return $this->createTrainingCategoryFromRow($row);
+        return $this->createFromRow($row);
     }
 
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
-            ->select('*')
-            ->from($this->getTable())
-            ->fetchAllAssociative()
-        ;
-
-        return array_map(
-            fn (array $row) => $this->createTrainingCategoryFromRow($row),
-            $rows
-        );
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     /**
      * @param array<string, mixed> $row
      */
-    private function createTrainingCategoryFromRow(array $row): TrainingCategoryModel
+    protected function createFromRow(array $row): TrainingCategoryModel
     {
         return new TrainingCategoryModel(
             TrainingCategoryId::fromString($row['id']),
