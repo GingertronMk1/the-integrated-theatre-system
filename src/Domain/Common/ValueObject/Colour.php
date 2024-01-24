@@ -62,4 +62,13 @@ final readonly class Colour implements Stringable
     {
         return $this->colour;
     }
+
+    public static function random(): self
+    {
+        return self::fromRGB(
+            random_int(0, 255),
+            random_int(0, 255),
+            random_int(0, 255),
+        );
+    }
 }
