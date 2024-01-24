@@ -57,7 +57,7 @@ final class DbalTrainingItemFinder extends AbstractDbalFinder implements Trainin
     /**
      * @param array<string, mixed> $row
      */
-    private function createFromRow(array $row): TrainingItemModel
+    protected function createFromRow(array $row): TrainingItemModel
     {
         return new TrainingItemModel(
             TrainingItemId::fromString($row['id']),

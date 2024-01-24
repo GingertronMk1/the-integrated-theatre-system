@@ -45,7 +45,10 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
         return $this->createFromRow($row);
     }
 
-    public function findAll(array $ids = [], int $offset, int $limit): array
+    /**
+     * @return array<int, mixed>
+     */
+    public function findAll(array $ids = [], int $offset = null, int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
