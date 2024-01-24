@@ -11,7 +11,7 @@ interface {{ className }}
     /**
      * @return array<{{ baseClass }}Model>
      */
-    public function findAll(): array;
+    public function findAll(int $offset = null, int $limit = null): array;
 
     public function find({{ baseClass }}Id $id): {{ baseClass }}Model;
 }
