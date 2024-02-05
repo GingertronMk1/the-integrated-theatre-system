@@ -26,7 +26,7 @@ final class DbalTrainingSessionFinder extends AbstractDbalFinder implements Trai
     ) {
     }
 
-    public function findAll(int $offset = null, int $limit = null): array
+    public function findAll(?int $offset = null, ?int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
@@ -104,7 +104,7 @@ final class DbalTrainingSessionFinder extends AbstractDbalFinder implements Trai
         return 'training_sessions';
     }
 
-    public function count(TrainingSessionId $id = null): int
+    public function count(?TrainingSessionId $id = null): int
     {
         return $this->_count($this->connection, $id);
     }

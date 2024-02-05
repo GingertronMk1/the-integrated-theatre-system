@@ -48,7 +48,7 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
     /**
      * @return array<int, mixed>
      */
-    public function findAll(array $ids = [], int $offset = null, int $limit = null): array
+    public function findAll(array $ids = [], ?int $offset = null, ?int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
@@ -76,7 +76,7 @@ class DbalPersonFinder extends AbstractDbalFinder implements PersonFinderInterfa
         );
     }
 
-    public function count(PersonId $id = null): int
+    public function count(?PersonId $id = null): int
     {
         return $this->_count($this->connection, $id);
     }

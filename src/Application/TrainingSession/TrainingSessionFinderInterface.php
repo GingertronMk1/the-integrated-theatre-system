@@ -13,7 +13,7 @@ interface TrainingSessionFinderInterface
     /**
      * @return array<TrainingSessionModel>
      */
-    public function findAll(int $offset = null, int $limit = null): array;
+    public function findAll(?int $offset = null, ?int $limit = null): array;
 
-    public function count(TrainingSessionId $id = null): int;
+    public function count(?TrainingSessionId $id = null): int;
 }

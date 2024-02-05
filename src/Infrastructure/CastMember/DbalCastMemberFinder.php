@@ -44,7 +44,7 @@ final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMembe
         return $this->createFromRow($row);
     }
 
-    public function findAll(int $offset = null, int $limit = null): array
+    public function findAll(?int $offset = null, ?int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
@@ -79,7 +79,7 @@ final class DbalCastMemberFinder extends AbstractDbalFinder implements CastMembe
         );
     }
 
-    public function count(CastMemberId $id = null): int
+    public function count(?CastMemberId $id = null): int
     {
         return $this->_count($this->connection, $id);
     }

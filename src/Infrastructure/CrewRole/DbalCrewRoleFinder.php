@@ -41,7 +41,7 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
         return $this->createFromRow($row);
     }
 
-    public function findAll(int $offset = null, int $limit = null): array
+    public function findAll(?int $offset = null, ?int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
@@ -66,7 +66,7 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
         );
     }
 
-    public function count(CrewRoleId $id = null): int
+    public function count(?CrewRoleId $id = null): int
     {
         return $this->_count($this->connection, $id);
     }
