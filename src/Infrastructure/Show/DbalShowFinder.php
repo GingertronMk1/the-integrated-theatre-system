@@ -29,7 +29,7 @@ final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInter
     /**
      * @return array<ShowModel>
      */
-    public function findAll(int $offset = null, int $limit = null): array
+    public function findAll(?int $offset = null, ?int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
@@ -87,7 +87,7 @@ final class DbalShowFinder extends AbstractDbalFinder implements ShowFinderInter
         return 'shows';
     }
 
-    public function count(ShowId $id = null): int
+    public function count(?ShowId $id = null): int
     {
         return $this->_count($this->connection, $id);
     }

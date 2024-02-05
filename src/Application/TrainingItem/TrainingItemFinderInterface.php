@@ -19,5 +19,5 @@ interface TrainingItemFinderInterface
 
     public function findByName(string $name): TrainingItemModel;
 
-    public function count(TrainingItemId $id = null): int;
+    public function count(?TrainingItemId $id = null): int;
 }

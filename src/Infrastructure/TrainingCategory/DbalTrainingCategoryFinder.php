@@ -35,7 +35,7 @@ final class DbalTrainingCategoryFinder extends AbstractDbalFinder implements Tra
         return $this->createFromRow($row);
     }
 
-    public function findAll(int $offset = null, int $limit = null): array
+    public function findAll(?int $offset = null, ?int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
@@ -58,7 +58,7 @@ final class DbalTrainingCategoryFinder extends AbstractDbalFinder implements Tra
         return 'training_categories';
     }
 
-    public function count(TrainingCategoryId $id = null): int
+    public function count(?TrainingCategoryId $id = null): int
     {
         return $this->_count($this->connection, $id);
     }

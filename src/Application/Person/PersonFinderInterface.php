@@ -15,7 +15,7 @@ interface PersonFinderInterface
      *
      * @return array<PersonModel>
      */
-    public function findAll(array $ids = [], int $offset = null, int $limit = null): array;
+    public function findAll(array $ids = [], ?int $offset = null, ?int $limit = null): array;
 
-    public function count(PersonId $id = null): int;
+    public function count(?PersonId $id = null): int;
 }

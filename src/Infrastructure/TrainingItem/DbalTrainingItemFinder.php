@@ -25,7 +25,7 @@ final class DbalTrainingItemFinder extends AbstractDbalFinder implements Trainin
         return $this->findByColumn('id', (string) $id);
     }
 
-    public function findAll(array $ids = [], int $offset = null, int $limit = null): array
+    public function findAll(array $ids = [], ?int $offset = null, ?int $limit = null): array
     {
         return $this->_findAll($this->connection, $offset, $limit);
     }
@@ -74,7 +74,7 @@ final class DbalTrainingItemFinder extends AbstractDbalFinder implements Trainin
         return 'training_items';
     }
 
-    public function count(TrainingItemId $id = null): int
+    public function count(?TrainingItemId $id = null): int
     {
         return $this->_count($this->connection, $id);
     }

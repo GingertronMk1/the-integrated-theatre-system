@@ -11,9 +11,9 @@ interface ShowFinderInterface
     /**
      * @return array<ShowModel>
      */
-    public function findAll(int $offset = null, int $limit = null): array;
+    public function findAll(?int $offset = null, ?int $limit = null): array;
 
     public function find(ShowId $id): ShowModel;
 
-    public function count(ShowId $id = null): int;
+    public function count(?ShowId $id = null): int;
 }

@@ -12,11 +12,11 @@ interface CrewMemberFinderInterface
     /**
      * @return array<CrewMemberModel>
      */
-    public function findAll(int $offset = null, int $limit = null): array;
+    public function findAll(?int $offset = null, ?int $limit = null): array;
 
     public function find(CrewMemberId $id): CrewMemberModel;
 
-    public function count(CrewMemberId $id = null): int;
+    public function count(?CrewMemberId $id = null): int;
 
     /**
      * @return array<CrewMemberModel>

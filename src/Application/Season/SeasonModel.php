@@ -16,7 +16,7 @@ final readonly class SeasonModel
         public ?string $description,
         public Colour $colour,
         public DateTime $createdAt,
-        public Datetime $updatedAt,
+        public DateTime $updatedAt,
         public ?DateTime $deletedAt,
     ) {
     }

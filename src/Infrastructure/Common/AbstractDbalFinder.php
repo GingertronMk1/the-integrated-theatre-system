@@ -12,7 +12,7 @@ abstract class AbstractDbalFinder extends AbstractDbalService
 {
     abstract protected function getTable(): string;
 
-    protected function _count(Connection $connection, AbstractUuidId $id = null): int
+    protected function _count(Connection $connection, ?AbstractUuidId $id = null): int
     {
         $qb = $connection->createQueryBuilder();
         $count = $qb
@@ -35,7 +35,7 @@ abstract class AbstractDbalFinder extends AbstractDbalService
     /**
      * @return array<int, mixed>
      */
-    protected function _findAll(Connection $connection, int $offset = null, int $limit = null): array
+    protected function _findAll(Connection $connection, ?int $offset = null, ?int $limit = null): array
     {
         $qb = $connection->createQueryBuilder();
         $rows = $qb

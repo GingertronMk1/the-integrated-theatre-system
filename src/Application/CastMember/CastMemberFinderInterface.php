@@ -12,11 +12,11 @@ interface CastMemberFinderInterface
     /**
      * @return array<CastMemberModel>
      */
-    public function findAll(int $offset = null, int $limit = null): array;
+    public function findAll(?int $offset = null, ?int $limit = null): array;
 
     public function find(CastMemberId $id): CastMemberModel;
 
-    public function count(CastMemberId $id = null): int;
+    public function count(?CastMemberId $id = null): int;
 
     /**
      * @return array<CastMemberModel>
