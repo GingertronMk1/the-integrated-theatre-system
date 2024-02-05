@@ -11,10 +11,10 @@ use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
 
 abstract class AbstractMigration extends DoctrineAbstractMigration
 {
-     /**
-     * Make a table with ID and timestamp fields, appropriately indexed
+    /**
+     * Make a table with ID and timestamp fields, appropriately indexed.
      */
-    private function makeTable(Schema $schema, string $tableName): Table
+    protected function makeTable(Schema $schema, string $tableName): Table
     {
         $table = $schema->createTable($tableName);
         $table->addColumn('id', Types::GUID, ['notnull' => true]);
@@ -25,7 +25,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         $table->addIndex(['created_at']);
         $table->addIndex(['updated_at']);
         $table->addIndex(['deleted_at']);
+
         return $table;
     }
-   
 }
