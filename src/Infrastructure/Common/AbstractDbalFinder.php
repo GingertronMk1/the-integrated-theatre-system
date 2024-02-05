@@ -31,4 +31,37 @@ abstract class AbstractDbalFinder extends AbstractDbalService
 
         return (int) $count;
     }
+
+    /**
+     * @return array<int, mixed>
+     */
+    protected function _findAll(Connection $connection, int $offset = null, int $limit = null): array
+    {
+        $qb = $connection->createQueryBuilder();
+        $rows = $qb
+            ->select('*')
+            ->from($this->getTable());
+
+        if (!is_null($offset)) {
+            $rows = $rows->setFirstResult($offset);
+        }
+
+        if (!is_null($limit)) {
+            $rows = $rows->setMaxResults($limit);
+        }
+
+        $rows = $rows->fetchAllAssociative();
+
+        return array_map(
+            fn (array $row) => $this->createFromRow($row),
+            $rows
+        );
+    }
+
+    /**
+     * @param array<string, ?string> $row
+     *
+     * @return mixed This will broadly be an entity type
+     */
+    abstract protected function createFromRow(array $row): mixed;
 }

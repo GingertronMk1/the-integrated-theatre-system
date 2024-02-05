@@ -41,24 +41,15 @@ final class DbalCrewRoleFinder extends AbstractDbalFinder implements CrewRoleFin
         return $this->createFromRow($row);
     }
 
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
-            ->select('*')
-            ->from($this->getTable())
-            ->fetchAllAssociative();
-
-        return array_map(
-            fn (array $row) => $this->createFromRow($row),
-            $rows
-        );
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     /**
      * @param array<string, ?string> $row
      */
-    private function createFromRow(array $row): CrewRoleModel
+    protected function createFromRow(array $row): CrewRoleModel
     {
         $deletedAt = null;
         if (!is_null($row['deleted_at'])) {

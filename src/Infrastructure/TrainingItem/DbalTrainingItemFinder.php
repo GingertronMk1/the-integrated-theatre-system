@@ -25,25 +25,9 @@ final class DbalTrainingItemFinder extends AbstractDbalFinder implements Trainin
         return $this->findByColumn('id', (string) $id);
     }
 
-    public function findAll(array $ids = []): array
+    public function findAll(array $ids = [], int $offset = null, int $limit = null): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $qb = $qb
-            ->select('*')
-            ->from($this->getTable());
-
-        if (!empty($ids)) {
-            $qb = $qb->where($this->columnInArray($qb, 'id', $ids));
-        }
-
-        $rows = $qb->executeQuery()
-            ->fetchAllAssociative()
-        ;
-
-        return array_map(
-            fn (array $row) => $this->createTrainingItemFromRow($row),
-            $rows
-        );
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     public function findByName(string $name): TrainingItemModel
@@ -67,13 +51,13 @@ final class DbalTrainingItemFinder extends AbstractDbalFinder implements Trainin
             throw TrainingItemException::notFoundWithColumn($column, $value);
         }
 
-        return $this->createTrainingItemFromRow($row);
+        return $this->createFromRow($row);
     }
 
     /**
      * @param array<string, mixed> $row
      */
-    private function createTrainingItemFromRow(array $row): TrainingItemModel
+    protected function createFromRow(array $row): TrainingItemModel
     {
         return new TrainingItemModel(
             TrainingItemId::fromString($row['id']),

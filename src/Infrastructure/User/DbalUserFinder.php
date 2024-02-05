@@ -46,7 +46,7 @@ final class DbalUserFinder extends AbstractDbalFinder implements UserFinderInter
             throw UserException::notFoundWithIdentifier($identifier);
         }
 
-        return $this->createUserFromRow($row);
+        return $this->createFromRow($row);
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, mixed $newHashedPassword): void
@@ -54,16 +54,9 @@ final class DbalUserFinder extends AbstractDbalFinder implements UserFinderInter
         // Doing nothing for now
     }
 
-    public function findAll(): array
+    public function findAll(int $offset = null, int $limit = null): array
     {
-        $qb = $this->connection->createQueryBuilder();
-        $rows = $qb
-            ->select('*')
-            ->from($this->getTable())
-            ->executeQuery()
-            ->fetchAllAssociative();
-
-        return array_map(fn ($row) => $this->createUserFromRow($row), $rows);
+        return $this->_findAll($this->connection, $offset, $limit);
     }
 
     public function find(UserId $id): UserModel
@@ -81,13 +74,13 @@ final class DbalUserFinder extends AbstractDbalFinder implements UserFinderInter
             throw UserException::notFound($id);
         }
 
-        return $this->createUserFromRow($row);
+        return $this->createFromRow($row);
     }
 
     /**
      * @param array<string, string> $row
      */
-    private function createUserFromRow(array $row): UserModel
+    protected function createFromRow(array $row): UserModel
     {
         return new UserModel(
             UserId::fromString($row['id']),

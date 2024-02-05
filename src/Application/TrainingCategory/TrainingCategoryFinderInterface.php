@@ -11,7 +11,7 @@ interface TrainingCategoryFinderInterface
     /**
      * @return array<TrainingCategoryModel>
      */
-    public function findAll(): array;
+    public function findAll(int $offset = null, int $limit = null): array;
 
     public function find(TrainingCategoryId $id): TrainingCategoryModel;
 
