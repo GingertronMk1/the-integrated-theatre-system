@@ -5249,16 +5249,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.28.0",
+            "version": "v1.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "42292d99c55abe617799667f454222c54c60e229"
+                "reference": "9773676c8a1bb1f8d4340a62efe641cf76eda7ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/42292d99c55abe617799667f454222c54c60e229",
-                "reference": "42292d99c55abe617799667f454222c54c60e229",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/9773676c8a1bb1f8d4340a62efe641cf76eda7ec",
+                "reference": "9773676c8a1bb1f8d4340a62efe641cf76eda7ec",
                 "shasum": ""
             },
             "require": {
@@ -5272,9 +5272,6 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "1.28-dev"
-                },
                 "thanks": {
                     "name": "symfony/polyfill",
                     "url": "https://github.com/symfony/polyfill"
@@ -5312,7 +5309,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.28.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.29.0"
             },
             "funding": [
                 {
@@ -5328,20 +5325,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-28T09:04:16+00:00"
+            "time": "2024-01-29T20:11:03+00:00"
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.28.0",
+            "version": "v1.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "b0f46ebbeeeda3e9d2faebdfbf4b4eae9b59fa11"
+                "reference": "86fcae159633351e5fd145d1c47de6c528f8caff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/b0f46ebbeeeda3e9d2faebdfbf4b4eae9b59fa11",
-                "reference": "b0f46ebbeeeda3e9d2faebdfbf4b4eae9b59fa11",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/86fcae159633351e5fd145d1c47de6c528f8caff",
+                "reference": "86fcae159633351e5fd145d1c47de6c528f8caff",
                 "shasum": ""
             },
             "require": {
@@ -5350,9 +5347,6 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "1.28-dev"
-                },
                 "thanks": {
                     "name": "symfony/polyfill",
                     "url": "https://github.com/symfony/polyfill"
@@ -5392,7 +5386,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.28.0"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.29.0"
             },
             "funding": [
                 {
@@ -5408,7 +5402,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-16T06:22:46+00:00"
+            "time": "2024-01-29T20:11:03+00:00"
         },
         {
             "name": "symfony/polyfill-uuid",
@@ -6789,16 +6783,16 @@
         },
         {
             "name": "symfony/twig-bridge",
-            "version": "v7.0.2",
+            "version": "v7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/twig-bridge.git",
-                "reference": "d6236c6e75ee70317a27f0fd4c3f9bb956f22366"
+                "reference": "414ff6930889262a11ec67f351e9810dd8565b0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/twig-bridge/zipball/d6236c6e75ee70317a27f0fd4c3f9bb956f22366",
-                "reference": "d6236c6e75ee70317a27f0fd4c3f9bb956f22366",
+                "url": "https://api.github.com/repos/symfony/twig-bridge/zipball/414ff6930889262a11ec67f351e9810dd8565b0d",
+                "reference": "414ff6930889262a11ec67f351e9810dd8565b0d",
                 "shasum": ""
             },
             "require": {
@@ -6841,7 +6835,7 @@
                 "symfony/security-core": "^6.4|^7.0",
                 "symfony/security-csrf": "^6.4|^7.0",
                 "symfony/security-http": "^6.4|^7.0",
-                "symfony/serializer": "^6.4|^7.0",
+                "symfony/serializer": "^6.4.3|^7.0.3",
                 "symfony/stopwatch": "^6.4|^7.0",
                 "symfony/translation": "^6.4|^7.0",
                 "symfony/web-link": "^6.4|^7.0",
@@ -6877,7 +6871,7 @@
             "description": "Provides integration for Twig with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/twig-bridge/tree/v7.0.2"
+                "source": "https://github.com/symfony/twig-bridge/tree/v7.0.3"
             },
             "funding": [
                 {
@@ -6893,20 +6887,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-15T12:36:57+00:00"
+            "time": "2024-01-30T08:34:29+00:00"
         },
         {
             "name": "symfony/twig-bundle",
-            "version": "v7.0.0",
+            "version": "v7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/twig-bundle.git",
-                "reference": "42c4a60f1b83894cd85a6b00533f8216c413ac11"
+                "reference": "6fbf0cc2b0d0208be4881ff6069665687396b323"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/twig-bundle/zipball/42c4a60f1b83894cd85a6b00533f8216c413ac11",
-                "reference": "42c4a60f1b83894cd85a6b00533f8216c413ac11",
+                "url": "https://api.github.com/repos/symfony/twig-bundle/zipball/6fbf0cc2b0d0208be4881ff6069665687396b323",
+                "reference": "6fbf0cc2b0d0208be4881ff6069665687396b323",
                 "shasum": ""
             },
             "require": {
@@ -6961,7 +6955,7 @@
             "description": "Provides a tight integration of Twig into the Symfony full-stack framework",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/twig-bundle/tree/v7.0.0"
+                "source": "https://github.com/symfony/twig-bundle/tree/v7.0.3"
             },
             "funding": [
                 {
@@ -6977,7 +6971,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-26T15:16:53+00:00"
+            "time": "2024-01-23T15:02:46+00:00"
         },
         {
             "name": "symfony/uid",
@@ -9974,16 +9968,16 @@
         },
         {
             "name": "symfony/web-profiler-bundle",
-            "version": "v7.0.2",
+            "version": "v7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/web-profiler-bundle.git",
-                "reference": "b3746379ad31d02a578aff360caacf521e753b85"
+                "reference": "320dbcaa6e3a72797a614216703df8b187f19265"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/b3746379ad31d02a578aff360caacf521e753b85",
-                "reference": "b3746379ad31d02a578aff360caacf521e753b85",
+                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/320dbcaa6e3a72797a614216703df8b187f19265",
+                "reference": "320dbcaa6e3a72797a614216703df8b187f19265",
                 "shasum": ""
             },
             "require": {
@@ -10035,7 +10029,7 @@
                 "dev"
             ],
             "support": {
-                "source": "https://github.com/symfony/web-profiler-bundle/tree/v7.0.2"
+                "source": "https://github.com/symfony/web-profiler-bundle/tree/v7.0.3"
             },
             "funding": [
                 {
@@ -10051,7 +10045,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-27T08:42:13+00:00"
+            "time": "2024-01-29T15:41:16+00:00"
         },
         {
             "name": "symplify/easy-coding-standard",
