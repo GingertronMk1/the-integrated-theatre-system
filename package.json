@@ -6,7 +6,7 @@
         "core-js": "^3.36.0",
         "regenerator-runtime": "^0.14.1",
         "sass": "^1.71.0",
-        "sass-loader": "^13.3.3",
+        "sass-loader": "^14.1.0",
         "stylelint": "^16.2.1",
         "stylelint-config-standard-scss": "^13.0.0",
         "webpack": "^5.90.2",
