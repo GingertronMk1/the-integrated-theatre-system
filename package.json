@@ -23,7 +23,7 @@
         "stylelint": "stylelint ./assets/**/*.scss"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^6.5.1",
+        "@fortawesome/fontawesome-free": "^6.5.2",
         "bootstrap": "~5.3"
     }
 }
