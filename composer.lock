@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5646a255b3e626d17375eb7950e4df9f",
+    "content-hash": "aa2a4e428c4212ff7913b3cddf1479f6",
     "packages": [
         {
             "name": "composer/semver",
@@ -4465,16 +4465,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v7.0.6",
+            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "99362408c9abdf8c7cadcf0529b6fc8b16f5ace2"
+                "reference": "92d6b9b1217eebff2035577db505b7e1435ca78c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/99362408c9abdf8c7cadcf0529b6fc8b16f5ace2",
-                "reference": "99362408c9abdf8c7cadcf0529b6fc8b16f5ace2",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/92d6b9b1217eebff2035577db505b7e1435ca78c",
+                "reference": "92d6b9b1217eebff2035577db505b7e1435ca78c",
                 "shasum": ""
             },
             "require": {
@@ -4529,7 +4529,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v7.0.6"
+                "source": "https://github.com/symfony/mime/tree/v7.1.0"
             },
             "funding": [
                 {
@@ -4545,7 +4545,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-21T19:37:36+00:00"
+            "time": "2024-05-29T15:16:11+00:00"
         },
         {
             "name": "symfony/monolog-bridge",
