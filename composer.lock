@@ -5417,16 +5417,16 @@
         },
         {
             "name": "symfony/polyfill-uuid",
-            "version": "v1.29.0",
+            "version": "v1.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-uuid.git",
-                "reference": "3abdd21b0ceaa3000ee950097bc3cf9efc137853"
+                "reference": "2ba1f33797470debcda07fe9dce20a0003df18e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-uuid/zipball/3abdd21b0ceaa3000ee950097bc3cf9efc137853",
-                "reference": "3abdd21b0ceaa3000ee950097bc3cf9efc137853",
+                "url": "https://api.github.com/repos/symfony/polyfill-uuid/zipball/2ba1f33797470debcda07fe9dce20a0003df18e9",
+                "reference": "2ba1f33797470debcda07fe9dce20a0003df18e9",
                 "shasum": ""
             },
             "require": {
@@ -5476,7 +5476,7 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-uuid/tree/v1.29.0"
+                "source": "https://github.com/symfony/polyfill-uuid/tree/v1.30.0"
             },
             "funding": [
                 {
@@ -5492,7 +5492,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-29T20:11:03+00:00"
+            "time": "2024-05-31T15:07:36+00:00"
         },
         {
             "name": "symfony/process",
@@ -7069,16 +7069,16 @@
         },
         {
             "name": "symfony/uid",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/uid.git",
-                "reference": "3bbcb15f311b86f72486826ade080d8013231f96"
+                "reference": "bb59febeecc81528ff672fad5dab7f06db8c8277"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/uid/zipball/3bbcb15f311b86f72486826ade080d8013231f96",
-                "reference": "3bbcb15f311b86f72486826ade080d8013231f96",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/bb59febeecc81528ff672fad5dab7f06db8c8277",
+                "reference": "bb59febeecc81528ff672fad5dab7f06db8c8277",
                 "shasum": ""
             },
             "require": {
@@ -7123,7 +7123,7 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/uid/tree/v7.1.0"
+                "source": "https://github.com/symfony/uid/tree/v7.1.1"
             },
             "funding": [
                 {
@@ -7139,7 +7139,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-18T09:32:20+00:00"
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/ux-turbo",
