@@ -12,6 +12,13 @@ class Person extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'start_year',
+        'end_year',
+        'user_id',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $user->person()->create([
             'name' => 'Test Person',
             'start_year' => 2007,
-            'end_year' => 2017
+            'end_year' => 2017,
         ]);
     }
 }

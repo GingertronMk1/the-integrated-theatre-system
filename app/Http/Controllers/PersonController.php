@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Person;
+use App\Models\User;
 
 class PersonController extends Controller
 {
@@ -13,7 +14,9 @@ class PersonController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.person.index', [
+            'people' => Person::all(),
+        ]);
     }
 
     /**
@@ -21,7 +24,11 @@ class PersonController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.person.create',
+            [
+                'users' => User::all(),
+            ]
+        );
     }
 
     /**
@@ -29,7 +36,11 @@ class PersonController extends Controller
      */
     public function store(StorePersonRequest $request)
     {
-        //
+        if (Person::create($request->input())) {
+            return redirect(action([self::class, 'index']));
+        }
+
+        return redirect(action([self::class, 'create']));
     }
 
     /**
@@ -61,6 +72,8 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        //
+        if($person->delete()) {
+            return redirect(action([self::class, 'index']));
+        }
     }
 }
