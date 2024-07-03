@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,10 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('name');
+            $table->year('start_year')->nullable();
+            $table->year('end_year')->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
