@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+./bin/app/ecs -- --fix
+./bin/app/composer stan
+./bin/app/deptrac
+./bin/node/npm run stylelint

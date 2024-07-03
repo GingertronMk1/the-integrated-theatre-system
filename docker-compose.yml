@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  nginx:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: _docker/config/nginx.dockerfile
+    volumes:
+      - "./:/var/www:delegated"
+      - "./_docker/config/nginx/conf.d/:/etc/nginx/conf.d/:delegated"
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - the-integrated-theatre-system-network
+
+  app:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: _docker/config/app.dockerfile
+    volumes:
+      - '.:/var/www:delegated'
+      - './_docker/config/app/php.ini:/usr/local/etc/php/conf.d/zzz_app.ini'
+    networks:
+      - the-integrated-theatre-system-network
+
+  node:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: _docker/config/node.dockerfile
+    volumes:
+        - '.:/app:delegated'
+    networks:
+        - the-integrated-theatre-system-network
+
+  adminer:
+    image: adminer:4-standalone
+    platform: linux/x86_64
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - './_docker/plugins:/var/www/html/plugins-enabled:delegated'
+      - './database/database.sqlite:/var/www/html/database.sqlite:rw'
+    networks:
+      - the-integrated-theatre-system-network
+
+networks:
+  the-integrated-theatre-system-network:
+    driver: bridge
