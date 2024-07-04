@@ -3,7 +3,7 @@
 cp .env.example .env \
 && docker-compose up -d --build --remove-orphans \
 && ./bin/app/composer install \
-&& ./bin/app/migrate \
+&& ./bin/app/recreate-db \
 && ./bin/node/npm install \
 && ./bin/node/npm run build \
 && docker-compose stop
