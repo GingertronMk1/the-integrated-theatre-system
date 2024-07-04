@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resources([
         'person' => PersonController::class,
-        'trainingCategory' => TrainingCategoryController::class
+        'trainingCategory' => TrainingCategoryController::class,
     ]);
 });
 

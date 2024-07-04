@@ -44,7 +44,7 @@ class TrainingCategoryController extends Controller
     public function show(TrainingCategory $trainingCategory)
     {
         return view('pages.trainingCategory.show', [
-            'trainingCategory' => $trainingCategory
+            'trainingCategory' => $trainingCategory,
         ]);
     }
 
@@ -54,7 +54,7 @@ class TrainingCategoryController extends Controller
     public function edit(TrainingCategory $trainingCategory)
     {
         return view('pages.trainingCategory.edit', [
-            'trainingCategory' => $trainingCategory
+            'trainingCategory' => $trainingCategory,
         ]);
     }
 
