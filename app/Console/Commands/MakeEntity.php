@@ -33,19 +33,19 @@ class MakeEntity extends Command
             [
                 'name' => $modelName,
                 '--all' => true,
-                '--phpunit' => true
+                '--phpunit' => true,
             ]
         );
-        foreach([
+        foreach ([
             'index',
             'create',
             'edit',
-            'show'
+            'show',
         ] as $viewName) {
             $this->call(
                 'make:view',
                 [
-                    'name' => "pages/{$modelNameLC}/{$viewName}"
+                    'name' => "pages/{$modelNameLC}/{$viewName}",
                 ]
             );
         }
