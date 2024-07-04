@@ -14,7 +14,7 @@ class {{ class }} extends Controller
     public function index()
     {
         return view('pages.{{ modelVariable }}.index', [
-            '{{ table }}' => {{ model }}::all(),
+            '{{ modelVariable }}s' => {{ model }}::all(),
         ]);
     }
 

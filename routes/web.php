@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrainingCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)
@@ -15,6 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resources([
         'person' => PersonController::class,
+        'trainingCategory' => TrainingCategoryController::class
     ]);
 });
 
