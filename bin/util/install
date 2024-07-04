@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 cp .env.example .env \
+&& touch database/database.sqlite \
 && docker-compose up -d --build --remove-orphans \
 && ./bin/app/composer install \
 && ./bin/app/recreate-db \
