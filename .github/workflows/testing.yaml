@@ -31,5 +31,5 @@ jobs:
             - name: Start
               run: ./bin/start
             - name: Stan
-              run: ./bin/app/composer pint
+              run: ./bin/app/composer pint -- --test
               if: always()

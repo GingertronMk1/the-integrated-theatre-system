@@ -60,7 +60,7 @@ class PersonController extends Controller
         return view('pages.person.edit',
             [
                 'users' => User::all(),
-                'person' => $person
+                'person' => $person,
             ]
         );
     }
