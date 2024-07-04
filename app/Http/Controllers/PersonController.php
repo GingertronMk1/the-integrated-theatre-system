@@ -73,7 +73,7 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        if($person->delete()) {
+        if ($person->delete()) {
             return redirect(action([self::class, 'index']));
         }
         throw new ErrorException('Unable to delete that person');
