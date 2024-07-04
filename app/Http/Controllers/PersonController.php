@@ -6,6 +6,7 @@ use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Person;
 use App\Models\User;
+use ErrorException;
 
 class PersonController extends Controller
 {
@@ -75,5 +76,6 @@ class PersonController extends Controller
         if($person->delete()) {
             return redirect(action([self::class, 'index']));
         }
+        throw new ErrorException('Unable to delete that person');
     }
 }
