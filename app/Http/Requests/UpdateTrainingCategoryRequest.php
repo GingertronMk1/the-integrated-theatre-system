@@ -24,7 +24,7 @@ class UpdateTrainingCategoryRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'string',
-            'advanced' => 'required|boolean'
+            'advanced' => 'required|boolean',
         ];
     }
 }

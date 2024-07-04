@@ -14,10 +14,10 @@ class TrainingCategory extends Model
     protected $fillable = [
         'name',
         'description',
-        'advanced'
+        'advanced',
     ];
 
     protected $casts = [
-        'advanced' => 'boolean'
+        'advanced' => 'boolean',
     ];
 }
