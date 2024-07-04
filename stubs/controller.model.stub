@@ -13,7 +13,9 @@ class {{ class }} extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.{{ modelVariable }}.index', [
+            '{{ table }}' => {{ model }}::all(),
+        ]);
     }
 
     /**
@@ -21,7 +23,7 @@ class {{ class }} extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.{{ modelVariable }}.create');
     }
 
     /**
@@ -29,7 +31,11 @@ class {{ class }} extends Controller
      */
     public function store({{ storeRequest }} $request)
     {
-        //
+        if ({{ model }}::create($request->input())) {
+            return redirect(action([self::class, 'index']));
+        }
+
+        return redirect(action([self::class, 'create']));
     }
 
     /**
@@ -37,7 +43,9 @@ class {{ class }} extends Controller
      */
     public function show({{ model }} ${{ modelVariable }})
     {
-        //
+        return view('pages.{{ modelVariable }}.show', [
+            '{{ modelVariable }}' => ${{ modelVariable }}
+        ]);
     }
 
     /**
@@ -45,7 +53,9 @@ class {{ class }} extends Controller
      */
     public function edit({{ model }} ${{ modelVariable }})
     {
-        //
+        return view('pages.{{ modelVariable }}.edit', [
+            '{{ modelVariable }}' => ${{ modelVariable }}
+        ]);
     }
 
     /**
@@ -53,7 +63,11 @@ class {{ class }} extends Controller
      */
     public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
     {
-        //
+        if (${{ modelVariable }}->update($request->input())) {
+            return redirect(action([self::class, 'index']));
+        }
+
+        return redirect(action([self::class, 'update'], ['{{ modelVariable }}' => ${{ modelVariable }}]));
     }
 
     /**
@@ -61,6 +75,9 @@ class {{ class }} extends Controller
      */
     public function destroy({{ model }} ${{ modelVariable }})
     {
-        //
+        if (${{ modelVariable }}->delete()) {
+            return redirect(action([self::class, 'index']));
+        }
+        throw new \ErrorException('Unable to delete that {{ modelVariable }}');
     }
 }
