@@ -30,6 +30,9 @@ jobs:
               run: ./bin/util/install
             - name: Start
               run: ./bin/start
-            - name: Stan
+            - name: Pint
               run: ./bin/app/composer pint -- --test
+              if: always()
+            - name: Test
+              run: ./bin/app/test
               if: always()
