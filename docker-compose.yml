@@ -35,6 +35,8 @@ services:
       dockerfile: _docker/config/node.dockerfile
     volumes:
         - '.:/app:delegated'
+    ports:
+        - "5173:5173"
     networks:
         - the-integrated-theatre-system-network
 
