@@ -6,4 +6,4 @@ docker-compose up -d --build --remove-orphans \
 && ./bin/node/npm install \
 && ./bin/node/npm run build \
 && docker-compose stop \
-&& touch .env.local
+&& cp .env.example .env
