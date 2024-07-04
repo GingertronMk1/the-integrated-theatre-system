@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <div>
         <form method="POST" action="{{ route('person.store') }}">
             @csrf

@@ -10,4 +10,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TrainingCategory extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'advanced'
+    ];
+
+    protected $casts = [
+        'advanced' => 'boolean'
+    ];
 }
