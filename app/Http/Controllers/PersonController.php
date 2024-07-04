@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\StorePersonRequest;
+use App\Http\Requests\UpdatePersonRequest;
+use App\Models\Person;
+use App\Models\User;
+use ErrorException;
+
+class PersonController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view('pages.person.index', [
+            'people' => Person::all(),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('pages.person.create',
+            [
+                'users' => User::all(),
+            ]
+        );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StorePersonRequest $request)
+    {
+        if (Person::create($request->input())) {
+            return redirect(action([self::class, 'index']));
+        }
+
+        return redirect(action([self::class, 'create']));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Person $person)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Person $person)
+    {
+        return view('pages.person.edit',
+            [
+                'users' => User::all(),
+                'person' => $person,
+            ]
+        );
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdatePersonRequest $request, Person $person)
+    {
+        if ($person->update($request->input())) {
+            return redirect(action([self::class, 'index']));
+        }
+
+        return redirect(action([self::class, 'update'], ['person' => $person]));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Person $person)
+    {
+        if ($person->delete()) {
+            return redirect(action([self::class, 'index']));
+        }
+        throw new ErrorException('Unable to delete that person');
+    }
+}

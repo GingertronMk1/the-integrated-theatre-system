@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 
-docker-compose up -d --build --remove-orphans \
+cp .env.example .env \
+&& touch database/database.sqlite database/testing.sqlite \
+&& docker-compose up -d --build --remove-orphans \
 && ./bin/app/composer install \
-&& ./bin/app/migrate \
+&& ./bin/app/recreate-db \
 && ./bin/node/npm install \
 && ./bin/node/npm run build \
-&& docker-compose stop \
-&& touch .env.local
+&& docker-compose stop
