@@ -3,7 +3,7 @@
 lowercasename=$(echo "$@" | awk '{print tolower($0)}')
 
 ./bin/app/artisan make:model "$@" --all --phpunit \
-    && ./bin/app/artisan make:view "pages/{$lowercasename}/index" \
-    && ./bin/app/artisan make:view "pages/{$lowercasename}/create" \
-    && ./bin/app/artisan make:view "pages/{$lowercasename}/edit" \
-    && ./bin/app/artisan make:view "pages/{$lowercasename}/show" \
+    && ./bin/app/artisan make:view "pages/$lowercasename/index" \
+    && ./bin/app/artisan make:view "pages/$lowercasename/create" \
+    && ./bin/app/artisan make:view "pages/$lowercasename/edit" \
+    && ./bin/app/artisan make:view "pages/$lowercasename/show" \
