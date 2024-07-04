@@ -57,7 +57,12 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        //
+        return view('pages.person.edit',
+            [
+                'users' => User::all(),
+                'person' => $person
+            ]
+        );
     }
 
     /**
@@ -65,7 +70,11 @@ class PersonController extends Controller
      */
     public function update(UpdatePersonRequest $request, Person $person)
     {
-        //
+        if ($person->update($request->input())) {
+            return redirect(action([self::class, 'index']));
+        }
+
+        return redirect(action([self::class, 'update'], ['person' => $person]));
     }
 
     /**
