@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-docker-compose up -d --build --remove-orphans \
-&& cp .env.example .env \
+cp .env.example .env \
+&& docker-compose up -d --build --remove-orphans \
 && ./bin/app/composer install \
 && ./bin/app/migrate \
 && ./bin/node/npm install \
