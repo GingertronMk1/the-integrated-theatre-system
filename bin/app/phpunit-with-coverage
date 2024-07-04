@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-./bin/app/phpunit -- --coverage-html code-coverage/html --coverage-clover code-coverage/coverage.xml
