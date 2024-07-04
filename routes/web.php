@@ -5,11 +5,7 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', DashboardController::class)
+Route::get('/', DashboardController::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
