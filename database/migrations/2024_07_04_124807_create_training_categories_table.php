@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('training_categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->boolean('advanced')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
