@@ -3,7 +3,7 @@
         <a href="{{ route('person.create') }}">Add</a>
         <table>
             @foreach ($people as $person)
-                <tr>
+                <tr data-person-id="{{ $person->id }}">
                     <td>{{ $person->name }}</td>
                     <td>{{ $person->user?->name ?? 'No user associated' }}</td>
                     <td>{{ $person->start_year ?? 'Start Year unknown' }}</td>
