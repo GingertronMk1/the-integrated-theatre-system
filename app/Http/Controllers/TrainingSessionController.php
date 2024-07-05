@@ -25,10 +25,9 @@ class TrainingSessionController extends Controller
     public function create()
     {
         return view('pages.trainingSession.create')
-            ->with('people',  Person::all())
-            ->with('people',  Person::all())
-            ->with('trainingItems', TrainingItem::all())
-        ;
+            ->with('people', Person::all())
+            ->with('people', Person::all())
+            ->with('trainingItems', TrainingItem::all());
     }
 
     /**
@@ -43,7 +42,8 @@ class TrainingSessionController extends Controller
 
             $trainingSession->trainees()->sync($trainees);
             $trainingSession->trainingItems()->sync($trainingItems);
-             return redirect(action([self::class, 'edit'], ['trainingSession' => $session]));
+
+            return redirect(action([self::class, 'edit'], ['trainingSession' => $session]));
         }
 
         return redirect(action([self::class, 'create']));
@@ -65,9 +65,8 @@ class TrainingSessionController extends Controller
     {
         return view('pages.trainingSession.edit')
             ->with('trainingSession', $trainingSession)
-            ->with('people',  Person::all())
-            ->with('trainingItems', TrainingItem::all())
-        ;
+            ->with('people', Person::all())
+            ->with('trainingItems', TrainingItem::all());
     }
 
     /**
@@ -81,6 +80,7 @@ class TrainingSessionController extends Controller
 
             $trainingSession->trainees()->sync($trainees);
             $trainingSession->trainingItems()->sync($trainingItems);
+
             return redirect(action([self::class, 'index']));
         }
 
