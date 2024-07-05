@@ -11,7 +11,12 @@ class Show extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'title',
+        'description',
+        'year',
+        'season',
+    ];
 
     protected $casts = [];
 }

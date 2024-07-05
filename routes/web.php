@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShowController;
 use App\Http\Controllers\TrainingCategoryController;
 use App\Http\Controllers\TrainingItemController;
 use App\Http\Controllers\TrainingSessionController;
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
         'trainingCategory' => TrainingCategoryController::class,
         'trainingItem' => TrainingItemController::class,
         'trainingSession' => TrainingSessionController::class,
+        'show' => ShowController::class,
     ]);
 });
 

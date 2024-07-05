@@ -17,7 +17,10 @@ class ShowFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->words(3, true),
+            'description' => fake()->paragraphs(3, true),
+            'year' => fake()->year(),
+            'season' => fake()->word(),
         ];
     }
 }
