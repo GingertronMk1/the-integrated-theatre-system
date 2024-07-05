@@ -22,7 +22,10 @@ class UpdateTrainingSessionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'trainer_id' => 'required',
+            'happened_at' => 'required',
+            'trainees' => 'array',
+            'training_items' => 'array'
         ];
     }
 }
