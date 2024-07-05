@@ -26,10 +26,6 @@ jobs:
               with:
                 path: node_modules
                 key: ${{ hashFiles('package-lock.json') }}
-            - name: Pre-Emptively Disable XDebug
-              run: >
-                mv _docker/config/app/php.ini _docker/config/app/php.ini.disabled
-                && touch _docker/config/app/php.ini
             - name: Install
               run: ./bin/util/install
             - name: Start
