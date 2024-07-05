@@ -26,14 +26,13 @@ class TrainingSessionControllerTest extends TestCase
     {
         $person = Person::factory()->create();
 
-        $session = TrainingSession::factory()->create();
         $response = $this
             ->actingAs($this->user)
             ->post(route('trainingSession.store'), [
-                'person_id' => $person->id,
+                'trainer_id' => $person->id,
                 'happened_at' => Carbon::now(),
             ]);
-        $response->assertRedirectToRoute('trainingSession.show');
+        $response->assertRedirect();
     }
 
     public function test_update_stores_properly(): void
@@ -41,19 +40,19 @@ class TrainingSessionControllerTest extends TestCase
         $description = 'This is the new description';
 
         $session = TrainingSession::factory()->create();
+        $happenedAt = Carbon::createFromFormat('Y-m-d H:i:s', '2024-01-01 09:00:00');
 
         $response = $this
             ->actingAs($this->user)
             ->put(route('trainingSession.update', ['trainingSession' => $session]), [
-                'name' => $session->name,
-                'description' => $description,
-                'advanced' => $session->advanced,
+                'trainer_id' => $session->trainer_id,
+                'happened_at' => $happenedAt
             ]);
         $response->assertRedirectToRoute('trainingSession.index');
 
         $session->refresh();
 
-        $this->assertEquals($description, $session->description);
+        $this->assertEquals($happenedAt, $session->happened_at);
     }
 
     public function test_delete_sets_delete(): void

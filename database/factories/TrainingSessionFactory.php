@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class TrainingSessionFactory extends Factory
     public function definition(): array
     {
         return [
+            'trainer_id' => Person::inRandomOrder()->first()->id,
             'happened_at' => fake()->dateTime(),
         ];
     }

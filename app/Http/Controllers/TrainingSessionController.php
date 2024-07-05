@@ -43,7 +43,7 @@ class TrainingSessionController extends Controller
             $trainingSession->trainees()->sync($trainees);
             $trainingSession->trainingItems()->sync($trainingItems);
 
-            return redirect(action([self::class, 'edit'], ['trainingSession' => $session]));
+            return redirect(action([self::class, 'edit'], ['trainingSession' => $trainingSession]));
         }
 
         return redirect(action([self::class, 'create']));

@@ -57,7 +57,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $sessions = TrainingSession::factory(10)
-            ->for(Person::inRandomOrder()->first(), relationship: 'trainer')
             ->create();
 
         $sessionProgressBar = new ProgressBar($this->command->getOutput());
