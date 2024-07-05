@@ -25,6 +25,8 @@ services:
     volumes:
       - '.:/var/www:delegated'
       - './_docker/config/app/php.ini:/usr/local/etc/php/conf.d/zzz_app.ini'
+    ports:
+      - "9003:9003"
     networks:
       - the-integrated-theatre-system-network
 
