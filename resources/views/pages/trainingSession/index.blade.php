@@ -12,7 +12,6 @@
                     <li class="py-2">
                         <h2 class="text-xl">{{ $session->trainer->name }} @ {{ $session->happened_at }}</h2>
                         <div class="flex justify-evenly">
-
                             <ul class="flex-1 list-disc">
                                 <h3 class="text-lg">Training Items</h3>
                                 @foreach ($session->trainingItems as $item)
