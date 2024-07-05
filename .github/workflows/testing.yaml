@@ -29,7 +29,9 @@ jobs:
             - name: Install
               run: ./bin/util/install
             - name: Disable XDebug
-              run: mv _docker/config/app/php.ini _docker/config/app/php.ini.disabled
+              run: >
+                mv _docker/config/app/php.ini _docker/config/app/php.ini.disabled \
+                && touch _docker/config/app/php.ini
             - name: Start
               run: ./bin/start
             - name: Pint
