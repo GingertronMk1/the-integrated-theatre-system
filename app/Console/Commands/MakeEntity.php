@@ -18,7 +18,7 @@ class MakeEntity extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Create a model with all the trimmings, views, and a form component';
 
     /**
      * Execute the console command.
@@ -33,7 +33,6 @@ class MakeEntity extends Command
             [
                 'name' => $modelName,
                 '--all' => true,
-                '--phpunit' => true,
             ]
         );
         foreach ([
