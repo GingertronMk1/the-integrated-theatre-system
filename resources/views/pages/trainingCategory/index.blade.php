@@ -20,7 +20,7 @@
             </thead>
             @foreach ($trainingCategories as $trainingCategory)
                 <tr data-trainingCategory-id="{{ $trainingCategory->id }}">
-                    <td>{{ $trainingCategory->name }}</td>
+                    <td><a href="{{ route('trainingCategory.show', ['trainingCategory' => $trainingCategory])}}">{{ $trainingCategory->name }}</a></td>
                     <td>{{ $trainingCategory->description }}</td>
                     <td class="text-center">{{ $trainingCategory->advanced ? 'Yes' : 'No' }}</td>
                     <td class="flex justify-evenly space-x-2">
