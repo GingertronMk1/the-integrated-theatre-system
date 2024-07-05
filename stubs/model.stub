@@ -10,4 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class {{ class }} extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
+
+    protected $fillable = [];
+
+    protected $casts = [];
 }

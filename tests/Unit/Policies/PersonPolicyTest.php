@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Policies;
 
 use App\Models\Person;
-use App\Models\User;
 use App\Policies\PersonPolicy;
 use Tests\TestCase;
 
@@ -13,15 +12,12 @@ class PersonPolicyTest extends TestCase
 {
     private PersonPolicy $policy;
 
-    private User $user;
-
     private Person $person;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->policy = new PersonPolicy();
-        $this->user = User::factory()->make();
         $this->person = Person::factory()->make();
     }
 

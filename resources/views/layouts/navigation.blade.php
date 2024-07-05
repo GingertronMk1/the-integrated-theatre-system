@@ -11,13 +11,13 @@
                 </div>
 
                 <!-- Navigation Links -->
+                {{-- $navLinks is passed in from the AppServiceProvider --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('person.index')" :active="request()->routeIs('person.index')">
-                        {{ __('People') }}
-                    </x-nav-link>
+                    @foreach($navLinks as $navRoute => $navText)
+                        <x-nav-link :href="route($navRoute)" :active="request()->routeIs($navRoute)">
+                            {{ __($navText) }}
+                        </x-nav-link>
+                    @endforeach
                 </div>
             </div>
 
@@ -70,9 +70,11 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            @foreach($navLinks as $navRoute => $navText)
+                <x-responsive-nav-link :href="route($navRoute)" :active="request()->routeIs($navRoute)">
+                    {{ __($navText) }}
+                </x-responsive-nav-link>
+            @endforeach
         </div>
 
         <!-- Responsive Settings Options -->
