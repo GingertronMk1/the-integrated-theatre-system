@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTrainingSessionRequest;
 use App\Http\Requests\UpdateTrainingSessionRequest;
+use App\Models\Person;
+use App\Models\TrainingItem;
 use App\Models\TrainingSession;
 
 class TrainingSessionController extends Controller
@@ -22,7 +24,11 @@ class TrainingSessionController extends Controller
      */
     public function create()
     {
-        return view('pages.trainingSession.create');
+        return view('pages.trainingSession.create')
+            ->with('people',  Person::all())
+            ->with('people',  Person::all())
+            ->with('trainingItems', TrainingItem::all())
+        ;
     }
 
     /**
@@ -30,8 +36,14 @@ class TrainingSessionController extends Controller
      */
     public function store(StoreTrainingSessionRequest $request)
     {
-        if (TrainingSession::create($request->input())) {
-            return redirect(action([self::class, 'index']));
+        $trainingSession = TrainingSession::create($request->input());
+        if ($trainingSession) {
+            $trainees = $request->input('trainees', []);
+            $trainingItems = $request->input('training_items', []);
+
+            $trainingSession->trainees()->sync($trainees);
+            $trainingSession->trainingItems()->sync($trainingItems);
+             return redirect(action([self::class, 'edit'], ['trainingSession' => $session]));
         }
 
         return redirect(action([self::class, 'create']));
@@ -52,7 +64,10 @@ class TrainingSessionController extends Controller
     public function edit(TrainingSession $trainingSession)
     {
         return view('pages.trainingSession.edit')
-            ->with('trainingSession', $trainingSession);
+            ->with('trainingSession', $trainingSession)
+            ->with('people',  Person::all())
+            ->with('trainingItems', TrainingItem::all())
+        ;
     }
 
     /**
@@ -61,6 +76,11 @@ class TrainingSessionController extends Controller
     public function update(UpdateTrainingSessionRequest $request, TrainingSession $trainingSession)
     {
         if ($trainingSession->update($request->input())) {
+            $trainees = $request->input('trainees', []);
+            $trainingItems = $request->input('training_items', []);
+
+            $trainingSession->trainees()->sync($trainees);
+            $trainingSession->trainingItems()->sync($trainingItems);
             return redirect(action([self::class, 'index']));
         }
 

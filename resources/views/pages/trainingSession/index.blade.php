@@ -7,10 +7,14 @@
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <a href="{{ route('trainingSession.create') }}">Add</a>
             <ul class="divide-y-2">
                 @foreach ($trainingSessions as $session)
                     <li class="py-2">
-                        <h2 class="text-xl">{{ $session->trainer->name }} @ {{ $session->happened_at }}</h2>
+                        <div class="flex justify-between">
+                            <h2 class="text-xl">{{ $session->trainer->name }} @ {{ $session->happened_at }}</h2>
+                            <a href="{{ route('trainingSession.edit', ['trainingSession' => $session]) }}">Edit</a>
+                        </div>
                         <div class="flex justify-evenly">
                             <ul class="flex-1 list-disc">
                                 <h3 class="text-lg">Training Items</h3>
