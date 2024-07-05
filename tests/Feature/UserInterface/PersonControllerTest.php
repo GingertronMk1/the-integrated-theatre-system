@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\UserInterface;
 
 use App\Models\Person;
 use App\Models\User;
@@ -10,12 +10,9 @@ use Tests\TestCase;
 
 class PersonControllerTest extends TestCase
 {
-    private User $user;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create();
     }
 
     public function test_is_behind_auth_wall(): void
