@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingCategoryController;
+use App\Http\Controllers\TrainingItemController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)
@@ -17,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::resources([
         'person' => PersonController::class,
         'trainingCategory' => TrainingCategoryController::class,
+        'trainingItem' => TrainingItemController::class
     ]);
 });
 

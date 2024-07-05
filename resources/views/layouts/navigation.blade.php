@@ -12,15 +12,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('person.index')" :active="request()->routeIs('person.index')">
-                        {{ __('People') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('trainingCategory.index')" :active="request()->routeIs('trainingCategory.index')">
-                        {{ __('Training Categories') }}
-                    </x-nav-link>
+                    @foreach($navLinks as $navRoute => $navText)
+                        <x-nav-link :href="route($navRoute)" :active="request()->routeIs($navRoute)">
+                            {{ __($navText) }}
+                        </x-nav-link>
+                    @endforeach
                 </div>
             </div>
 
