@@ -5,6 +5,7 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingCategoryController;
 use App\Http\Controllers\TrainingItemController;
+use App\Http\Controllers\TrainingSessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
         'person' => PersonController::class,
         'trainingCategory' => TrainingCategoryController::class,
         'trainingItem' => TrainingItemController::class,
+        'trainingSession' => TrainingSessionController::class,
     ]);
 });
 
