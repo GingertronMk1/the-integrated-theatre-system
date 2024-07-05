@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Person;
 use App\Models\TrainingCategory;
 use App\Models\TrainingItem;
+use App\Models\TrainingSession;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -33,12 +34,12 @@ class DatabaseSeeder extends Seeder
             'end_year' => 2017,
         ]);
 
-        $progressBar = new ProgressBar($this->command->getOutput());
+        $personProgressBar = new ProgressBar($this->command->getOutput());
 
         $personJson = Storage::json('person-fixtures.json');
 
         $this->command->info('Seeding people - every other person gets a user attached to them');
-        foreach ($progressBar->iterate($personJson) as $personIndex => $person) {
+        foreach ($personProgressBar->iterate($personJson) as $personIndex => $person) {
             $personName = $person['name'];
             $person = Person::factory()->create([
                 'name' => $personName,
@@ -54,6 +55,18 @@ class DatabaseSeeder extends Seeder
                 ])->create();
                 $user->person()->save($person);
             }
+        }
+
+        $sessions = TrainingSession::factory(10)
+                ->for(Person::inRandomOrder()->first(), relationship: 'trainer')
+                ->create();
+
+        $sessionProgressBar = new ProgressBar($this->command->getOutput());
+        $this->command->info('Seeding training sessions - each one gets 5 people and 5 training items');
+        foreach ($sessionProgressBar->iterate($sessions) as $session) {
+            /** @var TrainingSession $session */
+            $session->trainees()->sync(Person::inRandomOrder()->limit(5)->get()->pluck('id')->all());
+            $session->trainingItems()->sync(TrainingItem::inRandomOrder()->limit(5)->get()->pluck('id')->all());
         }
     }
 }
