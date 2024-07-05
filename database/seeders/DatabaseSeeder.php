@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Person;
+use App\Models\Show;
 use App\Models\TrainingCategory;
 use App\Models\TrainingItem;
 use App\Models\TrainingSession;
@@ -66,5 +67,7 @@ class DatabaseSeeder extends Seeder
             $session->trainees()->sync(Person::inRandomOrder()->limit(5)->get()->pluck('id')->all());
             $session->trainingItems()->sync(TrainingItem::inRandomOrder()->limit(5)->get()->pluck('id')->all());
         }
+
+        Show::factory(10)->create();
     }
 }

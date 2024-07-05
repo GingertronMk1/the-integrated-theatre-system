@@ -26,6 +26,10 @@ jobs:
               with:
                 path: node_modules
                 key: ${{ hashFiles('package-lock.json') }}
+            - name: Quickly Adjust Xdebug
+              run: >
+                mv _docker/config/app/php.ini _docker/config/app/php.ini.disabled
+                && mv _docker/config/app/php.ini.testing _docker/config/app/php.ini
             - name: Install
               run: ./bin/util/install
             - name: Start
