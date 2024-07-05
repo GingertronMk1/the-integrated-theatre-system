@@ -31,7 +31,7 @@ class PersonControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)->get(route('person.create'));
         $response->assertOk();
-        foreach([
+        foreach ([
             'input[name=name]',
             'input[name=start_year]',
             'input[name=end_year]',
@@ -47,7 +47,7 @@ class PersonControllerTest extends TestCase
         $person = Person::factory()->create();
         $response = $this->actingAs($this->user)->get(route('person.edit', ['person' => $person]));
         $response->assertOk();
-        foreach([
+        foreach ([
             'input[name=name]',
             'input[name=start_year]',
             'input[name=end_year]',
