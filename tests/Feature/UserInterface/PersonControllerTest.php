@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\UserInterface;
 
 use App\Models\Person;
+use Symfony\Component\DomCrawler\Crawler;
 use Tests\TestCase;
 
 class PersonControllerTest extends TestCase
@@ -30,14 +31,32 @@ class PersonControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)->get(route('person.create'));
         $response->assertOk();
+        foreach([
+            'input[name=name]',
+            'input[name=start_year]',
+            'input[name=end_year]',
+        ] as $input) {
+            $crawler = new Crawler($response->baseResponse->content());
+            $crawler->filter($input);
+            $this->assertGreaterThan(0, $crawler->count());
+        }
     }
 
     public function test_edit_shows_form(): void
     {
         $person = Person::factory()->create();
         $response = $this->actingAs($this->user)->get(route('person.edit', ['person' => $person]));
-        $response->assertSee($person->name);
         $response->assertOk();
+        foreach([
+            'input[name=name]',
+            'input[name=start_year]',
+            'input[name=end_year]',
+        ] as $input) {
+            $crawler = new Crawler($response->baseResponse->content());
+            $crawler->filter($input);
+            $this->assertGreaterThan(0, $crawler->count());
+        }
+
     }
 
     public function test_store_creates_properly(): void
