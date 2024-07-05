@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\TrainingCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class TrainingItemFactory extends Factory
             'name' => fake()->words(asText: true),
             'description' => fake()->paragraphs(asText: true),
             'dangerous' => fake()->boolean(),
+            'training_category_id' => TrainingCategory::all()->pluck('id')->random(),
         ];
     }
 }

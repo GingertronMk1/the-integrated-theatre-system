@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature\UserInterface;
 
 use App\Models\Person;
-use App\Models\User;
 use Tests\TestCase;
 
 class PersonControllerTest extends TestCase
