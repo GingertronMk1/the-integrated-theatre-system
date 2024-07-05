@@ -35,6 +35,20 @@ class TrainingSessionControllerTest extends TestCase
         $response->assertRedirect();
     }
 
+    public function test_show(): void
+    {
+        $session = TrainingSession::factory()->create();
+        $response = $this->actingAs($this->user)->get(route('trainingSession.show', ['trainingSession' => $session]));
+        $response->assertStatus(200);
+    }
+
+    public function test_edit(): void
+    {
+        $session = TrainingSession::factory()->create();
+        $response = $this->actingAs($this->user)->get(route('trainingSession.edit', ['trainingSession' => $session]));
+        $response->assertStatus(200);
+    }
+
     public function test_update_stores_properly(): void
     {
         $description = 'This is the new description';

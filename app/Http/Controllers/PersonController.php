@@ -49,7 +49,8 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
-        //
+        return view('pages.person.show')
+            ->with('person', $person);
     }
 
     /**

@@ -59,6 +59,15 @@ class PersonControllerTest extends TestCase
 
     }
 
+    public function test_show(): void
+    {
+        $person = Person::factory()->create();
+        $response = $this
+            ->actingAs($this->user)
+            ->get(route('person.show', ['person' => $person]));
+        $response->assertOk();
+    }
+
     public function test_store_creates_properly(): void
     {
         $name = 'PHPUnit Jones';

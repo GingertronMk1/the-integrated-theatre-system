@@ -20,6 +20,13 @@ class ShowControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_edit(): void
+    {
+        $show = Show::factory()->create();
+        $response = $this->actingAs($this->user)->get(route('show.edit', ['show' => $show]));
+        $response->assertStatus(200);
+    }
+
     public function test_create_stores_properly(): void
     {
         $response = $this
@@ -30,6 +37,15 @@ class ShowControllerTest extends TestCase
                 'year' => 1997,
             ]);
         $response->assertRedirectToRoute('show.index');
+    }
+
+    public function test_show(): void
+    {
+        $show = Show::factory()->create();
+        $response = $this
+            ->actingAs($this->user)
+            ->get(route('show.show', ['show' => $show]));
+        $response->assertOk();
     }
 
     public function test_update_stores_properly(): void
