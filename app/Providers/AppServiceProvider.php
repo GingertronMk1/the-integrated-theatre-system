@@ -38,8 +38,11 @@ class AppServiceProvider extends ServiceProvider
             return <<<PHP
             <?php
                 foreach(explode(PHP_EOL, $expression) as \$paragraph) {
-                        \$paragraph = e(\$paragraph);
-                        echo "<p>{\$paragraph}</p>";
+                        if (empty(\$paragraph)) {
+                            continue;
+                        }
+
+                        echo '<p>'.e(\$paragraph).'</p>';
                 }
             ?>
             PHP;
