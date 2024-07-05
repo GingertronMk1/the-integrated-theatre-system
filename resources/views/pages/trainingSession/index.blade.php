@@ -7,20 +7,20 @@
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <ul class="space-y-3">
+            <ul class="divide-y-2">
                 @foreach ($trainingSessions as $session)
-                    <li>
-                        {{ $session->trainer->name }} @ {{ $session->happened_at }}
+                    <li class="py-2">
+                        <h2 class="text-xl">{{ $session->trainer->name }} @ {{ $session->happened_at }}</h2>
                         <div class="flex justify-evenly">
 
-                            <ul class="flex-1">
-                                <h3>Training Items</h3>
+                            <ul class="flex-1 list-disc">
+                                <h3 class="text-lg">Training Items</h3>
                                 @foreach ($session->trainingItems as $item)
                                     <li>{{ $item->name }}</li>
                                 @endforeach
                             </ul>
-                            <ul class="flex-1">
-                                <h3>Trainees</h3>
+                            <ul class="flex-1 list-disc">
+                                <h3 class="text-lg">Trainees</h3>
                                 @foreach ($session->trainees as $trainee)
                                     <li>{{ $trainee->name }}</li>
                                 @endforeach
