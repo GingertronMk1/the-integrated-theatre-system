@@ -20,7 +20,7 @@ class ShowFactory extends Factory
             'title' => fake()->words(3, true),
             'description' => fake()->paragraphs(3, true),
             'year' => fake()->year(),
-            'season' => fake()->word(),
+            'season' => fake()->boolean(70) ? fake()->word() : null,
         ];
     }
 }
