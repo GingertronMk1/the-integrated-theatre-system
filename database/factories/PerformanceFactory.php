@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,8 @@ class PerformanceFactory extends Factory
      */
     public function definition(): array
     {
-        $showStart = new Carbon(fake()->dateTimeThisCentury());
-        $doors = (clone $showStart)->subMinutes(30);
+        $showStart = new CarbonImmutable(fake()->dateTimeThisCentury());
+        $doors = $showStart->subMinutes(30);
         return [
             'location' => fake()->address(),
             'show_start' => $showStart,
