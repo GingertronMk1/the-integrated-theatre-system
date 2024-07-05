@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View as FacadesView;
 use Illuminate\View\View;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +32,17 @@ class AppServiceProvider extends ServiceProvider
                 'trainingCategory.index' => 'Training Categories',
                 'trainingItem.index' => 'Training Items',
             ]);
+        });
+
+        Blade::directive('toparagraphs', function(string $expression): string {
+            return <<<PHP
+            <?php
+                foreach(explode(PHP_EOL, $expression) as \$paragraph) {
+                        echo "<p>{\$paragraph}</p>";
+                }
+            ?>
+            PHP;
+
         });
     }
 }
