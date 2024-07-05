@@ -17,7 +17,9 @@ class TrainingCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->words(asText: true),
+            'description' => fake()->paragraphs(asText: true),
+            'advanced' => fake()->boolean()
         ];
     }
 }
