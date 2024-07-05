@@ -49,5 +49,7 @@ class MakeEntity extends Command
                 ]
             );
         }
+
+        $this->call('make:component', ['name' => "Form/{$modelName}Form"]);
     }
 }

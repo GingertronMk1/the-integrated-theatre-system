@@ -26,7 +26,6 @@ class TrainingSessionController extends Controller
     {
         return view('pages.trainingSession.create')
             ->with('people', Person::all())
-            ->with('people', Person::all())
             ->with('trainingItems', TrainingItem::all());
     }
 

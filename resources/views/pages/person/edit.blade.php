@@ -6,31 +6,6 @@
     </x-slot>
 
     <div>
-        <form method="POST" action="{{ route('person.update', ['person' => $person]) }}">
-            @csrf
-            @method('PUT')
-            <label for="name">
-                Name
-                <input type="text" name="name" value="{{ $person->name }}">
-            </label>
-            <label for="start_year">
-                Start Year
-                <input type="number" name="start_year" min="0" max="9999" value="{{ $person->start_year }}">
-            </label>
-            <label for="end_year">
-                End Year
-                <input type="number" name="end_year" min="0" max="9999" value="{{ $person->end_year }}">
-            </label>
-            <label for="user_id">
-                User
-                <select name="user_id">
-                    <option value="{{ null }}">No User</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}" {{ $person->user?->id === $user->id ? 'selected' : ''}}>{{ $user->name }}</option>
-                    @endforeach
-                </select>
-            </label>
-            <button type="submit">Create Person</button>
-        </form>
+        <x-form.person-form :person="$person" :users="$users" />
     </div>
 </x-app-layout>
