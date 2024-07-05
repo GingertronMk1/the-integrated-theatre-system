@@ -16,8 +16,7 @@ class PersonForm extends Component
     public function __construct(
         private readonly Collection $users,
         private readonly ?Person $person = null,
-    )
-    {
+    ) {
         //
     }
 
@@ -28,7 +27,6 @@ class PersonForm extends Component
     {
         return view('components.form.person-form')
             ->with('person', $this->person ?? new Person())
-            ->with('users', $this->users)
-        ;
+            ->with('users', $this->users);
     }
 }
