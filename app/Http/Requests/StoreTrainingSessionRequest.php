@@ -25,7 +25,7 @@ class StoreTrainingSessionRequest extends FormRequest
             'trainer_id' => 'required',
             'happened_at' => 'required',
             'trainees' => 'array',
-            'training_items' => 'array'
+            'training_items' => 'array',
         ];
     }
 }

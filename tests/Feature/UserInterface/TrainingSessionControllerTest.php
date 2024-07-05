@@ -46,7 +46,7 @@ class TrainingSessionControllerTest extends TestCase
             ->actingAs($this->user)
             ->put(route('trainingSession.update', ['trainingSession' => $session]), [
                 'trainer_id' => $session->trainer_id,
-                'happened_at' => $happenedAt
+                'happened_at' => $happenedAt,
             ]);
         $response->assertRedirectToRoute('trainingSession.index');
 
