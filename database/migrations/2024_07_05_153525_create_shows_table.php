@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('shows', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->year('year');
+            $table->string('season')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
