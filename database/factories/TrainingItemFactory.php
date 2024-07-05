@@ -19,7 +19,7 @@ class TrainingItemFactory extends Factory
         return [
             'name' => fake()->words(asText: true),
             'description' => fake()->paragraphs(asText: true),
-            'dangerous' => fake()->boolean()
+            'dangerous' => fake()->boolean(),
         ];
     }
 }

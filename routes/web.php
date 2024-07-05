@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::resources([
         'person' => PersonController::class,
         'trainingCategory' => TrainingCategoryController::class,
-        'trainingItem' => TrainingItemController::class
+        'trainingItem' => TrainingItemController::class,
     ]);
 });
 

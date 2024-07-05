@@ -19,7 +19,7 @@ class TrainingCategoryFactory extends Factory
         return [
             'name' => fake()->words(asText: true),
             'description' => fake()->paragraphs(asText: true),
-            'advanced' => fake()->boolean()
+            'advanced' => fake()->boolean(),
         ];
     }
 }

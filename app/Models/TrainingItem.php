@@ -16,11 +16,11 @@ class TrainingItem extends Model
         'name',
         'description',
         'dangerous',
-        'training_category_id'
+        'training_category_id',
     ];
 
     protected $casts = [
-        'dangerous' => 'boolean'
+        'dangerous' => 'boolean',
     ];
 
     public function trainingCategory(): BelongsTo

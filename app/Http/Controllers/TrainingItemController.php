@@ -25,8 +25,7 @@ class TrainingItemController extends Controller
     public function create()
     {
         return view('pages.trainingItem.create')
-            ->with('trainingCategories', TrainingCategory::all())
-        ;
+            ->with('trainingCategories', TrainingCategory::all());
     }
 
     /**
@@ -47,8 +46,7 @@ class TrainingItemController extends Controller
     public function show(TrainingItem $trainingItem)
     {
         return view('pages.trainingItem.show')
-            ->with('trainingItem', $trainingItem)
-        ;
+            ->with('trainingItem', $trainingItem);
     }
 
     /**
@@ -58,8 +56,7 @@ class TrainingItemController extends Controller
     {
         return view('pages.trainingItem.edit')
             ->with('trainingItem', $trainingItem)
-            ->with('trainingCategories', TrainingCategory::all())
-        ;
+            ->with('trainingCategories', TrainingCategory::all());
     }
 
     /**
