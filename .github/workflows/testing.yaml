@@ -28,6 +28,8 @@ jobs:
                 key: ${{ hashFiles('package-lock.json') }}
             - name: Install
               run: ./bin/util/install
+            - name: Disable XDebug
+              run: mv _docker/config/app/php.ini _docker/config/app/php.ini.disabled
             - name: Start
               run: ./bin/start
             - name: Pint
