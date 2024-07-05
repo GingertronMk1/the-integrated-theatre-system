@@ -13,9 +13,9 @@ class {{ class }} extends Controller
      */
     public function index()
     {
-        return view('pages.{{ modelVariable }}.index', [
-            '{{ modelVariable }}s' => {{ model }}::all(),
-        ]);
+        return view('pages.{{ modelVariable }}.index')
+            ->with('{{ modelVariable }}s', {{ model }}::all())
+        ;
     }
 
     /**
@@ -43,9 +43,9 @@ class {{ class }} extends Controller
      */
     public function show({{ model }} ${{ modelVariable }})
     {
-        return view('pages.{{ modelVariable }}.show', [
-            '{{ modelVariable }}' => ${{ modelVariable }}
-        ]);
+        return view('pages.{{ modelVariable }}.show')
+            ->with('{{ modelVariable }}', ${{ modelVariable }})
+        ;
     }
 
     /**
@@ -53,9 +53,9 @@ class {{ class }} extends Controller
      */
     public function edit({{ model }} ${{ modelVariable }})
     {
-        return view('pages.{{ modelVariable }}.edit', [
-            '{{ modelVariable }}' => ${{ modelVariable }}
-        ]);
+        return view('pages.{{ modelVariable }}.edit')
+            ->with('{{ modelVariable }}', ${{ modelVariable }})
+        ;
     }
 
     /**

@@ -1,3 +1,49 @@
-<div>
-    <!-- Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. - Immanuel Kant -->
-</div>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Create Training Item') }}
+        </h2>
+    </x-slot>
+
+    <div>
+        <form method="POST" action="{{ route('trainingItem.store') }}">
+            @csrf
+            <label for="name">
+                Name
+                <input type="text" name="name" value="{{ $trainingItem->name }}">
+            </label>
+            <label for="description">
+                Description
+                <textarea name="description" id="description">{{ $trainingItem->description }}</textarea>
+            </label>
+            <label for="dangerous">
+                Dangerous?
+                <input
+                    type="hidden"
+                    name="dangerous"
+                    value="0">
+                <input
+                    type="checkbox"
+                    name="dangerous"
+                    id="dangerous"
+                    value="1">
+                    {{ $trainingItem->dangerous ? 'checked' : '' }}
+            </label>
+
+            <label for="training_category_id">
+                Training Category
+                <select name="training_category_id">
+                    @foreach ($trainingCategories as $training_category)
+                        <option
+                            value="{{ $training_category->id }}"
+                            {{ $trainingItem->trainingCategory->id === $training_category->id ? 'selected' : '' }}
+                        >
+                            {{ $training_category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </label>
+            <button type="submit">Create Training Item</button>
+        </form>
+    </div>
+</x-app-layout>

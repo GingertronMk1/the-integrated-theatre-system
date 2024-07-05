@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTrainingItemRequest;
 use App\Http\Requests\UpdateTrainingItemRequest;
+use App\Models\TrainingCategory;
 use App\Models\TrainingItem;
 
 class TrainingItemController extends Controller
@@ -23,7 +24,9 @@ class TrainingItemController extends Controller
      */
     public function create()
     {
-        return view('pages.trainingItem.create');
+        return view('pages.trainingItem.create')
+            ->with('trainingCategories', TrainingCategory::all())
+        ;
     }
 
     /**
@@ -43,9 +46,9 @@ class TrainingItemController extends Controller
      */
     public function show(TrainingItem $trainingItem)
     {
-        return view('pages.trainingItem.show', [
-            'trainingItem' => $trainingItem
-        ]);
+        return view('pages.trainingItem.show')
+            ->with('trainingItem', $trainingItem)
+        ;
     }
 
     /**
@@ -53,9 +56,10 @@ class TrainingItemController extends Controller
      */
     public function edit(TrainingItem $trainingItem)
     {
-        return view('pages.trainingItem.edit', [
-            'trainingItem' => $trainingItem
-        ]);
+        return view('pages.trainingItem.edit')
+            ->with('trainingItem', $trainingItem)
+            ->with('trainingCategories', TrainingCategory::all())
+        ;
     }
 
     /**
