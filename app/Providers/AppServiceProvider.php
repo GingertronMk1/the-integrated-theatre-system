@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
                 'person.index' => 'People',
                 'trainingCategory.index' => 'Training Categories',
                 'trainingItem.index' => 'Training Items',
-                'trainingSession.index' => 'Training Sessions'
+                'trainingSession.index' => 'Training Sessions',
             ]);
         });
 

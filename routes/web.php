@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
         'person' => PersonController::class,
         'trainingCategory' => TrainingCategoryController::class,
         'trainingItem' => TrainingItemController::class,
-        'trainingSession' => TrainingSessionController::class
+        'trainingSession' => TrainingSessionController::class,
     ]);
 });
 

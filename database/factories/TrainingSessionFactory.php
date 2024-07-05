@@ -17,7 +17,7 @@ class TrainingSessionFactory extends Factory
     public function definition(): array
     {
         return [
-            'happened_at' => fake()->dateTime()
+            'happened_at' => fake()->dateTime(),
         ];
     }
 }

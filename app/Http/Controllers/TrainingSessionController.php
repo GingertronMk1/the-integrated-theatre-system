@@ -14,8 +14,7 @@ class TrainingSessionController extends Controller
     public function index()
     {
         return view('pages.trainingSession.index')
-            ->with('trainingSessions', TrainingSession::all())
-        ;
+            ->with('trainingSessions', TrainingSession::all());
     }
 
     /**
@@ -44,8 +43,7 @@ class TrainingSessionController extends Controller
     public function show(TrainingSession $trainingSession)
     {
         return view('pages.trainingSession.show')
-            ->with('trainingSession', $trainingSession)
-        ;
+            ->with('trainingSession', $trainingSession);
     }
 
     /**
@@ -54,8 +52,7 @@ class TrainingSessionController extends Controller
     public function edit(TrainingSession $trainingSession)
     {
         return view('pages.trainingSession.edit')
-            ->with('trainingSession', $trainingSession)
-        ;
+            ->with('trainingSession', $trainingSession);
     }
 
     /**

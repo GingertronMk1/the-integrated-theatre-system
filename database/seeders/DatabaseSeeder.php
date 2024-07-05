@@ -7,7 +7,6 @@ use App\Models\TrainingCategory;
 use App\Models\TrainingItem;
 use App\Models\TrainingSession;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -58,8 +57,8 @@ class DatabaseSeeder extends Seeder
         }
 
         $sessions = TrainingSession::factory(10)
-                ->for(Person::inRandomOrder()->first(), relationship: 'trainer')
-                ->create();
+            ->for(Person::inRandomOrder()->first(), relationship: 'trainer')
+            ->create();
 
         $sessionProgressBar = new ProgressBar($this->command->getOutput());
         $this->command->info('Seeding training sessions - each one gets 5 people and 5 training items');

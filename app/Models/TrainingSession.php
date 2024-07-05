@@ -15,11 +15,11 @@ class TrainingSession extends Model
 
     protected $fillable = [
         'trainer_id',
-        'happened_at'
+        'happened_at',
     ];
 
     protected $casts = [
-        'happened_at' => 'datetime'
+        'happened_at' => 'datetime',
     ];
 
     public function trainer(): BelongsTo
