@@ -14,8 +14,7 @@ class ShowController extends Controller
     public function index()
     {
         return view('pages.show.index')
-            ->with('shows', Show::all())
-        ;
+            ->with('shows', Show::all());
     }
 
     /**
@@ -44,8 +43,7 @@ class ShowController extends Controller
     public function show(Show $show)
     {
         return view('pages.show.show')
-            ->with('show', $show)
-        ;
+            ->with('show', $show);
     }
 
     /**
@@ -54,8 +52,7 @@ class ShowController extends Controller
     public function edit(Show $show)
     {
         return view('pages.show.edit')
-            ->with('show', $show)
-        ;
+            ->with('show', $show);
     }
 
     /**
