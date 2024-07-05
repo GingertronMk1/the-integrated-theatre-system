@@ -22,7 +22,10 @@
             @foreach ($trainingItems as $trainingItem)
                 <tr data-trainingItem-id="{{ $trainingItem->id }}">
                     <td>{{ $trainingItem->name }}</td>
-                    <td>{{ $trainingItem->description }}</td>
+                    <td>@foreach(explode(PHP_EOL, $trainingItem->description) as $paragraph)
+                        <p>{{ $paragraph }}</p>
+                        @endforeach
+                    </td>
                     <td class="text-center">{{ $trainingItem->dangerous ? 'Yes' : 'No' }}</td>
                     <td>{{ $trainingItem->trainingCategory->name }}</td>
                     <td class="flex justify-evenly space-x-2">
