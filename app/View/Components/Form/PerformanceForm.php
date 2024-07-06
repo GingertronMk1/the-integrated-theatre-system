@@ -16,8 +16,7 @@ class PerformanceForm extends Component
     public function __construct(
         private readonly Show $show,
         private readonly ?Performance $performance = null
-    )
-    {
+    ) {
         //
     }
 
@@ -28,7 +27,6 @@ class PerformanceForm extends Component
     {
         return view('components.form.performance-form')
             ->with('show', $this->show)
-            ->with('performance', $this->performance ?? new Performance())
-        ;
+            ->with('performance', $this->performance ?? new Performance());
     }
 }

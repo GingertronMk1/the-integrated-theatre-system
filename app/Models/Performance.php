@@ -17,7 +17,7 @@ class Performance extends Model
         'show_id',
         'show_start',
         'doors',
-        'capacity'
+        'capacity',
     ];
 
     protected $casts = [

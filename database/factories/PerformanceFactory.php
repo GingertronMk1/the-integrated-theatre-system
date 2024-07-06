@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +19,7 @@ class PerformanceFactory extends Factory
     {
         $showStart = new CarbonImmutable(fake()->dateTimeThisCentury());
         $doors = $showStart->subMinutes(30);
+
         return [
             'venue' => fake()->address(),
             'show_start' => $showStart,

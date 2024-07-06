@@ -14,8 +14,7 @@ class ShowPerformanceController extends Controller
     public function index(Show $show)
     {
         return view('pages.show.performance.index')
-            ->with('show', $show)
-        ;
+            ->with('show', $show);
     }
 
     /**
@@ -24,8 +23,7 @@ class ShowPerformanceController extends Controller
     public function create(Show $show)
     {
         return view('pages.show.performance.create')
-            ->with('show', $show)
-        ;
+            ->with('show', $show);
     }
 
     /**
@@ -55,8 +53,7 @@ class ShowPerformanceController extends Controller
     {
         return view('pages.show.performance.edit')
             ->with('show', $show)
-            ->with('performance', $performance)
-        ;
+            ->with('performance', $performance);
     }
 
     /**
