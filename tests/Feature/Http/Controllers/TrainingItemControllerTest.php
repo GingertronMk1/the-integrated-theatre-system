@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\UserInterface;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\TrainingCategory;
 use App\Models\TrainingItem;
