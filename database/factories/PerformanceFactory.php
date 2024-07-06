@@ -21,7 +21,7 @@ class PerformanceFactory extends Factory
         $showStart = new CarbonImmutable(fake()->dateTimeThisCentury());
         $doors = $showStart->subMinutes(30);
         return [
-            'location' => fake()->address(),
+            'venue' => fake()->address(),
             'show_start' => $showStart,
             'doors' => $doors,
             'capacity' => fake()->numberBetween(5, 1000),

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('performances', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignIdFor(Show::class);
-            $table->string('location')->nullable();
+            $table->string('venue')->nullable();
             $table->dateTime('doors');
             $table->dateTime('show_start');
             $table->unsignedInteger('capacity');

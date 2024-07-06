@@ -13,7 +13,7 @@ class Performance extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable = [
-        'location',
+        'venue',
         'show_id',
         'show_start',
         'doors',

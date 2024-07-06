@@ -33,7 +33,11 @@ class ShowPerformanceController extends Controller
      */
     public function store(Request $request, Show $show)
     {
-        //
+        if ($show->performances()->create($request->input())) {
+            return redirect(action([self::class, 'index'], ['show' => $show]));
+        }
+
+        return redirect(action([self::class, 'create']));
     }
 
     /**
@@ -49,7 +53,10 @@ class ShowPerformanceController extends Controller
      */
     public function edit(Show $show, Performance $performance)
     {
-        //
+        return view('pages.show.performance.edit')
+            ->with('show', $show)
+            ->with('performance', $performance)
+        ;
     }
 
     /**
@@ -57,7 +64,11 @@ class ShowPerformanceController extends Controller
      */
     public function update(Request $request, Show $show, Performance $performance)
     {
-        //
+        if ($performance->update($request->input())) {
+            return redirect(action([self::class, 'index'], ['show' => $show]));
+        }
+
+        return redirect(action([self::class, 'edit']));
     }
 
     /**
