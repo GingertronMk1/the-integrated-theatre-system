@@ -1,7 +1,7 @@
 <x-app-layout>
-    <x-slot name="class">training-item</x-slot>
+    <x-slot name="class">training-item-index</x-slot>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2>
             {{ __('Training Items') }}
         </h2>
     </x-slot>
@@ -10,7 +10,7 @@
             Add
             <i class="fa-solid fa-plus"></i>
         </a>
-        <table class="w-full">
+        <table class="training-item-index__table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -26,15 +26,17 @@
                     <td>@toparagraphs($trainingItem->description)</td>
                     <td class="text-center">{{ $trainingItem->dangerous ? 'Yes' : 'No' }}</td>
                     <td>{{ $trainingItem->trainingCategory->name }}</td>
-                    <td class="action-column">
-                        <a href="{{ route('trainingItem.edit', ['trainingItem' => $trainingItem]) }}">Update</a>
-                        <form
-                            method="POST"
-                            action="{{ route('trainingItem.destroy', ['trainingItem' => $trainingItem]) }}" >
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit">Delete</button>
-                        </form>
+                    <td>
+                        <div class="action-column">
+                            <a href="{{ route('trainingItem.edit', ['trainingItem' => $trainingItem]) }}">Update</a>
+                            <form
+                                method="POST"
+                                action="{{ route('trainingItem.destroy', ['trainingItem' => $trainingItem]) }}" >
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach

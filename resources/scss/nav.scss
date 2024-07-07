@@ -16,8 +16,9 @@
 
     &__link {
         margin: 0 auto;
+
         & + & {
-            margin-left: 0.2rem;
+            margin-left: 1rem;
         }
     }
 
@@ -44,6 +45,7 @@
         top: 100%;
         right: 0;
         font-size: 1rem;
+        padding: 1rem 0;
 
         &--open {
             display: flex;
@@ -51,14 +53,8 @@
             align-items: flex-end;
         }
 
-        a, form {
-            & + & {
-                margin-top: 0.3rem;
-            }
-
-            button {
-                font-size: 1rem;
-            }
+        > * + *{
+            margin-top: 1rem;
         }
     }
 }
