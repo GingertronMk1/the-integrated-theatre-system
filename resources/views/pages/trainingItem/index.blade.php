@@ -25,7 +25,7 @@
                     <td>@toparagraphs($trainingItem->description)</td>
                     <td class="text-center">{{ $trainingItem->dangerous ? 'Yes' : 'No' }}</td>
                     <td>{{ $trainingItem->trainingCategory->name }}</td>
-                    <td class="flex justify-evenly space-x-2">
+                    <td class="action-column">
                         <a href="{{ route('trainingItem.edit', ['trainingItem' => $trainingItem]) }}">Update</a>
                         <form
                             method="POST"
