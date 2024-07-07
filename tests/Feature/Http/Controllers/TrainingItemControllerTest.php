@@ -15,6 +15,7 @@ class TrainingItemControllerTest extends TestCase
         parent::setUp();
         $this->category = TrainingCategory::factory()->create();
     }
+
     public function test_index(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingItem.index'));
