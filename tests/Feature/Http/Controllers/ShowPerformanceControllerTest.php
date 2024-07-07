@@ -56,7 +56,7 @@ class ShowPerformanceControllerTest extends TestCase
             ->actingAs($this->user)
             ->get(
                 route(
-                    'show.performance.index',
+                    'show.performance.edit',
                     [
                         'show' => $this->show,
                         'performance' => $performance,
