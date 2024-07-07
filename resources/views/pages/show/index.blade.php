@@ -7,7 +7,10 @@
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
-            <a href="{{ route('show.create') }}">Add</a>
+            <a class="button" href="{{ route('show.create') }}">
+                Add
+                <i class="fa-solid fa-plus"></i>
+            </a>
             @foreach ($shows as $show)
                 <div class="flex flex-col">
                     <span class="flex flex-row justify-between">
