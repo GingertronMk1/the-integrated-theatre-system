@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePerformanceRequest;
+use App\Http\Requests\UpdatePerformanceRequest;
 use App\Models\Performance;
 use App\Models\Show;
 use Illuminate\Http\Request;
@@ -29,7 +31,7 @@ class ShowPerformanceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Show $show)
+    public function store(StorePerformanceRequest $request, Show $show)
     {
         if ($show->performances()->create($request->input())) {
             return redirect(action([self::class, 'index'], ['show' => $show]));
@@ -59,7 +61,7 @@ class ShowPerformanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Show $show, Performance $performance)
+    public function update(UpdatePerformanceRequest $request, Show $show, Performance $performance)
     {
         if ($performance->update($request->input())) {
             return redirect(action([self::class, 'index'], ['show' => $show]));
