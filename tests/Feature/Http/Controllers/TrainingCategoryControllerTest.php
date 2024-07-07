@@ -9,14 +9,20 @@ class TrainingCategoryControllerTest extends TestCase
 {
     public function test_index(): void
     {
-        $response = $this->actingAs($this->user)->get(route('trainingCategory.index'));
+        $response = $this->actingAs($this->user)->get(
+            route('trainingCategory.index')
+        );
 
-        $response->assertSeeTextInOrder(TrainingCategory::all()->take(10)->pluck('name')->toArray());
+        $response->assertSeeTextInOrder(
+            TrainingCategory::all()->take(10)->pluck('name')->toArray()
+        );
     }
 
     public function test_create(): void
     {
-        $response = $this->actingAs($this->user)->get(route('trainingCategory.create'));
+        $response = $this->actingAs($this->user)->get(
+            route('trainingCategory.create')
+        );
         $response->assertStatus(200);
     }
 
@@ -25,12 +31,13 @@ class TrainingCategoryControllerTest extends TestCase
         $name = 'test category 1';
 
         $category = TrainingCategory::factory()->create();
-        $response = $this
-            ->actingAs($this->user)
-            ->post(route('trainingCategory.store'), [
+        $response = $this->actingAs($this->user)->post(
+            route('trainingCategory.store'),
+            [
                 'name' => $name,
                 'advanced' => 1,
-            ]);
+            ]
+        );
         $response->assertRedirectToRoute('trainingCategory.index');
 
         $category = TrainingCategory::firstWhere('name', $name);
@@ -43,13 +50,14 @@ class TrainingCategoryControllerTest extends TestCase
 
         $category = TrainingCategory::factory()->create();
 
-        $response = $this
-            ->actingAs($this->user)
-            ->put(route('trainingCategory.update', ['trainingCategory' => $category]), [
+        $response = $this->actingAs($this->user)->put(
+            route('trainingCategory.update', ['trainingCategory' => $category]),
+            [
                 'name' => $category->name,
                 'description' => $description,
                 'advanced' => $category->advanced,
-            ]);
+            ]
+        );
         $response->assertRedirectToRoute('trainingCategory.index');
 
         $category->refresh();
@@ -57,10 +65,40 @@ class TrainingCategoryControllerTest extends TestCase
         $this->assertEquals($description, $category->description);
     }
 
+    public function test_show_shows(): void
+    {
+        $category = TrainingCategory::factory()->create();
+        $response = $this->actingAs($this->user)->get(
+            route('trainingCategory.show', ['trainingCategory' => $category])
+        );
+        $response->assertOk();
+    }
+
+    public function test_edit_shows(): void
+    {
+        $category = TrainingCategory::factory()->create();
+        $response = $this->actingAs($this->user)->get(
+            route('trainingCategory.edit', ['trainingCategory' => $category])
+        );
+        $response->assertOk();
+    }
+
+    public function test_create_shows(): void
+    {
+        $response = $this->actingAs($this->user)->get(
+            route('trainingCategory.create')
+        );
+        $response->assertOk();
+    }
+
     public function test_delete_sets_delete(): void
     {
         $trainingCategory = TrainingCategory::factory()->create();
-        $response = $this->actingAs($this->user)->delete(route('trainingCategory.destroy', ['trainingCategory' => $trainingCategory]));
+        $response = $this->actingAs($this->user)->delete(
+            route('trainingCategory.destroy', [
+                'trainingCategory' => $trainingCategory,
+            ])
+        );
         $response->assertRedirect();
         $trainingCategory->refresh();
         $this->assertNotNull($trainingCategory->deleted_at);

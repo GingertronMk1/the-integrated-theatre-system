@@ -6,7 +6,6 @@ use App\Http\Requests\StorePerformanceRequest;
 use App\Http\Requests\UpdatePerformanceRequest;
 use App\Models\Performance;
 use App\Models\Show;
-use Illuminate\Http\Request;
 
 class ShowPerformanceController extends Controller
 {

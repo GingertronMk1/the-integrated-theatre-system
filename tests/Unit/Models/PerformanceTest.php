@@ -14,7 +14,7 @@ class PerformanceTest extends TestCase
     {
         $show = Show::factory()->create();
         $performance = Performance::factory()->state([
-            'show_id' => $show->id
+            'show_id' => $show->id,
         ])->create();
 
         $performance->refresh();
