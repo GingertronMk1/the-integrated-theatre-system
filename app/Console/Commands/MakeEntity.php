@@ -72,7 +72,7 @@ class MakeEntity extends Command
                 'name' => "{$modelName}Controller",
                 '--model' => $modelName,
                 '--phpunit' => true,
-            ]
+            ],
         ];
     }
 }

@@ -65,7 +65,7 @@ class ShowPerformanceController extends Controller
             return redirect(action([self::class, 'index'], ['show' => $show]));
         }
 
-        return redirect(action([self::class, 'edit']));
+        return redirect(action([self::class, 'edit'], ['show' => $show, 'performance' => $performance]));
     }
 
     /**
@@ -73,6 +73,9 @@ class ShowPerformanceController extends Controller
      */
     public function destroy(Show $show, Performance $performance)
     {
-        //
+        if ($performance->delete()) {
+            return redirect(action([self::class, 'index'], ['show' => $show]));
+        }
+        throw new \ErrorException('Unable to delete that performance');
     }
 }
