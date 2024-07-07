@@ -1,4 +1,4 @@
-<form class="flex flex-col" method="POST" action="{{
+<form class="flex flex-col space-y-2" method="POST" action="{{
     $performance->id
     ? route(
         'show.performance.update',
