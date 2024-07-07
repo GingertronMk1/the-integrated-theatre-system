@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Show extends Model
@@ -19,4 +20,9 @@ class Show extends Model
     ];
 
     protected $casts = [];
+
+    public function performances(): HasMany
+    {
+        return $this->hasMany(Performance::class)->orderBy('show_start');
+    }
 }

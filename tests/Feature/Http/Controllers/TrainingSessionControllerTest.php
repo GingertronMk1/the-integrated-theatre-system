@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\UserInterface;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Person;
 use App\Models\TrainingSession;

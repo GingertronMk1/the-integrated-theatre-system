@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Performance;
 use App\Models\Person;
 use App\Models\Show;
 use App\Models\TrainingCategory;
@@ -68,6 +69,8 @@ class DatabaseSeeder extends Seeder
             $session->trainingItems()->sync(TrainingItem::inRandomOrder()->limit(5)->get()->pluck('id')->all());
         }
 
-        Show::factory(10)->create();
+        Show::factory(10)
+            ->has(Performance::factory(10))
+            ->create();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\UserInterface;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\TrainingCategory;
 use App\Models\TrainingItem;
@@ -8,6 +8,14 @@ use Tests\TestCase;
 
 class TrainingItemControllerTest extends TestCase
 {
+    private TrainingCategory $category;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->category = TrainingCategory::factory()->create();
+    }
+
     public function test_index(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingItem.index'));
@@ -21,21 +29,34 @@ class TrainingItemControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_edit(): void
+    {
+        $item = TrainingItem::factory()->for($this->category)->create();
+        $response = $this->actingAs($this->user)->get(route('trainingItem.edit', ['trainingItem' => $item]));
+        $response->assertStatus(200);
+    }
+
     public function test_create_stores_properly(): void
     {
         $name = 'test item 1';
 
-        $category = TrainingCategory::factory()->create();
         $response = $this
             ->actingAs($this->user)
             ->post(route('trainingItem.store'), [
                 'name' => $name,
-                'training_category_id' => $category->id,
+                'training_category_id' => $this->category->id,
             ]);
         $response->assertRedirectToRoute('trainingItem.index');
 
         $item = TrainingItem::firstWhere('name', $name);
-        $this->assertEquals($category->id, $item->trainingCategory->id);
+        $this->assertEquals($this->category->id, $item->trainingCategory->id);
+    }
+
+    public function test_show(): void
+    {
+        $item = TrainingItem::factory()->for($this->category)->create();
+        $response = $this->actingAs($this->user)->get(route('trainingItem.show', ['trainingItem' => $item]));
+        $response->assertOk();
     }
 
     public function test_update_stores_properly(): void

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\UserInterface;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Person;
 use Symfony\Component\DomCrawler\Crawler;

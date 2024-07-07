@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Shows') }}
+        </h2>
+    </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
@@ -17,6 +22,7 @@
                             <ul>
                                 <li>Year: {{ $show->year }}</li>
                                 <li>Season: {{ $show->season ?? 'Unknown' }}</li>
+                                <li><a href="{{ route('show.performance.index', ['show' => $show]) }}">Performances</a></li>
                             </ul>
                         </div>
                     </div>

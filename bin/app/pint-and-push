@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+./bin/app/composer pint \
+    && git add . \
+    && git commit -m "Code style" \
+    && git push
+
