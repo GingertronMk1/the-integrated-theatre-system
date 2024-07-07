@@ -4,8 +4,15 @@ $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 @import '@fortawesome/fontawesome-free/scss/regular.scss';
 @import '@fortawesome/fontawesome-free/scss/solid.scss';
 
+@mixin reset-button {
+    appearance: none;
+    background: none;
+    border: none;
+}
+
 * {
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 html,
@@ -36,5 +43,72 @@ table {
     font-size: 3rem;
     &:hover {
         color: #696969;
+    }
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    padding: 0.3rem;
+
+    &__home-link {
+        margin-right: 1rem;
+    }
+
+    &__links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__link {
+        margin: 0 auto;
+        & + & {
+            margin-left: 0.2rem;
+        }
+    }
+
+    &__user-menu {
+        margin-left: auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__user-dropdown-button {
+        display: flex;
+        position: relative;
+        @include reset-button();
+        cursor: pointer;
+
+        i {
+            margin-left: 0.3rem;
+        }
+    }
+
+    &__user-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        font-size: 1rem;
+
+        &--open {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        a, form {
+            & + & {
+                margin-top: 0.3rem;
+            }
+
+            button {
+                @include reset-button();
+                font-size: 1rem;
+            }
+        }
     }
 }
