@@ -1,15 +1,12 @@
-<x-app-layout>
+<x-app-layout innerClass="p-person-index">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2>
             {{ __('People') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            <a href="{{ route('person.create') }}">Add</a>
-            <table class="w-full">
+            <a class="c-button" href="{{ route('person.create') }}"><i class="fa-solid fa-plus"></i>Add</a>
+            <table>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -21,11 +18,11 @@
                 </thead>
                 @foreach ($people as $person)
                     <tr data-person-id="{{ $person->id }}">
-                        <td>{{ $person->name }}</td>
-                        <td>{{ $person->user?->name ?? 'No user associated' }}</td>
-                        <td class="text-center">{{ $person->start_year ?? 'Start Year unknown' }}</td>
-                        <td class="text-center">{{ $person->end_year ?? 'End Year unknown' }}</td>
-                        <td class="flex justify-evenly space-x-2">
+                        <td class="p-person-index__person-name">{{ $person->name }}</td>
+                        <td class="p-person-index__person-user-name">{{ $person->user?->name ?? 'No user associated' }}</td>
+                        <td class="p-person-index__person-start-year">{{ $person->start_year ?? 'Start Year unknown' }}</td>
+                        <td class="p-person-index__person-end-year"">{{ $person->end_year ?? 'End Year unknown' }}</td>
+                        <td class="p-person-index__actions">
                             <a href="{{ route('person.edit', ['person' => $person]) }}">Update</a>
                             <form method="POST" action="{{ route('person.destroy', ['person' => $person]) }}">
                                 @method('DELETE')
@@ -36,6 +33,4 @@
                     </tr>
                 @endforeach
             </table>
-        </div>
-    </div>
 </x-app-layout>

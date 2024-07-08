@@ -1,0 +1,14 @@
+@import '../mixins';
+
+.p-person-index {
+    @include flex(column);
+
+    table {
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    &__person-start-year, &__person-end-year {
+        text-align: center;
+    }
+}

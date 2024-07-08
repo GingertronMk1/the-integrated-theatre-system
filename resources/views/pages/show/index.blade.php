@@ -1,20 +1,21 @@
-<x-app-layout>
+<x-app-layout innerClass="p-show-index">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2>
             {{ __('Shows') }}
         </h2>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
-            <a href="{{ route('show.create') }}">Add</a>
+            <a class="c-button" href="{{ route('show.create') }}">
+                Add
+                <i class="fa-solid fa-plus"></i>
+            </a>
             @foreach ($shows as $show)
-                <div class="flex flex-col">
-                    <span class="flex flex-row justify-between">
+                <div class="p-show-index__show">
+                    <span class="p-show-index__show-header">
                         <h3 class="text-xl">{{ $show->title }}</h3>
-                        <a href="{{ route('show.edit', ['show' => $show]) }}">Edit</a>
+                        <a class="c-button" href="{{ route('show.edit', ['show' => $show]) }}">Edit</a>
                     </span>
-                    <div class="flex flex-row divide-x-2">
+                    <div class="p-show-index__show-details">
                         <div class="flex-1 px-2">
                             @toparagraphs($show->description)
                         </div>
@@ -28,6 +29,4 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-    </div>
 </x-app-layout>

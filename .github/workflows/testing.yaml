@@ -40,3 +40,6 @@ jobs:
             - name: Test
               run: ./bin/app/test
               if: always()
+            - name: Stylelint
+              run: ./bin/node/npm run stylelint
+              if: always()
