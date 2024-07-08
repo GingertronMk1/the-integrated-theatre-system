@@ -24,7 +24,7 @@ class TrainingItem extends Model
     ];
 
     protected $with = [
-        'trainingCategory'
+        'trainingCategory',
     ];
 
     public function trainingCategory(): BelongsTo

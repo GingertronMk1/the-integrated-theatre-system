@@ -22,11 +22,10 @@ class TrainingSession extends Model
         'happened_at' => 'datetime',
     ];
 
-
     protected $with = [
         'trainer',
         'trainees',
-        'trainingItems'
+        'trainingItems',
     ];
 
     public function trainer(): BelongsTo
