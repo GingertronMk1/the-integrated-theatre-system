@@ -6,16 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View as FacadesView;
 use Illuminate\View\View;
 
+
 class NavLinkProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
-    public function register(): void
-    {
-        //
-    }
-
     /**
      * Bootstrap services.
      */
@@ -25,10 +18,12 @@ class NavLinkProvider extends ServiceProvider
             return $view->with('navLinks', [
                 'dashboard' => 'Dashboard',
                 'person.index' => 'People',
-                'trainingCategory.index' => 'Training Categories',
-                'trainingItem.index' => 'Training Items',
-                'trainingSession.index' => 'Training Sessions',
                 'show.index' => 'Shows',
+                'Training' => [
+                    'trainingCategory.index' => 'Categories',
+                    'trainingItem.index' => 'Items',
+                    'trainingSession.index' => 'Sessions',
+                ],
             ]);
         });
     }

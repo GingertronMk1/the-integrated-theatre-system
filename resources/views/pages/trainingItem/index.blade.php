@@ -1,5 +1,4 @@
-<x-app-layout>
-    <x-slot name="class">training-item-index</x-slot>
+<x-app-layout innerClass="training-item-index">
     <x-slot name="header">
         <h2>
             {{ __('Training Items') }}

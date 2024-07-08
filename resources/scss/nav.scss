@@ -8,17 +8,16 @@
         0 4px 6px -1px rgb(0 0 0 / 10%),
         0 2px 4px -2px rgb(0 0 0 / 10%);
 
-    a, &__user-dropdown-button {
+    a, &__user-dropdown-button, .c-dropdown__trigger {
         color: white;
+        &:hover {
+            color: var(--colour-secondary);
+        }
     }
 
     &__home-link {
         font-size: 3rem;
         margin-right: 1rem;
-
-        &:hover {
-            color: var(--colour-secondary);
-        }
     }
 
     &__links {
@@ -30,13 +29,11 @@
     &__link {
         margin: 0 auto;
         padding: 0.5rem;
+    }
 
+    &__link, &__dropdown {
         & + & {
             margin-left: 1rem;
-        }
-
-        &:hover {
-            color: var(--colour-secondary);
         }
     }
 

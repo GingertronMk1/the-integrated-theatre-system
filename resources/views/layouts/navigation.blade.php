@@ -6,26 +6,33 @@
                 {{-- $navLinks is passed in from the AppServiceProvider --}}
     <div class="nav__links">
         @foreach($navLinks as $navRoute => $navText)
+            @if(is_array($navText))
+            <x-dropdown class="nav__dropdown">
+                <x-slot name="trigger">{{ __($navRoute) }}</x-slot>
+                <x-slot name="content">
+                @foreach($navText as $dropdownRoute => $dropdownText)
+                    <a class="nav__dropdown-link" href="{{ route($dropdownRoute) }}" data-active="{{ request()->routeIs($dropdownRoute) }}">
+                        {{ __($dropdownText) }}
+                    </a>
+                @endforeach
+                </x-slot>
+            </x-dropdown>
+            @else
             <a class="nav__link" href="{{ route($navRoute) }}" data-active="{{ request()->routeIs($navRoute) }}">
                 {{ __($navText) }}
             </a>
+            @endif
         @endforeach
     </div>
 
     <!-- Settings Dropdown -->
     <div class="nav__user-menu">
         @auth
-            <div
-                class="nav__user-dropdown-button"
-                x-data="{ open: false }"
-                @click.outside="open = false"
-                @click="open = !open"
-            >
-                <div class="nav__user-dropdown-button-inner">
-                    <div>{{ Auth::user()->name }}</div>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="nav__user-dropdown" :class="open ? 'nav__user-dropdown--open' : ''">
+            <x-dropdown rightAligned="true">
+                <x-slot name="trigger">
+                    <span>{{ Auth::user()->name }}</span>
+                </x-slot>
+                <x-slot name="content">
                     <a href="{{ route('profile.edit') }}">
                         {{ __('Profile') }}
                     </a>
@@ -37,8 +44,8 @@
                             {{ __('Log Out') }}
                         </button>
                     </form>
-                </div>
-            </div>
+                </x-slot>
+            </x-dropdown>
         @endauth
         @guest
             <a href="{{ route('register') }}">Register</a>

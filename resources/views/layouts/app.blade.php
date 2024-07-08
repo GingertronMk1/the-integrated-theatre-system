@@ -22,7 +22,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main class="{{ $class ?? '' }}">
+            <main class="{{ $innerClass }}">
                 {{ $slot }}
             </main>
         </div>
