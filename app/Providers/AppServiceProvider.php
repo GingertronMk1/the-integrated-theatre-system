@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::preventAccessingMissingAttributes();
+        Model::shouldBeStrict();
 
         FacadesView::composer('layouts.navigation', function (View $view) {
             return $view->with('navLinks', [
