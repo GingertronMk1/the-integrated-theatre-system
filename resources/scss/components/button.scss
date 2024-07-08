@@ -1,7 +1,10 @@
-.button {
+.c-button {
     padding: 0.6rem;
     border-radius: 0.6rem;
-    background-color: blue;
+    background-color: var(--colour-primary);
     color: white;
-    margin-right: auto;
+
+    &:hover {
+        box-shadow: 0 0 0.5rem 0 black;
+    }
 }

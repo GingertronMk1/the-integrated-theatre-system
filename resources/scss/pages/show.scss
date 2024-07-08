@@ -1,0 +1,24 @@
+@import '../mixins';
+
+.p-show-index {
+    > .c-button {
+        margin-right: auto;
+    }
+
+    &__show {
+        @include flex($direction: column, $align: stretch);
+    }
+
+    &__show-header {
+        @include flex($justify: space-between, $align: center);
+
+    }
+
+    &__show-details {
+        @include flex($justify: space-evenly, $align: stretch);
+
+        > * {
+            flex: 1;
+        }
+    }
+}

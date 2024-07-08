@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-        <a class="button" href="{{ route('trainingItem.create') }}">
+        <a class="c-button" href="{{ route('trainingItem.create') }}">
             Add
             <i class="fa-solid fa-plus"></i>
         </a>

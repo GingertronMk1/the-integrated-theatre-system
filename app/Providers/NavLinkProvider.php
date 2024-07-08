@@ -15,7 +15,6 @@ class NavLinkProvider extends ServiceProvider
     {
         FacadesView::composer('layouts.navigation', function (View $view) {
             return $view->with('navLinks', [
-                'dashboard' => 'Dashboard',
                 'person.index' => 'People',
                 'show.index' => 'Shows',
                 'Training' => [
