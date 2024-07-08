@@ -23,6 +23,10 @@ class TrainingItem extends Model
         'dangerous' => 'boolean',
     ];
 
+    protected $with = [
+        'trainingCategory'
+    ];
+
     public function trainingCategory(): BelongsTo
     {
         return $this->belongsTo(TrainingCategory::class);

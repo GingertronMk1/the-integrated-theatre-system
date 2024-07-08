@@ -22,6 +22,13 @@ class TrainingSession extends Model
         'happened_at' => 'datetime',
     ];
 
+
+    protected $with = [
+        'trainer',
+        'trainees',
+        'trainingItems'
+    ];
+
     public function trainer(): BelongsTo
     {
         return $this->belongsTo(Person::class, 'trainer_id');
