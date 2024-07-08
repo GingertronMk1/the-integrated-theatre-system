@@ -21,8 +21,10 @@
                 @click.outside="open = false"
                 @click="open = !open"
             >
-                <div>{{ Auth::user()->name }}</div>
-                <i class="fas fa-chevron-down"></i>
+                <div class="nav__user-dropdown-button-inner">
+                    <div>{{ Auth::user()->name }}</div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
                 <div class="nav__user-dropdown" :class="open ? 'nav__user-dropdown--open' : ''">
                     <a href="{{ route('profile.edit') }}">
                         {{ __('Profile') }}

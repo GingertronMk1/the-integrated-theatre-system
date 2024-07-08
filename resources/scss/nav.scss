@@ -3,9 +3,22 @@
     flex-direction: row;
     align-items: stretch;
     padding: 0.3rem;
+    background-color: var(--colour-primary);
+    box-shadow:
+        0 4px 6px -1px rgb(0 0 0 / 10%),
+        0 2px 4px -2px rgb(0 0 0 / 10%);
+
+    a, &__user-dropdown-button {
+        color: white;
+    }
 
     &__home-link {
+        font-size: 3rem;
         margin-right: 1rem;
+
+        &:hover {
+            color: var(--colour-secondary);
+        }
     }
 
     &__links {
@@ -16,9 +29,14 @@
 
     &__link {
         margin: 0 auto;
+        padding: 0.5rem;
 
         & + & {
             margin-left: 1rem;
+        }
+
+        &:hover {
+            color: var(--colour-secondary);
         }
     }
 
@@ -33,19 +51,40 @@
         display: flex;
         position: relative;
         cursor: pointer;
+        padding: 0 1rem;
 
         i {
             margin-left: 0.3rem;
         }
     }
 
+    &__user-dropdown-button-inner {
+        display: flex;
+
+        &:hover {
+            color: var(--colour-secondary);
+        }
+
+    }
+
     &__user-dropdown {
         display: none;
         position: absolute;
-        top: 100%;
-        right: 0;
+        top: calc(100% + 1rem);
+        right: 1rem;
         font-size: 1rem;
-        padding: 1rem 0;
+        padding: 1rem;
+        background-color: var(--colour-primary);
+        box-shadow:
+            0 0 0.2rem black;
+
+        a, button {
+            color: inherit;
+
+            &:hover {
+                color: var(--colour-secondary);
+            }
+        }
 
         &--open {
             display: flex;

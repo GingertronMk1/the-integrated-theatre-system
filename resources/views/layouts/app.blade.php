@@ -11,8 +11,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
+        @include('layouts.navigation')
         <div id="body-inner">
-            @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)

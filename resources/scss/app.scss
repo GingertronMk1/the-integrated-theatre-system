@@ -1,12 +1,21 @@
 $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
-@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
-@import '@fortawesome/fontawesome-free/scss/brands.scss';
-@import '@fortawesome/fontawesome-free/scss/regular.scss';
-@import '@fortawesome/fontawesome-free/scss/solid.scss';
+
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/solid';
 @import 'nav';
 @import 'components/table';
 @import 'components/button';
 @import 'pages/training-item/index';
+
+$primary: #A54499;
+$secondary: #FFC425;
+
+:root {
+    --colour-primary: #{$primary};
+    --colour-secondary: #{$secondary};
+}
 
 button {
     appearance: none;
@@ -41,11 +50,4 @@ main {
     width: 95%;
     max-width: 1280px;
     margin: 0 auto;
-}
-
-#app-logo {
-    font-size: 3rem;
-    &:hover {
-        color: #696969;
-    }
 }
