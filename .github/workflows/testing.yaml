@@ -35,10 +35,13 @@ jobs:
             - name: Start
               run: ./bin/start
             - name: Pint
-              run: ./bin/app/composer pint -- --test
+              run: ./bin/app/composer check
               if: always()
             - name: Test
               run: ./bin/app/test
+              if: always()
+            - name: Prettier
+              run: ./bin/node/npm run prettier:check
               if: always()
             - name: Stylelint
               run: ./bin/node/npm run stylelint

@@ -6,7 +6,6 @@ use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Person;
 use App\Models\User;
-use ErrorException;
 
 class PersonController extends Controller
 {
@@ -25,10 +24,11 @@ class PersonController extends Controller
      */
     public function create()
     {
-        return view('pages.person.create',
+        return view(
+            'pages.person.create',
             [
                 'users' => User::all(),
-            ]
+            ],
         );
     }
 
@@ -37,7 +37,7 @@ class PersonController extends Controller
      */
     public function store(StorePersonRequest $request)
     {
-        if (Person::create($request->input())) {
+        if (Person::create($request->only((new Person())->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 
@@ -50,7 +50,8 @@ class PersonController extends Controller
     public function show(Person $person)
     {
         return view('pages.person.show')
-            ->with('person', $person);
+            ->with('person', $person)
+        ;
     }
 
     /**
@@ -58,11 +59,12 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        return view('pages.person.edit',
+        return view(
+            'pages.person.edit',
             [
                 'users' => User::all(),
                 'person' => $person,
-            ]
+            ],
         );
     }
 
@@ -71,7 +73,7 @@ class PersonController extends Controller
      */
     public function update(UpdatePersonRequest $request, Person $person)
     {
-        if ($person->update($request->input())) {
+        if ($person->update($request->only($person->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 
@@ -86,6 +88,7 @@ class PersonController extends Controller
         if ($person->delete()) {
             return redirect(action([self::class, 'index']));
         }
-        throw new ErrorException('Unable to delete that person');
+
+        throw new \ErrorException('Unable to delete that person');
     }
 }

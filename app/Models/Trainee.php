@@ -4,7 +4,4 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Trainee extends Pivot
-{
-    //
-}
+class Trainee extends Pivot {}

@@ -16,27 +16,27 @@ class TrainingItemControllerTest extends TestCase
         $this->category = TrainingCategory::factory()->create();
     }
 
-    public function test_index(): void
+    public function testIndex(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingItem.index'));
 
         $response->assertSeeTextInOrder(TrainingItem::all()->take(10)->pluck('name')->toArray());
     }
 
-    public function test_create(): void
+    public function testCreate(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingItem.create'));
         $response->assertStatus(200);
     }
 
-    public function test_edit(): void
+    public function testEdit(): void
     {
         $item = TrainingItem::factory()->for($this->category)->create();
         $response = $this->actingAs($this->user)->get(route('trainingItem.edit', ['trainingItem' => $item]));
         $response->assertStatus(200);
     }
 
-    public function test_create_stores_properly(): void
+    public function testCreateStoresProperly(): void
     {
         $name = 'test item 1';
 
@@ -45,21 +45,22 @@ class TrainingItemControllerTest extends TestCase
             ->post(route('trainingItem.store'), [
                 'name' => $name,
                 'training_category_id' => $this->category->id,
-            ]);
+            ])
+        ;
         $response->assertRedirectToRoute('trainingItem.index');
 
         $item = TrainingItem::firstWhere('name', $name);
         $this->assertEquals($this->category->id, $item->trainingCategory->id);
     }
 
-    public function test_show(): void
+    public function testShow(): void
     {
         $item = TrainingItem::factory()->for($this->category)->create();
         $response = $this->actingAs($this->user)->get(route('trainingItem.show', ['trainingItem' => $item]));
         $response->assertOk();
     }
 
-    public function test_update_stores_properly(): void
+    public function testUpdateStoresProperly(): void
     {
         $description = 'This is the new description';
 
@@ -69,7 +70,8 @@ class TrainingItemControllerTest extends TestCase
             ->actingAs($this->user)
             ->put(route('trainingItem.update', ['trainingItem' => $item]), [
                 'description' => $description,
-            ]);
+            ])
+        ;
         $response->assertRedirectToRoute('trainingItem.index');
 
         $item->refresh();
@@ -77,7 +79,7 @@ class TrainingItemControllerTest extends TestCase
         $this->assertEquals($description, $item->description);
     }
 
-    public function test_delete_sets_delete(): void
+    public function testDeleteSetsDelete(): void
     {
         $trainingItem = TrainingItem::factory()->create();
         $response = $this->actingAs($this->user)->delete(route('trainingItem.destroy', ['trainingItem' => $trainingItem]));

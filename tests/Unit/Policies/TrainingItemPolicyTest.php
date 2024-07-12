@@ -21,37 +21,37 @@ class TrainingItemPolicyTest extends TestCase
         $this->trainingitem = TrainingItem::factory()->make();
     }
 
-    public function test_view_any(): void
+    public function testViewAny(): void
     {
         $this->assertTrue($this->policy->viewAny($this->user));
     }
 
-    public function test_view(): void
+    public function testView(): void
     {
         $this->assertTrue($this->policy->view($this->user, $this->trainingitem));
     }
 
-    public function test_create(): void
+    public function testCreate(): void
     {
         $this->assertTrue($this->policy->create($this->user));
     }
 
-    public function test_update(): void
+    public function testUpdate(): void
     {
         $this->assertTrue($this->policy->update($this->user, $this->trainingitem));
     }
 
-    public function test_delete(): void
+    public function testDelete(): void
     {
         $this->assertTrue($this->policy->delete($this->user, $this->trainingitem));
     }
 
-    public function test_restore(): void
+    public function testRestore(): void
     {
         $this->assertTrue($this->policy->restore($this->user, $this->trainingitem));
     }
 
-    public function test_force_delete(): void
+    public function testForceDelete(): void
     {
         $this->assertTrue($this->policy->forceDelete($this->user, $this->trainingitem));
     }

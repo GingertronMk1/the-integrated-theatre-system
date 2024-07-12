@@ -15,19 +15,19 @@ class PersonControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function test_is_behind_auth_wall(): void
+    public function testIsBehindAuthWall(): void
     {
         $response = $this->get(route('person.index'));
         $response->assertRedirect();
     }
 
-    public function test_index_contains_people(): void
+    public function testIndexContainsPeople(): void
     {
         $response = $this->actingAs($this->user)->get(route('person.index'));
         $response->assertSeeInOrder(Person::all()->pluck('id')->toArray());
     }
 
-    public function test_create_shows_form(): void
+    public function testCreateShowsForm(): void
     {
         $response = $this->actingAs($this->user)->get(route('person.create'));
         $response->assertOk();
@@ -42,7 +42,7 @@ class PersonControllerTest extends TestCase
         }
     }
 
-    public function test_edit_shows_form(): void
+    public function testEditShowsForm(): void
     {
         $person = Person::factory()->create();
         $response = $this->actingAs($this->user)->get(route('person.edit', ['person' => $person]));
@@ -56,19 +56,19 @@ class PersonControllerTest extends TestCase
             $crawler->filter($input);
             $this->assertGreaterThan(0, $crawler->count());
         }
-
     }
 
-    public function test_show(): void
+    public function testShow(): void
     {
         $person = Person::factory()->create();
         $response = $this
             ->actingAs($this->user)
-            ->get(route('person.show', ['person' => $person]));
+            ->get(route('person.show', ['person' => $person]))
+        ;
         $response->assertOk();
     }
 
-    public function test_store_creates_properly(): void
+    public function testStoreCreatesProperly(): void
     {
         $name = 'PHPUnit Jones';
         $startYear = 1997;
@@ -80,7 +80,8 @@ class PersonControllerTest extends TestCase
                 'name' => $name,
                 'start_year' => $startYear,
                 'end_year' => $endYear,
-            ]);
+            ])
+        ;
         $response->assertRedirectToRoute('person.index');
 
         $person = Person::firstWhere('name', $name);
@@ -90,7 +91,7 @@ class PersonControllerTest extends TestCase
         $this->assertEquals($endYear, $person->end_year);
     }
 
-    public function test_update_updates_properly(): void
+    public function testUpdateUpdatesProperly(): void
     {
         $person = Person::factory()->create();
         $name = 'PHPUnit Jones';
@@ -103,7 +104,8 @@ class PersonControllerTest extends TestCase
                 'name' => $name,
                 'start_year' => $startYear,
                 'end_year' => $endYear,
-            ]);
+            ])
+        ;
         $response->assertRedirectToRoute('person.index');
 
         $person->refresh();
@@ -113,7 +115,7 @@ class PersonControllerTest extends TestCase
         $this->assertEquals($endYear, $person->end_year);
     }
 
-    public function test_delete_sets_delete(): void
+    public function testDeleteSetsDelete(): void
     {
         $person = Person::factory()->create();
         $response = $this->actingAs($this->user)->delete(route('person.destroy', ['person' => $person]));

@@ -13,7 +13,10 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, HasUuids, Notifiable, SoftDeletes;
+    use HasFactory;
+    use HasUuids;
+    use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +39,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function person(): HasOne
+    {
+        return $this->hasOne(Person::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -47,10 +55,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function person(): HasOne
-    {
-        return $this->hasOne(Person::class);
     }
 }

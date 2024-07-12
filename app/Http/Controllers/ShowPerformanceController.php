@@ -6,6 +6,7 @@ use App\Http\Requests\StorePerformanceRequest;
 use App\Http\Requests\UpdatePerformanceRequest;
 use App\Models\Performance;
 use App\Models\Show;
+use App\Models\Venue;
 
 class ShowPerformanceController extends Controller
 {
@@ -15,7 +16,8 @@ class ShowPerformanceController extends Controller
     public function index(Show $show)
     {
         return view('pages.show.performance.index')
-            ->with('show', $show);
+            ->with('show', $show)
+        ;
     }
 
     /**
@@ -24,7 +26,9 @@ class ShowPerformanceController extends Controller
     public function create(Show $show)
     {
         return view('pages.show.performance.create')
-            ->with('show', $show);
+            ->with('show', $show)
+            ->with('venues', Venue::all())
+        ;
     }
 
     /**
@@ -32,7 +36,9 @@ class ShowPerformanceController extends Controller
      */
     public function store(StorePerformanceRequest $request, Show $show)
     {
-        if ($show->performances()->create($request->input())) {
+        if ($show->performances()->create($request->only(
+            (new Performance())->getFillable(),
+        ))) {
             return redirect(action([self::class, 'index'], ['show' => $show]));
         }
 
@@ -42,10 +48,7 @@ class ShowPerformanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Show $show, Performance $performance)
-    {
-        //
-    }
+    public function show(Show $show, Performance $performance) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -54,7 +57,9 @@ class ShowPerformanceController extends Controller
     {
         return view('pages.show.performance.edit')
             ->with('show', $show)
-            ->with('performance', $performance);
+            ->with('performance', $performance)
+            ->with('venues', Venue::all())
+        ;
     }
 
     /**
@@ -62,7 +67,7 @@ class ShowPerformanceController extends Controller
      */
     public function update(UpdatePerformanceRequest $request, Show $show, Performance $performance)
     {
-        if ($performance->update($request->input())) {
+        if ($performance->update($request->only($performance->getFillable()))) {
             return redirect(action([self::class, 'index'], ['show' => $show]));
         }
 
@@ -77,6 +82,7 @@ class ShowPerformanceController extends Controller
         if ($performance->delete()) {
             return redirect(action([self::class, 'index'], ['show' => $show]));
         }
+
         throw new \ErrorException('Unable to delete that performance');
     }
 }

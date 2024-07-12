@@ -17,6 +17,7 @@ class AppLayout extends Component
     public function render(): View
     {
         return view('layouts.app')
-            ->with('innerClass', $this->innerClass);
+            ->with('innerClass', $this->innerClass)
+        ;
     }
 }

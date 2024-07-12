@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class PerformanceTest extends TestCase
 {
-    public function test_show_is_accurate(): void
+    public function testShowIsAccurate(): void
     {
         $show = Show::factory()->create();
         $performance = Performance::factory()->state([

@@ -25,7 +25,8 @@ class TrainingItemController extends Controller
     public function create()
     {
         return view('pages.trainingItem.create')
-            ->with('trainingCategories', TrainingCategory::all());
+            ->with('trainingCategories', TrainingCategory::all())
+        ;
     }
 
     /**
@@ -33,7 +34,7 @@ class TrainingItemController extends Controller
      */
     public function store(StoreTrainingItemRequest $request)
     {
-        if (TrainingItem::create($request->input())) {
+        if (TrainingItem::create($request->only((new TrainingItem())->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 
@@ -46,7 +47,8 @@ class TrainingItemController extends Controller
     public function show(TrainingItem $trainingItem)
     {
         return view('pages.trainingItem.show')
-            ->with('trainingItem', $trainingItem);
+            ->with('trainingItem', $trainingItem)
+        ;
     }
 
     /**
@@ -56,7 +58,8 @@ class TrainingItemController extends Controller
     {
         return view('pages.trainingItem.edit')
             ->with('trainingItem', $trainingItem)
-            ->with('trainingCategories', TrainingCategory::all());
+            ->with('trainingCategories', TrainingCategory::all())
+        ;
     }
 
     /**
@@ -64,7 +67,7 @@ class TrainingItemController extends Controller
      */
     public function update(UpdateTrainingItemRequest $request, TrainingItem $trainingItem)
     {
-        if ($trainingItem->update($request->input())) {
+        if ($trainingItem->update($request->only($trainingItem->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 
@@ -79,6 +82,7 @@ class TrainingItemController extends Controller
         if ($trainingItem->delete()) {
             return redirect(action([self::class, 'index']));
         }
+
         throw new \ErrorException('Unable to delete that trainingItem');
     }
 }

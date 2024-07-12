@@ -31,7 +31,7 @@ class {{ class }} extends Controller
      */
     public function store({{ storeRequest }} $request)
     {
-        if ({{ model }}::create($request->input())) {
+        if ({{ model }}::create($request->only((new {{ model }})->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 
@@ -63,7 +63,7 @@ class {{ class }} extends Controller
      */
     public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
     {
-        if (${{ modelVariable }}->update($request->input())) {
+        if (${{ modelVariable }}->update($request->only(${{ modelVariable }}->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 

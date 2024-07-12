@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShowRequest;
 use App\Http\Requests\UpdateShowRequest;
+use App\Models\Season;
 use App\Models\Show;
+use App\Models\Venue;
 
 class ShowController extends Controller
 {
@@ -14,7 +16,8 @@ class ShowController extends Controller
     public function index()
     {
         return view('pages.show.index')
-            ->with('shows', Show::all());
+            ->with('shows', Show::all())
+        ;
     }
 
     /**
@@ -22,7 +25,10 @@ class ShowController extends Controller
      */
     public function create()
     {
-        return view('pages.show.create');
+        return view('pages.show.create')
+            ->with('seasons', Season::all())
+            ->with('venues', Venue::all())
+        ;
     }
 
     /**
@@ -30,7 +36,7 @@ class ShowController extends Controller
      */
     public function store(StoreShowRequest $request)
     {
-        if (Show::create($request->input())) {
+        if (Show::create($request->only((new Show())->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 
@@ -43,7 +49,8 @@ class ShowController extends Controller
     public function show(Show $show)
     {
         return view('pages.show.show')
-            ->with('show', $show);
+            ->with('show', $show)
+        ;
     }
 
     /**
@@ -52,7 +59,10 @@ class ShowController extends Controller
     public function edit(Show $show)
     {
         return view('pages.show.edit')
-            ->with('show', $show);
+            ->with('show', $show)
+            ->with('seasons', Season::all())
+            ->with('venues', Venue::all())
+        ;
     }
 
     /**
@@ -60,7 +70,7 @@ class ShowController extends Controller
      */
     public function update(UpdateShowRequest $request, Show $show)
     {
-        if ($show->update($request->input())) {
+        if ($show->update($request->only($show->getFillable()))) {
             return redirect(action([self::class, 'index']));
         }
 
@@ -75,6 +85,7 @@ class ShowController extends Controller
         if ($show->delete()) {
             return redirect(action([self::class, 'index']));
         }
+
         throw new \ErrorException('Unable to delete that show');
     }
 }

@@ -1,15 +1,11 @@
-$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts";
 
-@import '@fortawesome/fontawesome-free/scss/fontawesome';
-@import '@fortawesome/fontawesome-free/scss/brands';
-@import '@fortawesome/fontawesome-free/scss/regular';
-@import '@fortawesome/fontawesome-free/scss/solid';
-@import 'init';
-@import 'nav';
-@import 'components/table';
-@import 'components/button';
-@import 'components/dropdown';
-@import 'pages/training/item';
-@import 'pages/training/session';
-@import 'pages/person';
-@import 'pages/show';
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/solid";
+
+$primary: #a54499;
+$secondary: #ffc425;
+
+@import "bootstrap/scss/bootstrap";
