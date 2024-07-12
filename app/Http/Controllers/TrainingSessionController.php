@@ -16,7 +16,8 @@ class TrainingSessionController extends Controller
     public function index()
     {
         return view('pages.trainingSession.index')
-            ->with('trainingSessions', TrainingSession::all());
+            ->with('trainingSessions', TrainingSession::all())
+        ;
     }
 
     /**
@@ -26,7 +27,8 @@ class TrainingSessionController extends Controller
     {
         return view('pages.trainingSession.create')
             ->with('people', Person::all())
-            ->with('trainingItems', TrainingItem::all());
+            ->with('trainingItems', TrainingItem::all())
+        ;
     }
 
     /**
@@ -34,7 +36,7 @@ class TrainingSessionController extends Controller
      */
     public function store(StoreTrainingSessionRequest $request)
     {
-        $trainingSession = TrainingSession::create($request->input());
+        $trainingSession = TrainingSession::create($request->only((new TrainingSession())->getFillable()));
         if ($trainingSession) {
             $trainees = $request->input('trainees', []);
             $trainingItems = $request->input('training_items', []);
@@ -54,7 +56,8 @@ class TrainingSessionController extends Controller
     public function show(TrainingSession $trainingSession)
     {
         return view('pages.trainingSession.show')
-            ->with('trainingSession', $trainingSession);
+            ->with('trainingSession', $trainingSession)
+        ;
     }
 
     /**
@@ -65,7 +68,8 @@ class TrainingSessionController extends Controller
         return view('pages.trainingSession.edit')
             ->with('trainingSession', $trainingSession)
             ->with('people', Person::all())
-            ->with('trainingItems', TrainingItem::all());
+            ->with('trainingItems', TrainingItem::all())
+        ;
     }
 
     /**
@@ -73,7 +77,7 @@ class TrainingSessionController extends Controller
      */
     public function update(UpdateTrainingSessionRequest $request, TrainingSession $trainingSession)
     {
-        if ($trainingSession->update($request->input())) {
+        if ($trainingSession->update($request->only($trainingSession->getFillable()))) {
             $trainees = $request->input('trainees', []);
             $trainingItems = $request->input('training_items', []);
 
@@ -94,6 +98,7 @@ class TrainingSessionController extends Controller
         if ($trainingSession->delete()) {
             return redirect(action([self::class, 'index']));
         }
+
         throw new \ErrorException('Unable to delete that trainingSession');
     }
 }

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class PersonTest extends TestCase
 {
-    public function test_user_is_accurate(): void
+    public function testUserIsAccurate(): void
     {
         $user = User::factory()->create();
         $person = Person::factory()->create();

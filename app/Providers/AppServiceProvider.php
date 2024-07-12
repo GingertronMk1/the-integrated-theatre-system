@@ -11,10 +11,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-        //
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap any application services.
@@ -26,14 +23,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('toparagraphs', function (string $expression): string {
             return <<<PHP
             <?php
-                foreach(explode(PHP_EOL, $expression) as \$paragraph) {
+                foreach(explode(PHP_EOL, {$expression}) as \$paragraph) {
                     if (!empty(\$paragraph)) {
                         echo '<p>'.e(\$paragraph).'</p>';
                     }
                 }
             ?>
             PHP;
-
         });
     }
 }

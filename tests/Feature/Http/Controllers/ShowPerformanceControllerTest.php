@@ -17,23 +17,25 @@ class ShowPerformanceControllerTest extends TestCase
         $this->show = Show::factory()->create();
     }
 
-    public function test_index(): void
+    public function testIndex(): void
     {
         $response = $this
             ->actingAs($this->user)
-            ->get(route('show.performance.index', ['show' => $this->show]));
+            ->get(route('show.performance.index', ['show' => $this->show]))
+        ;
         $response->assertOk();
     }
 
-    public function test_create(): void
+    public function testCreate(): void
     {
         $response = $this
             ->actingAs($this->user)
-            ->get(route('show.performance.create', ['show' => $this->show]));
+            ->get(route('show.performance.create', ['show' => $this->show]))
+        ;
         $response->assertOk();
     }
 
-    public function test_store(): void
+    public function testStore(): void
     {
         $response = $this
             ->actingAs($this->user)
@@ -44,12 +46,13 @@ class ShowPerformanceControllerTest extends TestCase
                     'doors' => Carbon::now(),
                     'venue' => 'venue',
                     'capacity' => 100,
-                ]
-            );
+                ],
+            )
+        ;
         $response->assertRedirect();
     }
 
-    public function test_edit(): void
+    public function testEdit(): void
     {
         $performance = $this->makePerformance();
         $response = $this
@@ -60,13 +63,14 @@ class ShowPerformanceControllerTest extends TestCase
                     [
                         'show' => $this->show,
                         'performance' => $performance,
-                    ]
-                )
-            );
+                    ],
+                ),
+            )
+        ;
         $response->assertOk();
     }
 
-    public function test_update(): void
+    public function testUpdate(): void
     {
         $performance = $this->makePerformance();
         $response = $this
@@ -77,18 +81,19 @@ class ShowPerformanceControllerTest extends TestCase
                     [
                         'show' => $this->show,
                         'performance' => $performance,
-                    ]
+                    ],
                 ),
                 [
                     'capacity' => 100,
-                ]
-            );
+                ],
+            )
+        ;
         $response->assertRedirect();
         $performance->refresh();
         $this->assertEquals(100, $performance->capacity);
     }
 
-    public function test_destroy(): void
+    public function testDestroy(): void
     {
         $performance = $this->makePerformance();
         $response = $this
@@ -99,9 +104,10 @@ class ShowPerformanceControllerTest extends TestCase
                     [
                         'show' => $this->show,
                         'performance' => $performance,
-                    ]
-                )
-            );
+                    ],
+                ),
+            )
+        ;
         $response->assertRedirect();
         $performance->refresh();
         $this->assertNotNull($performance->deleted_at);
@@ -112,6 +118,5 @@ class ShowPerformanceControllerTest extends TestCase
         return Performance::factory()->state([
             'show_id' => $this->show->id,
         ])->create();
-
     }
 }

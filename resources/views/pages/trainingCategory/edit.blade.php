@@ -1,37 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2>
             {{ __('Update :name', ['name' => $trainingCategory->name]) }}
         </h2>
     </x-slot>
 
-    <div>
-        <form method="POST" action="{{ route('trainingCategory.update', ['trainingCategory' => $trainingCategory]) }}">
-            @csrf
-            @method('PUT')
-            <label for="name">
-                Name
-                <input type="text" name="name" value="{{ $trainingCategory->name }}">
-            </label>
-            <label for="start_year">
-                Description
-                <textarea name="description">{{ $trainingCategory->description }}</textarea>
-            </label>
-            <label for="advanced">
-                Advanced?
-                <input
-                    type="hidden"
-                    name="advanced"
-                    value="0"
-                >
-                <input
-                    type="checkbox"
-                    name="advanced"
-                    {{ $trainingCategory->advanced ? 'checked' : '' }}
-                    value="1"
-                >
-            </label>
-            <button type="submit">Update Training Category</button>
-        </form>
-    </div>
+    <x-form.training-category-form class="training-category-form" :category="$trainingCategory" />
 </x-app-layout>

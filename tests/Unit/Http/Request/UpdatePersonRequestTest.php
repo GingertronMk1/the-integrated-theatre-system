@@ -9,13 +9,13 @@ use Tests\TestCase;
 
 class UpdatePersonRequestTest extends TestCase
 {
-    public function test_authorize(): void
+    public function testAuthorize(): void
     {
         $request = new UpdatePersonRequest();
         $this->assertTrue($request->authorize());
     }
 
-    public function test_rules(): void
+    public function testRules(): void
     {
         $request = new UpdatePersonRequest();
         $this->assertEquals([], $request->rules());

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Season;
+use App\Models\Venue;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +22,8 @@ class ShowFactory extends Factory
             'title' => fake()->words(3, true),
             'description' => fake()->paragraphs(3, true),
             'year' => fake()->year(),
-            'season' => fake()->boolean(70) ? fake()->word() : null,
+            'season_id' => Season::all()->random()->first()->id,
+            'venue_id' => Venue::all()->random()->first()->id,
         ];
     }
 }

@@ -9,20 +9,20 @@ use Tests\TestCase;
 
 class TrainingSessionControllerTest extends TestCase
 {
-    public function test_index(): void
+    public function testIndex(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingSession.index'));
 
         $response->assertOk();
     }
 
-    public function test_create(): void
+    public function testCreate(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingSession.create'));
         $response->assertStatus(200);
     }
 
-    public function test_create_stores_properly(): void
+    public function testCreateStoresProperly(): void
     {
         $person = Person::factory()->create();
 
@@ -31,25 +31,26 @@ class TrainingSessionControllerTest extends TestCase
             ->post(route('trainingSession.store'), [
                 'trainer_id' => $person->id,
                 'happened_at' => Carbon::now(),
-            ]);
+            ])
+        ;
         $response->assertRedirect();
     }
 
-    public function test_show(): void
+    public function testShow(): void
     {
         $session = TrainingSession::factory()->create();
         $response = $this->actingAs($this->user)->get(route('trainingSession.show', ['trainingSession' => $session]));
         $response->assertStatus(200);
     }
 
-    public function test_edit(): void
+    public function testEdit(): void
     {
         $session = TrainingSession::factory()->create();
         $response = $this->actingAs($this->user)->get(route('trainingSession.edit', ['trainingSession' => $session]));
         $response->assertStatus(200);
     }
 
-    public function test_update_stores_properly(): void
+    public function testUpdateStoresProperly(): void
     {
         $description = 'This is the new description';
 
@@ -61,7 +62,8 @@ class TrainingSessionControllerTest extends TestCase
             ->put(route('trainingSession.update', ['trainingSession' => $session]), [
                 'trainer_id' => $session->trainer_id,
                 'happened_at' => $happenedAt,
-            ]);
+            ])
+        ;
         $response->assertRedirectToRoute('trainingSession.index');
 
         $session->refresh();
@@ -69,7 +71,7 @@ class TrainingSessionControllerTest extends TestCase
         $this->assertEquals($happenedAt, $session->happened_at);
     }
 
-    public function test_delete_sets_delete(): void
+    public function testDeleteSetsDelete(): void
     {
         $trainingSession = TrainingSession::factory()->create();
         $response = $this->actingAs($this->user)->delete(route('trainingSession.destroy', ['trainingSession' => $trainingSession]));

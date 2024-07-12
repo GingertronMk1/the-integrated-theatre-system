@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Performance extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory;
+    use HasUuids;
+    use SoftDeletes;
 
     protected $fillable = [
-        'venue',
+        'venue_id',
         'show_id',
         'show_start',
         'doors',
@@ -24,6 +26,15 @@ class Performance extends Model
         'show_start' => 'datetime',
         'doors' => 'datetime',
     ];
+
+    protected $with = [
+        'venue',
+    ];
+
+    public function venue(): BelongsTo
+    {
+        return $this->belongsTo(Venue::class);
+    }
 
     public function show(): BelongsTo
     {

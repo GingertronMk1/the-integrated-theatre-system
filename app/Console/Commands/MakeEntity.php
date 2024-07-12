@@ -31,7 +31,7 @@ class MakeEntity extends Command
         foreach ($this->getThingsToMake($modelName) as $makeCommand => $arguments) {
             $this->call(
                 "make:{$makeCommand}",
-                $arguments
+                $arguments,
             );
         }
 
@@ -40,11 +40,17 @@ class MakeEntity extends Command
                 'make:view',
                 [
                     'name' => "pages/{$modelNameLC}/{$viewName}",
-                ]
+                ],
             );
         }
 
-        $this->call('make:component', ['name' => "Form/{$modelName}Form"]);
+        $this->call(
+            'make:component',
+            [
+                'name' => "Form/{$modelName}Form",
+                '--inline' => true,
+            ],
+        );
     }
 
     private function getViews(): array

@@ -13,7 +13,7 @@ class EmailVerificationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_email_verification_screen_can_be_rendered(): void
+    public function testEmailVerificationScreenCanBeRendered(): void
     {
         $user = User::factory()->unverified()->create();
 
@@ -22,7 +22,7 @@ class EmailVerificationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_email_can_be_verified(): void
+    public function testEmailCanBeVerified(): void
     {
         $user = User::factory()->unverified()->create();
 
@@ -31,7 +31,7 @@ class EmailVerificationTest extends TestCase
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(60),
-            ['id' => $user->id, 'hash' => sha1($user->email)]
+            ['id' => $user->id, 'hash' => sha1($user->email)],
         );
 
         $response = $this->actingAs($user)->get($verificationUrl);
@@ -41,14 +41,14 @@ class EmailVerificationTest extends TestCase
         $response->assertRedirect(route('dashboard', absolute: false).'?verified=1');
     }
 
-    public function test_email_is_not_verified_with_invalid_hash(): void
+    public function testEmailIsNotVerifiedWithInvalidHash(): void
     {
         $user = User::factory()->unverified()->create();
 
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(60),
-            ['id' => $user->id, 'hash' => sha1('wrong-email')]
+            ['id' => $user->id, 'hash' => sha1('wrong-email')],
         );
 
         $this->actingAs($user)->get($verificationUrl);
@@ -56,14 +56,14 @@ class EmailVerificationTest extends TestCase
         $this->assertFalse($user->fresh()->hasVerifiedEmail());
     }
 
-    public function test_email_verification_notification_redirect_verified(): void
+    public function testEmailVerificationNotificationRedirectVerified(): void
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->post(route('verification.send'));
         $response->assertRedirectToRoute('dashboard');
     }
 
-    public function test_email_verification_notification_redirect_unverified(): void
+    public function testEmailVerificationNotificationRedirectUnverified(): void
     {
         $user = User::factory()->unverified()->create();
         $response = $this->actingAs($user)->post(route('verification.send'));

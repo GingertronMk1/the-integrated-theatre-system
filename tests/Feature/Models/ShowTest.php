@@ -9,7 +9,7 @@ class ShowTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function testExample(): void
     {
         $response = $this->get('/');
 

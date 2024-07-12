@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Venue;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +22,7 @@ class PerformanceFactory extends Factory
         $doors = $showStart->subMinutes(30);
 
         return [
-            'venue' => fake()->address(),
+            'venue_id' => fake()->boolean() ? Venue::all()->random()->first()->id : null,
             'show_start' => $showStart,
             'doors' => $doors,
             'capacity' => fake()->numberBetween(5, 1000),

@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2>
             {{ __('Edit Session held by :name at :time', [
                 'name' => $trainingSession->trainer->name,
-                'time' => $trainingSession->happened_at
+                'time' => $trainingSession->happened_at,
             ]) }}
         </h2>
     </x-slot>

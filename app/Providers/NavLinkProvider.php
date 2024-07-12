@@ -17,6 +17,7 @@ class NavLinkProvider extends ServiceProvider
             return $view->with('navLinks', [
                 'person.index' => 'People',
                 'show.index' => 'Shows',
+                'season.index' => 'Seasons',
                 'Training' => [
                     'trainingCategory.index' => 'Categories',
                     'trainingItem.index' => 'Items',

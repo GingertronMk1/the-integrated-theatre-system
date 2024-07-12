@@ -1,6 +1,9 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\NavLinkProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\NavLinkProvider::class,
+    AppServiceProvider::class,
+    NavLinkProvider::class,
 ];

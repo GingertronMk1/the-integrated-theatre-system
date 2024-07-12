@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body>
-        @include('layouts.navigation')
-        <div id="body-inner">
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header>
-                    {{ $header }}
-                </header>
-            @endisset
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-            <!-- Page Content -->
-            <main class="{{ $innerClass }}">
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+<body>
+    @include('layouts.navigation')
+    <div class="container">
+
+        <!-- Page Heading -->
+        @isset($header)
+            <header class="py-3">
+                {{ $header }}
+            </header>
+        @endisset
+
+        <!-- Page Content -->
+        <main class="{{ $innerClass }}">
+            {{ $slot }}
+        </main>
+    </div>
+</body>
+
 </html>

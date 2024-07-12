@@ -11,17 +11,17 @@ class DefaultLogin
         echo $this->loginFormField(
             'driver',
             '',
-            'sqlite'
+            'sqlite',
         );
         echo $this->loginFormField(
             'username',
             '',
-            'admin'
+            'admin',
         );
         echo $this->loginFormField(
             'password',
             '',
-            'admin'
+            'admin',
         );
         echo $this->loginFormField(
             'db',
@@ -36,7 +36,7 @@ class DefaultLogin
     public function loginFormField(string $name, string $envValue = '', string $value = ''): string
     {
         $inputValue = $value;
-        if (! empty($envValue) && isset($_ENV[$envValue])) {
+        if (!empty($envValue) && isset($_ENV[$envValue])) {
             $inputValue = $_ENV[$envValue];
         }
 

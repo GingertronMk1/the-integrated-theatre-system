@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class DashboardTest extends TestCase
 {
-    public function test_that_it_shows(): void
+    public function testThatItShows(): void
     {
         $user = User::factory()->create();
         $request = $this->actingAs($user)->get(route('dashboard'));
