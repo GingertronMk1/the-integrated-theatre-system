@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Venue;
 use App\View\Components\Form\VenueForm;
-use Symfony\Component\DomCrawler\Crawler;
 use Tests\TestCase;
 
 class VenueControllerTest extends TestCase
@@ -28,9 +27,7 @@ class VenueControllerTest extends TestCase
         $response = $this->actingAs($this->user)->get(route('venue.create'));
         $response->assertOk();
 
-        $responseBody = new Crawler($response->baseResponse->getContent());
-        $form = $this->getGenericForm($responseBody, VenueForm::class);
-        $form->setValues([
+        $form = $this->getResponseForForm($response, VenueForm::class, [
             'name' => 'Test Venu',
             'location' => 'Test place',
             'location_additional' => fake()->paragraphs(3, true),
@@ -39,8 +36,6 @@ class VenueControllerTest extends TestCase
         $formResponse = $this->post($form->getUri(), $form->getValues());
         $formResponse->assertRedirect();
     }
-
-    public function testShow(): void {}
 
     public function testEdit(): void
     {
