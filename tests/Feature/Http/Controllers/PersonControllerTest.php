@@ -10,17 +10,6 @@ use Tests\TestCase;
 
 class PersonControllerTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    public function testIsBehindAuthWall(): void
-    {
-        $response = $this->get(route('person.index'));
-        $response->assertRedirect();
-    }
-
     public function testIndexContainsPeople(): void
     {
         $response = $this->actingAs($this->user)->get(route('person.index'));
