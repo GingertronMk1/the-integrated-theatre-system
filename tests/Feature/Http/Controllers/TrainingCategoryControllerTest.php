@@ -31,7 +31,7 @@ class TrainingCategoryControllerTest extends TestCase
             TrainingCategoryForm::class,
             [
                 'name' => 'test',
-                'advanced' => true
+                'advanced' => true,
             ]
         );
 

@@ -74,13 +74,13 @@ class ShowPerformanceControllerTest extends TestCase
             $response,
             PerformanceForm::class,
             [
-                'capacity' => 1
+                'capacity' => 1,
             ],
             [
                 'show_start' => $performance->show_start,
                 'doors' => $performance->doors,
                 'capacity' => $performance->capacity,
-                'venue_id' => $performance->venue?->id
+                'venue_id' => $performance->venue?->id,
             ]
         );
 

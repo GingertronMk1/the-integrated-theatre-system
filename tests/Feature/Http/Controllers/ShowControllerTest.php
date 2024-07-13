@@ -67,7 +67,7 @@ class ShowControllerTest extends TestCase
     {
         $initialAttrs = [
             'title' => 'wahoo',
-            'description' => 'awooga'
+            'description' => 'awooga',
         ];
         $show = Show::factory()->state(fn () => $initialAttrs)->create();
 
@@ -79,7 +79,7 @@ class ShowControllerTest extends TestCase
             $response,
             ShowForm::class,
             [
-                'description' => $newDescription
+                'description' => $newDescription,
             ],
             $initialAttrs
         );
