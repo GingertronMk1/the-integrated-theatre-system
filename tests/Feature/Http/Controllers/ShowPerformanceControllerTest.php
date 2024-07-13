@@ -4,6 +4,8 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Performance;
 use App\Models\Show;
+use App\Models\Venue;
+use App\View\Components\Form\PerformanceForm;
 use Carbon\Carbon;
 use Tests\TestCase;
 
@@ -28,28 +30,27 @@ class ShowPerformanceControllerTest extends TestCase
 
     public function testCreate(): void
     {
+        $venue = Venue::factory()->create();
         $response = $this
             ->actingAs($this->user)
             ->get(route('show.performance.create', ['show' => $this->show]))
         ;
         $response->assertOk();
-    }
+        $capacity = 1980;
+        $formResponse = $this->getResponseForForm(
+            $response,
+            PerformanceForm::class,
+            [
+                'show_start' => Carbon::now(),
+                'doors' => Carbon::now(),
+                'venue_id' => $venue->id,
+                'capacity' => $capacity,
+            ],
+        );
+        $formResponse->assertRedirect();
 
-    public function testStore(): void
-    {
-        $response = $this
-            ->actingAs($this->user)
-            ->post(
-                route('show.performance.store', ['show' => $this->show]),
-                [
-                    'show_start' => Carbon::now(),
-                    'doors' => Carbon::now(),
-                    'venue' => 'venue',
-                    'capacity' => 100,
-                ],
-            )
-        ;
-        $response->assertRedirect();
+        $this->show->refresh();
+        $this->assertContains($capacity, $this->show->performances->pluck('capacity'));
     }
 
     public function testEdit(): void
@@ -68,29 +69,22 @@ class ShowPerformanceControllerTest extends TestCase
             )
         ;
         $response->assertOk();
-    }
 
-    public function testUpdate(): void
-    {
-        $performance = $this->makePerformance();
-        $response = $this
-            ->actingAs($this->user)
-            ->put(
-                route(
-                    'show.performance.update',
-                    [
-                        'show' => $this->show,
-                        'performance' => $performance,
-                    ],
-                ),
-                [
-                    'capacity' => 100,
-                ],
-            )
-        ;
-        $response->assertRedirect();
-        $performance->refresh();
-        $this->assertEquals(100, $performance->capacity);
+        $formResponse = $this->getResponseForForm(
+            $response,
+            PerformanceForm::class,
+            [
+                'capacity' => 1
+            ],
+            [
+                'show_start' => $performance->show_start,
+                'doors' => $performance->doors,
+                'capacity' => $performance->capacity,
+                'venue_id' => $performance->venue?->id
+            ]
+        );
+
+        $formResponse->assertRedirect();
     }
 
     public function testDestroy(): void
