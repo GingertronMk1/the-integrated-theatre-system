@@ -21,8 +21,20 @@ class PerformanceFactory extends Factory
         $showStart = new CarbonImmutable(fake()->dateTimeThisCentury());
         $doors = $showStart->subMinutes(30);
 
+        $venueId = null;
+
+        if (fake()->boolean()) {
+            try {
+            $venueId = Venue::all()->random()->first()?->id;
+
+            } catch (\Throwable) {
+
+            $venueId = Venue::factory()->create()->id;
+            }
+        }
+
         return [
-            'venue_id' => fake()->boolean() ? Venue::all()->random()->first()->id : null,
+            'venue_id' => $venueId,
             'show_start' => $showStart,
             'doors' => $doors,
             'capacity' => fake()->numberBetween(5, 1000),

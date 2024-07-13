@@ -17,11 +17,18 @@ class TrainingItemFactory extends Factory
      */
     public function definition(): array
     {
+        try {
+
+        $categoryId = TrainingCategory::all()->random()->first()?->id;
+        } catch (\Throwable) {
+        $categoryId = TrainingCategory::factory()->create()->id;
+        }
+
         return [
             'name' => fake()->words(asText: true),
             'description' => fake()->paragraphs(asText: true),
             'dangerous' => fake()->boolean(),
-            'training_category_id' => TrainingCategory::all()->pluck('id')->random(),
+            'training_category_id' => $categoryId,
         ];
     }
 }

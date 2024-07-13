@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function afterRefreshingDatabase()
     {
-        $this->artisan('db:seed');
+        // $this->artisan('db:seed');
         $this->user = User::factory()->create();
     }
 

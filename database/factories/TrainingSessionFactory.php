@@ -17,8 +17,14 @@ class TrainingSessionFactory extends Factory
      */
     public function definition(): array
     {
+        try {
+            $personId = Person::all()->random()->first()->id;
+        } catch (\Throwable) {
+        $personId = Person::factory()->create()->id;
+        }
+
         return [
-            'trainer_id' => Person::inRandomOrder()->first()->id,
+            'trainer_id' => $personId,
             'happened_at' => fake()->dateTime(),
         ];
     }
