@@ -36,8 +36,10 @@ jobs:
                 node-version: 21
             - name: Install
               run: |
+                cp .env.example .env
                 composer install
                 npm install
+
                 touch database/database.sqlite
                 php artisan migrate:fresh
             - name: PHP Style
