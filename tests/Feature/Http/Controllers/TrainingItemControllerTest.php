@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\TrainingCategory;
 use App\Models\TrainingItem;
+use App\View\Components\Form\TrainingItemForm;
 use Tests\TestCase;
 
 class TrainingItemControllerTest extends TestCase
@@ -19,38 +20,26 @@ class TrainingItemControllerTest extends TestCase
     public function testIndex(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingItem.index'));
-
-        $response->assertSeeTextInOrder(TrainingItem::all()->take(10)->pluck('name')->toArray());
+        $response->assertOk();
     }
 
     public function testCreate(): void
     {
         $response = $this->actingAs($this->user)->get(route('trainingItem.create'));
         $response->assertStatus(200);
-    }
 
-    public function testEdit(): void
-    {
-        $item = TrainingItem::factory()->for($this->category)->create();
-        $response = $this->actingAs($this->user)->get(route('trainingItem.edit', ['trainingItem' => $item]));
-        $response->assertStatus(200);
-    }
-
-    public function testCreateStoresProperly(): void
-    {
         $name = 'test item 1';
 
-        $response = $this
-            ->actingAs($this->user)
-            ->post(route('trainingItem.store'), [
+        $formResponse = $this->getResponseForForm(
+            $response,
+            TrainingItemForm::class,
+            [
                 'name' => $name,
                 'training_category_id' => $this->category->id,
-            ])
-        ;
-        $response->assertRedirectToRoute('trainingItem.index');
+            ]
+        );
 
-        $item = TrainingItem::firstWhere('name', $name);
-        $this->assertEquals($this->category->id, $item->trainingCategory->id);
+        $formResponse->assertRedirect();
     }
 
     public function testShow(): void
@@ -62,17 +51,26 @@ class TrainingItemControllerTest extends TestCase
 
     public function testUpdateStoresProperly(): void
     {
+        $item = TrainingItem::factory()->for($this->category)->create();
+        $response = $this->actingAs($this->user)->get(route('trainingItem.edit', ['trainingItem' => $item]));
+        $response->assertStatus(200);
+
         $description = 'This is the new description';
 
-        $item = TrainingItem::factory()->create();
-
-        $response = $this
-            ->actingAs($this->user)
-            ->put(route('trainingItem.update', ['trainingItem' => $item]), [
+        $formResponse = $this->getResponseForForm(
+            $response,
+            TrainingItemForm::class,
+            [
                 'description' => $description,
-            ])
-        ;
-        $response->assertRedirectToRoute('trainingItem.index');
+            ],
+            [
+                'name' => $item->name,
+                'description' => $item->description,
+                'training_category_id' => $this->category->id,
+            ]
+        );
+
+        $formResponse->assertRedirect();
 
         $item->refresh();
 

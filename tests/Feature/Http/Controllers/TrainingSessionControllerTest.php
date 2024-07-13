@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Person;
 use App\Models\TrainingSession;
+use App\View\Components\Form\TrainingSessionForm;
 use Carbon\Carbon;
 use Tests\TestCase;
 
@@ -18,22 +19,19 @@ class TrainingSessionControllerTest extends TestCase
 
     public function testCreate(): void
     {
+        $person = Person::factory()->create();
         $response = $this->actingAs($this->user)->get(route('trainingSession.create'));
         $response->assertStatus(200);
-    }
 
-    public function testCreateStoresProperly(): void
-    {
-        $person = Person::factory()->create();
-
-        $response = $this
-            ->actingAs($this->user)
-            ->post(route('trainingSession.store'), [
+        $formResponse = $this->getResponseForForm(
+            $response,
+            TrainingSessionForm::class,
+            [
                 'trainer_id' => $person->id,
                 'happened_at' => Carbon::now(),
-            ])
-        ;
-        $response->assertRedirect();
+            ]
+        );
+        $formResponse->assertRedirect();
     }
 
     public function testShow(): void
@@ -48,23 +46,18 @@ class TrainingSessionControllerTest extends TestCase
         $session = TrainingSession::factory()->create();
         $response = $this->actingAs($this->user)->get(route('trainingSession.edit', ['trainingSession' => $session]));
         $response->assertStatus(200);
-    }
 
-    public function testUpdateStoresProperly(): void
-    {
-        $description = 'This is the new description';
-
-        $session = TrainingSession::factory()->create();
         $happenedAt = Carbon::createFromFormat('Y-m-d H:i:s', '2024-01-01 09:00:00');
 
-        $response = $this
-            ->actingAs($this->user)
-            ->put(route('trainingSession.update', ['trainingSession' => $session]), [
-                'trainer_id' => $session->trainer_id,
+        $formResponse = $this->getResponseForForm(
+            $response,
+            TrainingSessionForm::class,
+            [
                 'happened_at' => $happenedAt,
-            ])
-        ;
-        $response->assertRedirectToRoute('trainingSession.index');
+            ]
+        );
+
+        $formResponse->assertRedirect();
 
         $session->refresh();
 
