@@ -49,7 +49,11 @@ class TrainingCategoryControllerTest extends TestCase
 
     public function testEditShows(): void
     {
-        $category = TrainingCategory::factory()->create();
+        $category = TrainingCategory::create([
+            'name' => 'test name',
+            'description' => 'awooga',
+            'advanced' => true
+        ]);
         $response = $this->actingAs($this->user)->get(
             route('trainingCategory.edit', ['trainingCategory' => $category]),
         );

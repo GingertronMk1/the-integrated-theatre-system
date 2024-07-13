@@ -16,7 +16,6 @@ abstract class TestCase extends BaseTestCase
 
     protected function afterRefreshingDatabase()
     {
-        // $this->artisan('db:seed');
         $this->user = User::factory()->create();
     }
 
@@ -35,8 +34,13 @@ abstract class TestCase extends BaseTestCase
         ;
 
         if (!empty($expectedCurrentValues)) {
-            $currentValues = $form->getValues();
-            $this->assertEmpty(array_diff($expectedCurrentValues, $currentValues));
+            $formValues = $form->getValues();
+            foreach($expectedCurrentValues as $key => $value) {
+                $this->assertEquals(
+                    $value,
+                    $formValues[$key],
+                );
+            }
         }
 
         $form->setValues($values);

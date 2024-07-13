@@ -55,7 +55,7 @@ class ShowPerformanceControllerTest extends TestCase
 
     public function testEdit(): void
     {
-        $performance = $this->makePerformance();
+        $performance = Performance::factory()->create();
         $response = $this
             ->actingAs($this->user)
             ->get(
@@ -80,7 +80,6 @@ class ShowPerformanceControllerTest extends TestCase
                 'show_start' => $performance->show_start,
                 'doors' => $performance->doors,
                 'capacity' => $performance->capacity,
-                'venue_id' => $performance->venue?->id,
             ]
         );
 
@@ -89,7 +88,7 @@ class ShowPerformanceControllerTest extends TestCase
 
     public function testDestroy(): void
     {
-        $performance = $this->makePerformance();
+        $performance = Performance::factory()->create();
         $response = $this
             ->actingAs($this->user)
             ->delete(
@@ -105,12 +104,5 @@ class ShowPerformanceControllerTest extends TestCase
         $response->assertRedirect();
         $performance->refresh();
         $this->assertNotNull($performance->deleted_at);
-    }
-
-    private function makePerformance(): Performance
-    {
-        return Performance::factory()->state([
-            'show_id' => $this->show->id,
-        ])->create();
     }
 }
