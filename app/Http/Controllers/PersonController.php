@@ -37,11 +37,9 @@ class PersonController extends Controller
      */
     public function store(StorePersonRequest $request)
     {
-        if (Person::create($request->only((new Person())->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        Person::create($request->only((new Person())->getFillable()));
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -73,11 +71,9 @@ class PersonController extends Controller
      */
     public function update(UpdatePersonRequest $request, Person $person)
     {
-        if ($person->update($request->only($person->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        $person->update($request->only($person->getFillable()));
 
-        return redirect(action([self::class, 'update'], ['person' => $person]));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -85,10 +81,8 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        if ($person->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
+        $person->delete();
 
-        throw new \ErrorException('Unable to delete that person');
+        return redirect(action([self::class, 'index']));
     }
 }

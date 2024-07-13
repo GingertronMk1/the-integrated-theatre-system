@@ -37,17 +37,14 @@ class TrainingSessionController extends Controller
     public function store(StoreTrainingSessionRequest $request)
     {
         $trainingSession = TrainingSession::create($request->only((new TrainingSession())->getFillable()));
-        if ($trainingSession) {
-            $trainees = $request->input('trainees', []);
-            $trainingItems = $request->input('training_items', []);
 
-            $trainingSession->trainees()->sync($trainees);
-            $trainingSession->trainingItems()->sync($trainingItems);
+        $trainees = $request->input('trainees', []);
+        $trainingItems = $request->input('training_items', []);
 
-            return redirect(action([self::class, 'edit'], ['trainingSession' => $trainingSession]));
-        }
+        $trainingSession->trainees()->sync($trainees);
+        $trainingSession->trainingItems()->sync($trainingItems);
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'edit'], ['trainingSession' => $trainingSession]));
     }
 
     /**
@@ -77,17 +74,14 @@ class TrainingSessionController extends Controller
      */
     public function update(UpdateTrainingSessionRequest $request, TrainingSession $trainingSession)
     {
-        if ($trainingSession->update($request->only($trainingSession->getFillable()))) {
-            $trainees = $request->input('trainees', []);
-            $trainingItems = $request->input('training_items', []);
+        $trainingSession->update($request->only($trainingSession->getFillable()));
+        $trainees = $request->input('trainees', []);
+        $trainingItems = $request->input('training_items', []);
 
-            $trainingSession->trainees()->sync($trainees);
-            $trainingSession->trainingItems()->sync($trainingItems);
+        $trainingSession->trainees()->sync($trainees);
+        $trainingSession->trainingItems()->sync($trainingItems);
 
-            return redirect(action([self::class, 'index']));
-        }
-
-        return redirect(action([self::class, 'update'], ['trainingSession' => $trainingSession]));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -95,10 +89,8 @@ class TrainingSessionController extends Controller
      */
     public function destroy(TrainingSession $trainingSession)
     {
-        if ($trainingSession->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
+        $trainingSession->delete();
 
-        throw new \ErrorException('Unable to delete that trainingSession');
+        return redirect(action([self::class, 'index']));
     }
 }

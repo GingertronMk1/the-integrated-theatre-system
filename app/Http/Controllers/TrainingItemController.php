@@ -34,11 +34,9 @@ class TrainingItemController extends Controller
      */
     public function store(StoreTrainingItemRequest $request)
     {
-        if (TrainingItem::create($request->only((new TrainingItem())->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        TrainingItem::create($request->only((new TrainingItem())->getFillable()));
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -67,11 +65,9 @@ class TrainingItemController extends Controller
      */
     public function update(UpdateTrainingItemRequest $request, TrainingItem $trainingItem)
     {
-        if ($trainingItem->update($request->only($trainingItem->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        $trainingItem->update($request->only($trainingItem->getFillable()));
 
-        return redirect(action([self::class, 'update'], ['trainingItem' => $trainingItem]));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -79,10 +75,8 @@ class TrainingItemController extends Controller
      */
     public function destroy(TrainingItem $trainingItem)
     {
-        if ($trainingItem->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
+        $trainingItem->delete();
 
-        throw new \ErrorException('Unable to delete that trainingItem');
+        return redirect(action([self::class, 'index']));
     }
 }

@@ -30,11 +30,9 @@ class VenueController extends Controller
      */
     public function store(Request $request)
     {
-        if (Venue::create($request->only((new Venue())->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        Venue::create($request->only((new Venue())->getFillable()));
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -62,11 +60,9 @@ class VenueController extends Controller
      */
     public function update(Request $request, Venue $venue)
     {
-        if ($venue->update($request->only($venue->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        $venue->update($request->only($venue->getFillable()));
 
-        return redirect(action([self::class, 'update'], ['venue' => $venue]));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -74,10 +70,8 @@ class VenueController extends Controller
      */
     public function destroy(Venue $venue)
     {
-        if ($venue->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
+        $venue->delete();
 
-        throw new \ErrorException('Unable to delete that venue');
+        return redirect(action([self::class, 'index']));
     }
 }
