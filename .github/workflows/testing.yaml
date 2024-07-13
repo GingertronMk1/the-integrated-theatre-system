@@ -39,7 +39,7 @@ jobs:
                 cp .env.example .env
                 composer install
                 npm install
-
+                npm run build
                 touch database/database.sqlite
                 php artisan migrate:fresh
             - name: PHP Style
