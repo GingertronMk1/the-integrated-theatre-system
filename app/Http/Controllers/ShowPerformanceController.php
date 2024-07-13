@@ -36,13 +36,9 @@ class ShowPerformanceController extends Controller
      */
     public function store(StorePerformanceRequest $request, Show $show)
     {
-        if ($show->performances()->create($request->only(
-            (new Performance())->getFillable(),
-        ))) {
-            return redirect(action([self::class, 'index'], ['show' => $show]));
-        }
+        $show->performances()->create($request->only((new Performance())->getFillable()));
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'index'], ['show' => $show]));
     }
 
     /**
@@ -67,11 +63,9 @@ class ShowPerformanceController extends Controller
      */
     public function update(UpdatePerformanceRequest $request, Show $show, Performance $performance)
     {
-        if ($performance->update($request->only($performance->getFillable()))) {
-            return redirect(action([self::class, 'index'], ['show' => $show]));
-        }
+        $performance->update($request->only($performance->getFillable()));
 
-        return redirect(action([self::class, 'edit'], ['show' => $show, 'performance' => $performance]));
+        return redirect(action([self::class, 'index'], ['show' => $show]));
     }
 
     /**
@@ -79,10 +73,8 @@ class ShowPerformanceController extends Controller
      */
     public function destroy(Show $show, Performance $performance)
     {
-        if ($performance->delete()) {
-            return redirect(action([self::class, 'index'], ['show' => $show]));
-        }
+        $performance->delete();
 
-        throw new \ErrorException('Unable to delete that performance');
+        return redirect(action([self::class, 'index'], ['show' => $show]));
     }
 }

@@ -26,23 +26,31 @@ jobs:
               with:
                 path: node_modules
                 key: ${{ hashFiles('package-lock.json') }}
-            - name: Quickly Adjust Xdebug
-              run: >
-                mv _docker/config/app/php.ini _docker/config/app/php.ini.disabled
-                && mv _docker/config/app/php.ini.testing _docker/config/app/php.ini
+            - name: Setup PHP with tools
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: '8.3'
+                extensions: xdebug pcov
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 21
             - name: Install
-              run: ./bin/util/install
-            - name: Start
-              run: ./bin/start
-            - name: Pint
-              run: ./bin/app/composer check
+              run: |
+                cp .env.example .env
+                composer install
+                npm install
+                npm run build
+                touch database/database.sqlite
+                php artisan migrate:fresh
+            - name: PHP Style
+              run: composer check
               if: always()
             - name: Test
-              run: ./bin/app/test
+              run: php artisan test --parallel --coverage --min=90
               if: always()
             - name: Prettier
-              run: ./bin/node/npm run prettier:check
+              run: npm run prettier:check
               if: always()
             - name: Stylelint
-              run: ./bin/node/npm run stylelint
+              run: npm run stylelint
               if: always()

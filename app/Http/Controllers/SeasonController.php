@@ -30,11 +30,9 @@ class SeasonController extends Controller
      */
     public function store(Request $request)
     {
-        if (Season::create($request->only(['name', 'description', 'colour']))) {
-            return redirect(action([self::class, 'index']));
-        }
+        Season::create($request->only(['name', 'description', 'colour']));
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -62,11 +60,9 @@ class SeasonController extends Controller
      */
     public function update(Request $request, Season $season)
     {
-        if ($season->update($request->only(['name', 'description', 'colour']))) {
-            return redirect(action([self::class, 'index']));
-        }
+        $season->update($request->only(['name', 'description', 'colour']));
 
-        return redirect(action([self::class, 'update'], ['season' => $season]));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -74,10 +70,8 @@ class SeasonController extends Controller
      */
     public function destroy(Season $season)
     {
-        if ($season->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
+        $season->delete();
 
-        throw new \ErrorException('Unable to delete that season');
+        return redirect(action([self::class, 'index']));
     }
 }

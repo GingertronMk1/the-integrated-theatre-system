@@ -31,11 +31,8 @@ class {{ class }} extends Controller
      */
     public function store({{ storeRequest }} $request)
     {
-        if ({{ model }}::create($request->only((new {{ model }})->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
-
-        return redirect(action([self::class, 'create']));
+        {{ model }}::create($request->only((new {{ model }})->getFillable()));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -63,11 +60,8 @@ class {{ class }} extends Controller
      */
     public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
     {
-        if (${{ modelVariable }}->update($request->only(${{ modelVariable }}->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
-
-        return redirect(action([self::class, 'update'], ['{{ modelVariable }}' => ${{ modelVariable }}]));
+        ${{ modelVariable }}->update($request->only(${{ modelVariable }}->getFillable()));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -75,9 +69,7 @@ class {{ class }} extends Controller
      */
     public function destroy({{ model }} ${{ modelVariable }})
     {
-        if (${{ modelVariable }}->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
-        throw new \ErrorException('Unable to delete that {{ modelVariable }}');
+        ${{ modelVariable }}->delete()
+        return redirect(action([self::class, 'index']));
     }
 }

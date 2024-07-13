@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Season;
+use App\View\Components\Form\SeasonForm;
 use Tests\TestCase;
 
 class SeasonControllerTest extends TestCase
@@ -17,27 +18,17 @@ class SeasonControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)->get(route('season.create'));
         $response->assertOk();
-    }
+        $formResponse = $this->getResponseForForm(
+            $response,
+            SeasonForm::class,
+            [
+                'name' => 'Test Season',
+                'colour' => '#B4D455',
+                'description' => fake()->paragraphs(3, true),
+            ]
+        );
 
-    public function testStore(): void
-    {
-        $newName = 'Test Season';
-        $newColour = '#BAD455';
-        $newDescription = 'Test description woooo';
-        $response = $this
-            ->actingAs($this->user)
-            ->post(
-                route('season.store'),
-                [
-                    'name' => $newName,
-                    'colour' => $newColour,
-                    'description' => $newDescription,
-                ],
-            )
-        ;
-        $response->assertRedirect();
-        $season = Season::where('name', $newName)->where('colour', $newColour)->where('description', $newDescription)->first();
-        $this->assertNotNull($season);
+        $formResponse->assertRedirect();
     }
 
     public function testShow(): void
@@ -49,26 +40,28 @@ class SeasonControllerTest extends TestCase
 
     public function testEdit(): void
     {
-        $season = Season::factory()->create();
-        $response = $this->actingAs($this->user)->get(route('season.edit', ['season' => $season]));
+        $initialSeasonAttrs = [
+            'name' => 'Test Season',
+            'colour' => '#B4D455',
+            'description' => fake()->paragraphs(3, true),
+        ];
+        $initialSeason = Season::create($initialSeasonAttrs);
+        $newName = 'Edited Test Season';
+        $response = $this->actingAs($this->user)->get(route('season.edit', ['season' => $initialSeason]));
         $response->assertOk();
-    }
 
-    public function testUpdate(): void
-    {
-        $newColour = '#BAD455';
-        $season = Season::factory()->create();
-        $response = $this
-            ->actingAs($this->user)
-            ->put(
-                route('season.update', ['season' => $season]),
-                [
-                    'colour' => $newColour,
-                ],
-            )
-        ;
-        $season->refresh();
-        $this->assertEquals($newColour, $season->colour);
+        $formResponse = $this->getResponseForForm(
+            $response,
+            SeasonForm::class,
+            [
+                'name' => $newName,
+            ],
+            $initialSeasonAttrs
+        );
+        $formResponse->assertRedirect();
+
+        $initialSeason->refresh();
+        $this->assertEquals($newName, $initialSeason->name);
     }
 
     public function testDestroy(): void

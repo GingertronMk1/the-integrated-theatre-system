@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Show;
 use App\Models\Venue;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,11 +22,28 @@ class PerformanceFactory extends Factory
         $showStart = new CarbonImmutable(fake()->dateTimeThisCentury());
         $doors = $showStart->subMinutes(30);
 
+        $venueId = null;
+
+        if (fake()->boolean()) {
+            try {
+                $venueId = Venue::all()->random()->first()?->id;
+            } catch (\Throwable) {
+                $venueId = Venue::factory()->create()->id;
+            }
+        }
+
+        try {
+            $showId = Show::all()->random()->first()?->id;
+        } catch (\Throwable) {
+            $showId = Show::factory()->create()->id;
+        }
+
         return [
-            'venue_id' => fake()->boolean() ? Venue::all()->random()->first()->id : null,
+            'venue_id' => $venueId,
             'show_start' => $showStart,
             'doors' => $doors,
             'capacity' => fake()->numberBetween(5, 1000),
+            'show_id' => $showId,
         ];
     }
 }

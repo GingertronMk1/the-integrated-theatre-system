@@ -31,11 +31,9 @@ class TrainingCategoryController extends Controller
      */
     public function store(StoreTrainingCategoryRequest $request)
     {
-        if (TrainingCategory::create($request->only((new TrainingCategory())->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        TrainingCategory::create($request->only((new TrainingCategory())->getFillable()));
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -63,11 +61,9 @@ class TrainingCategoryController extends Controller
      */
     public function update(UpdateTrainingCategoryRequest $request, TrainingCategory $trainingCategory)
     {
-        if ($trainingCategory->update($request->only($trainingCategory->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        $trainingCategory->update($request->only($trainingCategory->getFillable()));
 
-        return redirect(action([self::class, 'update'], ['trainingCategory' => $trainingCategory]));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -75,10 +71,8 @@ class TrainingCategoryController extends Controller
      */
     public function destroy(TrainingCategory $trainingCategory)
     {
-        if ($trainingCategory->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
+        $trainingCategory->delete();
 
-        throw new \ErrorException('Unable to delete that trainingCategory');
+        return redirect(action([self::class, 'index']));
     }
 }

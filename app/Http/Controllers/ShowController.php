@@ -36,11 +36,9 @@ class ShowController extends Controller
      */
     public function store(StoreShowRequest $request)
     {
-        if (Show::create($request->only((new Show())->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        Show::create($request->only((new Show())->getFillable()));
 
-        return redirect(action([self::class, 'create']));
+        return redirect(action([self::class, 'index']));
     }
 
     /**
@@ -70,9 +68,9 @@ class ShowController extends Controller
      */
     public function update(UpdateShowRequest $request, Show $show)
     {
-        if ($show->update($request->only($show->getFillable()))) {
-            return redirect(action([self::class, 'index']));
-        }
+        $show->update($request->only($show->getFillable()));
+
+        return redirect(action([self::class, 'index']));
 
         return redirect(action([self::class, 'update'], ['show' => $show]));
     }
@@ -82,10 +80,8 @@ class ShowController extends Controller
      */
     public function destroy(Show $show)
     {
-        if ($show->delete()) {
-            return redirect(action([self::class, 'index']));
-        }
+        $show->delete();
 
-        throw new \ErrorException('Unable to delete that show');
+        return redirect(action([self::class, 'index']));
     }
 }

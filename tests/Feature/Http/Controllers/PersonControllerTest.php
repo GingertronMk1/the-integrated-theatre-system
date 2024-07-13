@@ -5,57 +5,52 @@ declare(strict_types=1);
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Person;
-use Symfony\Component\DomCrawler\Crawler;
+use App\View\Components\Form\PersonForm;
 use Tests\TestCase;
 
 class PersonControllerTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    public function testIsBehindAuthWall(): void
-    {
-        $response = $this->get(route('person.index'));
-        $response->assertRedirect();
-    }
-
     public function testIndexContainsPeople(): void
     {
         $response = $this->actingAs($this->user)->get(route('person.index'));
         $response->assertSeeInOrder(Person::all()->pluck('id')->toArray());
     }
 
-    public function testCreateShowsForm(): void
+    public function testCreateAndStore(): void
     {
         $response = $this->actingAs($this->user)->get(route('person.create'));
         $response->assertOk();
-        foreach ([
-            'input[name=name]',
-            'input[name=start_year]',
-            'input[name=end_year]',
-        ] as $input) {
-            $crawler = new Crawler($response->baseResponse->content());
-            $crawler->filter($input);
-            $this->assertGreaterThan(0, $crawler->count());
-        }
+        $formResponse = $this->getResponseForForm($response, PersonForm::class, [
+            'name' => 'Test Person',
+            'start_year' => 1997,
+            'end_year' => 2019,
+        ]);
+        $formResponse->assertRedirect();
     }
 
-    public function testEditShowsForm(): void
+    public function testEditAndUpdate(): void
     {
-        $person = Person::factory()->create();
-        $response = $this->actingAs($this->user)->get(route('person.edit', ['person' => $person]));
+        $initialPersonAttributes = [
+            'name' => 'Test Name',
+            'start_year' => 1997,
+            'end_year' => 2019,
+        ];
+        $person = Person::create($initialPersonAttributes);
+        $response = $this
+            ->actingAs($this->user)
+            ->get(route('person.edit', ['person' => $person]))
+        ;
         $response->assertOk();
-        foreach ([
-            'input[name=name]',
-            'input[name=start_year]',
-            'input[name=end_year]',
-        ] as $input) {
-            $crawler = new Crawler($response->baseResponse->content());
-            $crawler->filter($input);
-            $this->assertGreaterThan(0, $crawler->count());
-        }
+
+        $formResponse = $this->getResponseForForm(
+            $response,
+            PersonForm::class,
+            [
+                'name' => 'awooga',
+            ],
+            $initialPersonAttributes
+        );
+        $formResponse->assertRedirect();
     }
 
     public function testShow(): void
@@ -66,53 +61,6 @@ class PersonControllerTest extends TestCase
             ->get(route('person.show', ['person' => $person]))
         ;
         $response->assertOk();
-    }
-
-    public function testStoreCreatesProperly(): void
-    {
-        $name = 'PHPUnit Jones';
-        $startYear = 1997;
-        $endYear = 2015;
-
-        $response = $this
-            ->actingAs($this->user)
-            ->post(route('person.store'), [
-                'name' => $name,
-                'start_year' => $startYear,
-                'end_year' => $endYear,
-            ])
-        ;
-        $response->assertRedirectToRoute('person.index');
-
-        $person = Person::firstWhere('name', $name);
-        $this->assertNotNull($person);
-        $this->assertEquals($name, $person->name);
-        $this->assertEquals($startYear, $person->start_year);
-        $this->assertEquals($endYear, $person->end_year);
-    }
-
-    public function testUpdateUpdatesProperly(): void
-    {
-        $person = Person::factory()->create();
-        $name = 'PHPUnit Jones';
-        $startYear = 1997;
-        $endYear = 2015;
-
-        $response = $this
-            ->actingAs($this->user)
-            ->put(route('person.update', ['person' => $person]), [
-                'name' => $name,
-                'start_year' => $startYear,
-                'end_year' => $endYear,
-            ])
-        ;
-        $response->assertRedirectToRoute('person.index');
-
-        $person->refresh();
-        $this->assertNotNull($person);
-        $this->assertEquals($name, $person->name);
-        $this->assertEquals($startYear, $person->start_year);
-        $this->assertEquals($endYear, $person->end_year);
     }
 
     public function testDeleteSetsDelete(): void

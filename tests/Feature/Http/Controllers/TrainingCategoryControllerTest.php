@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\TrainingCategory;
+use App\View\Components\Form\TrainingCategoryForm;
 use Tests\TestCase;
 
 class TrainingCategoryControllerTest extends TestCase
@@ -24,45 +25,17 @@ class TrainingCategoryControllerTest extends TestCase
             route('trainingCategory.create'),
         );
         $response->assertStatus(200);
-    }
 
-    public function testCreateStoresProperly(): void
-    {
-        $name = 'test category 1';
-
-        $category = TrainingCategory::factory()->create();
-        $response = $this->actingAs($this->user)->post(
-            route('trainingCategory.store'),
+        $formResponse = $this->getResponseForForm(
+            $response,
+            TrainingCategoryForm::class,
             [
-                'name' => $name,
-                'advanced' => 1,
-            ],
+                'name' => 'test',
+                'advanced' => true,
+            ]
         );
-        $response->assertRedirectToRoute('trainingCategory.index');
 
-        $category = TrainingCategory::firstWhere('name', $name);
-        $this->assertEquals(true, $category->advanced);
-    }
-
-    public function testUpdateStoresProperly(): void
-    {
-        $description = 'This is the new description';
-
-        $category = TrainingCategory::factory()->create();
-
-        $response = $this->actingAs($this->user)->put(
-            route('trainingCategory.update', ['trainingCategory' => $category]),
-            [
-                'name' => $category->name,
-                'description' => $description,
-                'advanced' => $category->advanced,
-            ],
-        );
-        $response->assertRedirectToRoute('trainingCategory.index');
-
-        $category->refresh();
-
-        $this->assertEquals($description, $category->description);
+        $formResponse->assertRedirect();
     }
 
     public function testShowShows(): void
@@ -76,19 +49,36 @@ class TrainingCategoryControllerTest extends TestCase
 
     public function testEditShows(): void
     {
-        $category = TrainingCategory::factory()->create();
+        $category = TrainingCategory::create([
+            'name' => 'test name',
+            'description' => 'awooga',
+            'advanced' => true,
+        ]);
         $response = $this->actingAs($this->user)->get(
             route('trainingCategory.edit', ['trainingCategory' => $category]),
         );
         $response->assertOk();
-    }
 
-    public function testCreateShows(): void
-    {
-        $response = $this->actingAs($this->user)->get(
-            route('trainingCategory.create'),
+        $description = 'This is the new description';
+
+        $formResponse = $this->getResponseForForm(
+            $response,
+            TrainingCategoryForm::class,
+            [
+                'description' => $description,
+            ],
+            [
+                'name' => $category->name,
+                'description' => $category->description,
+                'advanced' => $category->advanced,
+            ],
         );
-        $response->assertOk();
+
+        $formResponse->assertRedirectToRoute('trainingCategory.index');
+
+        $category->refresh();
+
+        $this->assertEquals($description, $category->description);
     }
 
     public function testDeleteSetsDelete(): void
