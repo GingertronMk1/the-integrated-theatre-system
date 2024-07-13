@@ -27,13 +27,12 @@ class VenueControllerTest extends TestCase
         $response = $this->actingAs($this->user)->get(route('venue.create'));
         $response->assertOk();
 
-        $form = $this->getResponseForForm($response, VenueForm::class, [
+        $formResponse = $this->getResponseForForm($response, VenueForm::class, [
             'name' => 'Test Venu',
             'location' => 'Test place',
             'location_additional' => fake()->paragraphs(3, true),
             'capacity' => 500,
         ]);
-        $formResponse = $this->post($form->getUri(), $form->getValues());
         $formResponse->assertRedirect();
     }
 
