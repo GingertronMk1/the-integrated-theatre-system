@@ -34,7 +34,7 @@ jobs:
               run: ./bin/util/install
             - name: Start
               run: ./bin/start
-            - name: Pint
+            - name: PHP Style
               run: ./bin/app/composer check
               if: always()
             - name: Test

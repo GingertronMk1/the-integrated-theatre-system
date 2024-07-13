@@ -18,10 +18,9 @@ class TrainingItemFactory extends Factory
     public function definition(): array
     {
         try {
-
-        $categoryId = TrainingCategory::all()->random()->first()?->id;
+            $categoryId = TrainingCategory::all()->random()->first()?->id;
         } catch (\Throwable) {
-        $categoryId = TrainingCategory::factory()->create()->id;
+            $categoryId = TrainingCategory::factory()->create()->id;
         }
 
         return [

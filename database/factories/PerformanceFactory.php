@@ -25,11 +25,9 @@ class PerformanceFactory extends Factory
 
         if (fake()->boolean()) {
             try {
-            $venueId = Venue::all()->random()->first()?->id;
-
+                $venueId = Venue::all()->random()->first()?->id;
             } catch (\Throwable) {
-
-            $venueId = Venue::factory()->create()->id;
+                $venueId = Venue::factory()->create()->id;
             }
         }
 

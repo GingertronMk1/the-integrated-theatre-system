@@ -20,7 +20,7 @@ class TrainingSessionFactory extends Factory
         try {
             $personId = Person::all()->random()->first()->id;
         } catch (\Throwable) {
-        $personId = Person::factory()->create()->id;
+            $personId = Person::factory()->create()->id;
         }
 
         return [

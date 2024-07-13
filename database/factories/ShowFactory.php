@@ -23,6 +23,7 @@ class ShowFactory extends Factory
         } catch (\Throwable) {
             $seasonId = Season::factory()->create()->id;
         }
+
         try {
             $venueId = Venue::all()->random()->first()?->id;
         } catch (\Throwable) {
