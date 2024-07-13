@@ -35,7 +35,7 @@ abstract class TestCase extends BaseTestCase
 
         if (!empty($expectedCurrentValues)) {
             $formValues = $form->getValues();
-            foreach($expectedCurrentValues as $key => $value) {
+            foreach ($expectedCurrentValues as $key => $value) {
                 $this->assertEquals(
                     $value,
                     $formValues[$key],

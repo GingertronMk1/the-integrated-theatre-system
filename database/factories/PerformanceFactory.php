@@ -43,7 +43,7 @@ class PerformanceFactory extends Factory
             'show_start' => $showStart,
             'doors' => $doors,
             'capacity' => fake()->numberBetween(5, 1000),
-            'show_id' => $showId
+            'show_id' => $showId,
         ];
     }
 }
