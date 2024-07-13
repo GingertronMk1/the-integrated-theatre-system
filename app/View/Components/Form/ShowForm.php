@@ -56,7 +56,7 @@ class ShowForm extends Component
                     type: 'number',
                 ),
                 new FormInput(
-                    name: 'season',
+                    name: 'season_id',
                     currentValue: $show->season?->id,
                     type: 'select',
                     options: $this->seasons,
@@ -64,7 +64,7 @@ class ShowForm extends Component
                     optionLabel: fn (Season $season) => $season->name,
                 ),
                 new FormInput(
-                    name: 'venue',
+                    name: 'venue_id',
                     currentValue: $show->venue?->id,
                     type: 'select',
                     options: $this->venues,

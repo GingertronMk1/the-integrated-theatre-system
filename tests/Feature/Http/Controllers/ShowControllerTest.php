@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Season;
 use App\Models\Show;
 use App\Models\Venue;
+use App\View\Components\Form\ShowForm;
 use Tests\TestCase;
 
 class ShowControllerTest extends TestCase
@@ -25,24 +26,31 @@ class ShowControllerTest extends TestCase
     public function testEdit(): void
     {
         $show = Show::factory()->create();
-        $response = $this->actingAs($this->user)->get(route('show.edit', ['show' => $show]));
-        $response->assertStatus(200);
-    }
-
-    public function testCreateStoresProperly(): void
-    {
         $venue = Venue::factory()->create();
         $season = Season::factory()->create();
-        $response = $this
-            ->actingAs($this->user)
-            ->post(route('show.store'), [
-                'title' => 'test 1',
+        $response = $this->actingAs($this->user)->get(route('show.edit', ['show' => $show]));
+        $response->assertStatus(200);
+
+        $showTitle = 'test 1';
+
+        $formResponse = $this->getResponseForForm(
+            $response,
+            ShowForm::class,
+            [
+                'title' => $showTitle,
                 'season_id' => (string) $season->id,
                 'year' => 1997,
                 'venue_id' => (string) $venue->id,
-            ])
-        ;
-        $response->assertRedirectToRoute('show.index');
+            ]
+        );
+
+        $formResponse->assertRedirect();
+
+        $season->refresh();
+        $venue->refresh();
+
+        $this->assertContains($showTitle, $season->shows->pluck('title'));
+        $this->assertContains($showTitle, $venue->shows->pluck('title'));
     }
 
     public function testShow(): void
@@ -57,21 +65,30 @@ class ShowControllerTest extends TestCase
 
     public function testUpdateStoresProperly(): void
     {
-        $description = 'This is the new description';
+        $initialAttrs = [
+            'title' => 'wahoo',
+            'description' => 'awooga'
+        ];
+        $show = Show::factory()->state(fn () => $initialAttrs)->create();
 
-        $show = Show::factory()->create();
+        $newDescription = 'This is the new description';
 
-        $response = $this
-            ->actingAs($this->user)
-            ->put(route('show.update', ['show' => $show]), [
-                'description' => $description,
-            ])
-        ;
-        $response->assertRedirectToRoute('show.index');
+        $response = $this->actingAs($this->user)->get(route('show.edit', ['show' => $show]));
+
+        $formResponse = $this->getResponseForForm(
+            $response,
+            ShowForm::class,
+            [
+                'description' => $newDescription
+            ],
+            $initialAttrs
+        );
+
+        $formResponse->assertRedirect();
 
         $show->refresh();
 
-        $this->assertEquals($description, $show->description);
+        $this->assertEquals($newDescription, $show->description);
     }
 
     public function testDeleteSetsDelete(): void
