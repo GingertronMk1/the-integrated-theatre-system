@@ -35,7 +35,7 @@ jobs:
               with:
                 node-version: 21
             - name: Install
-              run: >
+              run: |
                 composer install
                 npm install
                 touch database/database.sqlite
