@@ -34,16 +34,4 @@ class GenericForm extends Component
             ->with('calledClass', $this->calledClass)
         ;
     }
-
-    public static function createAndRender(
-        array $inputs,
-        string $action,
-        ?Model $model,
-        ?bool $update = null,
-        string $calledClass = '',
-    ): string {
-        $self = new self(inputs: $inputs, action: $action, model: $model, update: $update, calledClass: $calledClass);
-
-        return $self->render();
-    }
 }
