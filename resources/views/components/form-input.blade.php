@@ -1,4 +1,7 @@
 <div class="mb-3">
+    @error($name)
+        <h4 class="text-red">{{ $message }}</h4>
+    @enderror
     @if ($type !== 'checkbox')
         <label for="{{ $id }}" class="form-label">
             {{ $label }}

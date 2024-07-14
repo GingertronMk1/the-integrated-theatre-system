@@ -1,10 +1,11 @@
 <nav x-data="{ open: false }" class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
         <a href="{{ route('dashboard') }}" class="navbar-brand">
-            <i class="fa-solid fa-masks-theater" id="app-logo"></i>
+            <i class="text-white fa-solid fa-masks-theater" id="app-logo"></i>
         </a>
         <!-- Navigation Links -->
         {{-- $navLinks is passed in from the AppServiceProvider --}}
+        @auth
         <ul class="navbar-nav text-white">
             @foreach ($navLinks as $navRoute => $navText)
                 @if (is_array($navText))
@@ -32,6 +33,7 @@
                 @endif
             @endforeach
         </ul>
+        @endauth
 
         <!-- Settings Dropdown -->
         <div class="ms-auto">
@@ -56,8 +58,8 @@
                 </div>
             @endauth
             @guest
-                <a href="{{ route('register') }}">Register</a>
-                <a href="{{ route('login') }}">Log In</a>
+                <a class="text-white" href="{{ route('register') }}">Register</a>
+                <a class="text-white" href="{{ route('login') }}">Log In</a>
             @endguest
         </div>
     </div>
