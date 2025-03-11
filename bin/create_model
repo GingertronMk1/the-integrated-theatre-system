@@ -2,7 +2,7 @@
 
 ./vendor/bin/sail artisan make:filament-resource "$1" \
     --soft-deletes \
-    --view \
     --model \
     --migration \
-    --factory
+    --factory \
+    -vv
