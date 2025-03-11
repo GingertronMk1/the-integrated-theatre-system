@@ -2,23 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PlaywrightResource\Pages;
-use App\Filament\Resources\PlaywrightResource\RelationManagers;
-use App\Models\Playwright;
+use App\Filament\Resources\SeasonResource\Pages;
+use App\Filament\Resources\SeasonResource\RelationManagers;
+use App\Models\Season;
 use Filament\Forms;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Colors\Color;
 use Filament\Tables;
+use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PlaywrightResource extends Resource
+class SeasonResource extends Resource
 {
-    protected static ?string $model = Playwright::class;
+    protected static ?string $model = Season::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -27,7 +30,8 @@ class PlaywrightResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name'),
-                Textarea::make('bio'),
+                Textarea::make('description'),
+                ColorPicker::make('colour'),
             ]);
     }
 
@@ -38,14 +42,15 @@ class PlaywrightResource extends Resource
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('bio')
+                TextColumn::make('description')
                     ->wrap(),
+                ColorColumn::make('colour')
+
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -67,10 +72,9 @@ class PlaywrightResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPlaywrights::route('/'),
-            'create' => Pages\CreatePlaywright::route('/create'),
-            'view' => Pages\ViewPlaywright::route('/{record}'),
-            'edit' => Pages\EditPlaywright::route('/{record}/edit'),
+            'index' => Pages\ListSeasons::route('/'),
+            'create' => Pages\CreateSeason::route('/create'),
+            'edit' => Pages\EditSeason::route('/{record}/edit'),
         ];
     }
 
