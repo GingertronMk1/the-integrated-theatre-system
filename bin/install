@@ -5,15 +5,15 @@ cp -v ./.env.example ./.env
 
 . ./.env
 
+echo "Creating DB File at $DB_DATABASE"
+touch "$DB_DATABASE"
+
 echo "Bootstrap some PHP so we can set Sail"
 docker run --rm \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):/var/www/html" \
   -w /var/www/html laravelsail/php84-composer:latest \
   composer install --ignore-platform-reqs
-
-echo "Creating DB File"
-touch "$DB_DATABASE"
 
 echo "Hoist Sail!"
 ./vendor/bin/sail up -d
