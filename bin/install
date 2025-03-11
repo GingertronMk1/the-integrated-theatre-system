@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 echo "Copy env file"
-cp -v .env.example .env
+cp -v ./.env.example ./.env
 
-. .env
+. ./.env
 
 echo "Bootstrap some PHP so we can set Sail"
 docker run --rm \
