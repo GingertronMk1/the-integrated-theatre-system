@@ -3,6 +3,8 @@
 echo "Copy env file"
 cp -v .env.example .env
 
+. .env
+
 echo "Bootstrap some PHP so we can set Sail"
 docker run --rm \
   -u "$(id -u):$(id -g)" \
@@ -12,6 +14,9 @@ docker run --rm \
 
 echo "Hoist Sail!"
 ./vendor/bin/sail up -d
+
+echo "Creating DB File"
+touch "$DB_DATABASE"
 
 echo "Composer Install"
 ./vendor/bin/sail composer install
