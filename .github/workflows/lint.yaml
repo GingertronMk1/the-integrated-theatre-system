@@ -1,0 +1,18 @@
+name: Fix Code Style
+
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.4]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install
+        run: ./bin/install
+      - name: Pint
+        run: ./vendor/bin/sail composer pint
