@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $adminEmail = 'admin@tits.test';
         if (app()->environment('local')) {
-            if (!User::query()->where('email', '=', $adminEmail)->exists()) {
+            if (! User::query()->where('email', '=', $adminEmail)->exists()) {
                 User::create([
                     'email' => $adminEmail,
                     'password' => bcrypt(12345),
