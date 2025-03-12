@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\SeasonResource\RelationManagers\ShowsRelationManager;
 use App\Filament\Resources\ShowResource\Pages;
 use App\Models\Show;
 use Filament\Forms\Components\ColorPicker;
@@ -26,7 +27,7 @@ class ShowResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name'),
+                TextInput::make('title'),
                 Textarea::make('blurb'),
                 TextInput::make('year')
                     ->numeric()
@@ -52,10 +53,16 @@ class ShowResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('year')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('season.name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('playwright.name')
                     ->searchable()
                     ->sortable(),
 
@@ -78,7 +85,7 @@ class ShowResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ShowsRelationManager::class,
         ];
     }
 

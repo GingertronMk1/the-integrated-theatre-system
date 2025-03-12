@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Playwright;
+use App\Models\Season;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class ShowFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->words(3, true),
+            'blurb' => fake()->paragraphs(3, true),
+            'year' => fake()->numberBetween(1960, now()->year),
+            'playwright_id' => Playwright::query()->inRandomOrder()->first(),
+            'season_id' => Season::query()->inRandomOrder()->first(),
         ];
     }
 }

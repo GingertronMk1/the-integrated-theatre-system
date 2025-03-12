@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PlaywrightResource\Pages;
+use App\Filament\Resources\PlaywrightResource\RelationManagers\ShowsRelationManager;
 use App\Models\Playwright;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -58,7 +59,7 @@ class PlaywrightResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ShowsRelationManager::class,
         ];
     }
 
