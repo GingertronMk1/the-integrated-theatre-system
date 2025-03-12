@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SeasonResource\Pages;
+use App\Filament\Resources\SeasonResource\RelationManagers\ShowsRelationManager;
 use App\Models\Season;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
@@ -62,7 +63,7 @@ class SeasonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ShowsRelationManager::class
         ];
     }
 

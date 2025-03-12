@@ -85,7 +85,6 @@ class ShowResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ShowsRelationManager::class,
         ];
     }
 
