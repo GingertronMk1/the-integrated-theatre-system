@@ -17,8 +17,8 @@ class PlaywrightFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name,
-            'bio' => fake()->text,
+            'name' => fake()->name(),
+            'bio' => fake()->text(),
         ];
     }
 }

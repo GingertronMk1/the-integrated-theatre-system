@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Season>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Show>
  */
-class SeasonFactory extends Factory
+class ShowFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class SeasonFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word(),
-            'description' => fake()->text(),
-            'colour' => fake()->hexColor(),
+            //
         ];
     }
 }

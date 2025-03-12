@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PlaywrightResource\Pages;
-use App\Filament\Resources\PlaywrightResource\RelationManagers;
-use App\Models\Playwright;
+use App\Filament\Resources\ShowResource\Pages;
+use App\Filament\Resources\ShowResource\RelationManagers;
+use App\Models\Show;
 use Filament\Forms;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -16,18 +18,38 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PlaywrightResource extends Resource
+class ShowResource extends Resource
 {
-    protected static ?string $model = Playwright::class;
+    protected static ?string $model = Show::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
-                Textarea::make('bio'),
+                TextInput::make('name'),
+                Textarea::make('blurb'),
+                TextInput::make('year')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(1)
+                ,
+                Select::make('season_id')
+                    ->relationship('season', 'name')
+                    ->createOptionForm([
+                        TextInput::make('name')->required(),
+                        Textarea::make('description'),
+                        ColorPicker::make('colour')->required(),
+                    ])
+                ,
+                Select::make('playwright_id')
+                    ->relationship('playwright', 'name')
+                    ->createOptionForm([
+                        TextInput::make('name')->required(),
+                        Textarea::make('bio'),
+                    ])
+                ,
             ]);
     }
 
@@ -38,14 +60,15 @@ class PlaywrightResource extends Resource
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('bio')
-                    ->wrap(),
+                TextColumn::make('year')
+                    ->searchable()
+                    ->sortable(),
+
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -67,10 +90,9 @@ class PlaywrightResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPlaywrights::route('/'),
-            'create' => Pages\CreatePlaywright::route('/create'),
-            'view' => Pages\ViewPlaywright::route('/{record}'),
-            'edit' => Pages\EditPlaywright::route('/{record}/edit'),
+            'index' => Pages\ListShows::route('/'),
+            'create' => Pages\CreateShow::route('/create'),
+            'edit' => Pages\EditShow::route('/{record}/edit'),
         ];
     }
 

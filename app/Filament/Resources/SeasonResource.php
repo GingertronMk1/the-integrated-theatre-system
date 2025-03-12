@@ -23,15 +23,15 @@ class SeasonResource extends Resource
 {
     protected static ?string $model = Season::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-play-circle';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name'),
+                TextInput::make('name')->required(),
                 Textarea::make('description'),
-                ColorPicker::make('colour'),
+                ColorPicker::make('colour')->required(),
             ]);
     }
 

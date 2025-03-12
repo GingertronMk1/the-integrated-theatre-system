@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+./vendor/bin/sail up -d \
+  && ./vendor/bin/sail composer sail-run

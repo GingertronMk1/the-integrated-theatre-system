@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Playwright;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\PlaywrightFactory;
+use Database\Factories\SeasonFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,15 +17,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $adminEmail = 'admin@tits.test';
-        if (app()->environment('local')) {
-            if (! User::query()->where('email', '=', $adminEmail)->exists()) {
-                User::create([
-                    'email' => $adminEmail,
-                    'password' => bcrypt(12345),
-                    'name' => 'Admin',
-                ]);
-            }
+        if (!app()->environment('local')) {
+            return;
         }
-        // User::factory(10)->create();
+        if (! User::query()->where('email', '=', $adminEmail)->exists()) {
+            User::create([
+                'email' => $adminEmail,
+                'password' => bcrypt(12345),
+                'name' => 'Admin',
+            ]);
+        }
+
+        (new PlaywrightFactory)->createMany(10);
+        (new SeasonFactory)->createMany(10);
     }
 }
