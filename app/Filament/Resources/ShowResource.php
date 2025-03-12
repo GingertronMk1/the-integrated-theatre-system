@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SeasonResource\RelationManagers\ShowsRelationManager;
 use App\Filament\Resources\ShowResource\Pages;
 use App\Models\Show;
 use Filament\Forms\Components\ColorPicker;

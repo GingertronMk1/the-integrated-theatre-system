@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         (new PlaywrightFactory)->createMany(10);
         (new SeasonFactory)->createMany(10);
 
-        $showFactory = new ShowFactory();
+        $showFactory = new ShowFactory;
         foreach (Playwright::all() as $playwright) {
             foreach (Season::all() as $season) {
                 $showFactory->create([

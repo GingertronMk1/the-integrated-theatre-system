@@ -63,7 +63,7 @@ class SeasonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ShowsRelationManager::class
+            ShowsRelationManager::class,
         ];
     }
 
