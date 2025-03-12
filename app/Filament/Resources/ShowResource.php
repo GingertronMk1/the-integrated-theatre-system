@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ShowResource\Pages;
-use App\Filament\Resources\ShowResource\RelationManagers;
 use App\Models\Show;
-use Filament\Forms;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -22,7 +20,7 @@ class ShowResource extends Resource
 {
     protected static ?string $model = Show::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-film';
 
     public static function form(Form $form): Form
     {
@@ -33,23 +31,20 @@ class ShowResource extends Resource
                 TextInput::make('year')
                     ->numeric()
                     ->minValue(0)
-                    ->step(1)
-                ,
+                    ->step(1),
                 Select::make('season_id')
                     ->relationship('season', 'name')
                     ->createOptionForm([
                         TextInput::make('name')->required(),
                         Textarea::make('description'),
                         ColorPicker::make('colour')->required(),
-                    ])
-                ,
+                    ]),
                 Select::make('playwright_id')
                     ->relationship('playwright', 'name')
                     ->createOptionForm([
                         TextInput::make('name')->required(),
                         Textarea::make('bio'),
-                    ])
-                ,
+                    ]),
             ]);
     }
 

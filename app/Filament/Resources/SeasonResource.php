@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SeasonResource\Pages;
-use App\Filament\Resources\SeasonResource\RelationManagers;
 use App\Models\Season;
-use Filament\Forms;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -44,7 +41,7 @@ class SeasonResource extends Resource
                     ->sortable(),
                 TextColumn::make('description')
                     ->wrap(),
-                ColorColumn::make('colour')
+                ColorColumn::make('colour'),
 
             ])
             ->filters([

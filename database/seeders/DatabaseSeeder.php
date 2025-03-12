@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Playwright;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Factories\PlaywrightFactory;
@@ -17,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $adminEmail = 'admin@tits.test';
-        if (!app()->environment('local')) {
+        if (! app()->environment('local')) {
             return;
         }
         if (! User::query()->where('email', '=', $adminEmail)->exists()) {
