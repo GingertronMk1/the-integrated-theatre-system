@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+./vendor/bin/sail artisan make:filament-resource "$1" \
+    --soft-deletes \
+    --model \
+    --migration \
+    --factory \
+    --view \
+    -vv
