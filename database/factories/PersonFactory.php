@@ -19,6 +19,7 @@ class PersonFactory extends Factory
     {
         $startYear = (int) fake()->year();
         $endYear = $startYear + fake()->randomDigit();
+
         return [
             'name' => fake()->name(),
             'user_id' => fake()->boolean() ? User::factory()->create() : null,
