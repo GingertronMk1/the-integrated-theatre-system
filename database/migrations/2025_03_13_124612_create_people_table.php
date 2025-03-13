@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->nullable();
             $table->integer('start_year')->unsigned()->nullable()->index();
             $table->integer('end_year')->unsigned()->nullable()->index();
+            $table->string('legacy_link')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
         });

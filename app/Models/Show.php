@@ -12,6 +12,15 @@ class Show extends Model
     //
     use SoftDeletes;
 
+    protected $fillable = [
+        'title',
+        'blurb',
+        'year',
+        'season_id',
+        'playwright_id',
+        'legacy_link',
+    ];
+
     public function playwright(): BelongsTo
     {
         return $this->belongsTo(Playwright::class);

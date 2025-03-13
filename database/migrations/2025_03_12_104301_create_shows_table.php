@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('year')->unsigned()->nullable()->index();
             $table->foreignIdFor(\App\Models\Playwright::class);
             $table->foreignIdFor(\App\Models\Season::class);
+            $table->string('legacy_link')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
         });
