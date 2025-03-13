@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonResource\Pages;
+use App\Filament\Resources\PersonResource\RelationManagers\CastShowsRelationManager;
+use App\Filament\Resources\PersonResource\RelationManagers\CrewShowsRelationManager;
 use App\Models\Person;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -67,7 +69,8 @@ class PersonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CastShowsRelationManager::class,
+            CrewShowsRelationManager::class,
         ];
     }
 

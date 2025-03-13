@@ -18,6 +18,12 @@ class CrewMember extends Model
         'notes',
     ];
 
+    protected $with = [
+        'crewRole',
+        'person',
+        'show',
+    ];
+
     public function crewRole(): BelongsTo
     {
         return $this->belongsTo(\App\Models\CrewRole::class);

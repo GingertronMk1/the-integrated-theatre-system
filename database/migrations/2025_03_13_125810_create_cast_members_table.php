@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('role_name');
             $table->text('notes')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

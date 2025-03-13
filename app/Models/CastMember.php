@@ -18,6 +18,11 @@ class CastMember extends Model
         'legacy_link',
     ];
 
+    protected $with = [
+        'show',
+        'person',
+    ];
+
     public function show(): BelongsTo
     {
         return $this->belongsTo(Show::class);
@@ -26,10 +31,5 @@ class CastMember extends Model
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->person->user();
     }
 }

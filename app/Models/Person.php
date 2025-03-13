@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Person extends Model
@@ -25,13 +25,17 @@ class Person extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function castShows(): BelongsToMany
+    public function castShows(): HasMany
     {
-        return $this->belongsToMany(Show::class, CastMember::class);
+        return $this
+            ->hasMany(CastMember::class)
+            ->with('show');
     }
 
-    public function crewShows(): BelongsToMany
+    public function crewShows(): HasMany
     {
-        return $this->belongsToMany(Show::class, CrewMember::class);
+        return $this
+            ->hasMany(CrewMember::class)
+            ->with(['show', 'crewRole']);
     }
 }

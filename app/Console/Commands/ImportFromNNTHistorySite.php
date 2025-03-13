@@ -41,7 +41,6 @@ class ImportFromNNTHistorySite extends Command
     public function handle(): int
     {
         $resp = Http::get(self::SEARCH_FEED)->json();
-        $people = [];
         $this->info('Importing people');
         $this->withProgressBar(
             array_filter($resp, fn (array $item) => $item['type'] === 'person'),
@@ -54,8 +53,9 @@ class ImportFromNNTHistorySite extends Command
             });
 
         $this->info('Importing shows');
-        foreach (array_filter($resp, fn (array $item) => $item['type'] === 'show') as $inputShow) {
-            $this->output->section($inputShow['title']);
+        $inputShows = array_filter($resp, fn (array $item) => $item['type'] === 'show');
+        foreach ($inputShows as $n => $inputShow) {
+            $this->output->section(sprintf('%s/%s %s', $n, count($inputShows), $inputShow['title']));
             $show = new Show([
                 'title' => $inputShow['title'],
                 'blurb' => $inputShow['content'],
