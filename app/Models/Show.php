@@ -26,4 +26,9 @@ class Show extends Model
     {
         return $this->hasMany(CastMember::class);
     }
+
+    public function crewMembers(): HasMany
+    {
+        return $this->hasMany(CrewMember::class);
+    }
 }

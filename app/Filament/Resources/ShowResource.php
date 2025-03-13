@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ShowResource\Pages;
+use App\Filament\Resources\ShowResource\RelationManagers\CastMembersRelationManager;
+use App\Filament\Resources\ShowResource\RelationManagers\CrewMembersRelationManager;
 use App\Models\Show;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -79,6 +81,8 @@ class ShowResource extends Resource
     public static function getRelations(): array
     {
         return [
+            CastMembersRelationManager::class,
+            CrewMembersRelationManager::class,
         ];
     }
 

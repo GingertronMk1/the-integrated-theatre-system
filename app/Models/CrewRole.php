@@ -12,5 +12,6 @@ class CrewRole extends Model
 
     protected $fillable = [
         'name',
+        'description',
     ];
 }

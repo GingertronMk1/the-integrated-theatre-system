@@ -11,7 +11,14 @@ class CrewMember extends Model
     //
     use SoftDeletes;
 
-    public function role(): BelongsTo
+    protected $fillable = [
+        'show_id',
+        'crew_role_id',
+        'person_id',
+        'notes',
+    ];
+
+    public function crewRole(): BelongsTo
     {
         return $this->belongsTo(\App\Models\CrewRole::class);
     }

@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CrewMemberResource\Pages;
 use App\Models\CrewMember;
-use App\Models\Person;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -25,13 +24,13 @@ class CrewMemberResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('role_id')
-                    ->relationship('role', 'name')
+                Forms\Components\Select::make('crew_role_id')
+                    ->relationship('crewRole', 'name')
                     ->createOptionForm(CrewRoleResource::form($form)->getFlatComponents())
                     ->required(),
                 Forms\Components\Select::make('person_id')
                     ->relationship('person', 'name')
-                    ->createOptionForm(Person::form($form)->getFlatComponents())
+                    ->createOptionForm(PersonResource::form($form)->getFlatComponents())
                     ->required(),
                 Forms\Components\Select::make('show_id')
                     ->relationship('show', 'name')

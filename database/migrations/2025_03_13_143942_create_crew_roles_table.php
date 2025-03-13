@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('crew_roles', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

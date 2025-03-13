@@ -24,16 +24,16 @@ class CastMemberResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('show_id')
+                'show_id' => Forms\Components\Select::make('show_id')
                     ->relationship('show', 'title')
                     ->required(),
-                Forms\Components\Select::make('person_id')
+                'person_id' => Forms\Components\Select::make('person_id')
                     ->relationship('person', 'name')
                     ->createOptionForm(PersonResource::form($form)->getFlatComponents())
                     ->required(),
-                Forms\Components\TextInput::make('role_name')
+                'role_name' => Forms\Components\TextInput::make('role_name')
                     ->required(),
-                Forms\Components\Textarea::make('notes')
+                'notes' => Forms\Components\Textarea::make('notes')
                     ->cols(5),
             ]);
     }

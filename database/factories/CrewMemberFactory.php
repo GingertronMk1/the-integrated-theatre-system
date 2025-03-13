@@ -17,7 +17,10 @@ class CrewMemberFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'show_id' => (new ShowFactory)->create(),
+            'crew_role_id' => (new CrewRoleFactory)->create(),
+            'person_id' => (new PersonFactory)->create(),
+            'notes' => fake()->paragraph(),
         ];
     }
 }

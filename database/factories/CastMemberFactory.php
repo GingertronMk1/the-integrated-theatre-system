@@ -17,7 +17,9 @@ class CastMemberFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'show_id' => (new ShowFactory)->create(),
+            'role_name' => fake()->words(3, true),
+            'person_id' => (new PersonFactory)->create(),
         ];
     }
 }

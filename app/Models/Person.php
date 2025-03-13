@@ -11,6 +11,13 @@ class Person extends Model
     //
     use SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'user_id',
+        'start_year',
+        'end_year',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
