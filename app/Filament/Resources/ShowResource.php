@@ -27,7 +27,9 @@ class ShowResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title'),
-                Textarea::make('blurb'),
+                Textarea::make('blurb')
+                    ->rows(10)
+                    ->columnSpan(4),
                 TextInput::make('year')
                     ->numeric()
                     ->minValue(0)
@@ -70,6 +72,7 @@ class ShowResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -92,6 +95,7 @@ class ShowResource extends Resource
         return [
             'index' => Pages\ListShows::route('/'),
             'create' => Pages\CreateShow::route('/create'),
+            'view' => Pages\ViewShow::route('/{record}'),
             'edit' => Pages\EditShow::route('/{record}/edit'),
         ];
     }

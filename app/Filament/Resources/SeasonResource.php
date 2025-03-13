@@ -28,7 +28,9 @@ class SeasonResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required(),
-                Textarea::make('description'),
+                Textarea::make('description')
+                    ->rows(10)
+                    ->columnSpan(4),
                 ColorPicker::make('colour')->required(),
             ]);
     }
@@ -49,6 +51,7 @@ class SeasonResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -72,6 +75,7 @@ class SeasonResource extends Resource
         return [
             'index' => Pages\ListSeasons::route('/'),
             'create' => Pages\CreateSeason::route('/create'),
+            'view' => Pages\ViewSeason::route('/{record}'),
             'edit' => Pages\EditSeason::route('/{record}/edit'),
         ];
     }

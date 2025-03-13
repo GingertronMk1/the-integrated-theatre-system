@@ -26,7 +26,9 @@ class PlaywrightResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required(),
-                Textarea::make('bio'),
+                Textarea::make('bio')
+                    ->rows(5)
+                    ->columnSpan(4),
             ]);
     }
 

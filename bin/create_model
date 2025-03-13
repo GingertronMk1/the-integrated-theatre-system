@@ -5,4 +5,5 @@
     --model \
     --migration \
     --factory \
+    --view \
     -vv
