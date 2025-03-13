@@ -20,7 +20,7 @@ class PersonResource extends Resource
 {
     protected static ?string $model = Person::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
@@ -39,10 +39,16 @@ class PersonResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('user.name'),
-                TextColumn::make('start_year'),
-                TextColumn::make('end_year'),
+                TextColumn::make('start_year')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('end_year')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

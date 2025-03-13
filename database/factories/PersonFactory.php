@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,13 @@ class PersonFactory extends Factory
      */
     public function definition(): array
     {
+        $startYear = (int) fake()->year();
+        $endYear = $startYear + fake()->randomDigit();
         return [
-            //
+            'name' => fake()->name(),
+            'user_id' => fake()->boolean() ? User::factory()->create() : null,
+            'start_year' => $startYear,
+            'end_year' => $endYear,
         ];
     }
 }
