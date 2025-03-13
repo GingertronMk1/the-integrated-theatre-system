@@ -2,44 +2,38 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ShowResource\Pages;
-use App\Models\Show;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
+use App\Filament\Resources\CastMemberResource\Pages;
+use App\Filament\Resources\CastMemberResource\RelationManagers;
+use App\Models\CastMember;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ShowResource extends Resource
+class CastMemberResource extends Resource
 {
-    protected static ?string $model = Show::class;
+    protected static ?string $model = CastMember::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-film';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('title'),
-                Textarea::make('blurb')
-                    ->rows(10)
-                    ->columnSpan(4),
-                TextInput::make('year')
-                    ->numeric()
-                    ->minValue(0)
-                    ->step(1),
-                Select::make('season_id')
-                    ->relationship('season', 'name')
-                    ->createOptionForm(SeasonResource::form($form)->getFlatComponents()),
-                Select::make('playwright_id')
-                    ->relationship('playwright', 'name')
-                    ->createOptionForm(PlaywrightResource::form($form)->getFlatComponents()),
+                Forms\Components\Select::make('show_id')
+                    ->relationship('show', 'title')
+                    ->required(),
+                Forms\Components\Select::make('person_id')
+                    ->relationship('person', 'name')
+                    ->createOptionForm(PersonResource::form($form)->getFlatComponents())
+                    ->required(),
+                Forms\Components\TextInput::make('role_name')
+                    ->required(),
+                Forms\Components\Textarea::make('notes')
+                    ->cols(5),
             ]);
     }
 
@@ -47,19 +41,15 @@ class ShowResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')
+                Tables\Columns\TextColumn::make('show.title')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('year')
+                Tables\Columns\TextColumn::make('person.name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('season.name')
+                Tables\Columns\TextColumn::make('role_name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('playwright.name')
-                    ->searchable()
-                    ->sortable(),
-
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -80,16 +70,17 @@ class ShowResource extends Resource
     public static function getRelations(): array
     {
         return [
+            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListShows::route('/'),
-            'create' => Pages\CreateShow::route('/create'),
-            'view' => Pages\ViewShow::route('/{record}'),
-            'edit' => Pages\EditShow::route('/{record}/edit'),
+            'index' => Pages\ListCastMembers::route('/'),
+            'create' => Pages\CreateCastMember::route('/create'),
+            'view' => Pages\ViewCastMember::route('/{record}'),
+            'edit' => Pages\EditCastMember::route('/{record}/edit'),
         ];
     }
 
