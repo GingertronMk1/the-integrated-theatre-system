@@ -14,7 +14,7 @@ class CastMember extends Model
         'show_id',
         'person_id',
         'role_name',
-        'notes'
+        'notes',
     ];
 
     public function show(): BelongsTo
