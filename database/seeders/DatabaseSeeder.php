@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Creating Crew Roles');
         (new CrewRoleFactory)->createMany(15);
 
+        return;
         $this->command->info('Populating shows with cast and crew members');
         $this->command->withProgressBar(Show::all(), function ($show) {
             $castMemberFactory = new CastMemberFactory;
