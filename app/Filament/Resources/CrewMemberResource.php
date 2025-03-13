@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CastMemberResource\Pages;
-use App\Models\CastMember;
+use App\Filament\Resources\CrewMemberResource\Pages;
+use App\Models\CrewMember;
+use App\Models\Person;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CastMemberResource extends Resource
+class CrewMemberResource extends Resource
 {
-    protected static ?string $model = CastMember::class;
+    protected static ?string $model = CrewMember::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -24,17 +25,17 @@ class CastMemberResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('show_id')
-                    ->relationship('show', 'title')
+                Forms\Components\Select::make('role_id')
+                    ->relationship('role', 'name')
+                    ->createOptionForm(CrewRoleResource::form($form)->getFlatComponents())
                     ->required(),
                 Forms\Components\Select::make('person_id')
                     ->relationship('person', 'name')
-                    ->createOptionForm(PersonResource::form($form)->getFlatComponents())
+                    ->createOptionForm(Person::form($form)->getFlatComponents())
                     ->required(),
-                Forms\Components\TextInput::make('role_name')
+                Forms\Components\Select::make('show_id')
+                    ->relationship('show', 'name')
                     ->required(),
-                Forms\Components\Textarea::make('notes')
-                    ->cols(5),
             ]);
     }
 
@@ -42,15 +43,7 @@ class CastMemberResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('show.title')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('person.name')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('role_name')
-                    ->searchable()
-                    ->sortable(),
+                //
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -78,10 +71,10 @@ class CastMemberResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCastMembers::route('/'),
-            'create' => Pages\CreateCastMember::route('/create'),
-            'view' => Pages\ViewCastMember::route('/{record}'),
-            'edit' => Pages\EditCastMember::route('/{record}/edit'),
+            'index' => Pages\ListCrewMembers::route('/'),
+            'create' => Pages\CreateCrewMember::route('/create'),
+            'view' => Pages\ViewCrewMember::route('/{record}'),
+            'edit' => Pages\EditCrewMember::route('/{record}/edit'),
         ];
     }
 
