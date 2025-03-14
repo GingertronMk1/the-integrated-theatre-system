@@ -30,17 +30,20 @@ class ShowResource extends Resource
                 TextInput::make('title'),
                 Textarea::make('blurb')
                     ->rows(10)
-                    ->columnSpan(4),
+                    ->columnSpan('full'),
+                Select::make('season_id')
+                    ->relationship('season', 'name')
+                    ->createOptionForm(SeasonResource::form($form)->getFlatComponents())
+                    ->columnSpan(2),
+                Select::make('playwright_id')
+                    ->relationship('playwright', 'name')
+                    ->createOptionForm(PlaywrightResource::form($form)->getFlatComponents())
+                    ->columnSpan(2),
                 TextInput::make('year')
                     ->numeric()
                     ->minValue(0)
                     ->step(1),
-                Select::make('season_id')
-                    ->relationship('season', 'name')
-                    ->createOptionForm(SeasonResource::form($form)->getFlatComponents()),
-                Select::make('playwright_id')
-                    ->relationship('playwright', 'name')
-                    ->createOptionForm(PlaywrightResource::form($form)->getFlatComponents()),
+                TextInput::make('legacy_link'),
             ]);
     }
 

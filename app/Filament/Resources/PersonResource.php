@@ -35,6 +35,7 @@ class PersonResource extends Resource
                     ->rows(5),
                 TextInput::make('start_year')->numeric(),
                 TextInput::make('end_year')->numeric(),
+                TextInput::make('legacy_link'),
             ]);
     }
 

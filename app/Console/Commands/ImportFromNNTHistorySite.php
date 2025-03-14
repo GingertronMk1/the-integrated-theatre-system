@@ -90,10 +90,11 @@ class ImportFromNNTHistorySite extends Command
             $show = new Show([
                 'title' => $inputShow['title'],
                 'blurb' => $inputShow['content'],
+                'legacy_link' => $inputShow['link'] ?? null,
             ]);
 
             try {
-                $show->year = Carbon::createFromFormat('Y-m-d', $inputShow['year'])->year;
+                $show->year = (int) substr($inputShow['year_title'], 0, 4);
             } catch (Throwable) {
                 // Don't bother
             }

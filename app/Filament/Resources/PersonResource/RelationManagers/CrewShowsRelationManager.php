@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\PersonResource\RelationManagers;
 
+use App\Models\CrewMember;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -29,8 +31,17 @@ class CrewShowsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                Tables\Columns\TextColumn::make('show.title'),
-                Tables\Columns\TextColumn::make('crewRole.name'),
+                Tables\Columns\TextColumn::make('show.title')
+                    ->label('Show')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('show.year')
+                    ->label('Year')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('crewRole.name')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -39,6 +50,9 @@ class CrewShowsRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_show')
+                    ->url(fn (CrewMember $member) => route('filament.admin.resources.shows.view', ['record' => $member->show]))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),

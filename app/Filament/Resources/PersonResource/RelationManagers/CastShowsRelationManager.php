@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PersonResource\RelationManagers;
 
+use App\Models\CastMember;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -30,8 +31,17 @@ class CastShowsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('show.title')
             ->columns([
-                Tables\Columns\TextColumn::make('show.title'),
-                TextColumn::make('role_name'),
+                Tables\Columns\TextColumn::make('show.title')
+                    ->label('Show')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('show.year')
+                    ->label('Year')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('role_name')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -40,6 +50,9 @@ class CastShowsRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_show')
+                    ->url(fn (CastMember $member) => route('filament.admin.resources.shows.view', ['record' => $member->show]))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
