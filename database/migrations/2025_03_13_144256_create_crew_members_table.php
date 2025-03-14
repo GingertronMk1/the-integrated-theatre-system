@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Person::class);
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

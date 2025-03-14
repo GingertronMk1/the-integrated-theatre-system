@@ -11,7 +11,9 @@ use App\Models\Season;
 use App\Models\Show;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DomCrawler\Crawler;
 use Throwable;
 
@@ -40,21 +42,51 @@ class ImportFromNNTHistorySite extends Command
      */
     public function handle(): int
     {
-        $resp = Http::get(self::SEARCH_FEED)->json();
-        $this->info('Importing people');
-        $this->withProgressBar(
-            array_filter($resp, fn (array $item) => $item['type'] === 'person'),
-            fn (array $person) => Person::create([
-                'name' => $person['title'],
-                'end_year' => $person['graduated'],
-                'legacy_link' => $person['link'],
-            ])
+        $resp = Cache::remember(
+            self::SEARCH_FEED,
+            $this->getCacheExpiry(),
+            fn () => Http::get(self::SEARCH_FEED)->json()
         );
+        $this->info('Importing people');
+        $peopleArray = array_filter($resp, fn (array $item) => $item['type'] === 'person');
+        $peopleProgress = $this->createProgressBar($peopleArray);
+        foreach ($peopleArray as $inputPerson) {
+            $person = Person::create([
+                'name' => $inputPerson['title'],
+                'end_year' => $inputPerson['graduated'],
+                'legacy_link' => $inputPerson['link'],
+            ]);
+
+            if (isset($inputPerson['link'])) {
+                $personCacheHit = Cache::get($inputPerson['link']);
+                $peopleProgress->setMessage(sprintf(
+                    '%s hit for %s',
+                    $personCacheHit ? 'Cache' : 'No cache',
+                    $inputPerson['link']
+                ));
+                $personPage = Cache::remember(
+                    $inputPerson['link'],
+                    $this->getCacheExpiry(),
+                    fn () => Http::get(self::HISTORY_SITE_BASE_URL.$inputPerson['link'])->body()
+                );
+                $personCrawler = new Crawler($personPage);
+
+                try {
+                    $person->bio = $personCrawler->filter('.person-bio')->text();
+                    $person->save();
+                } catch (Throwable) {
+                    // Ignore...
+                }
+            }
+            $peopleProgress->advance();
+        }
+        $peopleProgress->finish();
+        $this->newLine();
 
         $this->info('Importing shows');
         $inputShows = array_filter($resp, fn (array $item) => $item['type'] === 'show');
-        foreach ($inputShows as $n => $inputShow) {
-            $this->output->section(sprintf('%s/%s %s', $n, count($inputShows), $inputShow['title']));
+        $showProgress = $this->createProgressBar($inputShows);
+        foreach ($inputShows as $inputShow) {
             $show = new Show([
                 'title' => $inputShow['title'],
                 'blurb' => $inputShow['content'],
@@ -75,14 +107,21 @@ class ImportFromNNTHistorySite extends Command
             $show->save();
 
             if ($inputShow['link']) {
-                $this->info('Adding cast and crew');
-                $showPage = Http::get(self::HISTORY_SITE_BASE_URL.$inputShow['link']);
-                $showCrawler = new Crawler($showPage->body());
+                $showCacheHit = Cache::get($inputShow['link']);
+                $showProgress->setMessage(sprintf(
+                    '%s hit for %s',
+                    $showCacheHit ? 'Cache' : 'No cache',
+                    $inputShow['link']
+                ));
+                $showPage = Cache::remember(
+                    $inputShow['link'],
+                    $this->getCacheExpiry(),
+                    fn () => Http::get(self::HISTORY_SITE_BASE_URL.$inputShow['link'])->body()
+                );
+                $showCrawler = new Crawler($showPage);
                 $showCrawler->filter('.show-cast .person-list .person-single a')->each(
                     function (Crawler $node) use ($show) {
                         $person = Person::query()->where('legacy_link', '=', $node->attr('href'))->firstOrFail();
-                        $this->info($person->name);
-                        $this->info($node->attr('href'));
                         CastMember::create([
                             'show_id' => $show->id,
                             'person_id' => $person->id,
@@ -93,8 +132,6 @@ class ImportFromNNTHistorySite extends Command
                 $showCrawler->filter('.show-crew .person-list .person-single a')->each(
                     function (Crawler $node) use ($show) {
                         $person = Person::query()->where('legacy_link', '=', $node->attr('href'))->firstOrFail();
-                        $this->info($person->name);
-                        $this->info($node->attr('href'));
                         $role = $node->filter('.person-role')->text();
                         CrewMember::create([
                             'show_id' => $show->id,
@@ -103,8 +140,26 @@ class ImportFromNNTHistorySite extends Command
                         ]);
                     });
             }
+            $showProgress->advance();
         }
+        $showProgress->finish();
 
         return self::SUCCESS;
+    }
+
+    private function getCacheExpiry(): Carbon
+    {
+        return now()->addMonth();
+    }
+
+    private function createProgressBar(int|array $n): ProgressBar
+    {
+        $n = is_int($n) ? $n : count($n);
+        $progressBar = $this->output->createProgressBar($n);
+        $progressBar->setMessage('');
+        $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:16s%/%estimated:-16s% %message%');
+        $progressBar->start();
+
+        return $progressBar;
     }
 }

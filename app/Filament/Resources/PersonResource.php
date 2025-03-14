@@ -7,6 +7,7 @@ use App\Filament\Resources\PersonResource\RelationManagers\CastShowsRelationMana
 use App\Filament\Resources\PersonResource\RelationManagers\CrewShowsRelationManager;
 use App\Models\Person;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -29,9 +30,11 @@ class PersonResource extends Resource
                 TextInput::make('name')->required(),
                 Select::make('user_id')
                     ->relationship('user', 'name'),
+                Textarea::make('bio')
+                    ->columnSpan(4)
+                    ->rows(5),
                 TextInput::make('start_year')->numeric(),
                 TextInput::make('end_year')->numeric(),
-
             ]);
     }
 
