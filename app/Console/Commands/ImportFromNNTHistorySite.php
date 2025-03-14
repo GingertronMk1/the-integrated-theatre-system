@@ -44,13 +44,12 @@ class ImportFromNNTHistorySite extends Command
         $this->info('Importing people');
         $this->withProgressBar(
             array_filter($resp, fn (array $item) => $item['type'] === 'person'),
-            function (array $person) use (&$people) {
-                Person::create([
+            fn (array $person) => Person::create([
                     'name' => $person['title'],
                     'end_year' => $person['graduated'],
                     'legacy_link' => $person['link'],
-                ]);
-            });
+                ])
+            );
 
         $this->info('Importing shows');
         $inputShows = array_filter($resp, fn (array $item) => $item['type'] === 'show');
@@ -62,7 +61,7 @@ class ImportFromNNTHistorySite extends Command
             ]);
 
             try {
-                $show->year = Carbon::createFromFormat('Y-m-d', $inputShow['year'])->format('Y');
+                $show->year = Carbon::createFromFormat('Y-m-d', $inputShow['year'])->year;
             } catch (Throwable) {
                 // Don't bother
             }

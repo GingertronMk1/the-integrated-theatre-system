@@ -28,3 +28,5 @@ jobs:
         run: ./bin/install
       - name: Pint
         run: ./vendor/bin/sail composer pint
+      - name: Stan
+        run: ./vendor/bin/sail composer stan
