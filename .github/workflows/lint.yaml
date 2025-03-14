@@ -28,5 +28,7 @@ jobs:
         run: ./bin/install
       - name: Pint
         run: ./vendor/bin/sail composer pint
+        if: always()
       - name: Stan
         run: ./vendor/bin/sail composer stan
+        if: always()

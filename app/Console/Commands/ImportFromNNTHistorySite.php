@@ -45,11 +45,11 @@ class ImportFromNNTHistorySite extends Command
         $this->withProgressBar(
             array_filter($resp, fn (array $item) => $item['type'] === 'person'),
             fn (array $person) => Person::create([
-                    'name' => $person['title'],
-                    'end_year' => $person['graduated'],
-                    'legacy_link' => $person['link'],
-                ])
-            );
+                'name' => $person['title'],
+                'end_year' => $person['graduated'],
+                'legacy_link' => $person['link'],
+            ])
+        );
 
         $this->info('Importing shows');
         $inputShows = array_filter($resp, fn (array $item) => $item['type'] === 'show');
