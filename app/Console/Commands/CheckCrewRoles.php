@@ -14,7 +14,7 @@ class CheckCrewRoles extends Command
      *
      * @var string
      */
-    protected $signature = 'app:check-crew-roles';
+    protected $signature = 'app:check-crew-roles {min-percent=90}';
 
     /**
      * The console command description.
@@ -33,11 +33,19 @@ class CheckCrewRoles extends Command
             $key = "{$role->id}-{$role->name}";
             $json[$key] = [];
             foreach (CrewRole::query()->whereNot('id', '=', $role->id)->get() as $compRole) {
-                if (in_array($compRole->id, array_column(array_merge([...array_values($json)]), 'id'))) {
+                if (
+                    in_array(
+                        $compRole->id,
+                        array_column(
+                            array_merge([...array_values($json)]),
+                            'id'
+                        )
+                    )
+                ) {
                     continue;
                 }
                 similar_text($role->name, $compRole->name, $percent);
-                if ($percent >= 80) {
+                if ($percent >= $this->argument('min-percent')) {
                     $json[$key][] = [...$compRole->toArray(), 'diff' => $percent];
                 }
             }
