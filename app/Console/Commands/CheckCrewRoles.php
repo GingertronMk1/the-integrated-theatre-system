@@ -31,6 +31,7 @@ class CheckCrewRoles extends Command
         if ($this->option('replace')) {
             $toReplace = $this->ask('Enter the IDs of the roles you want replacing, separated by commas');
             $replaceWith = $this->ask('Enter the ID with which to replace them');
+            $this->info(sprintf('Updating all records with crew_role_id of %s with %s', $toReplace, $replaceWith));
             $replaced = CrewMember::query()
                 ->whereIn(
                     'id',
@@ -46,16 +47,14 @@ class CheckCrewRoles extends Command
         }
 
         $json = [];
-        $setRoles = CrewMember::query()->pluck('id');
-        $this->withProgressBar(CrewMember::all(), function ($member) use (&$json, $setRoles) {
-            $role = $member->crewRole;
+        $setRoles = array_unique(CrewMember::query()->pluck('crew_role_id')->toArray());
+        $this->withProgressBar(CrewRole::query()->whereIn('id', $setRoles)->get(), function ($role) use (&$json, $setRoles) {
             $key = "{$role->id}-{$role->name}";
             if (isset($json[$key])) {
                 return;
             }
             $json[$key] = [];
             foreach (CrewRole::query()
-                ->whereNot('id', '=', $role->id)
                 ->whereIn('id', $setRoles)
                 ->get() as $compRole) {
                 if (
@@ -65,7 +64,8 @@ class CheckCrewRoles extends Command
                             array_merge([...array_values($json)]),
                             'id'
                         )
-                    )
+                    ) ||
+                    $compRole->id === $role->id
                 ) {
                     continue;
                 }
@@ -82,7 +82,7 @@ class CheckCrewRoles extends Command
             $json[$role] = $newVal;
         }
 
-        $json = array_filter($json, fn (array $arr) => count($arr) > 0);
+        $json = array_filter($json, fn (array $arr) => count($arr));
 
         uasort($json, fn (array $a, array $b) => count($b) <=> count($a));
 
