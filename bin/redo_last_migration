@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+./vendor/bin/sail artisan migrate:rollback --step 1 \
+    && ./vendor/bin/sail artisan migrate

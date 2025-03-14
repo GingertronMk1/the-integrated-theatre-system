@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+./vendor/bin/sail composer pint:fix
+./vendor/bin/sail composer stan

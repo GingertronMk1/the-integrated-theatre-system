@@ -1,6 +1,10 @@
 name: Lint code
 
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   lint:
@@ -8,7 +12,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Cache Composer
+        id: cache-composer
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ hashFiles('composer.lock') }}
+      - name: Cache NPM
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ hashFiles('package-lock.json') }}
       - name: Install
         run: ./bin/install
       - name: Pint
         run: ./vendor/bin/sail composer pint
+        if: always()
+      - name: Stan
+        run: ./vendor/bin/sail composer stan
+        if: always()
