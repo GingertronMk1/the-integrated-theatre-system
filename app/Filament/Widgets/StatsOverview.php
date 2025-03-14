@@ -9,7 +9,6 @@ use App\Models\Person;
 use App\Models\Playwright;
 use App\Models\Season;
 use App\Models\Show;
-use Doctrine\Inflector\Inflector;
 use Doctrine\Inflector\InflectorFactory;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -22,7 +21,7 @@ class StatsOverview extends BaseWidget
         $inflector = InflectorFactory::create()->build();
         $return = [];
         foreach ($this->getClasses() as $class) {
-            if (!($class instanceof Model)) {
+            if (! ($class instanceof Model)) {
                 continue;
             }
 
@@ -31,6 +30,7 @@ class StatsOverview extends BaseWidget
 
             $return[] = Stat::make($inflector->pluralize($classBaseName), $class::query()->count());
         }
+
         return $return;
     }
 

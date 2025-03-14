@@ -14,7 +14,7 @@ class CheckCrewRoles extends Command
      *
      * @var string
      */
-    protected $signature = 'app:check-crew-roles {min-percent=90}';
+    protected $signature = 'app:check-crew-roles {min-percent=90} {--replace}';
 
     /**
      * The console command description.
@@ -28,11 +28,36 @@ class CheckCrewRoles extends Command
      */
     public function handle()
     {
+        if ($this->option('replace')) {
+            $toReplace = $this->ask('Enter the IDs of the roles you want replacing, separated by commas');
+            $replaceWith = $this->ask('Enter the ID with which to replace them');
+            $replaced = CrewMember::query()
+                ->whereIn(
+                    'id',
+                    array_map(
+                        fn (string $id) => intval($id),
+                        explode(',', $toReplace)
+                    )
+                )
+                ->update([
+                    'crew_role_id' => $replaceWith,
+                ]);
+            $this->info("Updated {$replaced} records");
+        }
+
         $json = [];
-        $this->withProgressBar(CrewRole::all(), function ($role) use (&$json) {
+        $setRoles = CrewMember::query()->pluck('id');
+        $this->withProgressBar(CrewMember::all(), function ($member) use (&$json, $setRoles) {
+            $role = $member->crewRole;
             $key = "{$role->id}-{$role->name}";
+            if (isset($json[$key])) {
+                return;
+            }
             $json[$key] = [];
-            foreach (CrewRole::query()->whereNot('id', '=', $role->id)->get() as $compRole) {
+            foreach (CrewRole::query()
+                ->whereNot('id', '=', $role->id)
+                ->whereIn('id', $setRoles)
+                ->get() as $compRole) {
                 if (
                     in_array(
                         $compRole->id,
@@ -46,7 +71,7 @@ class CheckCrewRoles extends Command
                 }
                 similar_text($role->name, $compRole->name, $percent);
                 if ($percent >= $this->argument('min-percent')) {
-                    $json[$key][] = [...$compRole->toArray(), 'diff' => $percent];
+                    $json[$key][] = ['id' => $compRole->id, 'name' => $compRole->name, 'diff' => $percent];
                 }
             }
         });
@@ -57,13 +82,13 @@ class CheckCrewRoles extends Command
             $json[$role] = $newVal;
         }
 
-        $json = array_filter($json, fn (array $arr) => count($arr));
+        $json = array_filter($json, fn (array $arr) => count($arr) > 0);
 
         uasort($json, fn (array $a, array $b) => count($b) <=> count($a));
 
         echo json_encode($json, JSON_PRETTY_PRINT);
         Storage::put('comparison.json', json_encode($json, JSON_PRETTY_PRINT));
-        return self::SUCCESS;
 
+        return self::SUCCESS;
     }
 }
