@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ShowResource\Pages;
-use App\Filament\Resources\ShowResource\RelationManagers\CastMembersRelationManager;
-use App\Filament\Resources\ShowResource\RelationManagers\CrewMembersRelationManager;
-use App\Models\Show;
+use App\Filament\Resources\PersonResource\Pages;
+use App\Filament\Resources\PersonResource\RelationManagers\CastShowsRelationManager;
+use App\Filament\Resources\PersonResource\RelationManagers\CrewShowsRelationManager;
+use App\Models\Person;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -17,32 +17,24 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ShowResource extends Resource
+class PersonResource extends Resource
 {
-    protected static ?string $model = Show::class;
+    protected static ?string $model = Person::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-film';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('title'),
-                Textarea::make('blurb')
-                    ->rows(10)
-                    ->columnSpan('full'),
-                Select::make('season_id')
-                    ->relationship('season', 'name')
-                    ->createOptionForm(SeasonResource::form($form)->getFlatComponents())
-                    ->columnSpan(2),
-                Select::make('playwright_id')
-                    ->relationship('playwright', 'name')
-                    ->createOptionForm(PlaywrightResource::form($form)->getFlatComponents())
-                    ->columnSpan(2),
-                TextInput::make('year')
-                    ->numeric()
-                    ->minValue(0)
-                    ->step(1),
+                TextInput::make('name')->required(),
+                Select::make('user_id')
+                    ->relationship('user', 'name'),
+                Textarea::make('bio')
+                    ->columnSpan(4)
+                    ->rows(5),
+                TextInput::make('start_year')->numeric(),
+                TextInput::make('end_year')->numeric(),
                 TextInput::make('legacy_link'),
             ]);
     }
@@ -51,19 +43,16 @@ class ShowResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('year')
+                TextColumn::make('user.name'),
+                TextColumn::make('start_year')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('season.name')
+                TextColumn::make('end_year')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('playwright.name')
-                    ->searchable()
-                    ->sortable(),
-
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -84,18 +73,18 @@ class ShowResource extends Resource
     public static function getRelations(): array
     {
         return [
-            CastMembersRelationManager::class,
-            CrewMembersRelationManager::class,
+            CastShowsRelationManager::class,
+            CrewShowsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListShows::route('/'),
-            'create' => Pages\CreateShow::route('/create'),
-            'view' => Pages\ViewShow::route('/{record}'),
-            'edit' => Pages\EditShow::route('/{record}/edit'),
+            'index' => Pages\ListPeople::route('/'),
+            'create' => Pages\CreatePerson::route('/create'),
+            'view' => Pages\ViewPerson::route('/{record}'),
+            'edit' => Pages\EditPerson::route('/{record}/edit'),
         ];
     }
 

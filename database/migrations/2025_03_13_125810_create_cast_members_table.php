@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Person;
+use App\Models\Show;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,14 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shows', function (Blueprint $table) {
+        Schema::create('cast_members', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->index();
-            $table->text('blurb')->nullable();
-            $table->integer('year')->unsigned()->nullable()->index();
-            $table->foreignIdFor(\App\Models\Playwright::class);
-            $table->foreignIdFor(\App\Models\Season::class);
-            $table->string('legacy_link')->nullable()->index();
+            $table->foreignIdFor(Show::class);
+            $table->foreignIdFor(Person::class);
+            $table->string('role_name');
+            $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shows');
+        Schema::dropIfExists('cast_members');
     }
 };

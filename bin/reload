@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+./vendor/bin/sail artisan migrate:fresh \
+    && ./vendor/bin/sail artisan tinker --execute "App\Models\User::create(['email' => 'admin@tits.test', 'password' => bcrypt('admin'), 'name' => 'Admin'])" \
+    && ./vendor/bin/sail artisan app:import-from-nnt-history-site

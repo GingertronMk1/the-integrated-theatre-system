@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shows', function (Blueprint $table) {
+        Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->index();
-            $table->text('blurb')->nullable();
-            $table->integer('year')->unsigned()->nullable()->index();
-            $table->foreignIdFor(\App\Models\Playwright::class);
-            $table->foreignIdFor(\App\Models\Season::class);
+            $table->string('name');
+            $table->text('bio')->nullable();
+            $table->foreignIdFor(\App\Models\User::class)->nullable();
+            $table->integer('start_year')->unsigned()->nullable()->index();
+            $table->integer('end_year')->unsigned()->nullable()->index();
             $table->string('legacy_link')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shows');
+        Schema::dropIfExists('people');
     }
 };
