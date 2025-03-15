@@ -13,6 +13,7 @@ use Doctrine\Inflector\InflectorFactory;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class StatsOverview extends BaseWidget
 {
@@ -21,10 +22,7 @@ class StatsOverview extends BaseWidget
         $inflector = InflectorFactory::create()->build();
         $return = [];
         foreach ($this->getClasses() as $class) {
-            if (! ($class instanceof Model)) {
-                continue;
-            }
-
+            /** @var class-string<Model> $class */
             $classBaseName = preg_replace('/.*\\\\(\w+$)/', '$1', $class);
             $classBaseName = preg_replace('/(?<!^)[A-Z]/', ' $0', $classBaseName);
 
