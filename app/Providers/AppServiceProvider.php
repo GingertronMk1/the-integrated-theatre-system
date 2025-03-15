@@ -40,7 +40,6 @@ class AppServiceProvider extends ServiceProvider
                 Log::info($query->toRawSql());
             });
         }
-        URL::forceScheme('https');
         Date::use(CarbonImmutable::class);
         Vite::prefetch(concurrency: 3);
     }
