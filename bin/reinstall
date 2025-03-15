@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+echo "Composer Install"
+./vendor/bin/sail composer install
+
+echo "NPM Install"
+./vendor/bin/sail npm install

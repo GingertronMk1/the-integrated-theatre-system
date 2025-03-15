@@ -2,3 +2,4 @@
 
 ./vendor/bin/sail composer pint:fix
 ./vendor/bin/sail composer stan
+./vendor/bin/sail npm run lint

@@ -1,10 +1,3 @@
 <?php
 
-use Illuminate\Foundation\Console\ClosureCommand;
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
-
-Artisan::command('inspire', function () {
-    /** @var ClosureCommand $this */
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+\Illuminate\Support\Facades\Schedule::call(\App\Console\Commands\CheckCrewRoles::class)->dailyAt('15:00');
