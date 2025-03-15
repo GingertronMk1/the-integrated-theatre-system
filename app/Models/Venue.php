@@ -9,5 +9,4 @@ class Venue extends Model
 {
     //
     use SoftDeletes;
-
 }

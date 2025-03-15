@@ -2,14 +2,16 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\CastMember;
-use App\Models\CrewMember;
-use App\Models\CrewRole;
-use App\Models\Person;
-use App\Models\Playwright;
-use App\Models\Season;
-use App\Models\Show;
+use App\Filament\Resources\CastMemberResource;
+use App\Filament\Resources\CrewMemberResource;
+use App\Filament\Resources\CrewRoleResource;
+use App\Filament\Resources\PersonResource;
+use App\Filament\Resources\PlaywrightResource;
+use App\Filament\Resources\SeasonResource;
+use App\Filament\Resources\ShowResource;
+use App\Filament\Resources\VenueResource;
 use Doctrine\Inflector\InflectorFactory;
+use Filament\Resources\Resource;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Model;
@@ -20,12 +22,19 @@ class StatsOverview extends BaseWidget
     {
         $inflector = InflectorFactory::create()->build();
         $return = [];
-        foreach ($this->getClasses() as $class) {
-            /** @var class-string<Model> $class */
-            $classBaseName = preg_replace('/.*\\\\(\w+$)/', '$1', $class);
-            $classBaseName = preg_replace('/(?<!^)[A-Z]/', ' $0', $classBaseName);
+        foreach ($this->getClasses() as $resource) {
+            /**
+             * @var class-string<resource> $resource
+             * @var class-string<Model> $class
+             */
+            $class = $resource::getModel();
+            $count = $class::query()->count();
+            $label = $resource::getTitleCaseModelLabel();
+            if ($count !== 1) {
+                $label = $inflector->pluralize($label);
+            }
 
-            $return[] = Stat::make($inflector->pluralize($classBaseName), $class::query()->count());
+            $return[] = Stat::make($label, $count)->url($resource::getUrl('index'));
         }
 
         return $return;
@@ -34,13 +43,14 @@ class StatsOverview extends BaseWidget
     private function getClasses(): array
     {
         return [
-            Show::class,
-            Person::class,
-            Playwright::class,
-            Season::class,
-            CrewRole::class,
-            CrewMember::class,
-            CastMember::class,
+            ShowResource::class,
+            PersonResource::class,
+            PlaywrightResource::class,
+            SeasonResource::class,
+            VenueResource::class,
+            CrewRoleResource::class,
+            CrewMemberResource::class,
+            CastMemberResource::class,
         ];
     }
 }

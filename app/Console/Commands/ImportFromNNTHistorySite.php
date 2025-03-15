@@ -94,7 +94,7 @@ class ImportFromNNTHistorySite extends Command
                 'legacy_link' => $inputShow['link'] ?? null,
                 'season_id' => Season::query()->firstOrCreate(['name' => $inputShow['season']]),
                 'playwright_id' => Playwright::query()->firstOrCreate(['name' => $inputShow['playwright'] ?? $inputShow['playwright_formatted'] ?? 'Unknown'])->id,
-                'venue_id' => Venue::query()->firstOrCreate(['name' => $inputShow['venue']])->id,
+                'venue_id' => Venue::query()->firstOrCreate(['name' => $inputShow['venue'] ?? 'Unknown'])->id,
             ]);
 
             try {
