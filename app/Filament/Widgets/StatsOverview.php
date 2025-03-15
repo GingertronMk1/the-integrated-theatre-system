@@ -13,7 +13,6 @@ use Doctrine\Inflector\InflectorFactory;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
 class StatsOverview extends BaseWidget
 {
