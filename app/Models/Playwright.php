@@ -10,12 +10,6 @@ class Playwright extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'bio',
-        'external_links',
-    ];
-
     protected $casts = [
         'external_links' => 'array',
     ];

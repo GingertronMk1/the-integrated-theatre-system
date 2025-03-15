@@ -9,6 +9,7 @@ use App\Models\Person;
 use App\Models\Playwright;
 use App\Models\Season;
 use App\Models\Show;
+use App\Models\Venue;
 use Carbon\CarbonInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
@@ -91,6 +92,9 @@ class ImportFromNNTHistorySite extends Command
                 'title' => $inputShow['title'],
                 'blurb' => $inputShow['content'],
                 'legacy_link' => $inputShow['link'] ?? null,
+                'season_id' => Season::query()->firstOrCreate(['name' => $inputShow['season']]),
+                'playwright_id' => Playwright::query()->firstOrCreate(['name' => $inputShow['playwright'] ?? $inputShow['playwright_formatted'] ?? 'Unknown'])->id,
+                'venue_id' => Venue::query()->firstOrCreate(['name' => $inputShow['venue']])->id,
             ]);
 
             try {
@@ -98,12 +102,6 @@ class ImportFromNNTHistorySite extends Command
             } catch (Throwable) {
                 // Don't bother
             }
-
-            $season = Season::query()->firstOrCreate(['name' => $inputShow['season']]);
-            $show->season_id = $season->id;
-
-            $playwright = Playwright::query()->firstOrCreate(['name' => $inputShow['playwright'] ?? $inputShow['playwright_formatted'] ?? 'Unknown']);
-            $show->playwright_id = $playwright->id;
 
             $show->save();
 

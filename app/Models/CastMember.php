@@ -10,14 +10,6 @@ class CastMember extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'show_id',
-        'person_id',
-        'role_name',
-        'notes',
-        'legacy_link',
-    ];
-
     protected $with = [
         'show',
         'person',
