@@ -9,7 +9,7 @@ use App\Models\Person;
 use App\Models\Playwright;
 use App\Models\Season;
 use App\Models\Show;
-use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -148,7 +148,7 @@ class ImportFromNNTHistorySite extends Command
         return self::SUCCESS;
     }
 
-    private function getCacheExpiry(): Carbon
+    private function getCacheExpiry(): CarbonInterface
     {
         return now()->addMonth();
     }
