@@ -32,3 +32,6 @@ jobs:
       - name: Stan
         run: ./vendor/bin/sail composer stan
         if: always()
+      - name: ESLint
+        run: ./vendor/bin/sail npm run lint
+        if: always()
