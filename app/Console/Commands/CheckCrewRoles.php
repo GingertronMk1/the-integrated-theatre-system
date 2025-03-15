@@ -21,30 +21,55 @@ class CheckCrewRoles extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Iterates through crew roles and optionally replaces instances';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
-        if ($this->option('replace')) {
-            $toReplace = $this->ask('Enter the IDs of the roles you want replacing, separated by commas');
-            $replaceWith = $this->ask('Enter the ID with which to replace them');
-            $this->info(sprintf('Updating all records with crew_role_id of %s with %s', $toReplace, $replaceWith));
-            $replaced = CrewMember::query()
-                ->whereIn(
-                    'id',
-                    array_map(
-                        fn (string $id) => intval($id),
-                        explode(',', $toReplace)
-                    )
+        $replace = $this->option('replace');
+
+        do {
+            if ($replace) {
+                $this->doReplace();
+            }
+            $this->doCheck();
+        } while (
+            $replace
+            &&
+            $this->confirm('Would you like to replace any more?', true)
+        );
+
+        return self::SUCCESS;
+    }
+
+    private function doReplace(): void
+    {
+        $toReplace = $this->ask('Enter the IDs of the roles you want replacing, separated by commas');
+        $replaceWith = $this->ask('Enter the ID with which to replace them');
+        $this->info(sprintf('Updating all records with crew_role_id of %s with %s', $toReplace, $replaceWith));
+        $replaced = CrewMember::query()
+            ->whereIn(
+                'crew_role_id',
+                array_map(
+                    fn (string $id) => intval($id),
+                    explode(',', $toReplace)
                 )
-                ->update([
-                    'crew_role_id' => $replaceWith,
-                ]);
-            $this->info("Updated {$replaced} records");
+            )
+            ->update(['crew_role_id' => $replaceWith]);
+        $this->info("Updated {$replaced} records");
+        if ($replaced > 0) {
+            CrewRole::query()
+                ->whereNotIn('id', CrewMember::query()->pluck('crew_role_id'))
+                ->get()
+                ->each(fn (CrewRole $crewRole) => $crewRole->delete());
+            $this->info('Soft-deleted now-unused records');
         }
+    }
+
+    private function doCheck(): void
+    {
 
         $json = [];
         $setRoles = array_unique(CrewMember::query()->pluck('crew_role_id')->toArray());
@@ -82,13 +107,14 @@ class CheckCrewRoles extends Command
             $json[$role] = $newVal;
         }
 
-        $json = array_filter($json, fn (array $arr) => count($arr));
+        $json = array_filter($json, fn (array $arr) => ! empty($arr));
 
         uasort($json, fn (array $a, array $b) => count($b) <=> count($a));
 
         echo json_encode($json, JSON_PRETTY_PRINT);
         Storage::put('comparison.json', json_encode($json, JSON_PRETTY_PRINT));
 
-        return self::SUCCESS;
+        $this->newLine();
+
     }
 }
