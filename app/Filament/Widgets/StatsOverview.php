@@ -11,10 +11,8 @@ use App\Filament\Resources\SeasonResource;
 use App\Filament\Resources\ShowResource;
 use App\Filament\Resources\VenueResource;
 use Doctrine\Inflector\InflectorFactory;
-use Filament\Resources\Resource;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Illuminate\Database\Eloquent\Model;
 
 class StatsOverview extends BaseWidget
 {
@@ -24,8 +22,8 @@ class StatsOverview extends BaseWidget
         $return = [];
         foreach ($this->getClasses() as $resource) {
             /**
-             * @var class-string<resource> $resource
-             * @var class-string<Model> $class
+             * @var class-string<\Filament\Resources\Resource> $resource
+             * @var class-string<\Illuminate\Database\Eloquent\Model> $class
              */
             $class = $resource::getModel();
             $count = $class::query()->count();
@@ -34,7 +32,7 @@ class StatsOverview extends BaseWidget
                 $label = $inflector->pluralize($label);
             }
 
-            $return[] = Stat::make($label, $count)->url($resource::getUrl('index'));
+            $return[] = Stat::make($label, $count)->url($resource::getUrl());
         }
 
         return $return;
