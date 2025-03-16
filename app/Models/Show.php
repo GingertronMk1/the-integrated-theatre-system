@@ -12,6 +12,12 @@ class Show extends Model
     //
     use SoftDeletes;
 
+    protected $with = [
+        'playwright',
+        'season',
+        'venue',
+    ];
+
     public function playwright(): BelongsTo
     {
         return $this->belongsTo(Playwright::class);
