@@ -17,7 +17,9 @@ class VenueFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->streetAddress(),
+            'description' => fake()->sentence(),
+            'address' => fake()->address(),
         ];
     }
 }

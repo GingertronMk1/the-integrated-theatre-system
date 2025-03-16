@@ -31,4 +31,9 @@ class Show extends Model
     {
         return $this->hasMany(CrewMember::class);
     }
+
+    public function venue(): BelongsTo
+    {
+        return $this->belongsTo(Venue::class);
+    }
 }
