@@ -4,9 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\VenueResource\Pages;
 use App\Models\Venue;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -15,13 +18,19 @@ class VenueResource extends Resource
 {
     protected static ?string $model = Venue::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->required(),
+                Textarea::make('description')
+                    ->rows(10)
+                    ->columnSpanFull(),
+                Textarea::make('address')
+                    ->rows(10)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -29,7 +38,12 @@ class VenueResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('address')
+                    ->searchable()
+                    ->wrap(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
