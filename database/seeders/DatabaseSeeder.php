@@ -2,15 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\CrewRole;
-use App\Models\Person;
 use App\Models\Playwright;
 use App\Models\Season;
-use App\Models\Show;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Database\Factories\CastMemberFactory;
-use Database\Factories\CrewMemberFactory;
 use Database\Factories\CrewRoleFactory;
 use Database\Factories\PersonFactory;
 use Database\Factories\PlaywrightFactory;
