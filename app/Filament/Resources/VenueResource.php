@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\VenueResource\Pages;
-use App\Filament\Resources\VenueResource\RelationManagers\ShowsRelationManager;
 use App\Models\Venue;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -66,7 +65,6 @@ class VenueResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ShowsRelationManager::class,
         ];
     }
 

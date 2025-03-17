@@ -9,7 +9,6 @@ use App\Models\Person;
 use App\Models\Playwright;
 use App\Models\Season;
 use App\Models\Show;
-use App\Models\Venue;
 use Carbon\CarbonInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;

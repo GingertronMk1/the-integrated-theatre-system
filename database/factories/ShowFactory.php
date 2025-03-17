@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Playwright;
 use App\Models\Season;
-use App\Models\Venue;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
