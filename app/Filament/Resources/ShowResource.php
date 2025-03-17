@@ -39,10 +39,6 @@ class ShowResource extends Resource
                     ->relationship('playwright', 'name')
                     ->createOptionForm(PlaywrightResource::form($form)->getFlatComponents())
                     ->columnSpan(2),
-                Select::make('venue_id')
-                    ->relationship('venue', 'name')
-                    ->createOptionForm(VenueResource::form($form)->getFlatComponents())
-                    ->columnSpan(2),
                 TextInput::make('year')
                     ->numeric()
                     ->minValue(0)
