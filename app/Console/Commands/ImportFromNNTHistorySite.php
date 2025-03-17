@@ -9,10 +9,13 @@ use App\Models\Person;
 use App\Models\Playwright;
 use App\Models\Season;
 use App\Models\Show;
+use App\Models\Venue;
 use Carbon\CarbonInterface;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DomCrawler\Crawler;
 use Throwable;
@@ -91,7 +94,7 @@ class ImportFromNNTHistorySite extends Command
                 'title' => $inputShow['title'],
                 'blurb' => $inputShow['content'],
                 'legacy_link' => $inputShow['link'] ?? null,
-                'season_id' => Season::query()->firstOrCreate(['name' => $inputShow['season']]),
+                'season_id' => Season::query()->firstOrCreate(['name' => $inputShow['season']])->id,
                 'playwright_id' => Playwright::query()->firstOrCreate(['name' => $inputShow['playwright'] ?? $inputShow['playwright_formatted'] ?? 'Unknown'])->id,
             ]);
 
@@ -102,6 +105,21 @@ class ImportFromNNTHistorySite extends Command
             }
 
             $show->save();
+
+            if (isset($inputShow['venue'])) {
+                $venue = Venue::query()->firstOrCreate(['name' => $inputShow['venue']]);
+
+                $date = $inputShow['date'] ?? null;
+                if (Carbon::canBeCreatedFromFormat($date, 'Y-m-d')) {
+                    $date = Carbon::createFromFormat('Y-m-d', $inputShow['date']);
+                    $show->performances()->create([
+                        'show_date' => $date,
+                        'venue_id' => $venue->id,
+                    ]);
+                } else {
+                    Log::error("Could not create a Carbon instance for {$date}");
+                }
+            }
 
             if ($inputShow['link']) {
                 $showCacheHit = Cache::get($inputShow['link']);

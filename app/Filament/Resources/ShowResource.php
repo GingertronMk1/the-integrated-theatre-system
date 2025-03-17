@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ShowResource\Pages;
 use App\Filament\Resources\ShowResource\RelationManagers\CastMembersRelationManager;
 use App\Filament\Resources\ShowResource\RelationManagers\CrewMembersRelationManager;
+use App\Filament\Resources\ShowResource\RelationManagers\PerformancesRelationManager;
 use App\Models\Show;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -22,6 +23,10 @@ class ShowResource extends Resource
     protected static ?string $model = Show::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-film';
+
+    protected static ?string $navigationGroup = 'Shows';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -86,6 +91,7 @@ class ShowResource extends Resource
         return [
             CastMembersRelationManager::class,
             CrewMembersRelationManager::class,
+            PerformancesRelationManager::class,
         ];
     }
 

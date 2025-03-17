@@ -20,6 +20,10 @@ class VenueResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
+    protected static ?string $navigationGroup = 'Shows';
+
+    protected static ?int $navigationSort = 4;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -44,7 +48,6 @@ class VenueResource extends Resource
                 TextColumn::make('address')
                     ->searchable()
                     ->wrap(),
-                TextColumn::make('shows_count')->counts('shows')->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

@@ -15,7 +15,6 @@ class Show extends Model
     protected $with = [
         'playwright',
         'season',
-        'venue',
     ];
 
     public function playwright(): BelongsTo
@@ -36,5 +35,10 @@ class Show extends Model
     public function crewMembers(): HasMany
     {
         return $this->hasMany(CrewMember::class);
+    }
+
+    public function performances(): HasMany
+    {
+        return $this->hasMany(Performance::class);
     }
 }
