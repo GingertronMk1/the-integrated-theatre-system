@@ -83,7 +83,8 @@ class ShowResource extends Resource
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('year', 'desc');
     }
 
     public static function getRelations(): array
