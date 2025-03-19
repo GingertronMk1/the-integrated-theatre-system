@@ -11,6 +11,7 @@ use App\Models\Season;
 use App\Models\Show;
 use App\Models\Venue;
 use Carbon\CarbonInterface;
+use Carbon\CarbonPeriodImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -49,6 +50,7 @@ class ImportFromNNTHistorySite extends Command
         );
         $this->info('Importing people');
         $peopleArray = array_filter($resp, fn(array $item) => $item['type'] === 'person');
+        usort($peopleArray, fn (array $a, array $b) => strcmp($a['link'] ?? '', $b['link'] ?? ''));
         $peopleProgress = $this->createProgressBar($peopleArray);
         foreach ($peopleArray as $inputPerson) {
             $person = Person::create([
@@ -85,6 +87,7 @@ class ImportFromNNTHistorySite extends Command
 
         $this->info('Importing shows');
         $inputShows = array_filter($resp, fn(array $item) => $item['type'] === 'show');
+        usort($inputShows, fn($a, $b) => strcmp($a['link'] ?? '', $b['link'] ?? ''));
         $showProgress = $this->createProgressBar($inputShows);
         foreach ($inputShows as $inputShow) {
             $show = new Show([
@@ -110,15 +113,15 @@ class ImportFromNNTHistorySite extends Command
 
                 if (!empty($inputShow['run'])) {
                     try {
-
                         $format = 'Y F d';
                         $run = str_replace(['&nbsp;', '&ndash;'], [' ', '-'], $inputShow['run']);
                         if (preg_match('/(\d+) (\w+)-(\d+) (\w+) (\d+)/', $run, $matches)) {
-                            [, $start, $end, $month, $year] = $matches;
+                            [, $start, $startMonth, $end, $endMonth, $year] = $matches;
                             $end = empty($end) ? $start : $end;
-                            if (Carbon::canBeCreatedFromFormat("{$year} {$month} {$start}", $format)) {
-                                foreach (range($start, $end) as $date) {
-                                    $date = Carbon::createFromFormat('Y F d', $date);
+                            if (Carbon::canBeCreatedFromFormat("{$year} {$startMonth} {$start}", $format)) {
+                                $startDate =  Carbon::createFromFormat($format, "{$year} {$startMonth} {$start}");
+                                $endDate =  Carbon::createFromFormat($format, "{$year} {$endMonth} {$end}");
+                                foreach (CarbonPeriodImmutable::create($startDate, $endDate) as $date) {
                                     $show->performances()->create([
                                         'show_date' => $date,
                                         'venue_id' => $venue->id,
@@ -130,8 +133,9 @@ class ImportFromNNTHistorySite extends Command
                             [, $start, $end, $month, $year] = $matches;
                             $end = empty($end) ? $start : $end;
                             if (Carbon::canBeCreatedFromFormat("{$year} {$month} {$start}", $format)) {
-                                foreach (range($start, $end) as $date) {
-                                    $date = Carbon::createFromFormat('Y F d', $date);
+                                $startDate = Carbon::createFromFormat($format, "{$year} {$month} {$start}");
+                                $endDate = Carbon::createFromFormat($format, "{$year} {$month} {$end}");
+                                foreach (CarbonPeriodImmutable::create($startDate, $endDate) as $date) {
                                     $show->performances()->create([
                                         'show_date' => $date,
                                         'venue_id' => $venue->id,
