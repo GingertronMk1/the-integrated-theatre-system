@@ -27,7 +27,7 @@ jobs:
       - name: Install
         run: ./bin/install
       - name: Pint
-        run: ./vendor/bin/sail composer pint
+        run: ./vendor/bin/sail composer pint -- --format=checkstyle
         if: always()
       - name: Stan
         run: ./vendor/bin/sail composer stan
