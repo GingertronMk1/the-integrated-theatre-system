@@ -11,13 +11,6 @@ class CrewMember extends Model
     //
     use SoftDeletes;
 
-    protected $fillable = [
-        'show_id',
-        'crew_role_id',
-        'person_id',
-        'notes',
-    ];
-
     protected $with = [
         'crewRole',
         'person',

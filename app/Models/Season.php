@@ -10,11 +10,6 @@ class Season extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'colour',
-    ];
-
     public function shows(): HasMany
     {
         return $this->hasMany(Show::class);

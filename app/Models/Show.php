@@ -12,13 +12,9 @@ class Show extends Model
     //
     use SoftDeletes;
 
-    protected $fillable = [
-        'title',
-        'blurb',
-        'year',
-        'season_id',
-        'playwright_id',
-        'legacy_link',
+    protected $with = [
+        'playwright',
+        'season',
     ];
 
     public function playwright(): BelongsTo
@@ -39,5 +35,10 @@ class Show extends Model
     public function crewMembers(): HasMany
     {
         return $this->hasMany(CrewMember::class);
+    }
+
+    public function performances(): HasMany
+    {
+        return $this->hasMany(Performance::class);
     }
 }

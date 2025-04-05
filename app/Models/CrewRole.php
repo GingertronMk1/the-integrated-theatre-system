@@ -11,11 +11,6 @@ class CrewRole extends Model
     //
     use SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'description',
-    ];
-
     public function crewMembers(): HasMany
     {
         return $this->hasMany(CrewMember::class);

@@ -6,16 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Playwright extends Model
+class Venue extends Model
 {
+    //
     use SoftDeletes;
 
-    protected $casts = [
-        'external_links' => 'array',
-    ];
-
-    public function shows(): HasMany
+    public function performances(): HasMany
     {
-        return $this->hasMany(Show::class);
+        return $this->hasMany(Performance::class);
     }
 }

@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CastMember extends Model
+class Performance extends Model
 {
+    //
     use SoftDeletes;
 
     protected $with = [
         'show',
-        'person',
+        'venue',
+    ];
+
+    protected $casts = [
+        'show_date' => 'date',
     ];
 
     public function show(): BelongsTo
@@ -20,8 +25,8 @@ class CastMember extends Model
         return $this->belongsTo(Show::class);
     }
 
-    public function person(): BelongsTo
+    public function venue(): BelongsTo
     {
-        return $this->belongsTo(Person::class);
+        return $this->belongsTo(Venue::class);
     }
 }
