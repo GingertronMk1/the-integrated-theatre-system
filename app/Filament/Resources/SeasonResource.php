@@ -23,6 +23,10 @@ class SeasonResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-play-circle';
 
+    protected static ?string $navigationGroup = 'Shows';
+
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -60,7 +64,8 @@ class SeasonResource extends Resource
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('name');
     }
 
     public static function getRelations(): array

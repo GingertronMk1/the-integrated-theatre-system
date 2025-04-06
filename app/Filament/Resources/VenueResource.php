@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PlaywrightResource\Pages;
-use App\Filament\Resources\PlaywrightResource\RelationManagers\ShowsRelationManager;
-use App\Models\Playwright;
+use App\Filament\Resources\VenueResource\Pages;
+use App\Models\Venue;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -15,24 +14,27 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PlaywrightResource extends Resource
+class VenueResource extends Resource
 {
-    protected static ?string $model = Playwright::class;
+    protected static ?string $model = Venue::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     protected static ?string $navigationGroup = 'Shows';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('name')->required(),
-                Textarea::make('bio')
-                    ->rows(5)
-                    ->columnSpan(4),
+                Textarea::make('description')
+                    ->rows(10)
+                    ->columnSpanFull(),
+                Textarea::make('address')
+                    ->rows(10)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -43,7 +45,8 @@ class PlaywrightResource extends Resource
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('bio')
+                TextColumn::make('address')
+                    ->searchable()
                     ->wrap(),
             ])
             ->filters([
@@ -66,17 +69,16 @@ class PlaywrightResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ShowsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPlaywrights::route('/'),
-            'create' => Pages\CreatePlaywright::route('/create'),
-            'view' => Pages\ViewPlaywright::route('/{record}'),
-            'edit' => Pages\EditPlaywright::route('/{record}/edit'),
+            'index' => Pages\ListVenues::route('/'),
+            'create' => Pages\CreateVenue::route('/create'),
+            'view' => Pages\ViewVenue::route('/{record}'),
+            'edit' => Pages\EditVenue::route('/{record}/edit'),
         ];
     }
 
