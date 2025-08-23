@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             PersonSeeder::class,
             VenueSeeder::class,
             SeasonSeeder::class,
+            PlaywrightSeeder::class,
         ]);
     }
 }
