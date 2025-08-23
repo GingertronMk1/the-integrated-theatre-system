@@ -53,6 +53,8 @@ test('email verification status is unchanged when the email address is unchanged
 test('user can delete their account', function () {
     $user = User::factory()->create();
 
+    expect($user->deleted_at)->toBeNull();
+
     $response = $this
         ->actingAs($user)
         ->delete('/settings/profile', [
@@ -64,7 +66,7 @@ test('user can delete their account', function () {
         ->assertRedirect('/');
 
     $this->assertGuest();
-    expect($user->fresh())->toBeNull();
+    expect($user->fresh()->deleted_at)->not()->toBeNull();
 });
 
 test('correct password must be provided to delete account', function () {
