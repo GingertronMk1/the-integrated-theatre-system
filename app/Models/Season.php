@@ -11,6 +11,7 @@ class Season extends Model
 {
     /** @use HasFactory<\Database\Factories\SeasonFactory> */
     use HasFactory;
+
     use HasUuids;
     use SoftDeletes;
 }
