@@ -11,6 +11,7 @@ class Venue extends Model
 {
     /** @use HasFactory<\Database\Factories\VenueFactory> */
     use HasFactory;
+
     use HasUuids;
     use SoftDeletes;
 }
