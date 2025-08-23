@@ -6,6 +6,7 @@ use App\Filament\Resources\Shows\Pages\CreateShow;
 use App\Filament\Resources\Shows\Pages\EditShow;
 use App\Filament\Resources\Shows\Pages\ListShows;
 use App\Filament\Resources\Shows\Pages\ViewShow;
+use App\Filament\Resources\Shows\RelationManagers\CastMembersRelationManager;
 use App\Filament\Resources\Shows\Schemas\ShowForm;
 use App\Filament\Resources\Shows\Schemas\ShowInfolist;
 use App\Filament\Resources\Shows\Tables\ShowsTable;
@@ -44,6 +45,7 @@ class ShowResource extends Resource
     public static function getRelations(): array
     {
         return [
+            CastMembersRelationManager::class,
         ];
     }
 
