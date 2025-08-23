@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             User::factory()->create([
                 'name' => 'Admin',
                 'email' => 'admin@the-integrated-theatre-system.test',
-                'password' => bcrypt(12345)
+                'password' => bcrypt(12345),
             ]);
         }
 

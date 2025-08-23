@@ -20,10 +20,13 @@ class PeopleTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('user.name')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
