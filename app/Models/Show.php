@@ -17,6 +17,12 @@ class Show extends Model
     use HasUuids;
     use SoftDeletes;
 
+    protected $with = [
+        'venue',
+        'playwright',
+        'season',
+    ];
+
     public function venue(): BelongsTo
     {
         return $this->belongsTo(Venue::class);
@@ -35,5 +41,10 @@ class Show extends Model
     public function castMembers(): HasMany
     {
         return $this->hasMany(CastMember::class);
+    }
+
+    public function crewMembers(): HasMany
+    {
+        return $this->hasMany(CrewMember::class);
     }
 }

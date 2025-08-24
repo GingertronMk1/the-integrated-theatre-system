@@ -21,7 +21,8 @@ class CastMembersTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('person.name')
                     ->label('Person')
                     ->sortable()

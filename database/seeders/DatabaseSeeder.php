@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             PlaywrightSeeder::class,
             ShowSeeder::class,
             CastMemberSeeder::class,
+            CrewRoleSeeder::class,
+            CrewMemberSeeder::class,
         ]);
     }
 }

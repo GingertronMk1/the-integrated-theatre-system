@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Seasons\Tables;
+namespace App\Filament\Resources\CrewRoles\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -8,12 +8,11 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class SeasonsTable
+class CrewRolesTable
 {
     public static function configure(Table $table): Table
     {
@@ -21,19 +20,9 @@ class SeasonsTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('name')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('description')
-                    ->wrap()
-                    ->words(4)
-                    ->sortable()
-                    ->searchable(),
-                ColorColumn::make('colour')
-                    ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
