@@ -22,7 +22,7 @@ class File extends Model
         'type' => FileTypeEnum::class,
     ];
 
-    public function file(): Filesystem|string|null
+    public function getFileAttribute(): Filesystem|string|null
     {
         return Storage::get($this->path);
     }
