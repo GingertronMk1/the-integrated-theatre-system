@@ -11,6 +11,7 @@ class CrewRole extends Model
 {
     /** @use HasFactory<\Database\Factories\CrewRoleFactory> */
     use HasFactory;
+
     use HasUuids;
     use SoftDeletes;
 }

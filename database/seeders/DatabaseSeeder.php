@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ShowSeeder::class,
             CastMemberSeeder::class,
             CrewRoleSeeder::class,
+            CrewMemberSeeder::class,
         ]);
     }
 }

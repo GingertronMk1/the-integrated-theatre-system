@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\CrewRole;
+use App\Models\CrewMember;
 use App\Models\User;
 
-class CrewRolePolicy
+class CrewMemberPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +18,7 @@ class CrewRolePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CrewRole $crewRole): bool
+    public function view(User $user, CrewMember $crewMember): bool
     {
         return true;
     }
@@ -34,7 +34,7 @@ class CrewRolePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CrewRole $crewRole): bool
+    public function update(User $user, CrewMember $crewMember): bool
     {
         return true;
     }
@@ -42,7 +42,7 @@ class CrewRolePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CrewRole $crewRole): bool
+    public function delete(User $user, CrewMember $crewMember): bool
     {
         return true;
     }
@@ -50,7 +50,7 @@ class CrewRolePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, CrewRole $crewRole): bool
+    public function restore(User $user, CrewMember $crewMember): bool
     {
         return true;
     }
@@ -58,7 +58,7 @@ class CrewRolePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, CrewRole $crewRole): bool
+    public function forceDelete(User $user, CrewMember $crewMember): bool
     {
         return true;
     }
