@@ -20,7 +20,8 @@ class CrewRolesTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('created_at')

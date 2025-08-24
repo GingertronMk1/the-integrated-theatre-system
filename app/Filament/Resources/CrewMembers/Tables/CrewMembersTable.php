@@ -21,7 +21,8 @@ class CrewMembersTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('crewRole.name')
                     ->sortable()
                     ->searchable(),

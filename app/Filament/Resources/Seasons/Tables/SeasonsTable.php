@@ -22,7 +22,8 @@ class SeasonsTable
                 TextColumn::make('id')
                     ->label('ID')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
