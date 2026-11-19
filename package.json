@@ -26,6 +26,9 @@
         "vite": "npm:@voidzero-dev/vite-plus-core@1.4.0"
     },
     "devDependencies": {
-        "fontaine": "^0.8.2"
+        "fontaine": "^0.8.2",
+        "prettier": "^3.10.1",
+        "prettier-plugin-blade": "^3.3.3",
+        "prettier-plugin-tailwindcss": "^0.8.1"
     }
 }

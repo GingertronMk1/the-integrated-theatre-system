@@ -1,0 +1,65 @@
+<x-layouts::app :title="$show->name">
+    <div class="mx-auto flex max-w-6xl flex-col gap-8">
+        <header>
+            <a
+                href="{{ route('shows.index') }}"
+                wire:navigate
+                class="text-sm font-medium text-amber-700 hover:underline dark:text-amber-400"
+            >← All shows</a>
+            <p class="mt-6 text-sm text-zinc-500">
+                {{ $show->season?->name ?? 'Season unavailable' }} · {{ $show->year ?? 'Year not set' }}
+            </p>
+            <h1 class="mt-2 text-3xl font-semibold text-zinc-950 dark:text-white">{{ $show->name }}</h1>
+            <p class="mt-2 text-zinc-500">By {{ $show->playwright?->name ?? 'Unknown playwright' }}</p>
+            @if ($show->description)
+                <p class="mt-5 max-w-3xl text-sm leading-6 whitespace-pre-line text-zinc-700 dark:text-zinc-300">
+                    {{ $show->description }}
+                </p>
+            @endif
+        </header>
+        <div class="grid items-start gap-5 lg:grid-cols-3">
+            <section class="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900">
+                <h2 class="font-semibold dark:text-white">Performances</h2>
+                <ul class="mt-4 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
+                    @forelse ($show->performances as $performance)
+                        <li>
+                            {{ $performance->show_start ?: 'Time not set' }}<span
+                                class="block text-zinc-500"
+                                >{{ $performance->venue?->name ?? 'Venue unavailable' }}</span>
+                        </li>
+                    @empty
+                        <li class="text-zinc-500">No performances yet.</li>
+                    @endforelse
+                </ul>
+            </section>
+            <section class="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900">
+                <h2 class="font-semibold dark:text-white">Cast</h2>
+                <ul class="mt-4 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
+                    @forelse ($show->cast as $entry)
+                        <li>
+                            {{ $entry->person?->name ?? 'Unnamed person' }}<span
+                                class="block text-zinc-500"
+                                >{{ $entry->role_name }}</span>
+                        </li>
+                    @empty
+                        <li class="text-zinc-500">No cast added yet.</li>
+                    @endforelse
+                </ul>
+            </section>
+            <section class="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900">
+                <h2 class="font-semibold dark:text-white">Crew</h2>
+                <ul class="mt-4 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
+                    @forelse ($show->crew as $entry)
+                        <li>
+                            {{ $entry->person?->name ?? 'Unnamed person' }}<span
+                                class="block text-zinc-500"
+                                >{{ $entry->role?->name ?? 'Role unavailable' }}</span>
+                        </li>
+                    @empty
+                        <li class="text-zinc-500">No crew added yet.</li>
+                    @endforelse
+                </ul>
+            </section>
+        </div>
+    </div>
+</x-layouts::app>
