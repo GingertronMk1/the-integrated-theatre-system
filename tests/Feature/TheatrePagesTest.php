@@ -18,14 +18,14 @@ it('allows guests to browse the theatre pages', function () {
 
 it('shows the theatre records in the browser', function () {
     $cast = ShowCast::factory()->create(['role_name' => 'Hamlet']);
-    $performance = Performance::factory()->for($cast->show)->create(['show_start' => 'Friday 7pm']);
+    $performance = Performance::factory()->for($cast->show)->create(['show_start' => '2026-06-12 19:00:00']);
     $person = Person::factory()->create(['name' => 'Alex Player']);
     $training = TrainingItem::factory()->create(['name' => 'Lighting safety', 'dangerous' => true]);
     $this->actingAs(User::factory()->create());
 
     $this->get(route('dashboard'))->assertOk()->assertSee($cast->show->name);
     $this->get(route('shows.index'))->assertOk()->assertSee($cast->show->name);
-    $this->get(route('shows.show', $cast->show))->assertOk()->assertSee('Hamlet')->assertSee('Friday 7pm');
+    $this->get(route('shows.show', $cast->show))->assertOk()->assertSee('Hamlet')->assertSee('2026-06-12 19:00:00');
     $this->get(route('performances.index'))->assertOk()->assertSee($performance->venue->name);
     $this->get(route('people.index'))->assertOk()->assertSee($person->name);
     $this->get(route('training.index'))->assertOk()->assertSee($training->name)->assertSee('Hazardous');

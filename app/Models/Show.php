@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use Database\Factories\ShowFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,8 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property-read string|null $first_performance_start
- * @property-read string|null $last_performance_start
+ * @property-read CarbonImmutable|null $first_performance_start
+ * @property-read CarbonImmutable|null $last_performance_start
  * @property-read Collection<int, Performance> $performances
  */
 class Show extends Model
@@ -57,18 +58,18 @@ class Show extends Model
         return $this->hasMany(Performance::class)->orderBy('performances.show_start');
     }
 
-    /** @return Attribute<string|null, never> */
+    /** @return Attribute<CarbonImmutable|null, never> */
     protected function firstPerformanceStart(): Attribute
     {
-        return Attribute::get(fn (): ?string => $this->relationLoaded('performances')
+        return Attribute::get(fn (): ?CarbonImmutable => $this->relationLoaded('performances')
             ? $this->performances->first()?->show_start
             : $this->performances()->without(['show', 'venue'])->first(['show_start'])?->show_start);
     }
 
-    /** @return Attribute<string|null, never> */
+    /** @return Attribute<CarbonImmutable|null, never> */
     protected function lastPerformanceStart(): Attribute
     {
-        return Attribute::get(fn (): ?string => $this->relationLoaded('performances')
+        return Attribute::get(fn (): ?CarbonImmutable => $this->relationLoaded('performances')
             ? $this->performances->last()?->show_start
             : $this->performances()->without(['show', 'venue'])->reorder('performances.show_start', 'desc')->first(['show_start'])?->show_start);
     }

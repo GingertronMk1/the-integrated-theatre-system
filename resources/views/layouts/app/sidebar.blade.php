@@ -1,66 +1,85 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
-    <head>
-        @include('partials.head')
-    </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:sidebar.header>
-                <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
-                <flux:sidebar.collapse class="lg:hidden" />
-            </flux:sidebar.header>
+<head>
+    @include('partials.head')
+</head>
+<body class="min-h-screen bg-white dark:bg-zinc-800">
+    <flux:sidebar
+        sticky
+        collapsible="mobile"
+        class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
+    >
+        <flux:sidebar.header>
+            <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
+            <flux:sidebar.collapse class="lg:hidden" />
+        </flux:sidebar.header>
 
-            <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </flux:sidebar.item>
-                    <flux:sidebar.item :href="route('shows.index')" :current="request()->routeIs('shows.*')" wire:navigate>Shows</flux:sidebar.item>
-                    <flux:sidebar.item :href="route('performances.index')" :current="request()->routeIs('performances.*')" wire:navigate>Performances</flux:sidebar.item>
-                    <flux:sidebar.item :href="route('people.index')" :current="request()->routeIs('people.*')" wire:navigate>People</flux:sidebar.item>
-                    <flux:sidebar.item :href="route('training.index')" :current="request()->routeIs('training.*')" wire:navigate>Training</flux:sidebar.item>
-                </flux:sidebar.group>
-            </flux:sidebar.nav>
+        <flux:sidebar.nav>
+            <flux:sidebar.group :heading="__('Platform')" class="grid">
+                <flux:sidebar.item
+                    icon="home"
+                    :href="route('dashboard')"
+                    :current="request()->routeIs('dashboard')"
+                    wire:navigate
+                >
+                    {{ __('Dashboard') }}
+                </flux:sidebar.item>
+                <flux:sidebar.item :href="route('shows.index')" :current="request()->routeIs('shows.*')" wire:navigate>
+                    Shows</flux:sidebar.item>
+                <flux:sidebar.item
+                    :href="route('performances.index')"
+                    :current="request()->routeIs('performances.*')"
+                    wire:navigate
+                >
+                    Performances</flux:sidebar.item>
+                <flux:sidebar.item
+                    :href="route('people.index')"
+                    :current="request()->routeIs('people.*')"
+                    wire:navigate
+                >
+                    People</flux:sidebar.item>
+                <flux:sidebar.item
+                    :href="route('training.index')"
+                    :current="request()->routeIs('training.*')"
+                    wire:navigate
+                >
+                    Training</flux:sidebar.item>
+            </flux:sidebar.group>
+        </flux:sidebar.nav>
 
-            <flux:spacer />
+        <flux:spacer />
 
-            @auth
+        @auth
             <flux:sidebar.nav>
                 <flux:sidebar.item :href="route('filament.admin.pages.dashboard')">Administration</flux:sidebar.item>
             </flux:sidebar.nav>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
-            @else
-                <flux:sidebar.nav>
-                    <flux:sidebar.item :href="route('login')" wire:navigate>Log in</flux:sidebar.item>
-                    @if (Route::has('register'))
-                        <flux:sidebar.item :href="route('register')" wire:navigate>Register</flux:sidebar.item>
-                    @endif
-                </flux:sidebar.nav>
-            @endauth
-        </flux:sidebar>
+        @else
+            <flux:sidebar.nav>
+                <flux:sidebar.item :href="route('login')" wire:navigate>Log in</flux:sidebar.item>
+                @if (Route::has('register'))
+                    <flux:sidebar.item :href="route('register')" wire:navigate>Register</flux:sidebar.item>
+                @endif
+            </flux:sidebar.nav>
+        @endauth
+    </flux:sidebar>
 
-        <!-- Mobile User Menu -->
-        <flux:header class="lg:hidden">
-            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+    <!-- Mobile User Menu -->
+    <flux:header class="lg:hidden">
+        <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
-            <flux:spacer />
+        <flux:spacer />
 
-            @auth
+        @auth
             <flux:dropdown position="top" align="end">
-                <flux:profile
-                    :initials="auth()->user()->initials()"
-                    icon-trailing="chevron-down"
-                />
+                <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" />
 
                 <flux:menu>
                     <flux:menu.radio.group>
                         <div class="p-0 text-sm font-normal">
                             <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                <flux:avatar
-                                    :name="auth()->user()->name"
-                                    :initials="auth()->user()->initials()"
-                                />
+                                <flux:avatar :name="auth()->user()->name" :initials="auth()->user()->initials()" />
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">
                                     <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
@@ -94,19 +113,19 @@
                     </form>
                 </flux:menu>
             </flux:dropdown>
-            @else
-                <flux:button :href="route('login')" size="sm" wire:navigate>Log in</flux:button>
-            @endauth
-        </flux:header>
+        @else
+            <flux:button :href="route('login')" size="sm" wire:navigate>Log in</flux:button>
+        @endauth
+    </flux:header>
 
-        {{ $slot }}
+    {{ $slot }}
 
-        @persist('toast')
-            <flux:toast.group>
-                <flux:toast />
-            </flux:toast.group>
-        @endpersist
+    @persist('toast')
+        <flux:toast.group>
+            <flux:toast />
+        </flux:toast.group>
+    @endpersist
 
-        @fluxScripts
-    </body>
+    @fluxScripts
+</body>
 </html>

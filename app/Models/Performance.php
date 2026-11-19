@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use Database\Factories\PerformanceFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property string|null $show_start
+ * @property CarbonImmutable|null $show_start
  */
 class Performance extends Model
 {
@@ -18,12 +20,13 @@ class Performance extends Model
     use HasFactory;
 
     use HasUuids;
+    use SoftDeletes;
 
     protected $with = ['show', 'venue'];
 
     protected $fillable = ['show_id', 'show_start', 'venue_id', 'capacity'];
 
-    public $timestamps = false;
+    protected $casts = ['show_start' => 'datetime'];
 
     /** @return BelongsTo<Show, $this> */
     public function show(): BelongsTo

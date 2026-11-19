@@ -3,6 +3,7 @@
 use App\Models\Performance;
 use App\Models\Show;
 use App\Models\Venue;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 
 test('a show returns its performances ordered by start time', function () {
@@ -14,8 +15,11 @@ test('a show returns its performances ordered by start time', function () {
 
     $expected = ['2026-06-01 19:30:00', '2026-06-02 19:30:00', '2026-06-03 19:30:00'];
 
-    expect($show->performances()->pluck('show_start')->all())->toBe($expected)
-        ->and(Show::query()->with('performances')->findOrFail($show->id)->performances->pluck('show_start')->all())->toBe($expected);
+    $fromQuery = $show->performances()->pluck('show_start')->map(fn (CarbonImmutable $start): string => $start->toDateTimeString())->all();
+    $fromRelation = Show::query()->with('performances')->findOrFail($show->id)->performances->pluck('show_start')
+        ->map(fn (CarbonImmutable $start): string => $start->toDateTimeString())->all();
+
+    expect($fromQuery)->toBe($expected)->and($fromRelation)->toBe($expected);
 });
 
 test('a show exposes first and last performance starts without loading the relationship', function () {
@@ -27,8 +31,10 @@ test('a show exposes first and last performance starts without loading the relat
 
     $show = Show::query()->findOrFail($show->id);
 
-    expect($show->first_performance_start)->toBe('2026-06-01 19:30:00')
-        ->and($show->last_performance_start)->toBe('2026-06-03 19:30:00')
+    expect($show->first_performance_start)->toBeInstanceOf(CarbonImmutable::class)
+        ->and($show->first_performance_start->toDateTimeString())->toBe('2026-06-01 19:30:00')
+        ->and($show->last_performance_start)->toBeInstanceOf(CarbonImmutable::class)
+        ->and($show->last_performance_start->toDateTimeString())->toBe('2026-06-03 19:30:00')
         ->and($show->relationLoaded('performances'))->toBeFalse();
 });
 
@@ -42,8 +48,10 @@ test('performance start attributes use already loaded performances without furth
     DB::enableQueryLog();
     DB::flushQueryLog();
 
-    expect($show->first_performance_start)->toBe('2026-06-01 19:30:00')
-        ->and($show->last_performance_start)->toBe('2026-06-03 19:30:00')
+    expect($show->first_performance_start)->toBeInstanceOf(CarbonImmutable::class)
+        ->and($show->first_performance_start->toDateTimeString())->toBe('2026-06-01 19:30:00')
+        ->and($show->last_performance_start)->toBeInstanceOf(CarbonImmutable::class)
+        ->and($show->last_performance_start->toDateTimeString())->toBe('2026-06-03 19:30:00')
         ->and(DB::getQueryLog())->toBeEmpty();
 
     DB::disableQueryLog();

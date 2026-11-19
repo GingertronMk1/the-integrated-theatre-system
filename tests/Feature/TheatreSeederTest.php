@@ -26,7 +26,7 @@ test('the database seeder creates a connected theatre dataset', function () {
         $firstDate = CarbonImmutable::parse($performances->first()->show_start);
 
         foreach ($performances as $index => $performance) {
-            expect($performance->show_start)->toBe($firstDate->addDays($index)->format('Y-m-d H:i:s'));
+            expect($performance->show_start->toDateTimeString())->toBe($firstDate->addDays($index)->format('Y-m-d H:i:s'));
         }
     }
 });

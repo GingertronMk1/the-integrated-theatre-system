@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('performances', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('show_id')->constrained();
-            $table->string('show_start')->nullable();
+            $table->dateTime('show_start')->nullable();
             $table->foreignUuid('venue_id')->constrained();
             $table->unsignedInteger('capacity');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

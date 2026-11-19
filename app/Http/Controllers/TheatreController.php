@@ -33,7 +33,7 @@ class TheatreController extends Controller
     public function shows(): View
     {
         return view('theatre.shows', [
-            'shows' => Show::query()->with(['season', 'playwright'])->orderBy('name')->paginate(15),
+            'shows' => Show::query()->with(['performances', 'season', 'playwright'])->orderBy('name')->paginate(15),
         ]);
     }
 
