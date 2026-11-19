@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        User::query()->firstOrCreate([
+            'email' => 'admin@tits.test',
+        ], [
+            'name' => 'Admin',
+            'password' => '12345',
         ]);
-
         $this->call(TheatreSeeder::class);
     }
 }
