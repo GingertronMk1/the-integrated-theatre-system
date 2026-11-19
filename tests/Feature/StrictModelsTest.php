@@ -23,5 +23,5 @@ test('models reject lazy loading on query collections', function () {
     Show::factory()->count(2)->create();
     $show = Show::query()->get()->first();
 
-    expect(fn () => $show->season)->toThrow(LazyLoadingViolationException::class);
+    expect(fn () => $show->performances)->toThrow(LazyLoadingViolationException::class);
 });

@@ -16,6 +16,8 @@ class TrainingItem extends Model
 
     use HasUuids;
 
+    protected $with = ['trainingCategory'];
+
     protected $fillable = ['name', 'training_category_id', 'dangerous'];
 
     protected function casts(): array

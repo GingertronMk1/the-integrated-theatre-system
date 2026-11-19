@@ -19,7 +19,7 @@ class VenueController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        return new JsonResource(Venue::create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
+        return new JsonResource(Venue::query()->create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
     }
 
     public function show(Venue $venue): JsonResource

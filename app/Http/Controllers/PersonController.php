@@ -20,7 +20,7 @@ class PersonController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        return new JsonResource(Person::create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
+        return new JsonResource(Person::query()->create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
     }
 
     public function show(Person $person): JsonResource

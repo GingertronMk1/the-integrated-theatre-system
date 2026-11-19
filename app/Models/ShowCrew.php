@@ -15,6 +15,8 @@ class ShowCrew extends Model
 
     use HasUuids;
 
+    protected $with = ['show', 'person', 'role'];
+
     protected $fillable = ['show_id', 'person_id', 'role_id', 'notes'];
 
     protected $table = 'show_crew';

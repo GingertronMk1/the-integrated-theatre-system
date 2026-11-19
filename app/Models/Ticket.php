@@ -16,6 +16,8 @@ class Ticket extends Model
 
     use HasUuids;
 
+    protected $with = ['performance'];
+
     protected $fillable = ['performance_id', 'status', 'cost_pence'];
 
     public $timestamps = false;

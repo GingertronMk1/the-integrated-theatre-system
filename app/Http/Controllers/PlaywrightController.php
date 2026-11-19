@@ -19,7 +19,7 @@ class PlaywrightController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        return new JsonResource(Playwright::create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
+        return new JsonResource(Playwright::query()->create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
     }
 
     public function show(Playwright $playwright): JsonResource

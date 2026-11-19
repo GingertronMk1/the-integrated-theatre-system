@@ -9,11 +9,11 @@ use Database\Seeders\DatabaseSeeder;
 test('the database seeder creates a connected theatre dataset', function () {
     $this->seed(DatabaseSeeder::class);
 
-    expect(Person::count())->toBe(1000)
-        ->and(Show::count())->toBe(100)
-        ->and(User::where('email', 'test@example.com')->exists())->toBeTrue();
+    expect(Person::query()->count())->toBe(1000)
+        ->and(Show::query()->count())->toBe(100)
+        ->and(User::query()->where('email', 'admin@tits.test')->exists())->toBeTrue();
 
-    $shows = Show::with(['cast', 'crew', 'performances'])->get();
+    $shows = Show::query()->with(['cast', 'crew', 'performances'])->get();
 
     foreach ($shows as $show) {
         expect($show->cast->count())->toBeGreaterThanOrEqual(5)->toBeLessThanOrEqual(20)

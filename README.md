@@ -77,7 +77,7 @@ MAIL_USERNAME=null
 MAIL_PASSWORD=null
 ```
 
-The Mailtrap Local dashboard uses host port `3550` by default (`FORWARD_MAILTRAP_LOCAL_DASHBOARD_PORT` overrides it). Register an account and verify its email to use the protected JSON endpoints and account features. The optional `vendor/bin/sail artisan db:seed` command creates a verified local `test@example.com` user with password `password`, plus 1,000 people and 100 shows. Each show has 5–20 cast members, 10–50 crew members and 3–5 performances on consecutive dates. The sample data also includes shared roles, venues, seasons and playwrights. Use the sample account only in a local environment.
+The Mailtrap Local dashboard uses host port `3550` by default (`FORWARD_MAILTRAP_LOCAL_DASHBOARD_PORT` overrides it). Register an account and verify its email to use the protected JSON endpoints and account features. The optional `vendor/bin/sail artisan db:seed` command creates a local `admin@tits.test` user with the password specified in `DatabaseSeeder`, plus 1,000 people and 100 shows. Each show has 5–20 cast members, 10–50 crew members and 3–5 performances on consecutive dates. The sample data also includes shared roles, venues, seasons and playwrights. Use the sample account only in a local environment.
 
 The original user and passkey migrations use UUID user IDs and were edited in place. A database that ran an earlier version of those migrations needs to be rebuilt or otherwise migrated before using this version. Do not run a destructive database reset against data you need to keep.
 

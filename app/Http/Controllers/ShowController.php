@@ -19,7 +19,7 @@ class ShowController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        return new JsonResource(Show::create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
+        return new JsonResource(Show::query()->create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
     }
 
     public function show(Show $show): JsonResource

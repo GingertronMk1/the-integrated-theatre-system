@@ -96,6 +96,6 @@ test('an administrator can create a user with a hashed password', function () {
         ])
         ->assertHasNoActionErrors();
 
-    $user = User::where('email', 'new@example.com')->firstOrFail();
+    $user = User::query()->where('email', 'new@example.com')->firstOrFail();
     expect(Hash::check('long-enough-password', $user->password))->toBeTrue();
 });

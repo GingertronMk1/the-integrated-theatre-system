@@ -16,6 +16,8 @@ class Person extends Model
 
     use HasUuids;
 
+    protected $with = ['user'];
+
     protected $fillable = ['user_id', 'name', 'start_year', 'end_year'];
 
     /** @return BelongsTo<User, $this> */

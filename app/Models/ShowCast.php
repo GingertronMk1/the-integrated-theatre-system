@@ -15,6 +15,8 @@ class ShowCast extends Model
 
     use HasUuids;
 
+    protected $with = ['show', 'person'];
+
     protected $fillable = ['show_id', 'person_id', 'role_name', 'notes'];
 
     protected $table = 'show_cast';

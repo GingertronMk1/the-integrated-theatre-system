@@ -19,6 +19,8 @@ class Performance extends Model
 
     use HasUuids;
 
+    protected $with = ['show', 'venue'];
+
     protected $fillable = ['show_id', 'show_start', 'venue_id', 'capacity'];
 
     public $timestamps = false;

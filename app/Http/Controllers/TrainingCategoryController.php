@@ -19,7 +19,7 @@ class TrainingCategoryController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        return new JsonResource(TrainingCategory::create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
+        return new JsonResource(TrainingCategory::query()->create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
     }
 
     public function show(TrainingCategory $trainingCategory): JsonResource

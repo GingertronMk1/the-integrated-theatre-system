@@ -19,7 +19,7 @@ class SeasonController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        return new JsonResource(Season::create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
+        return new JsonResource(Season::query()->create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
     }
 
     public function show(Season $season): JsonResource

@@ -16,6 +16,8 @@ class TrainingSession extends Model
 
     use HasUuids;
 
+    protected $with = ['trainingItem'];
+
     protected $fillable = ['training_item_id', 'occurred_at'];
 
     protected $table = 'training_session';

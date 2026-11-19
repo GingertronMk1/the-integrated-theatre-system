@@ -16,6 +16,8 @@ class TrainingSessionPerson extends Model
 
     use HasUuids;
 
+    protected $with = ['trainingSession', 'person'];
+
     protected $fillable = ['training_session_id', 'person_id', 'type'];
 
     public $timestamps = false;

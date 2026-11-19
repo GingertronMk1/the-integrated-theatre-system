@@ -23,6 +23,8 @@ class Show extends Model
 
     use HasUuids;
 
+    protected $with = ['playwright', 'season'];
+
     protected $fillable = ['name', 'description', 'year', 'playwright_id', 'season_id'];
 
     /** @return BelongsTo<Playwright, $this> */
@@ -60,7 +62,7 @@ class Show extends Model
     {
         return Attribute::get(fn (): ?string => $this->relationLoaded('performances')
             ? $this->performances->first()?->show_start
-            : $this->performances()->first(['show_start'])?->show_start);
+            : $this->performances()->without(['show', 'venue'])->first(['show_start'])?->show_start);
     }
 
     /** @return Attribute<string|null, never> */
@@ -68,6 +70,6 @@ class Show extends Model
     {
         return Attribute::get(fn (): ?string => $this->relationLoaded('performances')
             ? $this->performances->last()?->show_start
-            : $this->performances()->reorder('performances.show_start', 'desc')->first(['show_start'])?->show_start);
+            : $this->performances()->without(['show', 'venue'])->reorder('performances.show_start', 'desc')->first(['show_start'])?->show_start);
     }
 }

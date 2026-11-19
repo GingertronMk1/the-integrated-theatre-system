@@ -19,7 +19,7 @@ class TrainingSessionController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        return new JsonResource(TrainingSession::create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
+        return new JsonResource(TrainingSession::query()->create(Validator::make($request->all(), $this->rules())->safe(array_keys($this->rules()))));
     }
 
     public function show(TrainingSession $trainingSession): JsonResource

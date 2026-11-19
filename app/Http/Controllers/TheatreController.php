@@ -13,27 +13,27 @@ class TheatreController extends Controller
     public function home(): View
     {
         return view('welcome', [
-            'showCount' => Show::count(),
-            'performanceCount' => Performance::count(),
-            'peopleCount' => Person::count(),
+            'showCount' => Show::query()->count(),
+            'performanceCount' => Performance::query()->count(),
+            'peopleCount' => Person::query()->count(),
         ]);
     }
 
     public function dashboard(): View
     {
         return view('dashboard', [
-            'showCount' => Show::count(),
-            'performanceCount' => Performance::count(),
-            'peopleCount' => Person::count(),
-            'trainingCount' => TrainingItem::count(),
-            'shows' => Show::with(['season', 'playwright'])->latest()->limit(5)->get(),
+            'showCount' => Show::query()->count(),
+            'performanceCount' => Performance::query()->count(),
+            'peopleCount' => Person::query()->count(),
+            'trainingCount' => TrainingItem::query()->count(),
+            'shows' => Show::query()->with(['season', 'playwright'])->latest()->limit(5)->get(),
         ]);
     }
 
     public function shows(): View
     {
         return view('theatre.shows', [
-            'shows' => Show::with(['season', 'playwright'])->orderBy('name')->paginate(15),
+            'shows' => Show::query()->with(['season', 'playwright'])->orderBy('name')->paginate(15),
         ]);
     }
 
@@ -47,21 +47,21 @@ class TheatreController extends Controller
     public function performances(): View
     {
         return view('theatre.performances', [
-            'performances' => Performance::with(['show', 'venue'])->orderBy('show_start')->paginate(15),
+            'performances' => Performance::query()->with(['show', 'venue'])->orderBy('show_start')->paginate(15),
         ]);
     }
 
     public function people(): View
     {
         return view('theatre.people', [
-            'people' => Person::orderBy('name')->paginate(15),
+            'people' => Person::query()->orderBy('name')->paginate(15),
         ]);
     }
 
     public function training(): View
     {
         return view('theatre.training', [
-            'items' => TrainingItem::with('trainingCategory')->orderBy('name')->paginate(15),
+            'items' => TrainingItem::query()->with('trainingCategory')->orderBy('name')->paginate(15),
         ]);
     }
 }
