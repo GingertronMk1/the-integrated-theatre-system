@@ -18,11 +18,18 @@ class TheatreSeeder extends Seeder
 {
     public function run(): void
     {
-        $people = Person::factory()->count(1000)->create();
-        $roles = Role::factory()->count(10)->create();
-        $venues = Venue::factory()->count(5)->create();
-        $playwrights = Playwright::factory()->count(5)->create();
-        $seasons = Season::factory()->count(5)->create();
+        $this->call([
+            PersonSeeder::class,
+            RoleSeeder::class,
+            VenueSeeder::class,
+            PlaywrightSeeder::class,
+            SeasonSeeder::class,
+        ]);
+        $people = Person::query()->get();
+        $roles = Role::query()->get();
+        $venues = Venue::query()->get();
+        $playwrights = Playwright::query()->get();
+        $seasons = Season::query()->get();
 
         for ($showIndex = 0; $showIndex < 100; $showIndex++) {
             $firstPerformance = CarbonImmutable::instance(fake()->dateTimeBetween('-2 years', '+1 year'))->setTime(19, 30);
