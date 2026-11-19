@@ -38,7 +38,7 @@ Tickets belong to performances and have an `available`, `reserved` or `bought` s
    cp .env.example .env
    ```
 
-2. Edit `.env`. The example defaults to SQLite and a log mailer; for the MySQL service in `compose.yaml`, set matching database credentials, for example:
+2. Edit `.env`. The example is configured for Sail's MySQL, Redis, Mailtrap Local, Typesense and Soketi services. Set a local application URL and your own database credentials, for example:
 
    ```dotenv
    APP_ENV=local
@@ -52,7 +52,7 @@ Tickets belong to performances and have an `available`, `reserved` or `bought` s
    REDIS_HOST=redis
    ```
 
-   MySQL creates the configured database and user when its volume is first initialized. Set `APP_PORT` if port 80 is unavailable, and set `APP_URL` to the corresponding browser URL. The passkey relying party and allowed origin derive from `APP_URL`.
+   The example `APP_URL` uses `tits.test`; configure local name resolution for that hostname or change it to a URL your browser can reach. MySQL creates the configured database and user when its volume is first initialized. Set `APP_PORT` if port 80 is unavailable, and set `APP_URL` to the corresponding browser URL. The passkey relying party and allowed origin derive from `APP_URL`.
 
 3. Start the containers and complete installation:
 
@@ -67,7 +67,7 @@ Tickets belong to performances and have an `available`, `reserved` or `bought` s
 
    Keep the Vite development server running while working on frontend assets. To build assets instead, run `vendor/bin/sail npm run build`. Open the application with `vendor/bin/sail open` and stop the containers with `vendor/bin/sail stop`.
 
-Sail also starts Redis, Typesense, Mailtrap Local, Selenium and Soketi. Their ports and persistent volumes are defined in `compose.yaml`. To receive verification and password-reset emails in Mailtrap Local rather than the default application log, configure the mailer in `.env`, for example:
+Sail also starts Redis, Typesense, Mailtrap Local, Selenium and Soketi. Their ports and persistent volumes are defined in `compose.yaml`. The example configures Mailtrap Local for verification and password-reset emails:
 
 ```dotenv
 MAIL_MAILER=smtp
