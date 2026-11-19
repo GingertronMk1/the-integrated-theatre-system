@@ -12,6 +12,20 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: laravel
+      DB_USERNAME: sail
+      DB_PASSWORD: password
+      PUSHER_APP_ID: ci-app
+      PUSHER_APP_KEY: ci-key
+      PUSHER_APP_SECRET: ci-secret
+      PUSHER_HOST: soketi
+      PUSHER_PORT: 6001
+      PUSHER_SCHEME: http
+      PUSHER_APP_CLUSTER: mt1
 
     steps:
       - name: Checkout code
@@ -41,8 +55,11 @@ jobs:
       - name: Configure environment
         run: |
           cp .env.example .env
-          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
-          printf "\nDB_HOST=mysql\nDB_PORT=3306\nDB_DATABASE=laravel\nDB_USERNAME=sail\nDB_PASSWORD=password\n" >> .env
+          sed -i '/^DB_CONNECTION=/d' .env
+          for variable in DB_CONNECTION DB_HOST DB_PORT DB_DATABASE DB_USERNAME DB_PASSWORD \
+            PUSHER_APP_ID PUSHER_APP_KEY PUSHER_APP_SECRET PUSHER_HOST PUSHER_PORT PUSHER_SCHEME PUSHER_APP_CLUSTER; do
+            printf '%s=%s\n' "$variable" "${!variable}" >> .env
+          done
           echo "WWWUSER=$(id -u)" >> .env
           echo "WWWGROUP=$(id -g)" >> .env
 
@@ -66,16 +83,7 @@ jobs:
       - name: Set up application
         id: setup
         run: |
-          vendor/bin/sail up -d
-          for attempt in $(seq 1 60); do
-            if vendor/bin/sail exec -T mysql mysqladmin ping -h localhost -ppassword --silent; then
-              break
-            fi
-            if [ "$attempt" -eq 60 ]; then
-              exit 1
-            fi
-            sleep 2
-          done
+          vendor/bin/sail up --wait --wait-timeout 180
           vendor/bin/sail composer install --no-interaction --prefer-dist
           vendor/bin/sail artisan key:generate --no-interaction
           vendor/bin/sail artisan migrate --force --no-interaction
