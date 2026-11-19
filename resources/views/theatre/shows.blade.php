@@ -21,10 +21,10 @@
                         </p>
                     </div>
                     <span class="flex flex-col">
-                    <span class="text-sm text-zinc-500">{{ $show->year ?? 'Year not set' }} <span aria-hidden="true">→</span></span>
-                    <span class="text-xs text-zinc-500">
-                        {{ $show->first_performance_start?->format('d M') ?? 'Unknown' }} - {{ $show->last_performance_start?->format('d M') ?? 'Unknown' }}
-                    </span>
+                        <span class="text-sm text-zinc-500">
+                            {{ $show->first_performance_start?->format('d M') ?? 'Unknown' }} - {{ $show->last_performance_start?->format('d M') ?? 'Unknown' }}
+
+                            {{ $show->year ?? 'Year not set' }} <span aria-hidden="true">→</span></span>
                     </span>
                 </a>
             @empty
