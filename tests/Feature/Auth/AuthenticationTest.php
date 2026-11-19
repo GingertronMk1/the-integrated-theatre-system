@@ -65,3 +65,22 @@ test('users can logout', function () {
 
     $this->assertGuest();
 });
+
+test('malformed login identifiers are rejected without an error', function () {
+    $response = $this->postJson(route('login.store'), [
+        'email' => ['invalid'],
+        'password' => 'password',
+    ]);
+
+    $response->assertUnprocessable()->assertJsonValidationErrors('email');
+    $this->assertGuest();
+});
+
+test('malformed passkey identifiers are rejected without an error', function () {
+    $response = $this->postJson(route('passkey.login'), [
+        'credential' => ['id' => ['invalid']],
+    ]);
+
+    $response->assertUnprocessable()->assertJsonValidationErrors('credential.id');
+    $this->assertGuest();
+});

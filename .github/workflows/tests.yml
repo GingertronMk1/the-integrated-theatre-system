@@ -93,7 +93,7 @@ jobs:
 
       - name: Run tests
         if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
-        run: vendor/bin/sail artisan test --compact
+        run: vendor/bin/sail php -d pcov.enabled=1 artisan test --compact --coverage --min=90
 
   dependabot-auto-merge:
     needs: ci
