@@ -12,6 +12,20 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: laravel
+      DB_USERNAME: sail
+      DB_PASSWORD: password
+      PUSHER_APP_ID: ci-app
+      PUSHER_APP_KEY: ci-key
+      PUSHER_APP_SECRET: ci-secret
+      PUSHER_HOST: soketi
+      PUSHER_PORT: 6001
+      PUSHER_SCHEME: http
+      PUSHER_APP_CLUSTER: mt1
 
     steps:
       - name: Checkout code
@@ -19,20 +33,87 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+      - name: Cache Composer dependencies
+        id: composer-cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
         with:
-          php-version: '8.5'
-          tools: composer:v2
-          coverage: none
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.json', 'composer.lock') }}
 
-      - name: Setup Node
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      - name: Bootstrap Sail
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: |
+          docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/app" -w /app composer:2 install --ignore-platform-reqs --no-interaction --no-scripts --prefer-dist
+
+      - name: Cache Sail image
+        id: sail-image-cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
         with:
-          node-version: '22'
+          path: /tmp/sail-image.tar
+          key: ${{ runner.os }}-sail-image-${{ hashFiles('composer.lock', 'compose.yaml', 'vendor/laravel/sail/runtimes/8.5/**') }}
 
-      - name: Setup Application
-        run: composer setup
+      - name: Configure environment
+        run: |
+          cp .env.example .env
+          sed -i '/^DB_CONNECTION=/d' .env
+          for variable in DB_CONNECTION DB_HOST DB_PORT DB_DATABASE DB_USERNAME DB_PASSWORD \
+            PUSHER_APP_ID PUSHER_APP_KEY PUSHER_APP_SECRET PUSHER_HOST PUSHER_PORT PUSHER_SCHEME PUSHER_APP_CLUSTER; do
+            printf '%s=%s\n' "$variable" "${!variable}" >> .env
+          done
+          echo "WWWUSER=$(id -u)" >> .env
+          echo "WWWGROUP=$(id -g)" >> .env
 
-      - name: Run CI Checks
-        run: composer ci:check
+      - name: Restore or build Sail image
+        run: |
+          if [ "${{ steps.sail-image-cache.outputs.cache-hit }}" = 'true' ]; then
+            docker load --input /tmp/sail-image.tar
+          else
+            vendor/bin/sail build
+            docker save sail-8.5/app --output /tmp/sail-image.tar
+          fi
+
+      - name: Cache npm downloads
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: .npm-cache
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Set up application
+        id: setup
+        run: |
+          vendor/bin/sail up --wait --wait-timeout 180
+          vendor/bin/sail composer install --no-interaction --prefer-dist
+          vendor/bin/sail artisan key:generate --no-interaction
+          vendor/bin/sail artisan migrate --force --no-interaction
+          vendor/bin/sail npm ci --cache /var/www/html/.npm-cache
+          vendor/bin/sail npm run build
+          vendor/bin/sail artisan config:clear --no-interaction
+
+      - name: Check formatting
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: vendor/bin/sail composer lint:check
+
+      - name: Run static analysis
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: vendor/bin/sail composer types:check
+
+      - name: Run tests
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: vendor/bin/sail php -d pcov.enabled=1 artisan test --compact --coverage --min=90
+
+  dependabot-auto-merge:
+    needs: ci
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Enable auto-merge
+        run: gh pr merge --auto --merge "$PR_URL" --match-head-commit "$HEAD_SHA"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
