@@ -3,12 +3,19 @@
 namespace App\Models;
 
 use Database\Factories\ShowFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property-read string|null $first_performance_start
+ * @property-read string|null $last_performance_start
+ * @property-read Collection<int, Performance> $performances
+ */
 class Show extends Model
 {
     /** @use HasFactory<ShowFactory> */
@@ -45,6 +52,22 @@ class Show extends Model
     /** @return HasMany<Performance, $this> */
     public function performances(): HasMany
     {
-        return $this->hasMany(Performance::class);
+        return $this->hasMany(Performance::class)->orderBy('performances.show_start');
+    }
+
+    /** @return Attribute<string|null, never> */
+    protected function firstPerformanceStart(): Attribute
+    {
+        return Attribute::get(fn (): ?string => $this->relationLoaded('performances')
+            ? $this->performances->first()?->show_start
+            : $this->performances()->first(['show_start'])?->show_start);
+    }
+
+    /** @return Attribute<string|null, never> */
+    protected function lastPerformanceStart(): Attribute
+    {
+        return Attribute::get(fn (): ?string => $this->relationLoaded('performances')
+            ? $this->performances->last()?->show_start
+            : $this->performances()->reorder('performances.show_start', 'desc')->first(['show_start'])?->show_start);
     }
 }
