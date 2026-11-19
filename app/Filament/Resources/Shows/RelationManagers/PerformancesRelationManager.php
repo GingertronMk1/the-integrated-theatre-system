@@ -23,7 +23,7 @@ class PerformancesRelationManager extends RelationManager
         return $schema->components([
             TextInput::make('show_start'),
             Select::make('venue_id')->relationship('venue', 'name')->searchable()->required(),
-            TextInput::make('capacity')->numeric()->minValue(0)->required(),
+            TextInput::make('capacity')->numeric()->minValue(1)->required(),
         ]);
     }
 
