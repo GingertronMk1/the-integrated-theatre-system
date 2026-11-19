@@ -10,6 +10,15 @@ use Illuminate\View\View;
 
 class TheatreController extends Controller
 {
+    public function home(): View
+    {
+        return view('welcome', [
+            'showCount' => Show::count(),
+            'performanceCount' => Performance::count(),
+            'peopleCount' => Person::count(),
+        ]);
+    }
+
     public function dashboard(): View
     {
         return view('dashboard', [

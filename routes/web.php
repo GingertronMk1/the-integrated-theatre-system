@@ -17,7 +17,7 @@ use App\Http\Controllers\TrainingSessionPersonController;
 use App\Http\Controllers\VenueController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+Route::get('/', [TheatreController::class, 'home'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [TheatreController::class, 'dashboard'])->name('dashboard');

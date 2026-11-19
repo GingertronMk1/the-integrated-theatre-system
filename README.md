@@ -89,7 +89,7 @@ The home page is public. The workspace pages require an authenticated user with 
 
 | Method and path | Purpose |
 | --- | --- |
-| `GET /` | Welcome page |
+| `GET /` | Public welcome page with show, performance and people totals |
 | `GET /dashboard` | Workspace overview |
 | `GET /shows` | Browse shows |
 | `GET /shows/{show}` | Show details, cast, crew and performances |
