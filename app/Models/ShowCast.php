@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Models;
+
+use Database\Factories\ShowCastFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class ShowCast extends Model
+{
+    /** @use HasFactory<ShowCastFactory> */
+    use HasFactory;
+
+    use HasUuids;
+
+    protected $fillable = ['show_id', 'person_id', 'role_name', 'notes'];
+
+    protected $table = 'show_cast';
+
+    public $timestamps = false;
+
+    /** @return BelongsTo<Show, $this> */
+    public function show(): BelongsTo
+    {
+        return $this->belongsTo(Show::class);
+    }
+
+    /** @return BelongsTo<Person, $this> */
+    public function person(): BelongsTo
+    {
+        return $this->belongsTo(Person::class);
+    }
+}
