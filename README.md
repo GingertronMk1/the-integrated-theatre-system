@@ -1,6 +1,6 @@
 # The Integrated Theatre System
 
-The Integrated Theatre System is a Laravel application for keeping a theatre's productions, people, performances and training records together. Its signed-in workspace provides a dashboard and simple browsing pages; a Filament panel provides forms and related-record managers for maintaining the data. A versioned JSON interface is also available for the domain records.
+The Integrated Theatre System is a Laravel application for keeping a theatre's productions, people, performances and training records together. Its public workspace provides a dashboard and simple browsing pages; a Filament panel provides forms and related-record managers for maintaining the data. A versioned JSON interface is also available for the domain records.
 
 The application uses Laravel 13 and PHP 8.5 in Laravel Sail, with Livewire 4, Flux UI, Filament 5, Tailwind CSS 4 and Vite. Composer and npm lockfiles specify the installed dependency versions.
 
@@ -77,7 +77,7 @@ MAIL_USERNAME=null
 MAIL_PASSWORD=null
 ```
 
-The Mailtrap Local dashboard uses host port `3550` by default (`FORWARD_MAILTRAP_LOCAL_DASHBOARD_PORT` overrides it). Register an account and verify its email to enter the workspace. The optional `vendor/bin/sail artisan db:seed` command creates a verified local `test@example.com` user with password `password`; it does not seed the theatre domain by default. Individual domain seeders are available in `database/seeders` and generate sample records through factories. Use the sample account only in a local environment.
+The Mailtrap Local dashboard uses host port `3550` by default (`FORWARD_MAILTRAP_LOCAL_DASHBOARD_PORT` overrides it). Register an account and verify its email to use the protected JSON endpoints and account features. The optional `vendor/bin/sail artisan db:seed` command creates a verified local `test@example.com` user with password `password`; it does not seed the theatre domain by default. Individual domain seeders are available in `database/seeders` and generate sample records through factories. Use the sample account only in a local environment.
 
 The original user and passkey migrations use UUID user IDs and were edited in place. A database that ran an earlier version of those migrations needs to be rebuilt or otherwise migrated before using this version. Do not run a destructive database reset against data you need to keep.
 
@@ -85,7 +85,7 @@ The original user and passkey migrations use UUID user IDs and were edited in pl
 
 ### Browser pages
 
-The home page is public. The workspace pages require an authenticated user with a verified email address.
+The home page and workspace browsing pages are public. Account settings and administration retain their own access requirements.
 
 | Method and path | Purpose |
 | --- | --- |

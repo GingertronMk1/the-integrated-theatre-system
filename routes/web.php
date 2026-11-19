@@ -19,14 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TheatreController::class, 'home'])->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [TheatreController::class, 'dashboard'])->name('dashboard');
-    Route::get('shows', [TheatreController::class, 'shows'])->name('shows.index');
-    Route::get('shows/{show}', [TheatreController::class, 'show'])->name('shows.show');
-    Route::get('performances', [TheatreController::class, 'performances'])->name('performances.index');
-    Route::get('people', [TheatreController::class, 'people'])->name('people.index');
-    Route::get('training', [TheatreController::class, 'training'])->name('training.index');
-});
+Route::get('dashboard', [TheatreController::class, 'dashboard'])->name('dashboard');
+Route::get('shows', [TheatreController::class, 'shows'])->name('shows.index');
+Route::get('shows/{show}', [TheatreController::class, 'show'])->name('shows.show');
+Route::get('performances', [TheatreController::class, 'performances'])->name('performances.index');
+Route::get('people', [TheatreController::class, 'people'])->name('people.index');
+Route::get('training', [TheatreController::class, 'training'])->name('training.index');
 
 Route::prefix('api/v1')->name('api.v1.')->middleware(['auth', 'verified'])->group(function () {
     Route::apiResource('people', PersonController::class);

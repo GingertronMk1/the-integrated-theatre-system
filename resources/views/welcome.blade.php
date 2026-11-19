@@ -8,14 +8,13 @@
             <header class="flex items-center justify-between gap-4 border-b border-zinc-200 py-6 dark:border-zinc-800">
                 <a href="{{ route('home') }}" class="text-sm font-semibold tracking-tight sm:text-base">{{ config('app.name') }}</a>
                 <nav aria-label="Account" class="flex items-center gap-4 text-sm font-medium">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="rounded-lg bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200">Dashboard</a>
-                    @else
+                    <a href="{{ route('dashboard') }}" class="text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white">Dashboard</a>
+                    @guest
                         <a href="{{ route('login') }}" class="text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white">Log in</a>
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="rounded-lg bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200">Register</a>
                         @endif
-                    @endauth
+                    @endguest
                 </nav>
             </header>
 

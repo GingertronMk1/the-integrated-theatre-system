@@ -6,10 +6,14 @@ use App\Models\ShowCast;
 use App\Models\TrainingItem;
 use App\Models\User;
 
-it('requires authentication to browse the theatre pages', function () {
+it('allows guests to browse the theatre pages', function () {
+    $cast = ShowCast::factory()->create();
+
     foreach (['shows.index', 'performances.index', 'people.index', 'training.index'] as $route) {
-        $this->get(route($route))->assertRedirect(route('login'));
+        $this->get(route($route))->assertOk()->assertSee('Log in');
     }
+
+    $this->get(route('shows.show', $cast->show))->assertOk()->assertSee($cast->show->name);
 });
 
 it('shows the theatre records in the browser', function () {

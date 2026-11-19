@@ -24,11 +24,20 @@
 
             <flux:spacer />
 
+            @auth
             <flux:sidebar.nav>
                 <flux:sidebar.item :href="route('filament.admin.pages.dashboard')">Administration</flux:sidebar.item>
             </flux:sidebar.nav>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
+            @else
+                <flux:sidebar.nav>
+                    <flux:sidebar.item :href="route('login')" wire:navigate>Log in</flux:sidebar.item>
+                    @if (Route::has('register'))
+                        <flux:sidebar.item :href="route('register')" wire:navigate>Register</flux:sidebar.item>
+                    @endif
+                </flux:sidebar.nav>
+            @endauth
         </flux:sidebar>
 
         <!-- Mobile User Menu -->
@@ -37,6 +46,7 @@
 
             <flux:spacer />
 
+            @auth
             <flux:dropdown position="top" align="end">
                 <flux:profile
                     :initials="auth()->user()->initials()"
@@ -84,6 +94,9 @@
                     </form>
                 </flux:menu>
             </flux:dropdown>
+            @else
+                <flux:button :href="route('login')" size="sm" wire:navigate>Log in</flux:button>
+            @endauth
         </flux:header>
 
         {{ $slot }}

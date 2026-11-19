@@ -3,10 +3,12 @@
         <header class="flex flex-wrap items-end justify-between gap-4">
             <div>
                 <p class="text-sm font-medium text-amber-700 dark:text-amber-400">Theatre workspace</p>
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">Welcome, {{ auth()->user()->name }}</h1>
+                <h1 class="mt-1 text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">@auth Welcome, {{ auth()->user()->name }} @else Welcome @endauth</h1>
                 <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Your productions, people and training in one place.</p>
             </div>
-            <flux:button :href="route('filament.admin.pages.dashboard')">Manage records</flux:button>
+            @auth
+                <flux:button :href="route('filament.admin.pages.dashboard')">Manage records</flux:button>
+            @endauth
         </header>
 
         <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -30,7 +32,7 @@
                         <span class="text-sm text-zinc-500">{{ $show->year }}</span>
                     </a>
                 @empty
-                    <p class="px-5 py-8 text-sm text-zinc-500">No shows yet. Add one in administration to get started.</p>
+                    <p class="px-5 py-8 text-sm text-zinc-500">No shows have been added yet.</p>
                 @endforelse
             </div>
         </section>

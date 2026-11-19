@@ -2,9 +2,9 @@
 
 use App\Models\User;
 
-test('guests are redirected to the login page', function () {
+test('guests can visit the dashboard', function () {
     $response = $this->get(route('dashboard'));
-    $response->assertRedirect(route('login'));
+    $response->assertOk()->assertSee('Log in')->assertSee('Theatre workspace');
 });
 
 test('authenticated users can visit the dashboard', function () {
@@ -13,4 +13,10 @@ test('authenticated users can visit the dashboard', function () {
 
     $response = $this->get(route('dashboard'));
     $response->assertOk();
+});
+
+test('unverified users can visit the public dashboard', function () {
+    $this->actingAs(User::factory()->unverified()->create());
+
+    $this->get(route('dashboard'))->assertOk();
 });
