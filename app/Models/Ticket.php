@@ -18,7 +18,9 @@ class Ticket extends Model
 
     protected $with = ['performance'];
 
-    protected $fillable = ['performance_id', 'status', 'cost_pence'];
+    protected $fillable = ['performance_id', 'status', 'cost_pence', 'buyer_name', 'buyer_email'];
+
+    protected $hidden = ['buyer_name', 'buyer_email'];
 
     public $timestamps = false;
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PlaywrightController;
+use App\Http\Controllers\PublicBookingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\ShowCastController;
@@ -23,6 +24,8 @@ Route::get('dashboard', [TheatreController::class, 'dashboard'])->name('dashboar
 Route::get('shows', [TheatreController::class, 'shows'])->name('shows.index');
 Route::get('shows/{show}', [TheatreController::class, 'show'])->name('shows.show');
 Route::get('performances', [TheatreController::class, 'performances'])->name('performances.index');
+Route::get('performances/{performance}/book', [PublicBookingController::class, 'create'])->name('bookings.create');
+Route::post('performances/{performance}/book', [PublicBookingController::class, 'store'])->middleware('throttle:10,1')->name('bookings.store');
 Route::get('people', [TheatreController::class, 'people'])->name('people.index');
 Route::get('training', [TheatreController::class, 'training'])->name('training.index');
 

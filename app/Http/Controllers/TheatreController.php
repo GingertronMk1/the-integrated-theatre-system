@@ -13,9 +13,9 @@ class TheatreController extends Controller
     public function home(): View
     {
         return view('welcome', [
+            'shows' => Show::query()->with('performances')->latest()->limit(3)->get(),
+            'performances' => Performance::query()->where('show_start', '>', now())->orderBy('show_start')->limit(4)->get(),
             'showCount' => Show::query()->count(),
-            'performanceCount' => Performance::query()->count(),
-            'peopleCount' => Person::query()->count(),
         ]);
     }
 

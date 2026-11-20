@@ -1,36 +1,25 @@
-<x-layouts::app :title="__('Shows')">
-    <div class="mx-auto flex max-w-6xl flex-col gap-6">
-        <header>
-            <h1 class="text-3xl font-semibold text-zinc-950 dark:text-white">Shows</h1>
-            <p class="mt-2 text-sm text-zinc-500">Browse productions and their cast, crew and performances.</p>
-        </header>
-        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+<x-layouts.public title="Show archive">
+    <section class="bg-[#e8eee6]">
+        <div class="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+            <p class="text-xs font-bold tracking-[.2em] text-[#668476] uppercase">The stories we share</p>
+            <h1 class="mt-4 font-serif text-5xl sm:text-6xl">The show archive</h1>
+            <p class="mt-5 max-w-xl text-lg leading-8 text-[#617367]">
+                Explore the productions, performers and people that have brought our stage to life.
+            </p>
+        </div>
+    </section>
+    <section class="mx-auto max-w-7xl px-6 py-14 lg:px-10">
+        <div class="mb-8 flex items-center justify-between">
+            <h2 class="font-serif text-3xl">All productions</h2>
+            <span class="text-sm text-[#718075]">{{ $shows->total() }} shows</span>
+        </div>
+        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             @forelse ($shows as $show)
-                <a
-                    href="{{ route('shows.show', $show) }}"
-                    wire:navigate
-                    class="flex min-h-40 flex-col justify-between gap-6 rounded-xl border border-zinc-200 bg-white p-5 hover:border-amber-400 dark:border-zinc-700 dark:bg-zinc-900"
-                >
-                    <div>
-                        <p class="text-xs font-medium tracking-wider text-amber-700 uppercase dark:text-amber-400">
-                            {{ $show->season?->name ?? 'Season unavailable' }}
-                        </p>
-                        <h2 class="mt-2 text-lg font-semibold text-zinc-950 dark:text-white">{{ $show->name }}</h2>
-                        <p class="mt-1 text-sm text-zinc-500">
-                            {{ $show->playwright?->name ?? 'Playwright unavailable' }}
-                        </p>
-                    </div>
-                    <span class="flex flex-col">
-                        <span class="text-sm text-zinc-500">
-                            {{ $show->first_performance_start?->format('d M') ?? 'Unknown' }} - {{ $show->last_performance_start?->format('d M') ?? 'Unknown' }}
-
-                            {{ $show->year ?? 'Year not set' }} <span aria-hidden="true">→</span></span>
-                    </span>
-                </a>
+                @include('theatre.partials.show-card')
             @empty
-                <p class="text-sm text-zinc-500">No shows have been added yet.</p>
+                <p class="text-[#718075]">No shows have been added yet.</p>
             @endforelse
         </div>
-        {{ $shows->links() }}
-    </div>
-</x-layouts::app>
+        <div class="mt-8">{{ $shows->links() }}</div>
+    </section>
+</x-layouts.public>
