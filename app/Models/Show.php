@@ -14,6 +14,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property string $id
+ * @property string $name
+ * @property string|null $description
+ * @property string|null $year
+ * @property string $playwright_id
+ * @property string $season_id
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $deleted_at
  * @property-read CarbonImmutable|null $first_performance_start
  * @property-read CarbonImmutable|null $last_performance_start
  * @property-read Collection<int, Performance> $performances

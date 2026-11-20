@@ -19,6 +19,9 @@ class PublicBookingController extends Controller
         return view('theatre.booking', ['performance' => $performance]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function store(Request $request, Performance $performance): RedirectResponse
     {
         $request->validate([

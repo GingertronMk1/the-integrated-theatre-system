@@ -12,6 +12,10 @@ use Illuminate\Database\Seeder;
 
 class PerformanceSeeder extends Seeder
 {
+    /**
+     * @throws \JsonException
+     * @throws \RuntimeException
+     */
     public function run(): void
     {
         $this->call([VenueSeeder::class, ShowSeeder::class]);

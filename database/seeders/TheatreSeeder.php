@@ -6,6 +6,10 @@ use Illuminate\Database\Seeder;
 
 class TheatreSeeder extends Seeder
 {
+    /**
+     * @throws \JsonException
+     * @throws \RuntimeException
+     */
     public function run(): void
     {
         $this->call([

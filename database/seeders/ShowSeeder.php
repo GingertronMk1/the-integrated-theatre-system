@@ -13,6 +13,10 @@ use Illuminate\Database\Seeder;
 
 class ShowSeeder extends Seeder
 {
+    /**
+     * @throws \JsonException
+     * @throws \RuntimeException
+     */
     public function run(): void
     {
         $shows = HistoryData::shows();

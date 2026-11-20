@@ -12,6 +12,9 @@ class DatabaseSeeder extends Seeder
 
     /**
      * Seed the application's database.
+     *
+     * @throws \JsonException
+     * @throws \RuntimeException
      */
     public function run(): void
     {

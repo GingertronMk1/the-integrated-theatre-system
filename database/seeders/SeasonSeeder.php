@@ -7,6 +7,10 @@ use Illuminate\Database\Seeder;
 
 class SeasonSeeder extends Seeder
 {
+    /**
+     * @throws \JsonException
+     * @throws \RuntimeException
+     */
     public function run(): void
     {
         $shows = HistoryData::shows();

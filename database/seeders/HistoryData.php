@@ -11,6 +11,9 @@ class HistoryData
 {
     /**
      * @return list<array{title: string, playwright: string, season: string, year: string, date_start: string, date_end: string, venue: string, cast: list<array{name: string, role: string, note: string}>, crew: list<array{name: string, role: string, note: string}>}>
+     *
+     * @throws \JsonException
+     * @throws RuntimeException
      */
     public static function shows(): array
     {
@@ -45,7 +48,11 @@ class HistoryData
         return $shows;
     }
 
-    /** @return list<array{name: string, role: string, note: string}> */
+    /**
+     * @return list<array{name: string, role: string, note: string}>
+     *
+     * @throws RuntimeException
+     */
     private static function credits(mixed $credits): array
     {
         if (! is_array($credits) || ! array_is_list($credits)) {
