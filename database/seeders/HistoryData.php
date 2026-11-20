@@ -10,7 +10,7 @@ use RuntimeException;
 class HistoryData
 {
     /**
-     * @return list<array{title: string, playwright: string, season: string, year: string, cast: list<array{name: string, role: string, note: string}>, crew: list<array{name: string, role: string, note: string}>}>
+     * @return list<array{title: string, playwright: string, season: string, year: string, date_start: string, date_end: string, venue: string, cast: list<array{name: string, role: string, note: string}>, crew: list<array{name: string, role: string, note: string}>}>
      */
     public static function shows(): array
     {
@@ -26,7 +26,7 @@ class HistoryData
 
         $shows = [];
         foreach ($data as $record) {
-            if (! is_array($record) || ! is_string($record['title'] ?? null) || ! is_string($record['playwright'] ?? null) || ! is_string($record['season'] ?? null) || ! is_string($record['year'] ?? null)) {
+            if (! is_array($record) || ! is_string($record['title'] ?? null) || ! is_string($record['playwright'] ?? null) || ! is_string($record['season'] ?? null) || ! is_string($record['year'] ?? null) || ! is_string($record['date_start'] ?? null) || ! is_string($record['date_end'] ?? null) || ! is_string($record['venue'] ?? null)) {
                 throw new RuntimeException('Invalid production in history archive seed data.');
             }
             $shows[] = [
@@ -34,6 +34,9 @@ class HistoryData
                 'playwright' => $record['playwright'],
                 'season' => $record['season'],
                 'year' => $record['year'],
+                'date_start' => $record['date_start'],
+                'date_end' => $record['date_end'],
+                'venue' => $record['venue'],
                 'cast' => self::credits($record['cast'] ?? null),
                 'crew' => self::credits($record['crew'] ?? null),
             ];

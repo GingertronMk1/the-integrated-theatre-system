@@ -10,8 +10,7 @@ class TheatreSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
-            VenueSeeder::class,
-            ShowSeeder::class,
+            PerformanceSeeder::class,
         ]);
     }
 }
