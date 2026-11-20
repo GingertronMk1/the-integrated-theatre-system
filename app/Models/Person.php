@@ -2,19 +2,32 @@
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property string $id
+ * @property string|null $user_id
+ * @property string|null $name
+ * @property string $start_year
+ * @property string $end_year
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $deleted_at
+ */
 class Person extends Model
 {
     /** @use HasFactory<PersonFactory> */
     use HasFactory;
 
     use HasUuids;
+    use SoftDeletes;
 
     protected $with = ['user'];
 

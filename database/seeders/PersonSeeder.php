@@ -8,101 +8,31 @@ use Illuminate\Database\Seeder;
 class PersonSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * @throws \JsonException
+     * @throws \RuntimeException
      */
     public function run(): void
     {
-        foreach ($this->getFirstNames() as $firstKey => $firstName) {
-            foreach ($this->getSurnames() as $surKey => $surName) {
-                $key = $firstKey + $surKey;
-                Person::query()->firstOrCreate([
-                    'name' => "{$firstName} {$surName}",
-                    'start_year' => 2000 + $key % 10,
-                    'end_year' => 2004 + $key % 10,
-                ]);
+        $shows = HistoryData::shows();
+        $years = [];
+
+        foreach ($shows as $show) {
+            foreach (array_merge($show['cast'], $show['crew']) as $credit) {
+                $name = $credit['name'];
+                $years[$name] ??= [$show['year'], $show['year']];
+                $years[$name][0] = min($years[$name][0], $show['year']);
+                $years[$name][1] = max($years[$name][1], $show['year']);
             }
         }
-    }
 
-    /** @return list<string> */
-    private function getFirstNames(): array
-    {
-        return [
-            'Aisha',
-            'Allie',
-            'Apollo',
-            'Boden',
-            'Brody',
-            'Caiden',
-            'Celeste',
-            'Chandler',
-            'Chase',
-            'Cleo',
-            'Damari',
-            'Emely',
-            'Emilio',
-            'Gabriel',
-            'Hunter',
-            'Isaiah',
-            'Kaitlyn',
-            'Kalani',
-            'Katie',
-            'Kelly',
-            'Kylan',
-            'Laylani',
-            'Leonardo',
-            'Lucian',
-            'Monroe',
-            'Paulina',
-            'Rayna',
-            'Ricardo',
-            'Rohan',
-            'Scott',
-            'Teresa',
-            'Thomas',
-            'Xiomara',
-            'Zainab',
-        ];
-    }
-
-    /** @return list<string> */
-    private function getSurnames(): array
-    {
-        return [
-            'Bennett',
-            'Browning',
-            'Case',
-            'Clarke',
-            'Contreras',
-            'English',
-            'Gomez',
-            'Graham',
-            'Guevara',
-            'Hall',
-            'Herman',
-            'Ingram',
-            'Knapp',
-            'Kramer',
-            'Lara',
-            'Larsen',
-            'Leonard',
-            'Lloyd',
-            'Maddox',
-            'McDowell',
-            'McKenzie',
-            'Meza',
-            'Moran',
-            'Nash',
-            'Nguyen',
-            'Noble',
-            'Salazar',
-            'Serrano',
-            'Shepard',
-            'Simon',
-            'Sparks',
-            'Trujillo',
-            'Villanueva',
-            'Wallace',
-        ];
+        $people = Person::query()->get()->keyBy('name');
+        foreach ($years as $name => [$firstYear, $lastYear]) {
+            $person = $people->get($name);
+            if ($person === null) {
+                Person::query()->create(['name' => $name, 'start_year' => $firstYear, 'end_year' => $lastYear]);
+            } else {
+                $person->update(['start_year' => $firstYear, 'end_year' => $lastYear]);
+            }
+        }
     }
 }

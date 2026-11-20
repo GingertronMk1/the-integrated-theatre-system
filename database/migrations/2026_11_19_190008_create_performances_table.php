@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Show;
+use App\Models\Venue;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('performances', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('show_id')->constrained();
+            $table->foreignIdFor(Show::class)->constrained();
             $table->dateTime('show_start')->nullable();
-            $table->foreignUuid('venue_id')->constrained();
+            $table->foreignIdFor(Venue::class)->constrained();
             $table->unsignedInteger('capacity');
             $table->timestamps();
             $table->softDeletes();

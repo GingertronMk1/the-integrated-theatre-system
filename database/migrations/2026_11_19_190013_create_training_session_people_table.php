@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Person;
+use App\Models\TrainingSession;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('training_session_people', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('training_session_id')->constrained('training_session');
-            $table->foreignUuid('person_id')->constrained();
+            $table->foreignIdFor(TrainingSession::class)->constrained('training_session');
+            $table->foreignIdFor(Person::class)->constrained();
             $table->enum('type', ['trainer', 'trainee']);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

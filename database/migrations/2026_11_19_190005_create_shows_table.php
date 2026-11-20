@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Playwright;
+use App\Models\Season;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('year')->nullable();
-            $table->foreignUuid('playwright_id')->constrained();
-            $table->foreignUuid('season_id')->constrained();
+            $table->foreignIdFor(Playwright::class)->constrained();
+            $table->foreignIdFor(Season::class)->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

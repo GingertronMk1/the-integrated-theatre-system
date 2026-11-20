@@ -48,6 +48,8 @@ class RoleController extends Controller
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'icon' => ['nullable', 'string', 'max:255'],
+            'sort' => ['sometimes', 'integer', 'min:0', 'max:4294967295'],
         ];
     }
 }

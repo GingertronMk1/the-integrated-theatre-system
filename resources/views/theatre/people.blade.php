@@ -1,23 +1,26 @@
-<x-layouts::app :title="__('People')">
-    <div class="mx-auto flex max-w-6xl flex-col gap-6">
-        <header>
-            <h1 class="text-3xl font-semibold text-zinc-950 dark:text-white">People</h1>
-            <p class="mt-2 text-sm text-zinc-500">The people involved in your theatre.</p>
-        </header>
-        <div class="overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                @forelse ($people as $person)
-                    <div class="flex flex-wrap items-center justify-between gap-2 px-5 py-4">
-                        <span
-                            class="font-medium text-zinc-950 dark:text-white"
-                            >{{ $person->name ?: 'Unnamed person' }}</span
-                        ><span class="text-sm text-zinc-500">{{ $person->start_year }} – {{ $person->end_year }}</span>
-                    </div>
-                @empty
-                    <p class="px-5 py-8 text-sm text-zinc-500">No people have been added yet.</p>
-                @endforelse
-            </div>
+<x-layouts.public title="People">
+    <section class="bg-[#e8eee6]">
+        <div class="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+            <p class="text-xs font-bold tracking-[.2em] text-[#668476] uppercase">The people behind the productions</p>
+            <h1 class="mt-4 font-serif text-5xl sm:text-6xl">Our people</h1>
+            <p class="mt-5 max-w-xl text-lg leading-8 text-[#617367]">
+                Meet the people who have helped bring theatre to life.
+            </p>
         </div>
-        {{ $people->links() }}
-    </div>
-</x-layouts::app>
+    </section>
+    <section class="mx-auto max-w-7xl px-6 py-14 lg:px-10">
+        <div class="divide-y divide-[#e4e7df] border-y border-[#e4e7df]">
+            @forelse ($people as $person)
+                <div class="flex flex-wrap items-center justify-between gap-4 py-5">
+                    <span class="font-semibold"
+                        ><i class="fa-regular fa-user mr-3 text-[#87a08f]" aria-hidden="true"></i
+                        >{{ $person->name ?: 'Unnamed person' }}</span
+                    ><span class="text-sm text-[#718075]">{{ $person->start_year }} – {{ $person->end_year }}</span>
+                </div>
+            @empty
+                <p class="py-8 text-[#718075]">No people have been added yet.</p>
+            @endforelse
+        </div>
+        <div class="mt-8">{{ $people->links() }}</div>
+    </section>
+</x-layouts.public>

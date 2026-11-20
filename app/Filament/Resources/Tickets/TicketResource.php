@@ -31,6 +31,8 @@ class TicketResource extends Resource
                 Select::make('performance_id')->relationship('performance', 'id')->searchable()->required(),
                 Select::make('status')->options(['available' => 'Available', 'reserved' => 'Reserved', 'bought' => 'Bought'])->required(),
                 TextInput::make('cost_pence')->numeric()->minValue(0),
+                TextInput::make('buyer_name')->maxLength(255),
+                TextInput::make('buyer_email')->email()->maxLength(255),
             ]);
     }
 
@@ -40,6 +42,8 @@ class TicketResource extends Resource
             ->columns([
                 TextColumn::make('performance_id'),
                 TextColumn::make('status'),
+                TextColumn::make('buyer_name')->searchable(),
+                TextColumn::make('buyer_email')->searchable(),
                 TextColumn::make('cost_pence'),
             ])
             ->filters([

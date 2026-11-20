@@ -12,7 +12,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property string $id
+ * @property string $show_id
  * @property CarbonImmutable|null $show_start
+ * @property string $venue_id
+ * @property int $capacity
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $deleted_at
  */
 class Performance extends Model
 {

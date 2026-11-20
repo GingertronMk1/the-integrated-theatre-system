@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\ShowCast;
 use Illuminate\Database\Seeder;
 
 class ShowCastSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * @throws \JsonException
+     * @throws \RuntimeException
      */
     public function run(): void
     {
-        ShowCast::factory()->create();
+        $this->call(ShowSeeder::class);
     }
 }
