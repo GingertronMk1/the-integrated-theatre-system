@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Performance;
-use App\Models\Person;
 use App\Models\Show;
 use App\Models\User;
 
@@ -11,17 +10,16 @@ test('returns a successful response', function () {
     $response->assertOk();
 });
 
-test('the welcome page shows current theatre totals to guests', function () {
-    $shows = Show::factory()->count(2)->create();
-    Performance::factory()->count(3)->for($shows->first())->create();
-    Person::factory()->count(4)->create();
+test('the welcome page shows upcoming performances and recent productions to guests', function () {
+    $show = Show::factory()->create(['name' => 'The Tempest']);
+    $performance = Performance::factory()->for($show)->create(['show_start' => now()->addDay()]);
+    $pastPerformance = Performance::factory()->create(['show_start' => now()->subDay()]);
 
     $this->get(route('home'))
         ->assertOk()
-        ->assertViewHas('showCount', 2)
-        ->assertViewHas('performanceCount', 3)
-        ->assertViewHas('peopleCount', 4)
-        ->assertSeeTextInOrder(['Shows', '2', 'Performances', '3', 'People', '4'])
+        ->assertSee('The Tempest')
+        ->assertSee(route('bookings.create', $performance))
+        ->assertDontSee(route('bookings.create', $pastPerformance))
         ->assertSee('Log in');
 });
 

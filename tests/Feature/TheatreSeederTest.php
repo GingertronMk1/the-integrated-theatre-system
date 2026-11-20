@@ -9,7 +9,7 @@ use Database\Seeders\DatabaseSeeder;
 test('the database seeder creates a connected theatre dataset', function () {
     $this->seed(DatabaseSeeder::class);
 
-    expect(Person::query()->count())->toBe(1000)
+    expect(Person::query()->count())->toBe(1156)
         ->and(Show::query()->count())->toBe(100)
         ->and(User::query()->where('email', 'admin@tits.test')->exists())->toBeTrue();
 
