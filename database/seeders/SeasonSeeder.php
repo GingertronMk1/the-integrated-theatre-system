@@ -7,38 +7,17 @@ use Illuminate\Database\Seeder;
 
 class SeasonSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        foreach ($this->getSeasons() as $season) {
-            Season::query()->firstOrCreate([
-                'name' => $season,
-                'description' => $season,
-                'colour' => '#000000',
-            ]);
+        $shows = HistoryData::shows();
+        $names = [];
+        foreach ($shows as $show) {
+            $name = $show['season'] !== '' ? $show['season'] : 'Unknown';
+            $names[$name] = true;
         }
-    }
 
-    /** @return list<string> */
-    private function getSeasons(): array
-    {
-        return [
-            'In House',
-            'StuFF',
-            'Fringe',
-            'Edinburgh',
-            'External',
-            'Postgrads',
-            'Lakeside',
-            'UNCUT',
-            'Online',
-            'Studio',
-            'Unscripted',
-            'Fundraiser',
-            'Creatives',
-
-        ];
+        foreach (array_keys($names) as $name) {
+            Season::query()->firstOrCreate(['name' => $name], ['description' => '', 'colour' => '#000000']);
+        }
     }
 }

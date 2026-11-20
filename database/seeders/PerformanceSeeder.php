@@ -2,16 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Performance;
 use Illuminate\Database\Seeder;
 
 class PerformanceSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        Performance::factory()->create();
-    }
+    /** The archive does not supply reliable performance start times or capacities. */
+    public function run(): void {}
 }
