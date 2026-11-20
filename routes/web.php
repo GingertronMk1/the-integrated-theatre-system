@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [TheatreController::class, 'home'])->name('home');
 
 Route::get('dashboard', [TheatreController::class, 'dashboard'])->name('dashboard');
-Route::get('shows', [TheatreController::class, 'shows'])->name('shows.index');
+Route::get('shows/archive', [TheatreController::class, 'shows'])->name('shows.index');
+Route::get('shows/upcoming', [TheatreController::class, 'performances'])->name('performances.index');
 Route::get('shows/{show}', [TheatreController::class, 'show'])->name('shows.show');
-Route::get('performances', [TheatreController::class, 'performances'])->name('performances.index');
 Route::get('performances/{performance}/book', [PublicBookingController::class, 'create'])->name('bookings.create');
 Route::post('performances/{performance}/book', [PublicBookingController::class, 'store'])->middleware('throttle:10,1')->name('bookings.store');
 Route::get('people', [TheatreController::class, 'people'])->name('people.index');

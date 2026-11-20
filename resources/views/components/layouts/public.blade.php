@@ -18,7 +18,7 @@
             </a>
             <nav aria-label="Main navigation" class="flex flex-wrap items-center gap-5 text-sm font-semibold sm:gap-8">
                 <a href="{{ route('shows.index') }}" class="hover:text-[#a36a47]">Show archive</a>
-                <a href="{{ route('performances.index') }}" class="hover:text-[#a36a47]">What's on</a>
+                <a href="{{ route('performances.index') }}" class="hover:text-[#a36a47]">Upcoming</a>
                 <a href="{{ route('people.index') }}" class="hover:text-[#a36a47]">People</a>
                 @guest
                     <a href="{{ route('login') }}" class="text-[#64736b]"
@@ -43,7 +43,7 @@
                 <p class="text-xs font-bold tracking-[.18em] text-[#aec5b6] uppercase">Explore</p>
                 <div class="mt-4 grid gap-3 text-sm">
                     <a href="{{ route('shows.index') }}">Show archive</a
-                    ><a href="{{ route('performances.index') }}">Performances</a
+                    ><a href="{{ route('performances.index') }}">Upcoming</a
                     ><a href="{{ route('people.index') }}">People</a>
                 </div>
             </div>

@@ -6,14 +6,19 @@ use App\Models\Performance;
 use App\Models\Person;
 use App\Models\Show;
 use App\Models\TrainingItem;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 
 class TheatreController extends Controller
 {
     public function home(): View
     {
+        $now = now();
+
         return view('welcome', [
-            'shows' => Show::query()->with('performances')->latest()->limit(3)->get(),
+            'shows' => Show::query()->whereHas('performances', fn (Builder $query) => $query->where('show_start', '<', $now))
+                ->whereDoesntHave('performances', fn (Builder $query) => $query->where('show_start', '>=', $now))
+                ->with('performances')->latest()->limit(3)->get(),
             'performances' => Performance::query()->where('show_start', '>', now())->orderBy('show_start')->limit(4)->get(),
             'showCount' => Show::query()->count(),
         ]);
@@ -32,8 +37,12 @@ class TheatreController extends Controller
 
     public function shows(): View
     {
+        $now = now();
+
         return view('theatre.shows', [
-            'shows' => Show::query()->with(['performances', 'season', 'playwright'])->orderBy('name')->paginate(15),
+            'shows' => Show::query()->whereHas('performances', fn (Builder $query) => $query->where('show_start', '<', $now))
+                ->whereDoesntHave('performances', fn (Builder $query) => $query->where('show_start', '>=', $now))
+                ->orderBy('name')->paginate(15),
         ]);
     }
 
@@ -46,8 +55,12 @@ class TheatreController extends Controller
 
     public function performances(): View
     {
+        $now = now();
+
         return view('theatre.performances', [
-            'performances' => Performance::query()->with(['show', 'venue'])->orderBy('show_start')->paginate(15),
+            'shows' => Show::query()->whereHas('performances', fn (Builder $query) => $query->where('show_start', '>', $now))
+                ->with(['performances' => fn ($query) => $query->where('show_start', '>', $now)->with('venue')])
+                ->orderBy('name')->paginate(15),
         ]);
     }
 
