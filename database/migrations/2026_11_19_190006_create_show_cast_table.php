@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Person;
+use App\Models\Show;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('show_cast', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('show_id')->constrained();
-            $table->foreignUuid('person_id')->constrained();
+            $table->foreignIdFor(Show::class)->constrained();
+            $table->foreignIdFor(Person::class)->constrained();
             $table->string('role_name');
+            $table->unsignedInteger('sort')->default(0);
             $table->string('notes')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

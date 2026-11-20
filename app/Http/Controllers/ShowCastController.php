@@ -50,6 +50,7 @@ class ShowCastController extends Controller
             'show_id' => ['required', 'uuid', 'exists:shows,id'],
             'person_id' => ['required', 'uuid', 'exists:people,id'],
             'role_name' => ['required', 'string', 'max:255'],
+            'sort' => ['sometimes', 'integer', 'min:0', 'max:4294967295'],
             'notes' => ['nullable', 'string'],
         ];
     }

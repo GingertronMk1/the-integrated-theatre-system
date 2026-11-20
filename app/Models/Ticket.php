@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
@@ -15,14 +16,13 @@ class Ticket extends Model
     use HasFactory;
 
     use HasUuids;
+    use SoftDeletes;
 
     protected $with = ['performance'];
 
     protected $fillable = ['performance_id', 'status', 'cost_pence', 'buyer_name', 'buyer_email'];
 
     protected $hidden = ['buyer_name', 'buyer_email'];
-
-    public $timestamps = false;
 
     protected function casts(): array
     {

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property-read CarbonImmutable|null $first_performance_start
@@ -23,6 +24,7 @@ class Show extends Model
     use HasFactory;
 
     use HasUuids;
+    use SoftDeletes;
 
     protected $with = ['playwright', 'season'];
 
@@ -43,13 +45,15 @@ class Show extends Model
     /** @return HasMany<ShowCast, $this> */
     public function cast(): HasMany
     {
-        return $this->hasMany(ShowCast::class);
+        return $this->hasMany(ShowCast::class)->orderBy('show_cast.sort');
     }
 
     /** @return HasMany<ShowCrew, $this> */
     public function crew(): HasMany
     {
-        return $this->hasMany(ShowCrew::class);
+        return $this->hasMany(ShowCrew::class)->orderBy(
+            Role::query()->withTrashed()->select('sort')->whereColumn('roles.id', 'show_crew.role_id')
+        );
     }
 
     /** @return HasMany<Performance, $this> */

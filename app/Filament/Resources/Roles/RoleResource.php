@@ -28,6 +28,8 @@ class RoleResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')->required(),
+                TextInput::make('icon')->maxLength(255),
+                TextInput::make('sort')->integer()->minValue(0)->maxValue(4294967295)->default(0)->required(),
             ]);
     }
 

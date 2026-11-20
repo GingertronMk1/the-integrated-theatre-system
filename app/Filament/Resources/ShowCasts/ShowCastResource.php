@@ -31,6 +31,7 @@ class ShowCastResource extends Resource
                 Select::make('show_id')->relationship('show', 'name')->searchable()->required(),
                 Select::make('person_id')->relationship('person', 'name')->searchable()->required(),
                 TextInput::make('role_name')->required(),
+                TextInput::make('sort')->integer()->minValue(0)->maxValue(4294967295)->default(0)->required(),
                 Textarea::make('notes'),
             ]);
     }

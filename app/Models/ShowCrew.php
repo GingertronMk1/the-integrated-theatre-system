@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ShowCrew extends Model
 {
@@ -14,14 +15,13 @@ class ShowCrew extends Model
     use HasFactory;
 
     use HasUuids;
+    use SoftDeletes;
 
     protected $with = ['show', 'person', 'role'];
 
     protected $fillable = ['show_id', 'person_id', 'role_id', 'notes'];
 
     protected $table = 'show_crew';
-
-    public $timestamps = false;
 
     /** @return BelongsTo<Show, $this> */
     public function show(): BelongsTo

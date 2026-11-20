@@ -7,62 +7,49 @@ use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        foreach ($this->getRoleNames() as $role) {
-            Role::query()->firstOrCreate([
-                'name' => $role,
-            ]);
+        foreach ($this->roles() as $sort => $role) {
+            Role::query()->updateOrCreate(
+                ['name' => $role['name']],
+                ['icon' => $role['icon'], 'sort' => $sort * 10],
+            );
         }
     }
 
-    /** @return list<string> */
-    private function getRoleNames(): array
+    /** @return list<array{name: string, icon: string}> */
+    private function roles(): array
     {
         return [
-            'Director',
-            'Technical Operator',
-            'Stage Manager',
-            'Producer',
-            'Lighting Designer',
-            'Technical Director',
-            'Sound Designer',
-            'Set Designer',
-            'Poster Designer',
-            'Set Construction',
-            'Assistant Director',
-            'Publicity Manager',
-            'Assistant Producer',
-            'Assistant Stage Manager',
-            'Publicity Assistant',
-            'Writer',
-            'Shadow Director',
-            'Production Assistant',
-            'Co-Director',
-            'Musician',
-            'Lighting',
-            'Photographer',
-            'Sound',
-            'Venue Technician',
-            'Set Assistant',
-            'Costume Designer',
-            'Publicity Designer',
-            'Deputy Stage Manager',
-            'Technician',
-            'Costumes',
-            'Designer',
-            'Playwright',
-            'Shadow Technical Director',
-            'Video Designer',
-            'Show Technician',
-            'Co-Producer',
-            'Creative Assistant',
-            'Backstage',
-            'Publicity',
-            'Musical Director',
+            ['name' => 'Director', 'icon' => 'ion-film-marker'],
+            ['name' => 'Producer', 'icon' => 'fa fa-money'],
+            ['name' => 'Production Advisor', 'icon' => 'fa fa-comments-o'],
+            ['name' => 'Playwright', 'icon' => 'fa fa-pencil'],
+            ['name' => 'Set Designer', 'icon' => 'ion-paintbucket'],
+            ['name' => 'Designer', 'icon' => 'ion-paintbucket'],
+            ['name' => 'Stage Manager', 'icon' => 'fa fa-bookmark'],
+            ['name' => 'Technical Director', 'icon' => 'fa fa-plug'],
+            ['name' => 'Lighting Designer', 'icon' => 'fa fa-lightbulb-o'],
+            ['name' => 'Sound Designer', 'icon' => 'fa fa-volume-up'],
+            ['name' => 'Video Designer', 'icon' => 'ion-videocamera'],
+            ['name' => 'Technical Operator', 'icon' => 'fa fa-headphones'],
+            ['name' => 'Sound Engineer', 'icon' => 'ion-levels'],
+            ['name' => 'Followspot Operator', 'icon' => 'ion-aperture'],
+            ['name' => 'Composer', 'icon' => 'fa fa-music'],
+            ['name' => 'Musical Director', 'icon' => 'fa fa-music'],
+            ['name' => 'Vocalist', 'icon' => 'fa fa-music'],
+            ['name' => 'Musician', 'icon' => 'fa fa-music'],
+            ['name' => 'Make Up Artist', 'icon' => 'ion-paintbrush'],
+            ['name' => 'Costume Designer', 'icon' => 'ion-tshirt'],
+            ['name' => 'Publicity Designer', 'icon' => 'fa fa-picture-o'],
+            ['name' => 'Publicity Manager', 'icon' => 'fa fa-picture-o'],
+            ['name' => 'Publicist', 'icon' => 'fa fa-picture-o'],
+            ['name' => 'Poster Designer', 'icon' => 'fa fa-picture-o'],
+            ['name' => 'Artwork', 'icon' => 'fa fa-picture-o'],
+            ['name' => 'Photographer', 'icon' => 'fa fa-camera-retro'],
+            ['name' => 'Video Editor', 'icon' => 'fa fa-file-video-o'],
+            ['name' => 'Set Construction', 'icon' => 'ion-hammer'],
+            ['name' => 'Choreographer', 'icon' => 'fa fa-street-view'],
         ];
     }
 }
